@@ -1,5 +1,0 @@
-package com.rubypaper.persistence;
-
-public interface DynamicBoardRepository {
-
-}

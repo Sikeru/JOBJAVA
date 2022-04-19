@@ -1,4 +1,0 @@
-2022:03:31 14:35:21.683 WARN  --- [main] com.rubypaper.LoggingRunner : WARN ·Î±× ¸Þ½ÃÁö 
-2022:03:31 14:35:21.689 ERROR --- [main] com.rubypaper.LoggingRunner : ERROR ·Î±× ¸Þ½ÃÁö 
-2022:03:31 14:38:32.024 WARN  --- [restartedMain] com.rubypaper.LoggingRunner : WARN ë¡œê·¸ ë©”ì‹œì§€ 
-2022:03:31 14:38:32.026 ERROR --- [restartedMain] com.rubypaper.LoggingRunner : ERROR ë¡œê·¸ ë©”ì‹œì§€ 

@@ -1,9 +1,0 @@
-package com.rubypaper.domain;
-
-import lombok.Getter;
-
-@Getter
-@s
-public class Board {
-	
-}

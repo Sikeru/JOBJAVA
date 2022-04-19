@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<aop-reference-model>
-<aop-project name="board-spring-boot-stater"/>
-<aop-project name="Chapter03"/>
-<aop-project name="Chapter05"/>
-<aop-project name="Chapter02"/>
-<aop-project name="Chapter06"/>
-<aop-project name="Chapter07"/>
-</aop-reference-model>

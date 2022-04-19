@@ -1,5 +1,0 @@
-package com.rubypaper.exception;
-
-public class BoardException {
-
-}

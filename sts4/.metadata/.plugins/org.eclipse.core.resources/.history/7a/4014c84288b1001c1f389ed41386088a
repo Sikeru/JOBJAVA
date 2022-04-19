@@ -1,7 +1,0 @@
-package com.rubypaper;
-
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class BoardRepositoryTest {
-	
-}

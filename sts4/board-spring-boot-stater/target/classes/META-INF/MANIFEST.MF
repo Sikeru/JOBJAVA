@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Built-By: djit215
-Build-Jdk: 11.0.11
-Implementation-Title: board-spring-boot-stater
-Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: com.rubypaper
-Implementation-URL: http://www.example.com
-Created-By: Maven Integration for Eclipse
-

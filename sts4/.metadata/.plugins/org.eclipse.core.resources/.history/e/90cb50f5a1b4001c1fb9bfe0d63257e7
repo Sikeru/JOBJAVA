@@ -1,6 +1,0 @@
-server.session.timeout=360000
-server.port = 8090
-
-# ViewResolver Setting
-spring.mvc.view.prefix=/WEB-INF/board/
-spring.mvc.view.suffix=.jsp
