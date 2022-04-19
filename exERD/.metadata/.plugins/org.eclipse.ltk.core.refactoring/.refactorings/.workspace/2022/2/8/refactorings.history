@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="&apos;SFR&apos; 자원을 삭제합니다." deleteContents="false" description="&apos;SFR&apos; 자원을 삭제합니다." element1="/SFR" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1645055717832"/>&#x0A;<refactoring comment="&apos;newProject&apos; 자원을 삭제합니다." deleteContents="false" description="&apos;newProject&apos; 자원을 삭제합니다." element1="/newProject" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1645055764625"/>
-</session>
