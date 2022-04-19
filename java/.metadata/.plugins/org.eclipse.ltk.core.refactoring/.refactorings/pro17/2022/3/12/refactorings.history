@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy 4 elements to &apos;board&apos;&#x0D;&#x0A;- Original project: &apos;pro17&apos;&#x0D;&#x0A;- Destination element: &apos;board&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     articleForm.jsp&#x0D;&#x0A;     listArticles.jsp&#x0D;&#x0A;     replyForm.jsp&#x0D;&#x0A;     viewArticle.jsp" description="Copy files" element1="WebContent/board07/articleForm.jsp" element2="WebContent/board07/listArticles.jsp" element3="WebContent/board07/replyForm.jsp" element4="WebContent/board07/viewArticle.jsp" files="4" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1647500677549" target="/pro30/src/main/webapp/WEB-INF/views/board" units="0" version="1.0"/>
-</session>

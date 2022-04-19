@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy element &apos;MemberDAO.java&apos; to &apos;pro19/src/com.spring.ex03&apos;&#x0D;&#x0A;- Original project: &apos;pro17&apos;&#x0D;&#x0A;- Destination element: &apos;pro19/src/com.spring.ex03&apos;&#x0D;&#x0A;- Original element: &apos;sec02.ex02.MemberDAO.java&apos;" description="Copy compilation unit" destination="=pro19/src&lt;com.spring.ex03" element1="/src&lt;sec02.ex02{MemberDAO.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1646029813864" units="1" version="1.0"/>
-</session>

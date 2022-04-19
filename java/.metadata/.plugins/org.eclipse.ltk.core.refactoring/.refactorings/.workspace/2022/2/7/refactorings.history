@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;pro04&apos;" deleteContents="false" description="Delete resource &apos;pro04&apos;" element1="/pro04" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1644216609412"/>&#x0A;<refactoring comment="Delete resource &apos;pro01&apos;" deleteContents="false" description="Delete resource &apos;pro01&apos;" element1="/pro01" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1644216714373"/>&#x0A;<refactoring comment="Rename resource &apos;pro6&apos; to &apos;pro06&apos;" description="Rename resource &apos;pro6&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/pro6" name="pro06" stamp="1644277371477" updateReferences="true"/>
-=======
-<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;pro04&apos;" deleteContents="false" description="Delete resource &apos;pro04&apos;" element1="/pro04" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1644216609412"/>&#x0A;<refactoring comment="Delete resource &apos;pro01&apos;" deleteContents="false" description="Delete resource &apos;pro01&apos;" element1="/pro01" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1644216714373"/>
->>>>>>> 16e3b1d20f3bcb9130024a9220b545083e5db84a
-</session>

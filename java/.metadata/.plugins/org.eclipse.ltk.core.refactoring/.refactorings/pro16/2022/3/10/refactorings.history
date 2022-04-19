@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy 4 elements to &apos;lib&apos;&#x0D;&#x0A;- Original project: &apos;pro16&apos;&#x0D;&#x0A;- Destination element: &apos;lib&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     taglibs-standard-compat-1.2.5.jar&#x0D;&#x0A;     taglibs-standard-impl-1.2.5.jar&#x0D;&#x0A;     taglibs-standard-jstlel-1.2.5.jar&#x0D;&#x0A;     taglibs-standard-spec-1.2.5.jar" description="Copy files" element1="WebContent/WEB-INF/lib/taglibs-standard-compat-1.2.5.jar" element2="WebContent/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar" element3="WebContent/WEB-INF/lib/taglibs-standard-jstlel-1.2.5.jar" element4="WebContent/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar" files="4" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1646201124706" target="/pro21/WebContent/WEB-INF/lib" units="0" version="1.0"/>
-</session>
