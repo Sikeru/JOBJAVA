@@ -12,12 +12,12 @@
 			username-parameter="user_id"
 			password-parameter="user_pw"
 			login-processing-url="/login_check" 
-			login-page="/login.html" 
+			login-page="/login.html"
 			authentication-failure-url="/login.html?ng"
 		/>
 		<s:logout 
 			logout-url="/security_logout"
-			logout-success-url="/"
+			logout-success-url="/main"
 			invalidate-session="true"
 			delete-cookies="true"
 		/>
@@ -36,8 +36,5 @@
 		</s:authentication-provider>
 	</s:authentication-manager>
 	
-	<s:authentication-manager>
-		<s:authentication-provider user-service-ref="loginService"/>
-	</s:authentication-manager>
 	
 </beans>
