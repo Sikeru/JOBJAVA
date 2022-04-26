@@ -9,7 +9,7 @@
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
 		<java-version>1.6</java-version>
-		<org.springframework-version>4.1.1.RELEASE</org.springframework-version>
+		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -154,7 +154,8 @@
             <version>1.1.0</version>
         </dependency>
 
-        <dependency><!-- sqlSessionFactory 만들때 없으면 에러남 -->
+<!-- sqlSessionFactory 만들때 없으면 에러남 -->
+        <dependency>
             <groupId>cglib</groupId>
             <artifactId>cglib-nodep</artifactId>
             <version>2.2</version>
@@ -253,6 +254,31 @@
     <version>3.1.1.RELEASE</version>
   </dependency>
   
+  <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-taglibs</artifactId>
+    <version>3.1.1.RELEASE</version>
+  </dependency>   
+  
+  
+  <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-config</artifactId>
+    <version>3.1.1.RELEASE</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-core</artifactId>
+    <version>3.1.1.RELEASE</version>
+  </dependency>
+
+  <dependency>
+    <groupId>org.springframework.security</groupId>
+    <artifactId>spring-security-web</artifactId>
+    <version>3.1.1.RELEASE</version>
+  </dependency>
+
   <dependency>
     <groupId>org.springframework.security</groupId>
     <artifactId>spring-security-taglibs</artifactId>

@@ -14,9 +14,10 @@
 	<li><a href="#">고객만족센터</a></li>
 	<li class="no_line"><a href="#">찾아오시는길</a></li>
 </ul>
+<br>
 <div class="clear"></div>
 <a href="#"><img width="147px"  height="62px" alt="Booktopia" src="${contextPath}/resources/image/mainlogo.png" /></a>
-<div style="padding-left:200px">
+<div >
 	 ㈜북토피아 <br>
 	 대표이사: 이병승   <br>
 	 주소 : 우편번호 03133 서울시 종로구 종로3 <br>  

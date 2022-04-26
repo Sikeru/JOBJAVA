@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.jobjava.JJ.memberDAO">	
+	<select id="selectUser" resultType="com.jobjava.JJ.UserDetailsDto">
+		SELECT * FROM USERACC WHERE ID=#{param1}
+	</select>
+	
+	<select id="getAuthList" resultType="String">
+		SELECT AUTHORITY FROM USERAUTH WHERE ID=#{param1}
+	</select>
+	
+	<insert id="userSignUp">
+		INSERT INTO USERACC VALUES(#{param1},#{param2},#{param3})
+	</insert>
+	
+	<insert id="giveAuth">
+		INSERT INTO USERAUTH VALUES(#{param1},#{param2})
+	</insert>
+		
+</mapper>

@@ -12,11 +12,10 @@
 	</definition>
 	
 	
-	<definition name="/main/main" extends="baseLayout">
-		<put-attribute name="title" value="JOB JAVA 메인페이지" />
-		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
+	<definition name="/member/loginForm" extends="baseLayout">
+		<put-attribute name="title" value="JOB JAVA 로그인페이지" />
+		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
 	</definition>
-	
 
 </tiles-definitions>
 
