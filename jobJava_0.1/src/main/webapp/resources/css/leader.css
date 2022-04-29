@@ -1,0 +1,354 @@
+
+
+ * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    wrap{
+    width: 100%;
+    height: auto;
+    }
+
+#top{
+  width: 100%;
+  height: 300px;
+        background: #0F4C75;
+        border-bottom: 1px solid;
+  }     
+
+
+    header {
+      
+        
+    
+    width: 1600px;
+    margin: 0 auto;
+
+
+    }
+
+    header #loginMenu ul {
+        width: 100%;
+        height: 200px;
+        background: #0F4C75;
+        overflow: hidden;
+        margin:0;
+       
+    }
+
+    header #loginMenu li {
+        display: inline-block;
+        list-style: none;
+        text-decoration: none;
+        margin: 15px;
+        float: right;
+        position: relative;
+        right: 100px;
+        z-index: 1;
+    }
+
+    header #loginMenu li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    /*    logo 스타일*/
+    header #topLogo {
+        width: 100%;
+        height: 250px;
+        position: relative;
+        left: 45%;
+        bottom: 250px;
+         z-index: 0;
+        
+        
+
+    }
+
+
+
+    /*    logo 스타일 end*/
+
+    header #topMenu ul {
+        width: 100%;
+        background: #0F4C75;
+        
+        overflow: hidden;
+        margin:0;
+        
+
+
+
+    }
+
+    header #topMenu li {
+        display: inline-block;
+        list-style: none;
+        text-decoration: none;
+        margin: 20px;
+        float: right;
+        position: relative;
+        right: 35%;
+        top: 30%;
+        z-index: 2;
+    }
+
+    header #topMenu li a {
+        text-decoration: none;
+        color: white;
+    }
+    
+    /* header style End */
+        
+    /* header style End */
+  #container{
+ 
+    width: 1600px;
+    margin: 0 auto;
+    background: blue;
+  }      
+  
+  
+aside{
+   width:15%;
+   height: 100%;
+   float:left;
+   background: #3282B8;
+}
+        aside #side {
+           width:100%;
+           height: auto;
+           float: left;
+         
+
+
+        }
+
+        aside #side li {
+            list-style: none;
+            text-align: center;
+            margin:20px;
+
+
+        }
+
+        aside #side li a {
+            text-decoration: none;
+            color: white;
+
+
+        }
+
+        
+
+        aside input#program {
+            display: none;
+            
+        }
+        aside input#mypage {
+            display: none;
+            
+        }
+
+        aside nav#main_nav {
+            display: none;
+        }
+     
+        aside input#program:checked+nav#main_nav {
+            display: block
+        }
+        
+
+
+
+        aside nav#main_nav1 {
+            display: none;
+        }
+
+        aside input#mypage:checked+nav#main_nav1 {
+            display: block
+        }
+        
+         aside .dropdown {
+            position: relative;
+            display: inline-block;
+            float: right
+        }
+
+        aside .button {
+           margin-right: 350px;
+            font-size: 16px;
+            border: 0;
+          background: none;
+            cursor: pointer;
+
+        }
+
+        aside #drop-content {
+            position: absolute;
+         
+        }
+
+        aside #drop-content a {
+            display: block;
+            font-size: 20px;
+            background-color: none;
+            color: black;
+            text-decoration: none;
+            margin-left: 20px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        
+
+
+    /* header style End */  
+    
+    
+    article{
+    width:85%;
+    height:auto;
+    float:left;
+    background: #BBE1FA;
+    
+    }
+    
+       article #contain {
+            width: 100px;
+            height: auto;
+            background: #BBE1FA;
+        } 
+        
+        article #banner{
+            width: 80%;
+            height: 40%;
+            margin-left: 10%;
+            background: magenta;
+        }
+
+
+        article #content-wrap {
+            width: 80%;
+            height: 60%;
+            background: #3282B8;
+            margin-left: 10%;
+        }
+        article .content{
+            width: 50%;
+            height: 100%;
+           background: blue;
+            float: left;
+            
+            
+        }
+        article .about-us{
+            width: 0 auto;
+            height: 50%;
+            background: pink;
+        }
+        article .about-us2{
+            width: 0 auto;
+            height: 50%;
+            background: magenta;
+        }
+        article .content2{
+            width: 50%;
+            height: 100%;
+           background: red;
+            float: left;
+            
+        }
+    	/* body style End */
+    	
+   footer {
+        width: 100%;
+        margin: 0 auto;
+        clear: both;
+    }
+	footer #service{
+		width: 100%;
+		height:50px;
+		background: #0F4C75;
+	}
+    footer #service ul {
+    	width:100%;
+        text-align: center;
+        margin:0;
+    }
+
+    footer #service li {
+        list-style: none;
+        text-decoration: none;
+        display: inline-block;
+        margin-right:30px;
+        line-height: 50px;
+        
+        
+
+    }
+
+    footer #service li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    footer #copyrights {
+        width: 0 auto;
+        height: 200px;
+        
+        
+    }
+    footer .copyright-wrap{
+        width: 80%;
+        height: 100%;
+        background: #3282B8;
+        float: left;
+        
+    }
+    footer .copyright{
+        width: 0 auto;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+    footer .copyright a{
+        color: white;
+        line-height: 20px;
+       
+    }
+    footer .footerLogo{
+        width: 20%;
+        height: 100%;
+        float: left;
+        background: #3282B8;
+        
+        
+    }
+    footer .footerLogo img{
+        width: 100%;
+        height: 100%;
+    }
+    footer #company{
+        width: 100%;
+        height: 50px;
+        
+    }
+    footer #company ul{
+        text-align: center;
+        background: #BBE1FA;
+    }
+    footer #company li{
+        list-style: none;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 70px;
+    }
+    footer #company img{
+        width: 100%;
+        height: 150px;
+    }
+
+
+
+

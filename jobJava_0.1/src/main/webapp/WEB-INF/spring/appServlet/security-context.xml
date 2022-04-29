@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:s="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<s:http auto-config="true" use-expressions="true">
+		<s:form-login
+			username-parameter="ID"
+			password-parameter="PWD"
+			login-processing-url="/login_check" 
+			login-page="/member/loginForm.do"
+			authentication-failure-handler-ref="loginFailHandler"
+			authentication-success-handler-ref="loginSuccessHandler"
+		/>
+		<s:logout 
+			logout-url="/security_logout"
+			logout-success-url="/main/main.do"
+			invalidate-session="true"
+			delete-cookies="true"
+		/>
+		<!-- 
+		<s:intercept-url pattern="/main/main.do" access="isAnonymous()"/>
+		<s:intercept-url pattern="/main/main.do*" access="hasRole('ROLE_USER')"/>
+		<s:intercept-url pattern="/main/main.do*" access="hasRole('ROLE_ADMIN')"/> -->
+		
+		<!-- 접근권한이 없을시 에러시 메시지 -->
+		<s:access-denied-handler ref="accessFailHandler"/>
+	</s:http>
+	
+	<s:authentication-manager>
+		<s:authentication-provider ref="loginAuthenticationProvider"/>
+	</s:authentication-manager>
+	
+	<beans:bean id="bPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+</beans:beans>
+
+

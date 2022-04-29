@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.jobjava.JJ.member.dao.memberDAO">	
+	<select id="loginselectUser" resultType="MemberVO">
+		SELECT * FROM MEMBER WHERE ID=#{param1}
+	</select>
+	
+	<select id="getAuthList" resultType="String">
+		SELECT AUTHORITY FROM MEMBER WHERE ID=#{param1}
+	</select>
+	
+	<insert id="giveAuth">
+		INSERT INTO USERAUTH VALUES(#{param1},#{param2})
+	</insert>
+	
+	<select id="selectUser" resultType="MemberVO" parameterType="MemberVO">
+		SELECT * FROM MEMBER WHERE ID=#{ID}
+	</select>
+	
+	<insert id="userSignUp" parameterType="MemberVO">
+	<![CDATA[
+		INSERT INTO MEMBER VALUES(#{ID},#{PWD},#{HP},#{ADDR},#{EMAIL},#{AUTHORITY},1)
+	]]>
+	</insert>
+	
+	<insert id="NuserSignUp" parameterType="MemberVO">
+	<![CDATA[
+		INSERT INTO N_MEMBER(NM_NO, ID) VALUES(NMEMBERNO.nextval, #{ID})
+	]]>
+	</insert>
+	
+	<insert id="SuserSignUp" parameterType="MemberVO">
+	<![CDATA[
+		INSERT INTO ST_MEMBER(ST_NO, ID) VALUES(SMEMBERNO.nextval, #{ID})
+	]]>
+	</insert>
+	
+	<select id="selectUserInfo" resultType="MemberVO">
+	<![CDATA[
+		SELECT * FROM MEMBER WHERE ID=#{param1}
+	]]>
+	</select>
+	
+	<select id="selectNUserInfo" resultType="NMemberVO">
+	<![CDATA[
+		SELECT MEMBER.ID ,PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED, NM_NO, NAME,
+		J_SEARCH, BIRTH, LAST_EDU FROM MEMBER, N_MEMBER
+		WHERE N_MEMBER.ID=#{param1} AND MEMBER.ID = #{param1}
+	]]>
+	</select>
+	
+	<select id="selectSUserInfo" resultType="SMemberVO">
+	<![CDATA[
+		SELECT MEMBER.ID , PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED,
+		ST_NO, MG_NO, NAME, DEPT, MAC_ADDR, BIRTH, U_NAME FROM MEMBER, ST_MEMBER
+		WHERE MEMBER.ID=#{param1} AND ST_MEMBER.ID=#{param1}
+	]]>
+	</select>
+	
+	
+	<update id="upDateU" parameterType="java.util.HashMap">
+		UPDATE MEMBER
+		<set>
+		<if test="PWD !='' and PWD != null">
+		PWD=#{PWD},
+	     </if>
+	     <if test="HP !='' and HP != null">
+		HP=#{HP},
+	     </if>
+	     <if test="ADDR !='' and ADDR != null">
+		ADDR=#{ADDR},
+	     </if>
+	      <if test="EMAIL !='' and EMAIL != null">
+		EMAIL=#{EMAIL}
+	     </if>
+	     </set>	 
+		WHERE ID=#{ID}
+	</update>
+	<update id="upDateNU" parameterType="java.util.HashMap">
+		UPDATE N_MEMBER 
+		<set>
+		 <if test="NAME !='' and NAME != null">
+		NAME=#{NAME},
+	     </if>
+	      <if test="J_SEARCH !='' and J_SEARCH != null">
+		J_SEARCH=#{J_SEARCH},
+	     </if>
+	      <if test="BIRTH !='' and BIRTH != null">
+		BIRTH=#{BIRTH},
+	     </if>
+	      <if test="LAST_EDU !='' and LAST_EDU != null">
+		LAST_EDU=#{LAST_EDU},
+	     </if>
+		</set> 
+		WHERE ID=#{ID}
+	</update>
+		<update id="upDateSU" parameterType="java.util.HashMap">
+		UPDATE ST_MEMBER 
+		<set>
+		 <if test="NAME !='' and NAME != null">
+		NAME=#{NAME},
+	     </if>
+	      <if test="DEPT !='' and DEPT != null">
+		DEPT=#{DEPT},
+	     </if>
+	      <if test="MAC_ADDR !='' and MAC_ADDR != null">
+		MAC_ADDR=#{MAC_ADDR},
+	     </if>
+	      <if test="BIRTH !='' and BIRTH != null">
+		BIRTH=#{BIRTH},
+	     </if>
+	     <if test="U_NAME !='' and U_NAME != null">
+		U_NAME=#{U_NAME},
+	     </if>
+		</set> 
+		WHERE ID=#{ID}
+	</update>
+	
+
+	
+</mapper>

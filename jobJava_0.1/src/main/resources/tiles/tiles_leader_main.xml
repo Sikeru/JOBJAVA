@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+  <!--     뉴리더 홈페이지 메인 타일즈 -->
+<tiles-definitions>
+	<definition name="leaderbaseLayout"
+		template="/WEB-INF/views/common/leader/layout.jsp">
+		<put-attribute name="title" value="레이아웃 페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/leader/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="side" value="/WEB-INF/views/common/leader/side.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/common/leader/footer.jsp" />
+			
+	</definition>
+	
+	
+	<definition name="/leader/main" extends="leaderbaseLayout">
+		<put-attribute name="title" value="뉴리더 메인페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/leader/content.jsp" /> 
+	</definition>
+	
+
+</tiles-definitions>
+
+
