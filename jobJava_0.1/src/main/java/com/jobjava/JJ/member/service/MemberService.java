@@ -12,4 +12,5 @@ public interface MemberService {
 	public NMemberVO NUmyInfo(String userId);
 	public SMemberVO SUmyInfo(String userId);
 	public void upDateMember(HashMap<String, String> member, String AUTHORITY);
+	public void logST_Logout();
 }

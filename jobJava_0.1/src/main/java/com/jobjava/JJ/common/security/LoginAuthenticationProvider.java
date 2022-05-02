@@ -1,5 +1,8 @@
 package com.jobjava.JJ.common.security;
 
+import javax.servlet.http.HttpSession;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.jobjava.JJ.member.dao.memberDAO;
 import com.jobjava.JJ.member.vo.MemberVO;
 
 //이 클래스에 대한 bean 객체 만들기
@@ -23,6 +27,8 @@ public class LoginAuthenticationProvider implements AuthenticationProvider{
 	UserDetailsService loginService;
 	@Autowired
 	BCryptPasswordEncoder bPasswordEncoder;
+	@Autowired
+	private SqlSessionTemplate sqlSession;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -48,6 +54,10 @@ public class LoginAuthenticationProvider implements AuthenticationProvider{
 		
 		//로그인 성공
 		membervo.setPWD(null);
+		memberDAO dao = sqlSession.getMapper(memberDAO.class);
+		dao.log_Login(userId);
+		
+		
 		
 		Authentication newAuth = new UsernamePasswordAuthenticationToken(userId,null,membervo.getAuthorities());
 		return newAuth;		

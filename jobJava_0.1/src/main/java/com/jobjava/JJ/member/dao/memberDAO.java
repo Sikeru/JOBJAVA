@@ -22,4 +22,6 @@ public interface memberDAO {
 	public void upDateU(HashMap member);
 	public void upDateNU(HashMap member);
 	public void upDateSU(HashMap member);
+	public void log_Login(String userId);
+	public void log_Logout(String userId);
 }

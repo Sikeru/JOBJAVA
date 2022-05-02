@@ -11,7 +11,7 @@
         <div id="loginMenu">
             <ul>
                 <c:if test="${not empty pageContext.request.userPrincipal}">
-				<li><a href="/JJ/security_logout">로그아웃</a></li>
+				<li><a href="${contextPath}/logout.do?ID=${pageContext.request.userPrincipal.name}">로그아웃</a></li>
 				<li><a href="${contextPath}/member/mypageForm.do?ID=${pageContext.request.userPrincipal.name}">마이페이지</a>
 			</c:if>
 	        <c:if test="${empty pageContext.request.userPrincipal}">

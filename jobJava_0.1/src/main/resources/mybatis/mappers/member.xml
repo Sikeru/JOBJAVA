@@ -119,6 +119,19 @@
 		WHERE ID=#{ID}
 	</update>
 	
+	<insert id="log_Login">
+	<![CDATA[
+		INSERT INTO LOG_STATISTICS(LOG_NO, ID, LOGIN) VALUES(LOG_NO.nextval, #{param1}, SYSDATE)
+	]]>
+	</insert>
+	
+	<insert id="log_Logout">
+	<![CDATA[
+		INSERT INTO LOG_STATISTICS(LOGOUT) VALUES(SYSDATE)
+		WHERE ID = #{param1}
+	]]>
+	</insert>
+
 
 	
 </mapper>

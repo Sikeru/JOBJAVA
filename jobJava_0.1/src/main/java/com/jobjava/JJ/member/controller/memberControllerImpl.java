@@ -127,5 +127,12 @@ public class memberControllerImpl implements memberController {
 		return rMac;
 	}
 	
+	@RequestMapping(value="/logST_Logout.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String logST_Logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		memberservice.logST_Logout();
+		return "/main/main";
+	}
+	
+	
 
 }

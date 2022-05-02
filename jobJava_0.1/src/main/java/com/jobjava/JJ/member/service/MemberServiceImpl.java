@@ -73,6 +73,11 @@ public class MemberServiceImpl implements MemberService{
 			dao.upDateSU(member);
 		}
 	}
+
+	@Override
+	public void logST_Logout() {
+		memberDAO dao = sqlSession.getMapper(memberDAO.class);
+	}
 	
 	
 

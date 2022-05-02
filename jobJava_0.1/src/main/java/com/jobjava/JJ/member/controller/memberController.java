@@ -21,4 +21,5 @@ public interface memberController {
 	public ModelAndView mypageForm(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ResponseEntity myPageUpDate(@RequestParam HashMap<String, String> member, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String macGet(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String logST_Logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
