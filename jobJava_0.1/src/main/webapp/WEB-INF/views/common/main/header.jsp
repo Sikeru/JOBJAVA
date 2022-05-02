@@ -7,12 +7,30 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />
 
+<script>
+ function myPage(userID) {
+	 let f = document.createElement('form');
+	    let obj;
+	    obj = document.createElement('input');
+	    obj.setAttribute('type', 'hidden');
+	    obj.setAttribute('name', 'ID');
+	    obj.setAttribute('value', userID);
+	    f.appendChild(obj);
+	    f.setAttribute('method', 'post');
+	    f.setAttribute('action', '${contextPath}/member/mypageForm.do');
+	    document.body.appendChild(f);
+	    f.submit();
+ }
+
+</script>
+
 <body>
         <div id="loginMenu">
             <ul>
                 <c:if test="${not empty pageContext.request.userPrincipal}">
 				<li><a href="${contextPath}/logout.do?ID=${pageContext.request.userPrincipal.name}">로그아웃</a></li>
-				<li><a href="${contextPath}/member/mypageForm.do?ID=${pageContext.request.userPrincipal.name}">마이페이지</a>
+				<li><a href="javascript:myPage('${pageContext.request.userPrincipal.name}')">마이페이지</a></li>
+				<!-- <li><a href="${contextPath}/member/mypageForm.do?ID=${pageContext.request.userPrincipal.name}">마이페이지</a> -->
 			</c:if>
 	        <c:if test="${empty pageContext.request.userPrincipal}">
 				<li><a href="${contextPath}/member/signUpView.do">회원가입</a></li>

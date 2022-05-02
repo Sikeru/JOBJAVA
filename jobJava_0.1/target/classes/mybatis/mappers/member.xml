@@ -125,12 +125,12 @@
 	]]>
 	</insert>
 	
-	<insert id="log_Logout">
+	<update id="log_Logout">
 	<![CDATA[
-		INSERT INTO LOG_STATISTICS(LOGOUT) VALUES(SYSDATE)
-		WHERE ID = #{param1}
+		UPDATE LOG_STATISTICS SET LOGOUT=SYSDATE
+		WHERE LOG_NO = (SELECT MAX(LOG_NO) FROM LOG_STATISTICS WHERE ID = #{param1})
 	]]>
-	</insert>
+	</update>
 
 
 	
