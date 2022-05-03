@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+       
+  <!--     카페 홈페이지 메인 타일즈 -->
+<tiles-definitions>
+   <definition name="cafebaseLayout"
+      template="/WEB-INF/views/common/cafe/layout.jsp">
+      <put-attribute name="title" value="레이아웃 페이지" />
+      <put-attribute name="header" value="/WEB-INF/views/common/cafe/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="side" value="/WEB-INF/views/common/cafe/side.jsp" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/cafe/footer.jsp" />
+         
+   </definition>
+   
+   
+   <definition name="/cafe/main" extends="cafebaseLayout">
+      <put-attribute name="title" value="카페 메인페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/cafe/content.jsp" /> 
+   </definition>
+   
+
+</tiles-definitions>
+

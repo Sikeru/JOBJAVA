@@ -6,7 +6,7 @@
 	<definition name="baseLayout"
 		template="/WEB-INF/views/common/main/layout.jsp">
 		<put-attribute name="title" value="레이아웃 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/common/main/header.jsp" />
+		<put-attribute name="header" value="" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/views/common/main/footer.jsp" />
 	</definition>
@@ -14,13 +14,28 @@
 	
 	<definition name="/main/main" extends="baseLayout">
 		<put-attribute name="title" value="JOB JAVA 메인페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/main/main.jsp" />
 	</definition>
 	
 	<definition name="/main/bessinfo" extends="baseLayout">
 		<put-attribute name="title" value="JOB JAVA 메인페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/header.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/main/bessinfo.jsp" />
 	</definition>
+	
+	<definition name="/main/jobSotCenter" extends="baseLayout">
+		<put-attribute name="title" value="JOB JAVA 메인페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/jobSotCenterHeader.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/main/jobSotCenter.jsp" />
+	</definition>
+	
+	<definition name="/main/qnATable" extends="baseLayout">
+		<put-attribute name="title" value="JOB JAVA 메인페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/jobSotCenterHeader.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/main/qnATable.jsp" />
+	</definition>
+	
 	
 
 </tiles-definitions>

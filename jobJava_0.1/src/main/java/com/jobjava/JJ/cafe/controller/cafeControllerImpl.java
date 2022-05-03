@@ -1,4 +1,4 @@
-package com.jobjava.JJ.main.controller;
+package com.jobjava.JJ.cafe.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,11 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.main.service.MainService;
 
-@Controller("mainController")
-@RequestMapping(value="/main")
-public class mainControllerImpl implements mainController{
+@Controller("cafeController")
+@RequestMapping(value="/cafe")
+public class cafeControllerImpl implements cafeController{
 	@Autowired
-	MainService mainservice;
+	MainService cafeservice;
 	@RequestMapping(value= "/main.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView tomain(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mav=new ModelAndView();
@@ -28,19 +28,9 @@ public class mainControllerImpl implements mainController{
 	public ModelAndView bessinfoView(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		String viewName=(String)request.getAttribute("viewName");
-		mainservice.mnLog(request.getParameter("mnName"));
+		cafeservice.mnLog(request.getParameter("mnName"));
 		mav.setViewName(viewName);
 		return mav;
 	}
-	
-	@RequestMapping(value="/jobSotCenter.do" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView jobSotCenter(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav=new ModelAndView();
-		String viewName=(String)request.getAttribute("viewName");
-		mainservice.mnLog(request.getParameter("mnName"));
-		mav.setViewName(viewName);
-		return mav;
-	}
-	
 
 }

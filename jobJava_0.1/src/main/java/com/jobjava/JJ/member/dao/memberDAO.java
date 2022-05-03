@@ -3,11 +3,13 @@ package com.jobjava.JJ.member.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.stereotype.Repository;
+
 import com.jobjava.JJ.member.vo.MemberVO;
 import com.jobjava.JJ.member.vo.NMemberVO;
 import com.jobjava.JJ.member.vo.SMemberVO;
 
-
+@Repository
 public interface memberDAO {
 	public MemberVO loginselectUser(String username);
 	public MemberVO selectUser(MemberVO membervo);

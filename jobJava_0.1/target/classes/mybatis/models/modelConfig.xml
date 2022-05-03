@@ -7,6 +7,7 @@
       <typeAlias type="com.jobjava.JJ.member.vo.MemberVO" alias="MemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.NMemberVO" alias="NMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.SMemberVO" alias="SMemberVO" />
+      <typeAlias type="com.jobjava.JJ.board.vo.QnAVO" alias="QnAVO" />
   </typeAliases>
 </configuration>
 

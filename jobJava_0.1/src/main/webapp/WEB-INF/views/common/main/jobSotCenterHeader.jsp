@@ -42,11 +42,9 @@
 
         <div id="topMenu">
             <ul>
-	            <li><a href="${contextPath}/main/jobSotCenter.do?mnName=일자리지원센터">일자리지원센터</a></li>
-                <li><a href="${contextPath}/main/bessinfo.do">프로그램목록</a></li>
-                <li><a href="${contextPath}/member/loginForm.do">알림마당</a></li>
-                <li><a href="${contextPath}/member/loginForm.do">기업홍보</a></li>
-                <li><a href="${contextPath}/main/bessinfo.do?mnName=사업안내">사업안내</a></li>
+                <li><a href="${contextPath}/main/.do">취업상담</a></li>
+                <li><a href="${contextPath}/main/.do">온라인상담</a></li>
+                <li><a href="${contextPath}/board/qnATable.do">질의응답</a></li>
                 <s:authorize access="hasRole('ROLE_ADMIN')">
 				 <li class="no_line"><a href="">관리자</a></li>
 				</s:authorize>
