@@ -10,5 +10,23 @@
 		FROM QNA
 	]]>
 	</select>
+	
+	<select id="qnaSelectOne" resultType="QnAVO" parameterType="int">
+	<![CDATA[
+		SELECT QNA_NO, TITLE, CONTENT, QNA_DATE, ID, ANSWER, RESPON,PROCESS
+		FROM QNA
+		WHERE QNA_NO = #{QNA_NO}
+	]]>
+	</select>
+	
+	
+	<insert id="insertQnATable" parameterType="QnAVO">
+	<![CDATA[
+		INSERT INTO QNA(QNA_NO, TITLE,CONTENT, QNA_DATE, ID)
+		VALUES (QNA_NO.NEXTVAL, #{TITLE},#{CONTENT} ,SYSDATE, #{ID})
+	]]>
+	</insert>
+	
+	
 
 </mapper>

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jobjava.JJ.board.vo.QnAVO;
 
 public interface BoardService {
-	public QnAVO qnaSelectAll();
-
-
+	public List<QnAVO> qnaSelectAll();
+	public void insertQnATable(QnAVO qnAVO);
+	public QnAVO qnaSelectOne(int _QNA_NO);
 }

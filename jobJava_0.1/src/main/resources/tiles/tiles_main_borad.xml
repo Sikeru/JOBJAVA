@@ -12,9 +12,22 @@
 	</definition>
 	
 	<definition name="/board/qnATable" extends="baseLayout">
-		<put-attribute name="title" value="JOB JAVA 메인페이지" />
+		<put-attribute name="title" value="QNA테이블" />
 		<put-attribute name="header" value="/WEB-INF/views/common/main/jobSotCenterHeader.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/main/qnATable.jsp" />
 	</definition>
+	
+	<definition name="/board/qnAAddTableView" extends="baseLayout">
+		<put-attribute name="title" value="QNA 등록" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/jobSotCenterHeader.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/board/qnAAddTableView.jsp" />
+	</definition>
+	
+	<definition name="/board/qnATableView" extends="baseLayout">
+		<put-attribute name="title" value="QNA" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/jobSotCenterHeader.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/board/qnATableView.jsp" />
+	</definition>
+	
 
 </tiles-definitions>
