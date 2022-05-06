@@ -60,6 +60,8 @@ public class QnAVO {
 	public void setPROCESS(String pROCESS) {
 		PROCESS = pROCESS;
 	}
+
+
 	
 	
 

@@ -86,9 +86,11 @@ public class BoardControllerImpl implements BoardController{
 	}
 
 	@Override
+	@RequestMapping(value="/qnAUpDateTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public String qnAUpDateTable(@ModelAttribute("QnAVO") QnAVO _qnAVO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		return null;
+		boardservice.upDateQnATable(_qnAVO);
+		return "redirect:/board/qnATableView.do?QNA_NO="+_qnAVO.getQNA_NO();
 	}
 	
 

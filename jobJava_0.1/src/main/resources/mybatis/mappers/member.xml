@@ -55,8 +55,24 @@
 	<select id="selectSUserInfo" resultType="SMemberVO">
 	<![CDATA[
 		SELECT MEMBER.ID , PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED,
-		ST_NO, MG_NO, NAME, DEPT, MAC_ADDR, BIRTH, U_NAME FROM MEMBER, ST_MEMBER
+		ST_NO, MG_NO, NAME, DEPT, MAC_ADDR, TO_DATE(BIRTH,'YYYY-MM-DD'), U_NAME FROM MEMBER, ST_MEMBER
 		WHERE MEMBER.ID=#{param1} AND ST_MEMBER.ID=#{param1}
+	]]>
+	</select>
+	
+	<select id="selectCOMInfo" resultType="CMemberVO">
+	<![CDATA[
+		SELECT MEMBER.ID , PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED,
+		B_NO, AGENT, B_TYPE, C_DIV, EMP_NUM, HOMEPAGE, C_NAME FROM MEMBER, C_MEMBER
+		WHERE MEMBER.ID=#{param1} AND C_MEMBER.ID=#{param1}
+	]]>
+	</select>
+	
+	<select id="selectEMPInfo" resultType="EMemberVO">
+	<![CDATA[
+		SELECT MEMBER.ID , PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED,
+		EMP_NO, NAME,RANK FROM MEMBER, EMP
+		WHERE MEMBER.ID=#{param1} AND EMP.ID=#{param1}
 	]]>
 	</select>
 	
@@ -116,6 +132,43 @@
 		U_NAME=#{U_NAME},
 	     </if>
 		</set> 
+		WHERE ID=#{ID}
+	</update>
+	
+	<update id="upDateEMP" parameterType="java.util.HashMap">
+		UPDATE EMP
+		<set>
+		 <if test="NAME !='' and NAME != null">
+		NAME=#{NAME},
+	     </if>
+	      <if test="RANK !='' and RANK != null">
+		RANK=#{RANK},
+	     </if>
+	    </set>
+		WHERE ID=#{ID}
+	</update>
+	<update id="upDateCOM" parameterType="java.util.HashMap">
+		UPDATE C_MEMBER
+		<set>
+		 <if test="AGENT !='' and AGENT != null">
+		AGENT=#{AGENT},
+	     </if>
+	      <if test="B_TYPE !='' and B_TYPE != null">
+		B_TYPE=#{B_TYPE},
+	     </if>
+	      <if test="C_DIV !='' and C_DIV != null">
+		C_DIV=#{C_DIV},
+	     </if>
+	      <if test="EMP_NUM !='' and EMP_NUM != null">
+		EMP_NUM=#{EMP_NUM},
+	     </if>
+	      <if test="HOMEPAGE !='' and HOMEPAGE != null">
+		HOMEPAGE=#{HOMEPAGE},
+	     </if>
+	      <if test="C_NAME !='' and C_NAME != null">
+		C_NAME=#{C_NAME},
+	     </if>
+	    </set>
 		WHERE ID=#{ID}
 	</update>
 	

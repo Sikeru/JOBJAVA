@@ -22,10 +22,31 @@
 	
 	<insert id="insertQnATable" parameterType="QnAVO">
 	<![CDATA[
-		INSERT INTO QNA(QNA_NO, TITLE,CONTENT, QNA_DATE, ID)
-		VALUES (QNA_NO.NEXTVAL, #{TITLE},#{CONTENT} ,SYSDATE, #{ID})
+		INSERT INTO QNA(QNA_NO, TITLE,CONTENT, QNA_DATE, ID, PROCESS)
+		VALUES (QNA_NO.NEXTVAL, #{TITLE},#{CONTENT} ,SYSDATE, #{ID}, 'X')
 	]]>
 	</insert>
+	
+	<update id="upDateQnATable" parameterType="QnAVO">
+		UPDATE QNA
+		<set>
+		<if test="TITLE !='' and TITLE != null">
+		TITLE=#{TITLE},
+	     </if>
+	     <if test="CONTENT !='' and CONTENT != null">
+		CONTENT=#{CONTENT},
+	     </if>
+	     <if test="ANSWER !='' and ANSWER != null">
+		ANSWER=#{ANSWER},
+	     </if>
+	     <if test="RESPON !='' and RESPON != null">
+		RESPON=#{RESPON},
+		PROCESS='O',
+	     </if>
+	     </set>
+	    WHERE QNA_NO=#{QNA_NO}
+	</update>
+	
 	
 	
 

@@ -24,11 +24,13 @@
 </head>
 <body>
 <form action="${contextPath}/member/myPageUpDate.do" method="post">
+	<c:if test="${not empty pageContext.request.userPrincipal}">
 		ID : <input type="text" name="ID" value="${member.ID}"><br>
 		PW : <input type="password" name="passwd"><br>
 		HP : <input type="text" name="HP" value="${member.HP}"/><br>
 		ADDR : <input type="text" name="ADDR" value="${member.ADDR}"/><br>
 		EMAIL : <input type="text" name="EMAIL" value="${member.EMAIL}"/><br>
+	</c:if>
 	<s:authorize access="hasRole('ROLE_USER')">
 		NAME : <input type="text" name="NAME" value="${member.NAME}"/><br>
 		J_SEARCH : <input type="text" name="J_SEARCH" value="${member.j_SEARCH}"/><br>
@@ -42,6 +44,18 @@
 		<input type="button" onclick="mac_get()" value="맥정보가져오기"><br>
 		BIRTH : <input type="text" name="BIRTH" value="${member.BIRTH}"/><br>
 		U_NAME : <input type="text" name="U_NAME" value="${member.u_NAME}"/><br>
+	</s:authorize>
+	<s:authorize access="hasRole('ROLE_COM')">
+		AGENT : <input type="text" name="AGENT" value="${member.AGENT}"/><br>
+		B_TYPE : <input type="text" name="B_TYPE" value="${member.b_TYPE}"/><br>
+		C_DIV : <input type="text" name="C_DIV" value="${member.c_DIV}"/><br>
+		EMP_NUM : <input type="text" name="EMP_NUM" value="${member.EMP_NUM}"/><br>
+		HP : <input type="text" name="HP" value="${member.HP}"/><br>
+		C_NAME : <input type="text" name="C_NAME" value="${member.c_NAME}"/><br>
+	</s:authorize>
+	<s:authorize access="hasRole('ROLE_EMP')">
+		NAME : <input type="text" name="NAME" value="${member.NAME}"/><br>
+		RANK : <input type="text" name="RANK" value="${member.RANK}"/><br>
 	</s:authorize>
 		<input type="submit" value="정보수정">
 </form>

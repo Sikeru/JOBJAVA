@@ -13,4 +13,5 @@ public interface BoardService {
 	public List<QnAVO> qnaSelectAll();
 	public void insertQnATable(QnAVO qnAVO);
 	public QnAVO qnaSelectOne(int _QNA_NO);
+	public void upDateQnATable(QnAVO qnAVO);
 }

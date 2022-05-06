@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.springframework.stereotype.Repository;
 
+import com.jobjava.JJ.member.vo.CMemberVO;
+import com.jobjava.JJ.member.vo.EMemberVO;
 import com.jobjava.JJ.member.vo.MemberVO;
 import com.jobjava.JJ.member.vo.NMemberVO;
 import com.jobjava.JJ.member.vo.SMemberVO;
@@ -21,9 +23,13 @@ public interface memberDAO {
 	public MemberVO selectUserInfo(String userId);
 	public NMemberVO selectNUserInfo(String userId);
 	public SMemberVO selectSUserInfo(String userId);
+	public CMemberVO selectCOMInfo(String userId);
+	public EMemberVO selectEMPInfo(String userId);
 	public void upDateU(HashMap member);
 	public void upDateNU(HashMap member);
 	public void upDateSU(HashMap member);
+	public void upDateCOM(HashMap member);
+	public void upDateEMP(HashMap member);
 	public void log_Login(String userId);
 	public void log_Logout(String userId);
 }

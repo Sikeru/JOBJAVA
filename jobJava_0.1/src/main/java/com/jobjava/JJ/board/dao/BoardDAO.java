@@ -9,5 +9,6 @@ public interface BoardDAO {
 	public List<QnAVO> qnaSelectAll();
 	public void insertQnATable(QnAVO qnAVO);
 	public QnAVO qnaSelectOne(int QNA_NO);
+	public void upDateQnATable(QnAVO qnAVO);
 
 }

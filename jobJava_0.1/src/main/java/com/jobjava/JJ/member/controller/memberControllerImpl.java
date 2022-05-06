@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.member.service.MemberService;
+import com.jobjava.JJ.member.vo.CMemberVO;
+import com.jobjava.JJ.member.vo.EMemberVO;
 import com.jobjava.JJ.member.vo.MemberVO;
 import com.jobjava.JJ.member.vo.NMemberVO;
 import com.jobjava.JJ.member.vo.SMemberVO;
@@ -67,6 +69,12 @@ public class memberControllerImpl implements memberController {
 		}else if(membervo.getAUTHORITY().equals("ROLE_STU")) {
 			SMemberVO smembervo = memberservice.SUmyInfo(userId);
 			mav.addObject("member", smembervo);
+		}else if(membervo.getAUTHORITY().equals("ROLE_COM")) {
+			CMemberVO commembervo = memberservice.COMmyInfo(userId);
+			mav.addObject("member", commembervo);
+		}else if(membervo.getAUTHORITY().equals("ROLE_EMP")) {
+			EMemberVO empmembervo = memberservice.EMPmyInfo(userId);
+			mav.addObject("member", empmembervo);
 		}
 		String viewName=(String)request.getAttribute("viewName");
 		mav.setViewName(viewName);

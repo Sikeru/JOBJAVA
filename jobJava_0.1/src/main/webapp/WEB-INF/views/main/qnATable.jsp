@@ -127,7 +127,7 @@
 							<li class="left"><a href="${contextPath}/board/qnATableView.do?QNA_NO=${qna.QNA_NO}">${qna.TITLE}</a></li>
 							<li>${qna.QNA_DATE}</li>
 							<li>${qna.ID}</li>
-							<li>X</li>
+							<li>${qna.PROCESS}</li>
 				</ul>
 			</li>
 			</c:forEach>

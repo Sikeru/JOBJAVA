@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.jobjava.JJ.member.dao.memberDAO;
+import com.jobjava.JJ.member.vo.CMemberVO;
+import com.jobjava.JJ.member.vo.EMemberVO;
 import com.jobjava.JJ.member.vo.MemberVO;
 import com.jobjava.JJ.member.vo.NMemberVO;
 import com.jobjava.JJ.member.vo.SMemberVO;
@@ -60,6 +62,20 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
+	public CMemberVO COMmyInfo(String userId) {
+		memberDAO dao = sqlSession.getMapper(memberDAO.class);
+		CMemberVO vo = dao.selectCOMInfo(userId);
+		return vo;
+	}
+
+	@Override
+	public EMemberVO EMPmyInfo(String userId) {
+		memberDAO dao = sqlSession.getMapper(memberDAO.class);
+		EMemberVO vo = dao.selectEMPInfo(userId);
+		return vo;
+	}
+
+	@Override
 	public void upDateMember(HashMap<String, String> member, String AUTHORITY) {
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
 		if(!member.get("passwd").equals(null) && !member.get("passwd").equals("")) {
@@ -71,6 +87,12 @@ public class MemberServiceImpl implements MemberService{
 		}else if(AUTHORITY.equals("ROLE_STU")) {
 			dao.upDateU(member);
 			dao.upDateSU(member);
+		}else if(AUTHORITY.equals("ROLE_COM")) {
+			dao.upDateU(member);
+			dao.upDateCOM(member);
+		}else if(AUTHORITY.equals("ROLE_EMP")) {
+			dao.upDateU(member);
+			dao.upDateEMP(member);
 		}
 	}
 

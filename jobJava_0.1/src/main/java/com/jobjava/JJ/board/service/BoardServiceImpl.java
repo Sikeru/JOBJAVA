@@ -35,5 +35,11 @@ public class BoardServiceImpl  implements BoardService{
 		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
 		return dao.qnaSelectOne(_QNA_NO);
 	}
+
+	@Override
+	public void upDateQnATable(QnAVO qnAVO) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		dao.upDateQnATable(qnAVO);
+	}
 	
 }
