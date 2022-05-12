@@ -116,6 +116,10 @@ form {
   letter-spacing: 2px;
 }
 
+#err {
+  color: red;
+}
+
 </style>
 
 </head>
@@ -134,10 +138,10 @@ form {
             </div>
             <div class="login_etc">
                 <div class="forgot_pw">
-                <a href="">아이디 찾기 |</a>
-                <a href="">비밀번호 찾기</a><br>
+                <a href="${contextPath}/member/memberFindView.do">아이디 찾기 |</a>
+                <a href="${contextPath}/member/memberFindView.do">비밀번호 찾기</a><br>
                 <c:if test="${LoginFailMessage!=null}">
-					<p> Error : <c:out value="${LoginFailMessage}"/> </p>
+					<div id="err"><c:out value="${LoginFailMessage}"/></div>
 				</c:if>
             </div>
             </div>

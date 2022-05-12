@@ -1,112 +1,203 @@
- * {
-            margin: 0;
-            padding: 0;
-        }
+* {
+	margin: 0;
+	padding: 0;
+}
 
-        #wrap {
-            position: relative;
-            margin: 0 auto;
-            width: 100%;
-            height: 100%;
-        }
-        
-        #logo {
-            width: 100%;
-            height: 200px;
-            position: relative;
-            top: -50px;
-            left: 50px;
-            
-   
-        }
-        #logo img{
-            width: 300px;
-  
-        }
-		#navi {
-			position: relative;
-			top: 100px;
-		}
+#outer_wrap {
+	width: 100%;
+	height: auto;
+}
 
-        #side {
-            width: 400px;
-            height: 100%;
-            float: left;
-            background: #CEE3F6;
-        }
+#wrap {
+	position: relative;
+	margin: 0 auto;
+	width: 3200px;
+	height: 100%;
+}
 
-        #main {
-            width: 80%;
-            height: 1000px;
-        }
+#logo {
+	width: 100%;
+	height: 200px;
+	position: relative;
+	top: -50px;
+	left: 50px;
+}
 
-        #side li {
-            list-style: none;
-      
-        }
+aside {
+	width: 600px;
+	height: auto;
+	float: left;
+}
 
-        #side a {
-            text-decoration: none;
-        }
-        
-        #jobseeker {
-            position: absolute;
-            border: 1px solid black;
-            width: 500px;
-            height: 700px;
-            left: 600px;
-            top: 180px;
-        }
-        
-        #company {
-            width: 500px;
-            height: 700px;
-            position: absolute;
-            border: 1px solid black;
-            left: 1200px;
-            top: 180px;
-        }
-        
-  /*       #company a {
+article {
+	float: right;
+	height: auto;
+	width: 2600px;
+}
+
+#logo img {
+	width: 300px;
+}
+
+#navi {
+	position: relative;
+	top: 100px;
+}
+
+aside #side {
+	width: 5 00px;
+	height: 100%;
+	float: left;
+	background: #CEE3F6;
+}
+
+#main {
+	width: 100%;
+	height: 100%;
+}
+
+#reg {
+	width: 100%;
+	height: 100%;
+}
+
+#side li {
+	list-style: none;
+}
+
+#side a {
+	text-decoration: none;
+}
+
+#jobseeker {
+	position: absolute;
+	border: 1px solid black;
+	width: 500px;
+	height: 700px;
+	left: 600px;
+	top: 180px;
+}
+
+#company {
+	width: 500px;
+	height: 700px;
+	position: absolute;
+	border: 1px solid black;
+	left: 1200px;
+	top: 180px;
+}
+
+/*       #company a {
         	position: absolute;
         	
         } */
+.group {
+	margin-bottom: 5px;
+	margin-bottom: 40px;
+}
 
-        .group {
-            margin-bottom: 5px;
-            margin-bottom: 40px;
-        }
+.title {
+	height: 35px;
+	line-height: 35px;
+	cursor: pointer;
+	color: #000;
+	font-family: 'Black Han Sans', sans-serif;
+	font-size: 2.2em;
+}
 
-        .title {
-            height: 35px;
-            line-height: 35px;
-            cursor: pointer;
-            color: #000;
-            font-family: 'Black Han Sans', sans-serif; 
-            font-size: 2.2em;
-            
-        }
+.sub li {
+	margin: 3px;
+	width: 400px;
+	height: 60px;
+	line-height: 35px;
+	/*    border: 1px solid #000;*/
+	font-family: 'Do Hyeon', sans-serif;
+	font-size: 1.8em;
+}
 
-        .sub li {
-            margin: 3px;
-            width: 400px;
-            height: 60px;
-            line-height: 35px;
-            /*    border: 1px solid #000;*/
-            font-family: 'Do Hyeon', sans-serif;
-            font-size: 1.8em;
-        }
-        
+#sub_15 {
+	color: black;
+}
 
-        .sub li a {
-            width: 100%;
-            height: 100%;
-            color: #000;
-        }
-        
+.sub li a {
+	width: 100%;
+	height: 100%;
+	color: #000;
+}
 
-        .title:hover,
-        .on {}
-        
+.title:hover, .on {
+	
+}
 
-   
+/* 대학교 사업계획서 등록하는 CSS */
+input {
+	border: 1px solid black;
+	border-radius: 3px;
+	line-height: 35px;
+	font-size: 12px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.uniname {
+	width: 100%;
+}
+
+.unihp {
+	width: 100%;
+}
+
+.uniaddr {
+	width: 100%;
+}
+
+.unimanager {
+	width: 100%;
+}
+
+.uniemail {
+	width: 100%;
+}
+
+.uniexpenses {
+	width: 100%;
+}
+
+.unibname {
+	width: 100%;
+}
+
+.unicontent {
+	width: 100%;
+}
+
+/* 		.unireg2 button {
+   			 width: 80px;
+   			 cursor:pointer;
+			}
+
+			button{
+ 		   cursor: pointer;
+ 		   height: 30px;
+			} */
+.g-table {
+	border: 1px solid black;
+}
+
+.g-tr {
+	width: 500px;
+	height: 50px;
+}
+
+.g-th {
+	width: 125px;
+	height: 50px;
+	border: 1px solid black;
+	text-align: center;
+}
+
+.g-td {
+	width: 500px;
+	height: 40px;
+	border-bottom: 1px solid black;
+}

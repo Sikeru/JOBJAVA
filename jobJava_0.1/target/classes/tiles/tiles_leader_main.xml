@@ -20,7 +20,16 @@
 		<put-attribute name="title" value="뉴리더 메인페이지" />
  		<put-attribute name="body" value="/WEB-INF/views/leader/content.jsp" /> 
 	</definition>
-	
+
+<definition name="/leader/companyLegister" extends="leaderbaseLayout">
+		<put-attribute name="title" value="뉴리더 메인페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/leader/companyLegister.jsp" /> 
+	</definition>	
+
+<definition name="/leader/companyLegisterList" extends="leaderbaseLayout">
+		<put-attribute name="title" value="뉴리더 메인페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/leader/companyLegisterList.jsp" /> 
+	</definition>	
 
 </tiles-definitions>
 

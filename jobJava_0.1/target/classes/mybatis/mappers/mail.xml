@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jobjava.JJ.common.mail.dao.MailDAO">
+
+	<select id="findPwCertiMail" resultType="String" parameterType="java.util.HashMap">
+	<![CDATA[
+		SELECT DECODE(COUNT(*), 0, 'FALSE',1,'TRUE') FROM MEMBER
+		WHERE ID = #{id} AND EMAIL =#{email}
+	]]>
+	</select>
+	
+	<update id="pwdChange" parameterType="java.util.HashMap">
+	<![CDATA[
+		UPDATE MEMBER SET PWD=#{PWD}
+		WHERE ID=#{ID}
+	]]>
+	</update>
+   
+</mapper>

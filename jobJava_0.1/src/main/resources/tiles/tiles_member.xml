@@ -13,20 +13,35 @@
 	
 	
 	<definition name="/member/loginForm" extends="baseLayout">
-		<put-attribute name="title" value="JOB JAVA 로그인페이지" />
+		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
 	</definition>
 	
 	<definition name="/member/signUpView" extends="baseLayout">
-		<put-attribute name="title" value="JOB JAVA 로그인페이지" />
+		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/signUpView.jsp" />
 	</definition>
 	
+	<definition name="/member/signUpTestView" extends="baseLayout">
+		<put-attribute name="title" value="JOBJAVA" />
+		<put-attribute name="body" value="/WEB-INF/views/member/signUpTestView.jsp" />
+	</definition>
+	
 	<definition name="/member/mypageForm" extends="baseLayout">
-		<put-attribute name="title" value="JOB JAVA 로그인페이지" />
+		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/mypageForm.jsp" />
 	</definition>
-
+	
+	<definition name="/member/termsgree" extends="baseLayout">
+		<put-attribute name="title" value="JOBJAVA" />
+		<put-attribute name="body" value="/WEB-INF/views/member/termsgree.jsp" />
+	</definition>
+	
+	<definition name="/member/memberFindView" extends="baseLayout">
+		<put-attribute name="title" value="JOBJAVA" />
+		<put-attribute name="body" value="/WEB-INF/views/member/memberFindView.jsp" />
+	</definition>
+	
 </tiles-definitions>
 
 

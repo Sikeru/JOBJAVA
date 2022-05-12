@@ -9,7 +9,7 @@
 
 <script>
  function myPage(userID) {
-	 let f = document.createElement('form');
+	 	let f = document.createElement('form');
 	    let obj;
 	    obj = document.createElement('input');
 	    obj.setAttribute('type', 'hidden');
@@ -33,7 +33,7 @@
 				<!-- <li><a href="${contextPath}/member/mypageForm.do?ID=${pageContext.request.userPrincipal.name}">마이페이지</a> -->
 			</c:if>
 	        <c:if test="${empty pageContext.request.userPrincipal}">
-				<li><a href="${contextPath}/member/signUpView.do">회원가입</a></li>
+				<li><a href="${contextPath}/member/termsgree.do">회원가입</a></li>
 				<li><a href="${contextPath}/member/loginForm.do">로그인</a></li>
 			</c:if>
             </ul>

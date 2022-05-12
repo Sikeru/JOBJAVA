@@ -9,5 +9,4 @@
 		INSERT INTO MENU_STATISTICS VALUES(MN_LOG.nextval,#{param1})
 	]]>
 	</insert>
-	
 </mapper>

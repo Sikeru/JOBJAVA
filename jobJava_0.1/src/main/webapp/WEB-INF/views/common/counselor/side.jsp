@@ -12,7 +12,7 @@
 
         <div id='side'>
             <div id="logo">
-                <a href="#"><img src="${contextPath}/resources/image/logo2.png" /></a>
+                <a href="${contextPath}/counselor/main.do"><img src="${contextPath}/resources/image/mainlogo.png" /></a>
             </div>
             <ul id='navi'>
                 <li class='group'>
@@ -40,15 +40,11 @@
                     </ul>
                 </li>
                 
+                
                 <li class='group'>
                     <div class='title'>
-                        일자리 정보
+                        <a href = "${contextPath}/counselor/jobregForm.do"> 일자리 등록</a>
                     </div>
-                    <ul class="sub">
-                        <li><a href="#" id="sub_15">일자리 등록</a></li>
-                        <li><a href="#" id="sub_16">일자리 정보</a></li>
-
-                    </ul>
                 </li>
                 
                 <li class='group'>
@@ -73,8 +69,6 @@
                         협약서 관리
                     </div>
                 </li>
-                
-
                 
             </ul>
         </div>

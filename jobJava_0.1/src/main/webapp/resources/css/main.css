@@ -202,18 +202,10 @@ aside{
     width:100%;
     height:auto;
     float:left;
-    background: #BBE1FA;
+    /*background: #BBE1FA;*/
     
     }
-       article .carousel-item{
-       		width:100%;
-       		height: 500px;
-       }
-       
-       article .d-block{
-       		width:100%;
-       		height: 500px;
-       }
+
 
        /* body style End */
        

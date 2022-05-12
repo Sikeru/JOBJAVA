@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jobjava.JJ.member.service.MemberService;
 import com.jobjava.JJ.member.vo.CMemberVO;
 import com.jobjava.JJ.member.vo.EMemberVO;
+import com.jobjava.JJ.member.vo.MMemberVO;
 import com.jobjava.JJ.member.vo.MemberVO;
 import com.jobjava.JJ.member.vo.NMemberVO;
 import com.jobjava.JJ.member.vo.SMemberVO;
@@ -35,10 +37,53 @@ public class memberControllerImpl implements memberController {
 	@Autowired
 	MemberService memberservice;
 	
-	@RequestMapping("/signUpView.do")
-	public String signUpView(Model model) {
-		return "/member/signUpView";
+	
+	@RequestMapping("/termsgree.do")
+	public String termsgree(Model model) {
+		return "/member/termsgree";
 	}
+	
+	@RequestMapping("/signUpTestView.do")
+	public ModelAndView signUpTestView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		try {
+			if(request.getParameter("check").equals("checkAll")) {
+				mav.setViewName("/member/signUpTestView");
+				return mav;
+			}
+			mav.setViewName("/member/termsgree");
+			return mav;
+		}catch(Exception e) {
+			mav.setViewName("/member/termsgree");
+			return mav;
+					
+		}
+	}
+	
+	@RequestMapping("/signUpView.do")
+	public ModelAndView signUpView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		try {
+		if(request.getParameter("email").equals(null)) {
+			mav.setViewName("/member/termsgree");
+			return mav;
+		}
+		if(memberservice.email_check(request.getParameter("email")).equals("TRUE")) {
+			mav.addObject("msg", 1);
+			mav.setViewName("/member/signUpTestView");
+			return mav;
+		}
+		mav.addObject("email", request.getParameter("email"));
+		mav.setViewName("/member/signUpView");
+		return mav;
+		
+		}catch(NullPointerException e) {
+			mav.setViewName("/member/termsgree");
+			return mav;
+		}
+
+	}
+	
 	
 	@Override
 	@RequestMapping("/signUp.do")
@@ -75,6 +120,9 @@ public class memberControllerImpl implements memberController {
 		}else if(membervo.getAUTHORITY().equals("ROLE_EMP")) {
 			EMemberVO empmembervo = memberservice.EMPmyInfo(userId);
 			mav.addObject("member", empmembervo);
+		}else if(membervo.getAUTHORITY().equals("ROLE_MAG")) {
+			MMemberVO ummembervo = memberservice.MAGmyInfo(userId);
+			mav.addObject("member", ummembervo);
 		}
 		String viewName=(String)request.getAttribute("viewName");
 		mav.setViewName(viewName);
@@ -85,7 +133,6 @@ public class memberControllerImpl implements memberController {
 	@RequestMapping(value="/myPageUpDate.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ResponseEntity myPageUpDate(@RequestParam HashMap<String, String> member,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav=new ModelAndView();
 		MemberVO membervo = memberservice.myInfo(member.get("ID"));
 		memberservice.upDateMember(member, membervo.getAUTHORITY());
 		
@@ -141,6 +188,24 @@ public class memberControllerImpl implements memberController {
 		return "/main/main";
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping(value="/id_check.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String id_check(@RequestParam String userID, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return memberservice.id_check(userID);
+	}
+
+	@Override
+	@RequestMapping(value="/memberFindView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String memberFindView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return "/member/memberFindView";
+	}
+		
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/idFind.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String idFind(String email, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return memberservice.idFind(email);
+	}
+
 
 }

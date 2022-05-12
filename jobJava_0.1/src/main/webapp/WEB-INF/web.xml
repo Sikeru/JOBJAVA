@@ -31,6 +31,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/mybatis-context.xml
+			/WEB-INF/spring/mail-context.xml
 			/WEB-INF/spring/appServlet/security-context.xml
 			/WEB-INF/spring/appServlet/servlet-context.xml
 		</param-value>
@@ -40,6 +41,11 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<listener>
+        <listener-class>
+		org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
 
 	<!-- Processes application requests -->
 	<servlet>

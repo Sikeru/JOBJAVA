@@ -20,7 +20,7 @@ public class AccessFailHandler implements AccessDeniedHandler{
 		if(accessDeniedException instanceof AccessDeniedException) {
 			request.setAttribute("LoginFailMessage", "접근 권한이 없는 계정입니다.");
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/member/loginForm");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/main/main.do");
 		dispatcher.forward(request, response);
 	}
 }

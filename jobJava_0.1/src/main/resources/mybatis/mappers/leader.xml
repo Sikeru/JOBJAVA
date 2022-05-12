@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jobjava.JJ.leader.dao.LeaderDAO">
+	<!-- 기업등록추가 -->
+	<insert id="legisterAdd" parameterType="java.util.HashMap">
+	<![CDATA[
+		INSERT INTO C_REG(REGI_NO, B_NO, TITLE, CONTENT, FILENAME, S_DATE, E_DATE) 
+					VALUES(REGI_NO.NEXTVAL,#{B_NO}, #{TITLE}, #{CONTENT}, #{FILENAME}, #{S_DATE}, #{E_DATE})
+	]]>
+	</insert>
+
+	<!-- ID에 따른 사업자번호 가져오기 -->
+	<select id="selectCompanyID" resultType="String"
+		parameterType="java.util.HashMap">
+	<![CDATA[
+		SELECT B_NO FROM C_MEMBER
+		WHERE ID= #{ID}
+	]]>
+	</select>
+
+	<!-- 기업등록조회 -->
+	<select id="boardList" resultType="hashmap"
+      parameterType="hashmap">
+        <![CDATA[
+            SELECT REGI_NO, 
+                TITLE, 
+                CONTENT,
+                S_DATE, 
+                E_DATE
+                
+         FROM ( 
+                SELECT REGI_NO,
+                        B_NO,
+                       TITLE, 
+                       CONTENT, 
+                       FILENAME, 
+                       S_DATE,
+                       E_DATE, 
+                       ROW_NUMBER() OVER(ORDER BY REGI_NO) AS RNUM
+                 FROM C_REG 
+                               ) 
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+        ORDER BY REGI_NO ASC
+        ]]>
+   </select>
+	<select id="boardListCnt" resultType="int">
+	<![CDATA[
+		SELECT count(*)
+		FROM C_REG
+		]]>
+	</select>
+
+	<!-- 기업등록조회상세 -->
+	<select id="selectCompanyLegisterDetail" resultType="CRegVO">
+	<![CDATA[
+		SELECT * FROM C_REG
+		
+	]]>
+	</select>
+
+	<!-- 기업등록 번호조회 -->
+	<select id="selectRegi" resultType="CRegVO">
+	<![CDATA[
+		SELECT * FROM C_REG WHERE REGI_NO = #{regiNO}
+	]]>
+	</select>
+
+	<select id="insertIntosurvey">
+	<![CDATA[
+		INSERT INTO SURVEY()
+	]]>
+	</select>
+</mapper>

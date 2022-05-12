@@ -38,6 +38,24 @@
 	]]>
 	</insert>
 	
+	<insert id="CuserSignUp" parameterType="MemberVO">
+	<![CDATA[
+	INSERT INTO C_MEMBER(B_NO,ID,AGENT,B_TYPE) values(b_no.nextval, #{ID}, '대표자','업종')
+	]]>
+	</insert>
+	
+	<insert id="EuserSignUp" parameterType="MemberVO">
+	<![CDATA[
+		INSERT INTO EMP(EMP_NO, ID) VALUES(EMP_NO.nextval, #{ID})
+	]]>
+	</insert>
+	
+	<insert id="MuserSignUp" parameterType="MemberVO">
+	<![CDATA[
+		INSERT INTO UM_MEMBER(MG_NO, ID,U_NAME) VALUES(MG_NO.nextval, #{ID},'대학교이름')
+	]]>
+	</insert>
+
 	<select id="selectUserInfo" resultType="MemberVO">
 	<![CDATA[
 		SELECT * FROM MEMBER WHERE ID=#{param1}
@@ -55,7 +73,7 @@
 	<select id="selectSUserInfo" resultType="SMemberVO">
 	<![CDATA[
 		SELECT MEMBER.ID , PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED,
-		ST_NO, MG_NO, NAME, DEPT, MAC_ADDR, TO_DATE(BIRTH,'YYYY-MM-DD'), U_NAME FROM MEMBER, ST_MEMBER
+		ST_NO, MG_NO, NAME, DEPT, MAC_ADDR, BIRTH, U_NAME FROM MEMBER, ST_MEMBER
 		WHERE MEMBER.ID=#{param1} AND ST_MEMBER.ID=#{param1}
 	]]>
 	</select>
@@ -76,6 +94,15 @@
 	]]>
 	</select>
 	
+	<select id="selectMAGInfo" resultType="MMemberVO">
+	<![CDATA[
+		SELECT MEMBER.ID , PWD, HP, ADDR, EMAIL, AUTHORITY, ENABLED,
+		U_NAME, NAME FROM MEMBER, UM_MEMBER
+		WHERE MEMBER.ID=#{param1} AND UM_MEMBER.ID=#{param1}
+	]]>
+	</select>
+	
+
 	
 	<update id="upDateU" parameterType="java.util.HashMap">
 		UPDATE MEMBER
@@ -172,6 +199,20 @@
 		WHERE ID=#{ID}
 	</update>
 	
+	<update id="upDateMAG" parameterType="java.util.HashMap">
+		UPDATE UM_MEMBER
+		<set>
+		 <if test="U_NAME !='' and U_NAME != null">
+		U_NAME=#{U_NAME},
+	     </if>
+	      <if test="NAME !='' and NAME != null">
+		NAME=#{NAME},
+	     </if>
+	    </set>
+		WHERE ID=#{ID}
+	</update>
+	
+	
 	<insert id="log_Login">
 	<![CDATA[
 		INSERT INTO LOG_STATISTICS(LOG_NO, ID, LOGIN) VALUES(LOG_NO.nextval, #{param1}, SYSDATE)
@@ -184,6 +225,30 @@
 		WHERE LOG_NO = (SELECT MAX(LOG_NO) FROM LOG_STATISTICS WHERE ID = #{param1})
 	]]>
 	</update>
+	
+
+	<select id="id_check" resultType="String">
+	<![CDATA[
+	SELECT DECODE(COUNT(*), 0,'FALSE', 1,'TRUE') 
+	FROM MEMBER
+	WHERE ID = #{param1}
+	]]>
+	</select>
+	
+	<select id="email_check" resultType="String">
+	<![CDATA[
+	SELECT DECODE(COUNT(*), 0,'FALSE', 1,'TRUE') 
+	FROM MEMBER
+	WHERE EMAIL = #{param1}
+	]]>
+	</select>
+	
+	<select id="idFind" resultType="String">
+	<![CDATA[
+	SELECT RPAD(SUBSTR(ID,1,5),10,'*') ID FROM MEMBER
+	WHERE EMAIL = #{param1}
+	]]>
+	</select>
 
 
 	

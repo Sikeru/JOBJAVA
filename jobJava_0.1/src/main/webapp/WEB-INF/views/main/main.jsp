@@ -12,19 +12,34 @@
 <html>
 <head>
 	<title>Home</title>
+	<style>
+		#contain {
+		  width: 100%;
+  		  height: 700px;
+		}
+		.d-block {
+			width: 70%;
+			height: 700px;
+			margin: 0 auto;
+		}
+		.cafeleader {
+			width: 49%;
+			height: 400px;
+		}
+	</style>
 </head>
 <body>
-<div id="#contain">
+<div id="contain">
 <div id="mainimg" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="${contextPath}/resources/image/mainlogo.png" class="d-block" alt="...">
+      <img src="${contextPath}/resources/image/mainimg1.png" class="d-block" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="${contextPath}/resources/image/mainlogo.png" class="d-block" alt="...">
+      <img src="${contextPath}/resources/image/mainimg2.png" class="d-block" alt="...">
     </div>
     <div class="carousel-item">
-      <img src="${contextPath}/resources/image/mainlogo.png" class="d-block" alt="...">
+      <img src="${contextPath}/resources/image/mainimg3.jpg" class="d-block" alt="...">
     </div>
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
@@ -36,6 +51,10 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+</div>
+<div>
+	<a href="${contextPath}/cafe/main.do"><img class="cafeleader" src="${contextPath}/resources/image/cafemain1.jpg"></a>
+	<a href="${contextPath}/leader/main.do"><img class="cafeleader" src="${contextPath}/resources/image/jobleader_main_student.jpg" ></a>
 </div>
 </body>
 </html>

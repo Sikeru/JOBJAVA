@@ -71,7 +71,7 @@
     #divPaging {
           clear:both; 
         margin:0 auto; 
-        width:220px; 
+        width:320px; 
         height:50px;
 }
 
@@ -106,7 +106,8 @@
         <ul>
             <!-- 게시판 제목 -->
             <li>QNA</li>
-
+			
+				
             <!-- 게시판 목록  -->
             <li>
                 <ul id ="ulTable">
@@ -120,10 +121,21 @@
                         </ul>
                     </li>
                     <!-- 게시물이 출력될 영역 -->
-          <c:forEach var="qna" items="${qna}">
+		  <c:choose>
+  		    <c:when test="${empty qna}" >
+  		    	<ul height="10">
+  		    		<li>
+  		    			<p align="center">
+            				<b><span style="font-size:9pt;">등록된 글이 없습니다.</span></b>
+        				</p>
+  		    		</li>
+  		    	</ul>
+  		    </c:when>
+  		    <c:when test="${!empty qna}" >
+          <c:forEach var="qna" items="${qna}" varStatus="qnaNUM">
 			<li>
 				<ul>
-							<li>${qna.QNA_NO}</li>
+							<li>${qnaNUM.count}</li>
 							<li class="left"><a href="${contextPath}/board/qnATableView.do?QNA_NO=${qna.QNA_NO}">${qna.TITLE}</a></li>
 							<li>${qna.QNA_DATE}</li>
 							<li>${qna.ID}</li>
@@ -131,17 +143,48 @@
 				</ul>
 			</li>
 			</c:forEach>
+			</c:when>
+			</c:choose>
 
             <!-- 게시판 페이징 영역 -->
             <li>
                 <div id="divPaging">
-                    <div>◀</div>
-                       <div><b>1</b></div>
-                    <div>2</div>
-                    <div>3</div>
-                    <div>4</div>
-                    <div>5</div>
-                    <div>▶</div>
+                <c:if test="${qnaTotal != null }" >
+                <c:choose>
+                <c:when test="${qnaTotal >100 }">
+                <c:forEach   var="page" begin="1" end="10" step="1" >
+                	<c:if test="${paging.section >1 && page==1 }">
+			          <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section-1}&pageNum=1">&nbsp; ◀ </a>
+	    		    </c:if>
+	          		  <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
+	         		<c:if test="${page ==10 }">
+	          		  <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section+1}&pageNum=1">&nbsp; ▶</a>
+	         		</c:if>
+	      		</c:forEach>
+        		</c:when>
+        		<c:when test="${qnaTotal ==100 }" >  <!--등록된 글 개수가 100개인경우  -->
+	      			<c:forEach   var="page" begin="1" end="10" step="1" >
+	        		  <a class="no-uline"  href="#">${page } </a>
+	      		  </c:forEach>
+        		</c:when>
+        		
+        		<c:when test="${qnaTotal< 100 }" >   <!--등록된 글 개수가 100개 미만인 경우  -->
+	     			 <c:forEach   var="page" begin="1" end="${qnaTotal/10 +1}" step="1" >
+	         		<c:choose>
+	           		<c:when test="${page==paging.pageNum }">
+	            		<a class="sel-page"  href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${page } </a>
+	          		</c:when>
+	          		<c:otherwise>
+	            		<a class="no-uline"  href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${page } </a>
+	          		</c:otherwise>
+	        		</c:choose>
+	      		</c:forEach>
+        		</c:when>
+      		</c:choose>
+    		</c:if>
+        		
+        		
+        		
                 </div>
             </li>
             <c:if test="${not empty pageContext.request.userPrincipal}">
@@ -163,7 +206,8 @@
                 </li>
 
         </ul>
+        
     </div>
-
+</Table>
 </body>
 </html>

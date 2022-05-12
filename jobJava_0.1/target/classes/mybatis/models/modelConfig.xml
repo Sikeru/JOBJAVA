@@ -9,7 +9,16 @@
       <typeAlias type="com.jobjava.JJ.member.vo.SMemberVO" alias="SMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.CMemberVO" alias="CMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.EMemberVO" alias="EMemberVO" />
+      <typeAlias type="com.jobjava.JJ.member.vo.MMemberVO" alias="MMemberVO" />
       <typeAlias type="com.jobjava.JJ.board.vo.QnAVO" alias="QnAVO" />
+      <typeAlias type="com.jobjava.JJ.counselor.vo.JobregVO" alias="JobregVO" />
+      <typeAlias type="com.jobjava.JJ.counselor.vo.UniregVO" alias="UniregVO" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.CRegVO" alias="CRegVO" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.Criteria" alias="Criteria" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.Paging" alias="Paging" />
+      <typeAlias type="com.jobjava.JJ.cafe.vo.MyPageVO" alias="MyPageVO" />
+      <typeAlias type="com.jobjava.JJ.cafe.vo.JobAppVO" alias="JobAppVO" />
+      <typeAlias type="com.jobjava.JJ.cafe.vo.ProgramVO" alias="ProgramVO" />
   </typeAliases>
 </configuration>
 

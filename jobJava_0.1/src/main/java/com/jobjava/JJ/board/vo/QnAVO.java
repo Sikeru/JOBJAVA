@@ -3,6 +3,7 @@ package com.jobjava.JJ.board.vo;
 import java.sql.Date;
 
 public class QnAVO {
+	private int RECNUM;
 	private int QNA_NO;
 	private String TITLE;
 	private String CONTENT;
@@ -12,6 +13,13 @@ public class QnAVO {
 	private String RESPON;
 	private String PROCESS;
 	
+
+	public int getRECNUM() {
+		return RECNUM;
+	}
+	public void setRECNUM(int rECNUM) {
+		RECNUM = rECNUM;
+	}
 	public int getQNA_NO() {
 		return QNA_NO;
 	}
@@ -60,6 +68,7 @@ public class QnAVO {
 	public void setPROCESS(String pROCESS) {
 		PROCESS = pROCESS;
 	}
+
 
 
 	

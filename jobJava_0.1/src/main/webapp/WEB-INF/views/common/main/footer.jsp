@@ -36,15 +36,7 @@
                 </div>
                 </div>
             </div>
-            <div id="company">
-            <ul>
-                <li><img src="${contextPath}/resources/image/mainlogo.png"></li>
-                <li><img src="${contextPath}/resources/image/mainlogo.png"></li>
-                <li><img src="${contextPath}/resources/image/mainlogo.png"></li>
-                <li><img src="${contextPath}/resources/image/mainlogo.png"></li>
-                <li><img src="${contextPath}/resources/image/mainlogo.png"></li>
-            </ul>
-        </div>
+
         </div>
         </html>    
 

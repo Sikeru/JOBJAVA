@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!-- 꿈터게시판 -->
+<mapper namespace="com.jobjava.JJ.cafe.dao.CafeDAO">
+
+	<select id="selcetProgram" resultType="ProgramVO">
+	<![CDATA[
+		SELECT PROGRAM_NO, TITLE,
+		S_DATE, E_DATE FROM PROGRAM
+		]]>
+	</select>
+
+	<select id="selectProgramDetail" resultType="ProgramVO"
+		parameterType="String">
+	<![CDATA[
+		SELECT * FROM PROGRAM
+		WHERE PROGRAM_NO = #{PROGRAMNO}
+		]]>
+	</select>
+
+
+
+	<select id="boardList" resultType="hashmap"
+		parameterType="hashmap">
+        <![CDATA[
+       SELECT PROGRAM_NO,
+       TITLE,
+       S_DATE,
+       E_DATE
+	FROM(
+    SELECT PROGRAM_NO,
+ 	   TITLE,
+ 	   S_DATE,
+  	  E_DATE,
+  	  ROW_NUMBER() OVER(ORDER BY PROGRAM_NO DESC) AS RNUM
+   	 FROM PROGRAM
+  	  )MP
+  	  WHERE RNUM BETWEEN 1 AND 10
+  	  ORDER BY PROGRAM_NO DESC
+        ]]>
+	</select>
+	<select id="boardListCnt" resultType="ProgramVO">
+   <![CDATA[
+      SELECT count(*)
+      FROM PROGRAM
+      ]]>
+	</select>
+	
+	<!-- 꿈터구직등록 -->
+   
+	
+	<insert id="jobAppresultAdd" parameterType="JobAppVO">
+	<![CDATA[
+		INSERT INTO JOB_APPLICATION(JOB_APP_NO, ID, FILENAME, AREA, OCC_TYPE, E_DATE, F_FAMILY, DISCLOSURE, DISABILITY, MILITARY) 
+					VALUES(JOB_APP_NO.NEXTVAL,#{ID}, #{FILENAME}, #{AREA}, #{OCC_TYPE}, #{E_DATE}, #{F_FAMILY}, #{DISCLOSURE}, #{DISABILITY}, #{MILITARY})
+	]]>
+	</insert>
+	
+	<select id="selectMemberID" resultType="String"
+	  parameterType="java.util.HashMap">
+	<![CDATA[ 
+	SELECT ID FROM MEMBER WHERE ID=#{ID}
+	]]>
+	</select>
+
+
+<!-- 꿈터기업마이페이지 -->	
+	
+	
+	<insert id="mypageresultAdd" parameterType="java.util.HashMap">
+	<![CDATA[
+		INSERT INTO PROGRAM(PROGRAM_NO, B_NO, TITLE, CONTENT, S_DATE, E_DATE, FILENAME, DIVISION) 
+					VALUES(PROGRAM_NO.NEXTVAL,#{B_NO}, #{TITLE}, #{CONTENT}, #{S_DATE}, #{E_DATE}, #{FILENAME}, #{DIVISION})
+	]]>
+	</insert>
+	
+	<!-- ID에 따른 사업자번호 가져오기 -->
+	<select id="selectCompanyID" resultType="String"
+		parameterType="java.util.HashMap">
+	<![CDATA[
+		SELECT B_NO FROM C_MEMBER
+		WHERE ID= #{ID}
+	]]>
+	</select>
+	
+	<!-- 꿈터 캘린더 -->
+	
+		<select id="selectSdata" resultType="String">
+		<![CDATA[
+			SELECT COMPANY FROM JOB_INFO WHERE S_DATE = TO_DATE(#{param1}) AND ROWNUM<=3
+		]]>
+	</select>
+	
+	<select id="selectDdata" resultType="String">
+		<![CDATA[
+			SELECT COMPANY FROM JOB_INFO WHERE D_DATE = TO_DATE(#{param1}) AND ROWNUM<=3
+		]]>
+	</select>
+	
+
+	
+
+
+</mapper>

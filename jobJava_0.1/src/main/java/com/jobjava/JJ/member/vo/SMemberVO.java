@@ -1,5 +1,7 @@
 package com.jobjava.JJ.member.vo;
 
+import java.sql.Date;
+
 public class SMemberVO {
 	private String ID;
 	private String PWD;
@@ -13,9 +15,9 @@ public class SMemberVO {
 	private String NAME;
 	private String DEPT;
 	private String MAC_ADDR;
-	private String BIRTH;
+	private Date BIRTH;
 	private String U_NAME;
-	
+	 
 	public String getID() {
 		return ID;
 	}
@@ -88,10 +90,11 @@ public class SMemberVO {
 	public void setMAC_ADDR(String mAC_ADDR) {
 		MAC_ADDR = mAC_ADDR;
 	}
-	public String getBIRTH() {
+
+	public Date getBIRTH() {
 		return BIRTH;
 	}
-	public void setBIRTH(String bIRTH) {
+	public void setBIRTH(Date bIRTH) {
 		BIRTH = bIRTH;
 	}
 	public String getU_NAME() {

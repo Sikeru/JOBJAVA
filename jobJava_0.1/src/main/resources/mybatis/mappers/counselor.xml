@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jobjava.JJ.counselor.dao.CounselorDAO">
+<resultMap id="officerResult" type="java.util.HashMap">
+      <result property="NAME" column="NAME" />
+      <result property="AGE" column="AGE" />
+      <result property="HP" column="HP" />
+</resultMap>
+<!-- resultMap="officerResult"> -->
+	<select id="JobDao" resultType="java.util.HashMap">
+		SELECT NM.NAME, TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(NM.BIRTH,'YYYY') AGE, MEMBER.HP FROM N_MEMBER NM,
+		MEMBER, CHARGE_MEMBER CM
+		WHERE CM.ID = MEMBER.ID AND MEMBER.ID = NM.ID
+	</select>
+	
+	<select id="JobDao2" resultType="java.util.HashMap">
+		SELECT SM.NAME, TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(SM.BIRTH,'YYYY') AGE, MEMBER.HP FROM ST_MEMBER SM,
+		MEMBER, CHARGE_MEMBER CM
+		WHERE CM.ID = MEMBER.ID AND MEMBER.ID = SM.ID
+	</select>
+	<select id="JobDao3" resultType="java.util.HashMap">
+		SELECT CASE SUBSTR(CAREER, 0, 2)
+		WHEN '관계' THEN '관계없음'
+		ELSE SUBSTR(CAREER, 0, 2)
+		END CAREER, EDU, SUBSTR (AREA, 0, INSTR(AREA, ' ', 1, 1)) AREA, COMPANY
+		FROM JOB_INFO JI, CHARGE_MEMBER CM, SHOP_BASKET SB
+		WHERE JI.JOB_NO = SB.JOB_NO AND SB.EMP_NO = CM.EMP_NO
+	</select>
+	
+	<insert id="insertNewJob" parameterType="JobregVO">
+   <![CDATA[
+      INSERT INTO JOB_INFO(JOB_NO, CAREER, EDU, AREA, SAL, EMP_TYPE, WORK_TYPE, WELFARE, COMPANY, B_TYPE, SCALE, ESTABLISH,
+      						Y_SALES, HP, EMP_NUM, S_DATE, D_DATE, JOB_D) 
+               VALUES(JOB_NO.nextval,#{CAREER, jdbcType=VARCHAR}, #{EDU, jdbcType=VARCHAR}, #{AREA, jdbcType=VARCHAR},
+                #{SAL, jdbcType=VARCHAR}, #{EMP_TYPE, jdbcType=VARCHAR}, #{WORK_TYPE, jdbcType=VARCHAR}, #{WELFARE, jdbcType=VARCHAR},
+               		#{COMPANY, jdbcType=VARCHAR}, #{B_TYPE, jdbcType=VARCHAR}, #{SCALE, jdbcType=VARCHAR}, #{ESTABLISH, jdbcType=DATE}, 
+               		#{Y_SALES, jdbcType=VARCHAR}, 
+               		#{HP, jdbcType=VARCHAR}, #{EMP_NUM, jdbcType=VARCHAR}, #{S_DATE, jdbcType=DATE}, 
+               		#{D_DATE, jdbcType=DATE}, #{JOB_D, jdbcType=VARCHAR})
+   ]]>
+   </insert>
+   
+   <insert id="insertNewUni" parameterType="java.util.HashMap">
+
+   <![CDATA[
+      INSERT INTO UNI_BUSINESS(UNI_B_NO, MG_NO, U_NAME, UNI_HP, UNI_ADDR, B_NAME, B_EXPENSE, 
+      						S_DATE, D_DATE, B_CONTENT) 
+               VALUES(UNI_B_NO.nextval, #{MG_NO}, #{U_NAME}, #{UNI_HP}, #{UNI_ADDR}, 
+               #{B_NAME},
+               #{B_EXPENSE}, #{S_DATE}, #{D_DATE}, #{B_CONTENT})
+               
+   ]]>
+   </insert>
+   
+   <!-- 대학 참여 아이디 가져오기 -->
+   <select id = "selectUniID" resultType="String"  parameterType="java.util.HashMap">
+
+   	<![CDATA[
+   		SELECT MG_NO FROM UM_MEMBER
+   		WHERE ID = #{ID}
+   	]]>
+   </select>
+   
+   
+</mapper>

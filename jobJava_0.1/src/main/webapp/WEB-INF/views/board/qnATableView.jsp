@@ -16,7 +16,8 @@
 <form action="${contextPath}/board/qnAUpDateTable.do" method="post">
   <input type="text" name="ID" value="${qna.ID}" readonly><br>
   <input type="hidden" name="QNA_NO" value="${qna.QNA_NO}">
-  <c:if test="${qna.ID == USER_ID}">
+  <c:choose>
+	<c:when test="${qna.ID == USER_ID}">
   	<input type="text" name="TITLE" value="${qna.TITLE }" style="width:50%">
   	<input type="text" name="CONTENT" value="${qna.CONTENT }" style="width: 50%; height: 100%"><br>
   	<c:if test="${not empty qna.RESPON}">
@@ -24,18 +25,28 @@
   	<input type="text" value="${qna.RESPON }" style="width: 50%" disabled><br>
   	</c:if>
   	<input type="submit" value="수정">
-  </c:if>
-  <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
-  <input type="text" name="TITLE" value="${qna.TITLE }" style="width:50%">
+	</c:when>
+  
+    <c:otherwise>
+    <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
+  	<input type="text" name="TITLE" value="${qna.TITLE }" style="width:50%">
   	<input type="text" name="CONTENT" value="${qna.CONTENT }" style="width: 50%; height: 100%"><br>
+  	<input type="text" value="${qna.RESPON }" style="width: 50%" readonly><br>
   	<input type="text" name="ANSWER" value="${qna.ANSWER }" style="width: 50%"><br>
-  	<input type="text" name="RESPON" value="${qna.RESPON }" style="width: 50%"><br>
+  	<input type="hidden" name="RESPON" value="${pageContext.request.userPrincipal.name}">
+  
   	<input type="submit" value="수정">
-  </s:authorize>
- <s:authorize access="isAnonymous()">
+    </s:authorize>
+ 	<s:authorize access="hasAnyRole('ROLE_COM', 'ROLE_MAG')">
+ 	<input type="text" name="TITLE" value="${qna.TITLE }" readonly style="width:50%">
+  	<input type="text" name="CONTENT" value="${qna.CONTENT }" readonly style="width: 50%; height: 100%">
+  	</s:authorize>
+ 	<s:authorize access="isAnonymous()">
  	<input type="text" name="TITLE" value="${qna.TITLE }" readonly style="width:50%">
   	<input type="text" name="CONTENT" value="${qna.CONTENT }" readonly style="width: 50%; height: 100%">
   </s:authorize>
+  </c:otherwise>
+  </c:choose>
 </form>
 </body>
 </html>
