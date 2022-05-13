@@ -4,10 +4,29 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.jobjava.JJ.board.dao.BoardDAO">
+   <sql id="search">
+      <if test="search != null">
+         <if test="search == 'T'.toString()"> TITLE LIKE '%' || #{txtKeyWord} || '%'</if>
+         <if test="search == 'C'.toString()"> CONTENT LIKE '%' || #{txtKeyWord} || '%'</if>
+         <if test="search == 'TC'.toString()">(TITLE LIKE '%' || #{txtKeyWord} || '%') or (CONTENT
+            LIKE '%' || #{txtKeyWord} || '%')</if>
+      </if>
+   </sql>
+
 	<select id="qnaSelectAll" resultType="QnAVO" parameterType="java.util.HashMap">
 	<![CDATA[
 	SELECT * FROM(SELECT ROWNUM as recNum, QNA_NO, TITLE, CONTENT, QNA_DATE, ID, ANSWER, RESPON,PROCESS
 	FROM QNA)
+	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
+	ORDER BY QNA_DATE DESC
+	]]>
+	</select>
+	<select id="qnaSelectSearch" resultType="QnAVO" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT * FROM(SELECT ROWNUM as recNum, QNA_NO, TITLE, CONTENT, QNA_DATE, ID, ANSWER, RESPON,PROCESS
+	FROM QNA
+	WHERE ]]> <include refid="search"/>
+	<![CDATA[)
 	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
 	ORDER BY QNA_DATE DESC
 	]]>
@@ -17,6 +36,14 @@
 	<![CDATA[
 	SELECT COUNT(QNA_NO) FROM QNA
 	]]>
+	</select>
+	
+	<select id="qnaSelectTotalSearch" resultType="int" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT COUNT(QNA_NO) FROM QNA
+	WHERE ]]>
+	<include refid="search"/>
+
 	</select>
 	
 	<select id="qnaSelectOne" resultType="QnAVO" parameterType="int">

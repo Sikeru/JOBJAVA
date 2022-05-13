@@ -9,6 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function nuser_submit() {
+		$('#search').submit();   
+	}
+
+</script>
 <style>
    body{
         line-height:2em;        
@@ -154,11 +160,32 @@
                 <c:when test="${qnaTotal >100 }">
                 <c:forEach   var="page" begin="1" end="10" step="1" >
                 	<c:if test="${paging.section >1 && page==1 }">
+                	  <c:choose>
+                	   <c:when test="${search.search == null} ">
 			          <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section-1}&pageNum=1">&nbsp; ◀ </a>
+			          </c:when>
+			           <c:when test="${search.search != null }">
+			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section-1}&pageNum=1">&nbsp; ◀ </a>
+			           </c:when>
+			          </c:choose>
 	    		    </c:if>
+	    		      <c:choose>
+                	   <c:when test="${search.search == null} ">
 	          		  <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
+	          		  </c:when>
+	          		   <c:when test="${search.search != null }">
+			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
+			           </c:when>
+			          </c:choose>
 	         		<c:if test="${page ==10 }">
+	         		 <c:choose>
+                	   <c:when test="${search.search == null} ">
 	          		  <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section+1}&pageNum=1">&nbsp; ▶</a>
+	          		  </c:when>
+	          		  <c:when test="${search.search != null }">
+			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section+1}&pageNum=1">&nbsp; ▶</a>
+			           </c:when>
+			          </c:choose>
 	         		</c:if>
 	      		</c:forEach>
         		</c:when>
@@ -172,10 +199,20 @@
 	     			 <c:forEach   var="page" begin="1" end="${qnaTotal/10 +1}" step="1" >
 	         		<c:choose>
 	           		<c:when test="${page==paging.pageNum }">
+	           		  <c:if test="${search.search == null}">
 	            		<a class="sel-page"  href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${page } </a>
+	            		</c:if>
+	            	   <c:if test="${search.search != null}">
+	            		<a class="sel-page"  href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section}&pageNum=${page}">${page } </a>
+	            		</c:if>
 	          		</c:when>
 	          		<c:otherwise>
+	          		<c:if test="${search.search == null}">
 	            		<a class="no-uline"  href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${page } </a>
+	            		</c:if>
+	            		<c:if test="${search.search != null}">
+	            		<a class="sel-page"  href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section}&pageNum=${page}">${page } </a>
+	            		</c:if>
 	          		</c:otherwise>
 	        		</c:choose>
 	      		</c:forEach>
@@ -195,13 +232,15 @@
             <!-- 검색 폼 영역 -->
             <li id='liSearchOption'>
                 <div>
-                    <select id='selSearchOption' >
-                        <option value='A'>제목+내용</option>
-                        <option value='T'>제목</option>
+                	<form id="search" action="${contextPath}/board/searchQNATable.do" method="get">
+                    <select id='selSearchOption' name='search'>
+                        <option value='TC' >제목+내용</option>
+                        <option value='T' >제목</option>
                         <option value='C'>내용</option>
                     </select>
-                    <input id='txtKeyWord' />
-                    <input type='button' value='검색'/>
+                    <input type="text" id='txtKeyWord' name="txtKeyWord"/>
+                    <input class="btn-secondary" type="submit" value="검색"/>
+                    </form>
                 </div>
                 </li>
 

@@ -13,4 +13,6 @@ public interface BoardDAO {
 	public QnAVO qnaSelectOne(int QNA_NO);
 	public void upDateQnATable(QnAVO qnAVO);
 	public String selectEmpName(QnAVO qnAVO);
+	public List<QnAVO> qnaSelectSearch(HashMap<String, Object> search);
+	public int qnaSelectTotalSearch(HashMap<String, Object> search);
 }

@@ -23,6 +23,6 @@ public interface BoardController {
 	public ModelAndView qnATableView(@RequestParam("QNA_NO") int _QNA_NO ,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ResponseEntity qnAUpDateTable(@ModelAttribute("QnAVO") QnAVO _qnAVO,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
-		
+	public ModelAndView searchQNATable(@RequestParam HashMap<String, Object> search,HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }

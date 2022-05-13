@@ -54,5 +54,19 @@ public class BoardServiceImpl  implements BoardService{
 		}
 		dao.upDateQnATable(qnAVO);
 	}
-	
+
+	@Override
+	public List<QnAVO> qnaSelectSearch(HashMap<String, Object> search) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		List<QnAVO> qnavo = new ArrayList<QnAVO>();
+		qnavo = dao.qnaSelectSearch(search);
+		return qnavo;
+	}
+
+	@Override
+	public int qnaSelectTotalSearch(HashMap<String, Object> search) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		return dao.qnaSelectTotalSearch(search);
+	}	
+
 }

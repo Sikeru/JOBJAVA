@@ -1,5 +1,6 @@
 package com.jobjava.JJ.board.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -122,6 +123,32 @@ public class BoardControllerImpl implements BoardController{
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
 	}
+
+	@Override
+	@RequestMapping(value="/searchQNATable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView searchQNATable(@RequestParam HashMap<String, Object> search, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		if(search.get("section") == null && search.get("pageNum") == null) {
+			search.put("section", 1);
+			search.put("pageNum", 1);
+		}
+		
+		HashMap<String, Integer> paging = new HashMap<String, Integer>();
+		List<QnAVO> qnavo = boardservice.qnaSelectSearch(search);
+		int	qnaTotalTable = boardservice.qnaSelectTotalSearch(search);
+		
+		paging.put("section", Integer.parseInt(String.valueOf(search.get("section"))));
+		paging.put("pageNum", Integer.parseInt(String.valueOf(search.get("pageNum"))));
+		mav.addObject("qnaTotal", qnaTotalTable);
+		mav.addObject("qna", qnavo);
+		mav.addObject("paging", paging);
+		mav.addObject("search", search);
+		
+		mav.setViewName("/board/qnATable");
+		return mav;
+	}
+	
 	
 
 	
