@@ -4,32 +4,78 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jobjava.JJ.counselor.dao.CounselorDAO">
-<resultMap id="officerResult" type="java.util.HashMap">
-      <result property="NAME" column="NAME" />
-      <result property="AGE" column="AGE" />
-      <result property="HP" column="HP" />
-</resultMap>
-<!-- resultMap="officerResult"> -->
+	<resultMap id="officerResult" type="java.util.HashMap">
+		<result property="NAME" column="NAME" />
+		<result property="AGE" column="AGE" />
+		<result property="HP" column="HP" />
+		<result property="CAREER" column="CAREER" />
+		<result property="EDU" column="EDU" />
+		<result property="AREA" column="AREA" />
+		<result property="COMPANY" column="COMPANY" />
+		<result property="ID" column="ID" />
+		<result property="CD" column="CD" />
+		<result property="AT" column="AT" />
+		<result property="QT" column="QT" />
+		<result property="PROCESS" column="PROCESS" />
+
+
+	</resultMap>
+	<!-- resultMap="officerResult"> -->
 	<select id="JobDao" resultType="java.util.HashMap">
-		SELECT NM.NAME, TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(NM.BIRTH,'YYYY') AGE, MEMBER.HP FROM N_MEMBER NM,
+		SELECT NM.NAME,
+		TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(NM.BIRTH,'YYYY') AGE, MEMBER.HP FROM
+		N_MEMBER NM,
 		MEMBER, CHARGE_MEMBER CM
-		WHERE CM.ID = MEMBER.ID AND MEMBER.ID = NM.ID
+		WHERE CM.ID = MEMBER.ID AND
+		MEMBER.ID = NM.ID
 	</select>
-	
+
 	<select id="JobDao2" resultType="java.util.HashMap">
-		SELECT SM.NAME, TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(SM.BIRTH,'YYYY') AGE, MEMBER.HP FROM ST_MEMBER SM,
+		SELECT SM.NAME,
+		TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(SM.BIRTH,'YYYY') AGE, MEMBER.HP FROM
+		ST_MEMBER SM,
 		MEMBER, CHARGE_MEMBER CM
-		WHERE CM.ID = MEMBER.ID AND MEMBER.ID = SM.ID
+		WHERE CM.ID = MEMBER.ID AND
+		MEMBER.ID = SM.ID
 	</select>
+
 	<select id="JobDao3" resultType="java.util.HashMap">
 		SELECT CASE SUBSTR(CAREER, 0, 2)
 		WHEN '관계' THEN '관계없음'
 		ELSE SUBSTR(CAREER, 0, 2)
-		END CAREER, EDU, SUBSTR (AREA, 0, INSTR(AREA, ' ', 1, 1)) AREA, COMPANY
-		FROM JOB_INFO JI, CHARGE_MEMBER CM, SHOP_BASKET SB
-		WHERE JI.JOB_NO = SB.JOB_NO AND SB.EMP_NO = CM.EMP_NO
+		END CAREER, EDU, SUBSTR
+		(AREA, 0, INSTR(AREA, ' ', 1, 1)) AREA, COMPANY
+		FROM JOB_INFO JI,
+		CHARGE_MEMBER CM, SHOP_BASKET SB
+		WHERE JI.JOB_NO = SB.JOB_NO AND
+		SB.EMP_NO = CM.EMP_NO
 	</select>
-	
+
+	<select id="attendanceDao" resultType="java.util.HashMap">
+		SELECT ME.ID,
+		TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD,
+		TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT
+		,TO_CHAR(QUT_TIME,'HH24:MI:SS') QT,
+		PROCESS FROM MEMBER ME, COMMUTE CO,
+		ST_SALARY SS
+		WHERE ME.ID = CO.ID AND CO.COM_NO = SS.COM_NO
+		ORDER BY CD
+		ASC
+	</select>
+
+	<select id="commuteDao" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		SELECT ME.ID, TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD,
+		TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT, TO_CHAR(QUT_TIME,'HH24:MI:SS') QT,
+		PROCESS FROM MEMBER ME, COMMUTE CO, ST_SALARY SS
+		WHERE ME.ID = CO.ID
+		AND CO.COM_NO = SS.COM_NO AND COM_DATE
+		BETWEEN
+		TO_DATE(#{one,jdbcType=VARCHAR}, 'YYYY-MM-DD') AND
+		TO_DATE(#{two,jdbcType=VARCHAR}, 'YYYY-MM-DD')
+		ORDER BY CD ASC
+	</select>
+
 	<insert id="insertNewJob" parameterType="JobregVO">
    <![CDATA[
       INSERT INTO JOB_INFO(JOB_NO, CAREER, EDU, AREA, SAL, EMP_TYPE, WORK_TYPE, WELFARE, COMPANY, B_TYPE, SCALE, ESTABLISH,
@@ -41,28 +87,104 @@
                		#{HP, jdbcType=VARCHAR}, #{EMP_NUM, jdbcType=VARCHAR}, #{S_DATE, jdbcType=DATE}, 
                		#{D_DATE, jdbcType=DATE}, #{JOB_D, jdbcType=VARCHAR})
    ]]>
-   </insert>
-   
-   <insert id="insertNewUni" parameterType="java.util.HashMap">
+	</insert>
+
+	<!-- 등록했을때 기본적으로는 접수진행중이 뜸 -->
+
+	<insert id="insertNewUni" parameterType="UniregVO">
 
    <![CDATA[
       INSERT INTO UNI_BUSINESS(UNI_B_NO, MG_NO, U_NAME, UNI_HP, UNI_ADDR, B_NAME, B_EXPENSE, 
-      						S_DATE, D_DATE, B_CONTENT) 
-               VALUES(UNI_B_NO.nextval, #{MG_NO}, #{U_NAME}, #{UNI_HP}, #{UNI_ADDR}, 
-               #{B_NAME},
-               #{B_EXPENSE}, #{S_DATE}, #{D_DATE}, #{B_CONTENT})
-               
+      						S_DATE, E_DATE, B_CONTENT, PERMISSION) 
+               VALUES(UNI_B_NO.nextval, '1', #{U_NAME, jdbcType=VARCHAR}, #{UNI_HP, jdbcType=VARCHAR},
+               #{UNI_ADDR, jdbcType=VARCHAR}, 
+               #{B_NAME, jdbcType=VARCHAR}, #{B_EXPENSE, jdbcType=INTEGER}, #{S_DATE, jdbcType=DATE}, #{E_DATE, jdbcType=DATE},
+                #{B_CONTENT, jdbcType=VARCHAR}, '접수진행중') 
+                
    ]]>
-   </insert>
-   
-   <!-- 대학 참여 아이디 가져오기 -->
-   <select id = "selectUniID" resultType="String"  parameterType="java.util.HashMap">
+	</insert>
 
-   	<![CDATA[
-   		SELECT MG_NO FROM UM_MEMBER
-   		WHERE ID = #{ID}
-   	]]>
-   </select>
-   
-   
+	<!-- <select id="boardList" resultType="hashmap"
+		parameterType="hashmap">
+        <![CDATA[
+            SELECT REGI_NO, 
+                TITLE, 
+                CONTENT,
+                S_DATE, 
+                E_DATE
+             
+         		FROM ( 
+                		SELECT REGI_NO,
+                   	   	 B_NO,
+                   	   	 TITLE, 
+                   	   	 CONTENT, 
+                   	   	 FILENAME, 
+                   	   	 S_DATE,
+                   	   	 E_DATE, 
+                   	   	 ROW_NUMBER() OVER(ORDER BY REGI_NO) AS RNUM
+                 		FROM C_REG 
+              		 ) 
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+        ORDER BY REGI_NO ASC
+        ]]>
+	</select> -->
+
+	<select id="selectUniID" resultType="String"
+		parameterType="UniregVO">
+	<![CDATA[
+		SELECT MG_NO
+		FROM UM_MEMBER
+		WHERE ID = #{ID}
+	]]>
+
+	</select>
+
+	<select id="uniList" resultType="UniregVO">
+	<![CDATA[
+		SELECT UNI_B_NO, B_NAME, U_NAME, PERMISSION
+		FROM UNI_BUSINESS
+	]]>
+	</select>
+
+	<select id="selectProgram" resultType="UniregVO">
+	<![CDATA[
+		SELECT UNI_B_NO, U_NAME, UNI_HP, UNI_ADDR, B_NAME, B_EXPENSE, S_DATE, E_DATE, B_CONTENT, PERMISSION
+		FROM UNI_BUSINESS
+		WHERE UNI_B_NO = #{UNI_B_NO} 
+	]]>
+	</select>
+ 
+	<update id="updatePermissionState" parameterType="UniregVO">
+		update UNI_BUSINESS
+		<set>
+			<if test=" PERMISSION!='' and PERMISSION!=null">
+				PERMISSION=#{PERMISSION}
+			</if>
+		</set>
+		where
+		UNI_B_NO=#{UNI_B_NO}
+	</update>
+	
+	<select id="selectAllBasketInfo" parameterType="String" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT * FROM JOB_INFO JI, SHOP_BASKET SB
+	WHERE JI.JOB_NO = SB.JOB_NO AND SB.EMP_NO = (SELECT EMP_NO FROM EMP WHERE ID = #{user_id})
+	]]>
+	</select>
+	<select id="selectAllChMember" parameterType="String" resultType="java.util.HashMap">
+	<![CDATA[
+	SELECT NM.NAME, (TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(BIRTH,'YYYY')) AGE, JA.AREA, JA.OCC_TYPE, CM.ID, CM.CM_NO
+	FROM CHARGE_MEMBER CM, N_MEMBER NM, JOB_APPLICATION JA
+	WHERE CM.ID = NM.ID AND JA.ID = CM.ID AND CM.EMP_NO = 
+    (SELECT EMP_NO FROM EMP
+    WHERE ID = #{user_id})
+    ]]>
+    </select>
+    
+    <insert id="memberMatching"  parameterType="java.util.HashMap">
+    <![CDATA[
+    INSERT INTO MATCHING VALUES(MAT_NO.NEXTVAL, #{CM_NO}, #{SHOP_NO}, '처리중')
+    ]]>
+    </insert>
+
 </mapper>

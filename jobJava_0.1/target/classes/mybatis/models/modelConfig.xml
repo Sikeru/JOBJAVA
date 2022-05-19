@@ -10,15 +10,26 @@
       <typeAlias type="com.jobjava.JJ.member.vo.CMemberVO" alias="CMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.EMemberVO" alias="EMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.MMemberVO" alias="MMemberVO" />
+	  
       <typeAlias type="com.jobjava.JJ.board.vo.QnAVO" alias="QnAVO" />
+      <typeAlias type="com.jobjava.JJ.board.vo.OnlineVO" alias="OnlineVO" />
+	  <typeAlias type="com.jobjava.JJ.board.vo.EmploymentVO" alias="EmploymentVO" />
+	  
       <typeAlias type="com.jobjava.JJ.counselor.vo.JobregVO" alias="JobregVO" />
       <typeAlias type="com.jobjava.JJ.counselor.vo.UniregVO" alias="UniregVO" />
+	  
       <typeAlias type="com.jobjava.JJ.leader.vo.CRegVO" alias="CRegVO" />
       <typeAlias type="com.jobjava.JJ.leader.vo.Criteria" alias="Criteria" />
       <typeAlias type="com.jobjava.JJ.leader.vo.Paging" alias="Paging" />
-      <typeAlias type="com.jobjava.JJ.cafe.vo.MyPageVO" alias="MyPageVO" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.SurveyVO" alias="SurveyVO" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.AppVO" alias="AppVO" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.SearchCriteria" alias="SearchCriteria" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.FileVO" alias="FileVO" />
+	  
       <typeAlias type="com.jobjava.JJ.cafe.vo.JobAppVO" alias="JobAppVO" />
       <typeAlias type="com.jobjava.JJ.cafe.vo.ProgramVO" alias="ProgramVO" />
+      <typeAlias type="com.jobjava.JJ.cafe.vo.FileVO" alias="FileVO" />
+      <typeAlias type="com.jobjava.JJ.cafe.vo.SearchCriteria" alias="SearchCriteria" />  
   </typeAliases>
 </configuration>
 

@@ -8,76 +8,160 @@
 <mapper namespace="com.jobjava.JJ.cafe.dao.CafeDAO">
 
 	<select id="selcetProgram" resultType="ProgramVO">
-	<![CDATA[
-		SELECT PROGRAM_NO, TITLE,
-		S_DATE, E_DATE FROM PROGRAM
-		]]>
+   <![CDATA[
+      SELECT PROGRAM_NO, TITLE,
+      S_DATE, E_DATE FROM PROGRAM
+      ]]>
 	</select>
 
-	<select id="selectProgramDetail" resultType="ProgramVO"
-		parameterType="String">
-	<![CDATA[
-		SELECT * FROM PROGRAM
-		WHERE PROGRAM_NO = #{PROGRAMNO}
-		]]>
-	</select>
+	<!-- <select id="selectProgramDetail" resultType="ProgramVO" parameterType="String"> 
+		<![CDATA[ SELECT * FROM PROGRAM WHERE PROGRAM_NO = #{PROGRAMNO} ]]> </select> -->
 
 
 
+	<!-- 기업등록조회 + 페이징 + 검색 -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'T'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+				LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
 	<select id="boardList" resultType="hashmap"
 		parameterType="hashmap">
         <![CDATA[
-       SELECT PROGRAM_NO,
-       TITLE,
-       S_DATE,
-       E_DATE
-	FROM(
-    SELECT PROGRAM_NO,
- 	   TITLE,
- 	   S_DATE,
-  	  E_DATE,
-  	  ROW_NUMBER() OVER(ORDER BY PROGRAM_NO DESC) AS RNUM
-   	 FROM PROGRAM
-  	  )MP
-  	  WHERE RNUM BETWEEN 1 AND 10
-  	  ORDER BY PROGRAM_NO DESC
-        ]]>
+            SELECT PROGRAM_NO, 
+                TITLE, 
+                CONTENT,
+                S_DATE, 
+                E_DATE
+                
+         FROM ( 
+                SELECT PROGRAM_NO,
+                       B_NO,
+                       TITLE, 
+                       CONTENT, 
+                       FILENAME, 
+                       S_DATE,
+                       E_DATE, 
+                       ROW_NUMBER() OVER(ORDER BY PROGRAM_NO) AS RNUM
+                 FROM PROGRAM
+                 WHERE 1=1]]>
+		<include refid="search"></include>
+
+<![CDATA[
+
+		)
+
+
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY PROGRAM_NO ASC
+		]]>
+
 	</select>
-	<select id="boardListCnt" resultType="ProgramVO">
+
+
+	<select id="boardListCnt" parameterType="SearchCriteria"
+		resultType="int">
+
    <![CDATA[
       SELECT count(*)
       FROM PROGRAM
+       WHERE 1=1
       ]]>
+		<include refid="search"></include>
 	</select>
-	
+
+
+
+	<!-- 채용정보 상세조회 -->
+	<select id="selectProgram" parameterType="int" resultType="ProgramVO">
+   <![CDATA[
+      SELECT * FROM PROGRAM
+      WHERE PROGRAM_NO = #{PROGRAM_NO}  
+   ]]>
+	</select>
+
+
+
+
+
+
+	<!-- 글 수정 -->
+	<update id="update" parameterType="ProgramVO">
+		UPDATE PROGRAM
+		SET TITLE =
+		#{TITLE, jdbcType=VARCHAR},
+		CONTENT = #{CONTENT, jdbcType=VARCHAR}
+		WHERE PROGRAM_NO = #{PROGRAM_NO}
+	</update>
+
+
+	<!-- 글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM PROGRAM
+		WHERE
+		PROGRAM_NO = #{PROGRAM_NO}
+	</delete>
+
+
+
+
 	<!-- 꿈터구직등록 -->
-   
-	
+
+
 	<insert id="jobAppresultAdd" parameterType="JobAppVO">
 	<![CDATA[
 		INSERT INTO JOB_APPLICATION(JOB_APP_NO, ID, FILENAME, AREA, OCC_TYPE, E_DATE, F_FAMILY, DISCLOSURE, DISABILITY, MILITARY) 
 					VALUES(JOB_APP_NO.NEXTVAL,#{ID}, #{FILENAME}, #{AREA}, #{OCC_TYPE}, #{E_DATE}, #{F_FAMILY}, #{DISCLOSURE}, #{DISABILITY}, #{MILITARY})
 	]]>
 	</insert>
-	
+
 	<select id="selectMemberID" resultType="String"
-	  parameterType="java.util.HashMap">
+		parameterType="java.util.HashMap">
 	<![CDATA[ 
 	SELECT ID FROM MEMBER WHERE ID=#{ID}
 	]]>
 	</select>
 
 
-<!-- 꿈터기업마이페이지 -->	
-	
-	
-	<insert id="mypageresultAdd" parameterType="java.util.HashMap">
-	<![CDATA[
-		INSERT INTO PROGRAM(PROGRAM_NO, B_NO, TITLE, CONTENT, S_DATE, E_DATE, FILENAME, DIVISION) 
-					VALUES(PROGRAM_NO.NEXTVAL,#{B_NO}, #{TITLE}, #{CONTENT}, #{S_DATE}, #{E_DATE}, #{FILENAME}, #{DIVISION})
-	]]>
+
+
+	<!--다중 이미지 추가 SQL문 --><!-- 꿈터기업마이페이지 -->
+	<insert id="insertNewArticle" parameterType="java.util.Map">
+	  <![CDATA[
+     INSERT INTO PROGRAM(PROGRAM_NO, B_NO, TITLE, CONTENT, S_DATE, E_DATE, FILENAME, DIVISION) 
+					VALUES(#{PROGRAM_NO}, #{B_NO}, #{TITLE}, #{CONTENT}, #{S_DATE}, #{E_DATE}, NULL , #{DIVISION})
+    ]]>
 	</insert>
-	
+
+	<!-- 프로그램파일추가 -->
+	<insert id="insertNewImage" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			separator=" " close="SELECT * FROM DUAL">
+			INTO PROGRAM_FILE(EMP_FILE, PROGRAM_NO,
+			EMP_FILENAME,
+			EMP_DATE)
+			VALUES(#{item.EMP_FILE}, #{item.PROGRAM_NO},
+			#{item.EMP_FILENAME}, SYSDATE)
+		</foreach>
+	</insert>
+
+	<!-- 프로그램 파일번호 가져오기 -->
+	<select id="selectNewImageFileNO" resultType="int">
+		<![CDATA[
+			SELECT nvl(max(EMP_FILE), 0) from PROGRAM_FILE]]>
+	</select>
+
+	<!-- 프로그램 번호 가져오기 -->
+	<select id="selectPROGRAM_NO" resultType="int">
+	<![CDATA[
+		 SELECT nvl(max(PROGRAM_NO),0) +1 from PROGRAM
+	]]>
+	</select>
+
 	<!-- ID에 따른 사업자번호 가져오기 -->
 	<select id="selectCompanyID" resultType="String"
 		parameterType="java.util.HashMap">
@@ -86,23 +170,81 @@
 		WHERE ID= #{ID}
 	]]>
 	</select>
-	
+
+	<!-- 프로그램 게시판 파일삭제 -->
+	<delete id="deleteModImage" parameterType="FileVO">
+	  <![CDATA[
+	      delete from PROGRAM_FILE
+	      where PROGRAM_NO = #{PROGRAM_NO}
+	      and EMP_FILE = #{EMP_FILE}
+	    ]]>
+	</delete>
+
+	<!-- 여기부터 -->
+	<!-- 프로그램 게시판 수정 파일만 추가 -->
+	<insert id="insertModNewImage" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			separator=" " close="SELECT * FROM DUAL">
+			INTO noti_file(up_fileNO, up_fileName, noti_NO,
+			up_date)
+			VALUES (#{item.up_fileNO},
+			#{item.up_fileName},
+			#{item.noti_NO},
+			SYSDATE)
+		</foreach>
+	</insert>
+
+	<!-- 프로그램 게시판 다중 파일 수정하기 -->
+	<update id="updateArticle" parameterType="java.util.Map">
+		update board_Notice
+		set
+		noti_title=#{noti_title},
+		noti_context=#{noti_context}
+		where
+		noti_NO=#{noti_NO}
+	</update>
+
+	<!-- 프로그램 게시판 파일 수정 -->
+	<update id="updateImageFile" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";"
+			open="DECLARE BEGIN" close="; END;">
+			<choose>
+				<when test="item.up_fileName != null ">
+					update noti_file
+					set up_fileName =
+					#{item.up_fileName}
+					where
+					noti_NO=#{item.noti_NO}
+					and up_fileNO =
+					#{item.up_fileNO}
+				</when>
+				<otherwise>
+
+				</otherwise>
+			</choose>
+		</foreach>
+	</update>
+
+
+	<!-- 여기까지 -->
+
+
 	<!-- 꿈터 캘린더 -->
-	
-		<select id="selectSdata" resultType="String">
+
+	<select id="selectSdata" resultType="String">
 		<![CDATA[
 			SELECT COMPANY FROM JOB_INFO WHERE S_DATE = TO_DATE(#{param1}) AND ROWNUM<=3
 		]]>
 	</select>
-	
+
 	<select id="selectDdata" resultType="String">
 		<![CDATA[
 			SELECT COMPANY FROM JOB_INFO WHERE D_DATE = TO_DATE(#{param1}) AND ROWNUM<=3
 		]]>
 	</select>
-	
 
-	
+
+
 
 
 </mapper>

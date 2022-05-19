@@ -2,35 +2,83 @@
 <!DOCTYPE tiles-definitions PUBLIC
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
-       
-  <!--     뉴리더 홈페이지 메인 타일즈 -->
+
+<!-- 뉴리더 홈페이지 메인 타일즈 -->
 <tiles-definitions>
-	<definition name="leaderbaseLayout"
-		template="/WEB-INF/views/common/leader/layout.jsp">
-		<put-attribute name="title" value="레이아웃 페이지" />
-		<put-attribute name="header" value="/WEB-INF/views/common/leader/header.jsp" />
-		<put-attribute name="body" value="" />
-		<put-attribute name="side" value="/WEB-INF/views/common/leader/side.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/common/leader/footer.jsp" />
-			
+   <definition name="leaderbaseLayout"
+      template="/WEB-INF/views/common/leader/layout.jsp">
+      <put-attribute name="title" value="레이아웃 페이지" />
+      <put-attribute name="header"
+         value="/WEB-INF/views/common/leader/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="side"
+         value="/WEB-INF/views/common/leader/side.jsp" />
+      <put-attribute name="footer"
+         value="/WEB-INF/views/common/leader/footer.jsp" />
+
+   </definition>
+
+
+   <definition name="/leader/main" extends="leaderbaseLayout">
+      <put-attribute name="title" value="뉴리더 메인페이지" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/content.jsp" />
+   </definition>
+
+   <definition name="/leader/companyLegister"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="뉴리더 등록페이지" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/companyLegister.jsp" />
+   </definition>
+
+   <definition name="/leader/companyLegisterList"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="뉴리더 조회페이지" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/companyLegisterList.jsp" />
+   </definition>
+   
+   <definition name="/leader/companyDetail"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="기업정보상세창" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/companyDetail.jsp" />
+   </definition>
+   
+   <definition name="/leader/viweApplicationfrom"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="사업참여신청" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/addApplicationFrom.jsp" />
+   </definition>
+   
+   <definition name="/leader/surveylist"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="설문조사리스트" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/surveyList.jsp" />
+   </definition>
+   
+   <definition name="/leader/addsurveryfrom"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="설문조사등록" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/addSurveryFrom.jsp" />
+   </definition>
+   
+   <definition name="/leader/surveyDetail"
+		extends="leaderbaseLayout">
+		<put-attribute name="title" value="설문조사 디테일" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/leader/surveyDetail.jsp" />
 	</definition>
 	
-	
-	<definition name="/leader/main" extends="leaderbaseLayout">
-		<put-attribute name="title" value="뉴리더 메인페이지" />
- 		<put-attribute name="body" value="/WEB-INF/views/leader/content.jsp" /> 
+	<definition name="/leader/addAnswer"
+		extends="leaderbaseLayout">
+		<put-attribute name="title" value="설문조사 답변" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/leader/surveyList.jsp" />
 	</definition>
-
-<definition name="/leader/companyLegister" extends="leaderbaseLayout">
-		<put-attribute name="title" value="뉴리더 메인페이지" />
- 		<put-attribute name="body" value="/WEB-INF/views/leader/companyLegister.jsp" /> 
-	</definition>	
-
-<definition name="/leader/companyLegisterList" extends="leaderbaseLayout">
-		<put-attribute name="title" value="뉴리더 메인페이지" />
- 		<put-attribute name="body" value="/WEB-INF/views/leader/companyLegisterList.jsp" /> 
-	</definition>	
 
 </tiles-definitions>
-
-

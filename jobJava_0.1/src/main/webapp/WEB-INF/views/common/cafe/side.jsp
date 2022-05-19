@@ -27,8 +27,8 @@
                     <input id="mypage" type="checkbox">
                     <nav id="main_nav1">
                         <ul>
-                            <li><a href="#">사업참여등록</a></li>
-                            
+                            <li><a href="${contextPath}/cafe/mypage.do">사업참여신청</a></li>
+                            <li><a href="${contextPath}/cafe/jobapp.do">구직등록</a></li>
                         </ul>
                     </nav>
                 </li>

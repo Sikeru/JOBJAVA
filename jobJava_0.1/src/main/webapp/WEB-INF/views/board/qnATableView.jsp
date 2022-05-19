@@ -11,6 +11,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+ function deleteTable(QNA_NO) {
+	 location.href="${contextPath}/board/qnADeleteTable.do?QNA_NO="+QNA_NO;
+	 
+ }
+</script>
 </head>
 <body>
 <form action="${contextPath}/board/qnAUpDateTable.do" method="post">
@@ -24,7 +30,8 @@
   	<input type="text" value="${qna.ANSWER }" style="width: 50%" disabled><br>
   	<input type="text" value="${qna.RESPON }" style="width: 50%" disabled><br>
   	</c:if>
-  	<input type="submit" value="수정">
+  	<input type="submit" value="수정"><br>
+  	<input type="button" value="삭제" onclick="deleteTable(${qna.QNA_NO})"/>
 	</c:when>
   
     <c:otherwise>
@@ -34,8 +41,10 @@
   	<input type="text" value="${qna.RESPON }" style="width: 50%" readonly><br>
   	<input type="text" name="ANSWER" value="${qna.ANSWER }" style="width: 50%"><br>
   	<input type="hidden" name="RESPON" value="${pageContext.request.userPrincipal.name}">
+    <input type="button" value="삭제" onclick="deleteTable(${qna.QNA_NO})"/>
   
   	<input type="submit" value="수정">
+  	
     </s:authorize>
  	<s:authorize access="hasAnyRole('ROLE_COM', 'ROLE_MAG')">
  	<input type="text" name="TITLE" value="${qna.TITLE }" readonly style="width:50%">

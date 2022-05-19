@@ -1,103 +1,140 @@
 package com.jobjava.JJ.cafe.vo;
-// °Ô½ÃÆÇ ÇÏ´ÜÀÇ ÆäÀÌÂ¡
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
 public class Paging {
-    
-    private int totalCount; // °Ô½ÃÆÇ ÀüÃ¼ µ¥ÀÌÅÍ °³¼ö
-    private int displayPageNum = 10; // °Ô½ÃÆÇ È­¸é¿¡¼­ ÇÑ¹ø¿¡ º¸¿©Áú ÆäÀÌÁö ¹øÈ£ÀÇ °³¼ö
-    
-    private int startPage; // È­¸éÀÇ ½ÃÀÛ ¹øÈ£
-    private int endPage;  // È­¸éÀÇ ³¡ ¹øÈ£
-    private boolean prev; // ÆäÀÌÂ¡ ÀÌÀü ¹öÆ° È°¼ºÈ­ ¿©ºÎ
-    private boolean next; // ÆäÀÌÂ¡ ´ÙÀ½ ¹öÆ° È°¼ºÈ­ ¿©ºÎ
-    
-    private Criteria cri;
- 
-    
-    public int getTotalCount() {
-        return totalCount;
-    }
- 
-    public void setTotalCount(int totalCount) {
-        this.totalCount = totalCount;
-        
-        pagingData();
-    }
-    
-    private void pagingData() {
-        
-        endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
-        // endPage = (ÇöÀç ÆäÀÌÁö ¹øÈ£ / È­¸é¿¡ º¸¿©Áú ÆäÀÌÁö ¹øÈ£ÀÇ °³¼ö) * È­¸é¿¡ º¸¿©Áú ÆäÀÌÁö ¹øÈ£ÀÇ °³¼ö
-        startPage = (endPage - displayPageNum) + 1;
-        // startPage = (³¡ ÆäÀÌÁö ¹øÈ£ - È­¸é¿¡ º¸¿©Áú ÆäÀÌÁö ¹øÈ£ÀÇ °³¼ö) + 1
-        
-        int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));    
-        if(endPage > tempEndPage) {
-            endPage = tempEndPage;
-        }
-        // ¸¶Áö¸· ÆäÀÌÁö ¹øÈ£ = ÃÑ °Ô½Ã±Û ¼ö / ÇÑ ÆäÀÌÁö´ç º¸¿©ÁÙ °Ô½Ã±ÛÀÇ°³¼ö
-        
-        prev = startPage == 1 ? false : true;    
-        // ÀÌÀü ¹öÆ° »ı¼º ¿©ºÎ = ½ÃÀÛ ÆäÀÌÁö ¹øÈ£°¡ 1°ú °°À¸¸é false, ¾Æ´Ï¸é true
-        next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
-        // ´ÙÀ½ ¹öÆ° »ı¼º ¿©ºÎ = ³¡ ÆäÀÌÁö ¹øÈ£ * ÇÑ ÆäÀÌÁö´ç º¸¿©ÁÙ °Ô½Ã±ÛÀÇ °³¼ö°¡ ÃÑ °Ô½Ã±ÛÀÇ ¼öº¸´Ù
-        // Å©°Å³ª °°À¸¸é false, ¾Æ´Ï¸é true
-    }
- 
-    public int getDisplayPageNum() {
-        return displayPageNum;
-    }
- 
-    public void setDisplayPageNum(int displayPageNum) {
-        this.displayPageNum = displayPageNum;
-    }
- 
-    public int getStartPage() {
-        return startPage;
-    }
- 
-    public void setStartPage(int startPage) {
-        this.startPage = startPage;
-    }
- 
-    public int getEndPage() {
-        return endPage;
-    }
- 
-    public void setEndPage(int endPage) {
-        this.endPage = endPage;
-    }
- 
-    public boolean isPrev() {
-        return prev;
-    }
- 
-    public void setPrev(boolean prev) {
-        this.prev = prev;
-    }
- 
-    public boolean isNext() {
-        return next;
-    }
- 
-    public void setNext(boolean next) {
-        this.next = next;
-    }
- 
-    public Criteria getCri() {
-        return cri;
-    }
- 
-    public void setCri(Criteria cri) {
-        this.cri = cri;
-    }
-    
-    
-    @Override
+
+	private int totalCount; // ê²Œì‹œíŒ ì „ì²´ ë°ì´í„° ê°œìˆ˜
+	private int displayPageNum = 10; // ê²Œì‹œíŒ í™”ë©´ì—ì„œ í•œë²ˆì— ë³´ì—¬ì§ˆ í˜ì´ì§€ ë²ˆí˜¸ì˜ ê°œìˆ˜
+
+	private int startPage; // í™”ë©´ì˜ ì‹œì‘ ë²ˆí˜¸
+	private int endPage; // í™”ë©´ì˜ ë ë²ˆí˜¸
+	private boolean prev; // í˜ì´ì§• ì´ì „ ë²„íŠ¼ í™œì„±í™” ì—¬ë¶€
+	private boolean next; // í˜ì´ì§• ë‹¤ìŒ ë²„íŠ¼ í™œì„±í™” ì—¬ë¶€
+
+	private Criteria cri;
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+
+		pagingData();
+	}
+
+	private void pagingData() {
+
+		endPage = (int) (Math.ceil(cri.getPage() / (double) displayPageNum) * displayPageNum);
+		// endPage = (í˜„ì¬ í˜ì´ì§€ ë²ˆí˜¸ / í™”ë©´ì— ë³´ì—¬ì§ˆ í˜ì´ì§€ ë²ˆí˜¸ì˜ ê°œìˆ˜) * í™”ë©´ì— ë³´ì—¬ì§ˆ í˜ì´ì§€ ë²ˆí˜¸ì˜ ê°œìˆ˜
+		startPage = (endPage - displayPageNum) + 1;
+		// startPage = (ë í˜ì´ì§€ ë²ˆí˜¸ - í™”ë©´ì— ë³´ì—¬ì§ˆ í˜ì´ì§€ ë²ˆí˜¸ì˜ ê°œìˆ˜) + 1
+
+		int tempEndPage = (int) (Math.ceil(totalCount / (double) cri.getPerPageNum()));
+		if (endPage > tempEndPage) {
+			endPage = tempEndPage;
+		}
+		// ë§ˆì§€ë§‰ í˜ì´ì§€ ë²ˆí˜¸ = ì´ ê²Œì‹œê¸€ ìˆ˜ / í•œ í˜ì´ì§€ë‹¹ ë³´ì—¬ì¤„ ê²Œì‹œê¸€ì˜ê°œìˆ˜
+
+		prev = startPage == 1 ? false : true;
+		// ì´ì „ ë²„íŠ¼ ìƒì„± ì—¬ë¶€ = ì‹œì‘ í˜ì´ì§€ ë²ˆí˜¸ê°€ 1ê³¼ ê°™ìœ¼ë©´ false, ì•„ë‹ˆë©´ true
+		next = endPage * cri.getPerPageNum() >= totalCount ? false : true;
+		// ë‹¤ìŒ ë²„íŠ¼ ìƒì„± ì—¬ë¶€ = ë í˜ì´ì§€ ë²ˆí˜¸ * í•œ í˜ì´ì§€ë‹¹ ë³´ì—¬ì¤„ ê²Œì‹œê¸€ì˜ ê°œìˆ˜ê°€ ì´ ê²Œì‹œê¸€ì˜ ìˆ˜ë³´ë‹¤
+		// í¬ê±°ë‚˜ ê°™ìœ¼ë©´ false, ì•„ë‹ˆë©´ true
+	}
+
+	public int getDisplayPageNum() {
+		return displayPageNum;
+	}
+
+	public void setDisplayPageNum(int displayPageNum) {
+		this.displayPageNum = displayPageNum;
+	}
+
+	public int getStartPage() {
+		return startPage;
+	}
+
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+
+	public int getEndPage() {
+		return endPage;
+	}
+
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
+
+	public boolean isPrev() {
+		return prev;
+	}
+
+	public void setPrev(boolean prev) {
+		this.prev = prev;
+	}
+
+	public boolean isNext() {
+		return next;
+	}
+
+	public void setNext(boolean next) {
+		this.next = next;
+	}
+
+	public Criteria getCri() {
+		return cri;
+	}
+
+	public void setCri(Criteria cri) {
+		this.cri = cri;
+	}
+
+	@Override
     public String toString() {
         return "PageMaker [totalCount=" + totalCount + ", startPage=" + startPage + ", endPage=" + endPage + ", prev="
                 + prev + ", next=" + next + ", displayPageNum=" + displayPageNum + ", cri=" + cri + "]";
     }
+   public String makeQuery(int page) {
+      UriComponents uriComponents =
+      UriComponentsBuilder.newInstance()
+                      .queryParam("page", page)
+                     .queryParam("perPageNum", cri.getPerPageNum())
+                     .build();
+         
+      return uriComponents.toUriString();
+   }
+    
+    
+    public String makeSearch(int page)
+   {
+     
+    UriComponents uriComponents =
+               UriComponentsBuilder.newInstance()
+               .queryParam("page", page)
+               .queryParam("perPageNum", cri.getPerPageNum())
+               .queryParam("searchType", ((SearchCriteria)cri).getSearchType())
+               .queryParam("keyword", encoding(((SearchCriteria)cri).getKeyword()))
+               .build(); 
+       return uriComponents.toUriString();  
+   }
+
+   private String encoding(String keyword) {
+      if(keyword == null || keyword.trim().length() == 0) { 
+         return "";
+      }
+       
+      try {
+         return URLEncoder.encode(keyword, "UTF-8");
+      } catch(UnsupportedEncodingException e) { 
+         return ""; 
+      }
+   }
     
 }
-
-

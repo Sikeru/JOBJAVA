@@ -1,16 +1,13 @@
 package com.jobjava.JJ.cafe.vo;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public class ProgramVO {
 	private int PROGRAM_NO;
-	private int EMP_NO;
+	private String B_NO;
 	private String TITLE;
 	private String CONTENT;
 	private Date S_DATE;
@@ -24,11 +21,11 @@ public class ProgramVO {
 	public void setPROGRAM_NO(int pROGRAM_NO) {
 		PROGRAM_NO = pROGRAM_NO;
 	}
-	public int getEMP_NO() {
-		return EMP_NO;
+	public String getB_NO() {
+		return B_NO;
 	}
-	public void setEMP_NO(int eMP_NO) {
-		EMP_NO = eMP_NO;
+	public void setB_NO(String b_NO) {
+		B_NO = b_NO;
 	}
 	public String getTITLE() {
 		return TITLE;
@@ -55,10 +52,23 @@ public class ProgramVO {
 		E_DATE = e_DATE;
 	}
 	public String getFILENAME() {
+		try {
+			if (FILENAME != null && FILENAME.length() != 0) {
+				FILENAME = URLDecoder.decode(FILENAME, "UTF-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return FILENAME;
 	}
 	public void setFILENAME(String fILENAME) {
-		FILENAME = fILENAME;
+		try {
+			if(fILENAME!= null && fILENAME.length()!=0) {
+				this.FILENAME = URLEncoder.encode(fILENAME,"UTF-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	public String getDIVISION() {
 		return DIVISION;
@@ -67,23 +77,8 @@ public class ProgramVO {
 		DIVISION = dIVISION;
 	}
 	
-	
-	
-	
-//	private ArrayList<GrantedAuthority> authority;
-	
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		return authority;
-//	}
-//	
-//	public void setAuthority(ArrayList<String> authList) {
-//		ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-//		for(int i=0;i<authList.size();i++) {
-//			auth.add(new SimpleGrantedAuthority(authList.get(i)));
-//		}
-//		this.authority=auth;
-//	}
-	
-	
+
+
 }
+	
+	

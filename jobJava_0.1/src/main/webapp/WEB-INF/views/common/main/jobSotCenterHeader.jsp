@@ -6,7 +6,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />
+<style>
+    #jobSottopMenu ul {
+        width: 100%;
+        overflow: hidden;
+        margin:0;
+    }
 
+    #jobSottopMenu li {
+        display: inline-block;
+        list-style: none;
+        text-decoration: none;
+        margin: 20px;
+        float: right;
+        position: relative;
+        right: 42%;
+        top: 30%;
+        z-index: 2;
+    }
+
+    #jobSottopMenu li a {
+        text-decoration: none;
+        color: white;
+    }
+</style>
 <script>
  function myPage(userID) {
 	 let f = document.createElement('form');
@@ -40,15 +63,11 @@
         </div>
 
 
-        <div id="topMenu">
+        <div id="jobSottopMenu">
             <ul>
-                <li><a href="${contextPath}/main/.do">취업상담</a></li>
-                <li><a href="${contextPath}/main/.do">온라인상담</a></li>
+                <li><a href="${contextPath}/board/employmentConTable.do">취업상담</a></li>
+                <li><a href="${contextPath}/board/onlineConTable.do">온라인상담</a></li>
                 <li><a href="${contextPath}/board/qnATable.do">질의응답</a></li>
-                <s:authorize access="hasRole('ROLE_ADMIN')">
-				 <li class="no_line"><a href="">관리자</a></li>
-				</s:authorize>
-
             </ul>
         </div>
         

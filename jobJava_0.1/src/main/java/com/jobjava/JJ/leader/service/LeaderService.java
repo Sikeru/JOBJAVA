@@ -4,20 +4,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jobjava.JJ.leader.vo.AppVO;
 import com.jobjava.JJ.leader.vo.CRegVO;
 import com.jobjava.JJ.leader.vo.Criteria;
+import com.jobjava.JJ.leader.vo.SearchCriteria;
+import com.jobjava.JJ.leader.vo.SurveyVO;
 
 public interface LeaderService {
-	// ±â¾÷µî·ÏÇÏ±â insert
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ insert
 	public void insertCompany(HashMap<String, String> company);
 
-	// ±â¾÷µî·Ï select
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ select
 	public List<CRegVO> selectlegister();
 
-	// ±â¾÷µî·ÏÁ¶È¸ ¸®½ºÆ® ÆäÀÌÂ¡
-	public int boardListCnt();
-
-	public List<Map<String, Object>> boardList(Criteria cri);
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½Â¡
 
 	public CRegVO selectRegi(String regiNO);
+
+	public int selectSvNO(String title);
+
+	public void addQuestion(String ql, int svNO);
+
+	public void addSurvery(int empNO, String title, String sDate, String eDate);
+
+	public int selectEmpno(String parameter);
+
+	public List<SurveyVO> SurveyList();
+
+	public List<SurveyVO> viewSurvey(int svNO);
+
+	public SurveyVO surveyDetail(int svNO);
+	
+	public void addAnswer(int qno, String answer, String id);
+	
+	public String cregTitle(int regiNO);
+	
+	public AppVO userInfo(String id);
+
+	public int addCompany(Map articleMap) throws Exception;
+
+	public int boardListCnt(SearchCriteria scri);
+	
+	public List<Map<String, Object>> boardList(SearchCriteria scri);
 }

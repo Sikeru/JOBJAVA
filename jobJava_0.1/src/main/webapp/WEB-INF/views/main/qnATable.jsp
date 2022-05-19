@@ -10,9 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
-	function nuser_submit() {
-		$('#search').submit();   
-	}
+
 
 </script>
 <style>
@@ -108,7 +106,6 @@
 <body>
 <Table>
 <div id="mainWrapper">
-
         <ul>
             <!-- 게시판 제목 -->
             <li>QNA</li>
@@ -152,6 +149,7 @@
 			</c:when>
 			</c:choose>
 
+
             <!-- 게시판 페이징 영역 -->
             <li>
                 <div id="divPaging">
@@ -161,30 +159,30 @@
                 <c:forEach   var="page" begin="1" end="10" step="1" >
                 	<c:if test="${paging.section >1 && page==1 }">
                 	  <c:choose>
-                	   <c:when test="${search.search == null} ">
-			          <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section-1}&pageNum=1">&nbsp; ◀ </a>
-			          </c:when>
 			           <c:when test="${search.search != null }">
 			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section-1}&pageNum=1">&nbsp; ◀ </a>
 			           </c:when>
+			           <c:otherwise>
+			           <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section-1}&pageNum=1">&nbsp; ◀ </a>
+			           </c:otherwise>
 			          </c:choose>
 	    		    </c:if>
 	    		      <c:choose>
-                	   <c:when test="${search.search == null} ">
-	          		  <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
-	          		  </c:when>
 	          		   <c:when test="${search.search != null }">
 			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
 			           </c:when>
+			           <c:otherwise>
+			           <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
+			           </c:otherwise>
 			          </c:choose>
 	         		<c:if test="${page ==10 }">
 	         		 <c:choose>
-                	   <c:when test="${search.search == null} ">
-	          		  <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section+1}&pageNum=1">&nbsp; ▶</a>
-	          		  </c:when>
 	          		  <c:when test="${search.search != null }">
 			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section+1}&pageNum=1">&nbsp; ▶</a>
 			           </c:when>
+			           <c:otherwise>
+			           <a class="no-uline" href="${contextPath }/board/qnATable.do?section=${paging.section+1}&pageNum=1">&nbsp; ▶</a>
+			           </c:otherwise>
 			          </c:choose>
 	         		</c:if>
 	      		</c:forEach>
@@ -199,7 +197,7 @@
 	     			 <c:forEach   var="page" begin="1" end="${qnaTotal/10 +1}" step="1" >
 	         		<c:choose>
 	           		<c:when test="${page==paging.pageNum }">
-	           		  <c:if test="${search.search == null}">
+	           		  <c:if test="${empty search.search}">
 	            		<a class="sel-page"  href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${page } </a>
 	            		</c:if>
 	            	   <c:if test="${search.search != null}">
@@ -207,7 +205,7 @@
 	            		</c:if>
 	          		</c:when>
 	          		<c:otherwise>
-	          		<c:if test="${search.search == null}">
+	          		<c:if test="${empty search.search}">
 	            		<a class="no-uline"  href="${contextPath }/board/qnATable.do?section=${paging.section}&pageNum=${page}">${page } </a>
 	            		</c:if>
 	            		<c:if test="${search.search != null}">

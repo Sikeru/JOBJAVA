@@ -16,9 +16,9 @@
 	<select id="qnaSelectAll" resultType="QnAVO" parameterType="java.util.HashMap">
 	<![CDATA[
 	SELECT * FROM(SELECT ROWNUM as recNum, QNA_NO, TITLE, CONTENT, QNA_DATE, ID, ANSWER, RESPON,PROCESS
-	FROM QNA)
+	FROM QNA
+	ORDER BY QNA_NO DESC)
 	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
-	ORDER BY QNA_DATE DESC
 	]]>
 	</select>
 	<select id="qnaSelectSearch" resultType="QnAVO" parameterType="java.util.HashMap">
@@ -90,7 +90,165 @@
 	    WHERE QNA_NO=#{QNA_NO}
 	</update>
 	
+	<delete id="qnADeleteTable" parameterType="int">
+		<![CDATA[
+		DELETE FROM QNA
+		WHERE QNA_NO = #{QNA_NO}
+		]]>
+	</delete>
 	
+	<select id="onlineSelectAll" resultType="OnlineVO" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT * FROM(SELECT ROWNUM as recNum, ON_COM_NO, TITLE, CONTENT, OCA_DATE, ID, ANSWER, RESPON,PROCESS
+	FROM ONLINE_COM_APP
+	ORDER BY ON_COM_NO DESC)
+	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
+	]]>
+	</select>
+	
+	<select id="onlineTotalTable" resultType="int">
+	<![CDATA[
+	SELECT COUNT(ON_COM_NO) FROM ONLINE_COM_APP
+	]]>
+	</select>
+	
+	<insert id="insertOnlineTable" parameterType="OnlineVO">
+	<![CDATA[
+		INSERT INTO ONLINE_COM_APP(ON_COM_NO, TITLE,CONTENT, OCA_DATE, ID, PROCESS)
+		VALUES (QNA_NO.NEXTVAL, #{TITLE},#{CONTENT} ,SYSDATE, #{ID}, 'X')
+	]]>
+	</insert>
+	
+	<select id="onlineSelectOne" resultType="OnlineVO" parameterType="int">
+	<![CDATA[
+	SELECT * FROM ONLINE_COM_APP
+	WHERE ON_COM_NO = #{ON_COM_NO}
+	]]>
+	</select>
+	
+	<delete id="onlineDeleteTable" parameterType="int">
+		<![CDATA[
+		DELETE FROM ONLINE_COM_APP
+		WHERE ON_COM_NO = #{ON_COM_NO}
+		]]>
+	</delete>
+	
+	
+	<update id="upDateonlineTable" parameterType="OnlineVO">
+		UPDATE ONLINE_COM_APP
+		<set>
+		<if test="TITLE !='' and TITLE != null">
+		TITLE=#{TITLE},
+	     </if>
+	     <if test="CONTENT !='' and CONTENT != null">
+		CONTENT=#{CONTENT},
+	     </if>
+	     <if test="ANSWER !='' and ANSWER != null">
+		ANSWER=#{ANSWER},
+	     </if>
+	     <if test="RESPON !='' and RESPON != null">
+		RESPON=#{RESPON},
+		PROCESS='O',
+	     </if>
+	     </set>
+	    WHERE ON_COM_NO=#{ON_COM_NO}
+	</update>
+	
+	<select id="onlineSelectSearch" resultType="OnlineVO" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT * FROM(SELECT ROWNUM as recNum, ON_COM_NO, TITLE, CONTENT, OCA_DATE, ID, ANSWER, RESPON,PROCESS
+	FROM ONLINE_COM_APP
+	WHERE ]]> <include refid="search"/>
+	<![CDATA[)
+	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
+	ORDER BY OCA_DATE DESC
+	]]>
+	</select>
+	
+	<select id="onlineSelectTotalSearch" resultType="int" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT COUNT(ON_COM_NO) FROM ONLINE_COM_APP
+	WHERE ]]>
+	<include refid="search"/>
+
+	</select>
+	
+	
+	<select id="employmentSelectAll" resultType="EmploymentVO" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT * FROM(SELECT ROWNUM as recNum, EMP_CON_NO, TITLE, CONTENT, EC_DATE, ID, ANSWER, RESPON,PROCESS
+	FROM EMP_CONSULTING
+	ORDER BY EMP_CON_NO DESC)
+	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
+	]]>
+	</select>
+	
+	<select id="employmentTotalTable" resultType="int">
+	<![CDATA[
+	SELECT COUNT(EMP_CON_NO) FROM EMP_CONSULTING
+	]]>
+	</select>
+	
+	<select id="employmentSelectOne" resultType="EmploymentVO" parameterType="int">
+	<![CDATA[
+		SELECT EMP_CON_NO, TITLE, CONTENT, EC_DATE, ID, ANSWER, RESPON,PROCESS
+		FROM EMP_CONSULTING
+		WHERE EMP_CON_NO = #{EMP_CON_NO}
+	]]>
+	</select>
+	
+	<insert id="insertEmploymentTable" parameterType="EmploymentVO">
+	<![CDATA[
+		INSERT INTO EMP_CONSULTING(EMP_CON_NO, TITLE,CONTENT, EC_DATE, ID, PROCESS)
+		VALUES (EMP_CON_NO.NEXTVAL, #{TITLE},#{CONTENT} ,SYSDATE, #{ID}, 'X')
+	]]>
+	</insert>
+	
+	<delete id="employmentDeleteTable" parameterType="int">
+		<![CDATA[
+		DELETE FROM EMP_CONSULTING
+		WHERE EMP_CON_NO = #{EMP_CON_NO}
+		]]>
+	</delete>
+	
+	<update id="upDateemploymentTable" parameterType="EmploymentVO">
+		UPDATE EMP_CONSULTING
+		<set>
+		<if test="TITLE !='' and TITLE != null">
+		TITLE=#{TITLE},
+	     </if>
+	     <if test="CONTENT !='' and CONTENT != null">
+		CONTENT=#{CONTENT},
+	     </if>
+	     <if test="ANSWER !='' and ANSWER != null">
+		ANSWER=#{ANSWER},
+	     </if>
+	     <if test="RESPON !='' and RESPON != null">
+		RESPON=#{RESPON},
+		PROCESS='O',
+	     </if>
+	     </set>
+	    WHERE EMP_CON_NO=#{EMP_CON_NO}
+	</update>
+	
+	<select id="employmentSelectSearch" resultType="EmploymentVO" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT * FROM(SELECT ROWNUM as recNum, EMP_CON_NO, TITLE, CONTENT, EC_DATE, ID, ANSWER, RESPON,PROCESS
+	FROM EMP_CONSULTING
+	WHERE ]]> <include refid="search"/>
+	<![CDATA[)
+	WHERE recNum BETWEEN(#{section}-1)*100+(#{pageNum}-1)*10+1 AND (#{section}-1)*100+#{pageNum}*10
+	ORDER BY EC_DATE DESC
+	]]>
+	</select>
+	
+	<select id="employmentSelectTotalSearch" resultType="int" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT COUNT(EMP_CON_NO) FROM EMP_CONSULTING
+	WHERE ]]>
+	<include refid="search"/>
+
+	</select>
 	
 
 </mapper>

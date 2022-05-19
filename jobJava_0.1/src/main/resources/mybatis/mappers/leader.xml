@@ -12,6 +12,34 @@
 	]]>
 	</insert>
 
+	<!--다중 이미지 추가 SQL문 --><!-- 꿈터기업마이페이지 -->
+	<insert id="insertNewArticle" parameterType="java.util.Map">
+	 <![CDATA[
+		INSERT INTO C_REG(REGI_NO, B_NO, TITLE, CONTENT, FILENAME, S_DATE, E_DATE) 
+					VALUES(REGI_NO.NEXTVAL,#{B_NO}, #{TITLE}, #{CONTENT}, null, #{S_DATE}, #{E_DATE})
+	]]>
+	</insert>
+	<!-- 프로그램파일추가 -->
+	<insert id="insertNewImage" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			separator=" " close="SELECT * FROM DUAL">
+
+			INTO C_REGI_FILE(REGI_FILENO, REGI_NO, REGI_FILENAME,
+			REGI_DATE)
+			VALUES(#{item.REGI_FILENO}, #{item.REGI_NO},
+			#{item.REGI_FILENAME},
+			SYSDATE)
+
+		</foreach>
+	</insert>
+
+	<!-- 프로그램파일번호 생성 -->
+	<select id="selectNewImageFileNO" resultType="int">
+		<![CDATA[
+			SELECT nvl(max(REGI_FILENO), 0) from C_REGI_FILE]]>
+	</select>
+
+
 	<!-- ID에 따른 사업자번호 가져오기 -->
 	<select id="selectCompanyID" resultType="String"
 		parameterType="java.util.HashMap">
@@ -21,9 +49,29 @@
 	]]>
 	</select>
 
-	<!-- 기업등록조회 -->
+	<!-- 프로그램 번호 가져오기 -->
+	<select resultType="int" id="selectREGI_NO">
+		<![CDATA[
+		 SELECT nvl(max(REGI_NO),0) +1 from C_REG
+	]]>
+	</select>
+
+
+
+
+	<!-- 기업등록조회 + 페이징 + 검색 -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'T'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+				LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
+
+
 	<select id="boardList" resultType="hashmap"
-      parameterType="hashmap">
+		parameterType="hashmap">
         <![CDATA[
             SELECT REGI_NO, 
                 TITLE, 
@@ -38,19 +86,34 @@
                        CONTENT, 
                        FILENAME, 
                        S_DATE,
-                       E_DATE, 
+                       E_DATE,
                        ROW_NUMBER() OVER(ORDER BY REGI_NO) AS RNUM
                  FROM C_REG 
-                               ) 
+                 WHERE 1=1]]>
+
+
+		<include refid="search"></include> 
+               
+                 
+        <![CDATA[
+                   )
+       
         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
         ORDER BY REGI_NO ASC
+        
         ]]>
-   </select>
-	<select id="boardListCnt" resultType="int">
+
+	</select>
+	<!-- 게시물 총 갯수 -->
+	<select id="boardListCnt" parameterType="SearchCriteria"
+		resultType="int">
 	<![CDATA[
 		SELECT count(*)
 		FROM C_REG
+		WHERE 1=1
 		]]>
+
+		<include refid="search"></include>
 	</select>
 
 	<!-- 기업등록조회상세 -->
@@ -59,6 +122,7 @@
 		SELECT * FROM C_REG
 		
 	]]>
+
 	</select>
 
 	<!-- 기업등록 번호조회 -->
@@ -73,4 +137,88 @@
 		INSERT INTO SURVEY()
 	]]>
 	</select>
+
+	<!-- 사원번호 가져오기 -->
+	<select id="selectEmpNO" resultType="int">
+	<![CDATA[
+		select emp_no from emp where id = #{Id}
+	]]>
+	</select>
+
+	<!-- 사업번호로 제목가져오기 -->
+	<select id="selectCregtitle" resultType="String">
+	<![CDATA[
+		SELECT TITLE FROM C_REG WHERE REGI_NO= #{param1}
+	]]>
+	</select>
+
+	<!-- 유저ID로 기본정보 가져오기 -->
+	<select id="selectUserInfo" resultType="AppVO">
+	<![CDATA[
+		SELECT NAME, ADDR, HP, EMAIL 
+		FROM ST_MEMBER SM, MEMBER M 
+		WHERE M.ID='gkrtod' AND SM.ID=#{param1}
+	]]>
+	</select>
+
+
+
+
+	<!-- 설문등록 -->
+	<insert id="addSurvery">
+	<![CDATA[
+		INSERT INTO SURVEY VALUES(SV_NO.NEXTVAL, #{param1}, #{param2}, TO_DATE(#{param3},'YYYY-MM-DD'), TO_DATE(#{param4}, 'YYYY-MM-DD'), ' ')
+	]]>
+	</insert>
+
+	<!-- 설문문항등록 -->
+	<insert id="addQuestion">
+		<![CDATA[
+			INSERT INTO QUESTION VALUES(Q_NO.NEXTVAL, #{param1}, #{param2})
+		]]>
+	</insert>
+
+	<!-- 설문번호 가져오기 -->
+	<select id="selectSvNO" resultType="int">
+	<![CDATA[
+		SELECT SV_NO FROM SURVEY WHERE TITLE = #{param1}
+	]]>
+	</select>
+
+	<!-- 설문전체리스트 -->
+	<select id="selectAllSurveyList" resultType="SurveyVO">
+	<![CDATA[
+		SELECT SV_NO, TITLE, TO_CHAR(S_DATE, 'YYYY-MM-DD') AS S_DATE, TO_CHAR(E_DATE, 'YYYY-MM-DD') AS E_DATE, NAME 
+		FROM SURVEY S, EMP E 
+		WHERE S.EMP_NO=E.EMP_NO order by SV_NO ASC
+	]]>
+	</select>
+
+	<!-- 설문 상세 -->
+	<select id="selectContent" resultType="SurveyVO">
+	<![CDATA[
+		SELECT Q_NO, Q_TXT
+		FROM SURVEY S, QUESTION Q
+		WHERE S.SV_NO = Q.SV_NO AND S.SV_NO = #{param1}
+		ORDER BY Q_NO ASC
+	]]>
+	</select>
+
+	<select id="selectSurvey" resultType="SurveyVO">
+	<![CDATA[
+		SELECT TITLE, TO_CHAR(S_DATE, 'YYYY-MM-DD') AS S_DATE, TO_CHAR(E_DATE, 'YYYY-MM-DD') AS E_DATE, NAME 
+		FROM SURVEY S, EMP E 
+		WHERE S.EMP_NO=E.EMP_NO AND SV_NO = #{param1}
+		order by SV_NO ASC
+	]]>
+	</select>
+
+	<update id="insertAnswer">
+	<![CDATA[
+		INSERT INTO ANSWER(A_NO, Q_NO, ${param2}, ID)
+    		VALUES(A_NO.NEXTVAL, ${param1}, 1, #{param3})
+	]]>
+	</update>
+
+
 </mapper>

@@ -27,6 +27,16 @@
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</beans:bean>
 	
+	<!-- 다중 파일업로드  -->
+  <beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+  <beans:property name="maxUploadSize" value="52428800"/>
+  <beans:property name="maxInMemorySize" value="1000000"/>
+  <beans:property name="defaultEncoding" value="utf-8"/>
+  </beans:bean>
+	
+	
+	
+	
 <!-- 인터셉터 실습 설정 -->
    <mvc:interceptors>
     	<mvc:interceptor>

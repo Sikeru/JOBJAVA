@@ -1,7 +1,8 @@
 package com.jobjava.JJ.counselor.vo;
 
-import java.util.Date;
-
+import java.sql.Date;
+import java.util.List;
+ 
 public class UniregVO {
 	private int UNI_B_NO;
 	private int MG_NO;
@@ -11,9 +12,16 @@ public class UniregVO {
 	private String B_NAME;
 	private int B_EXPENSE;
 	private Date S_DATE;
-	private Date D_DATE;
+	private Date E_DATE;
 	private String B_CONTENT;
+	private String PERMISSION;
 	
+	public String getPERMISSION() {
+		return PERMISSION;
+	}
+	public void setPERMISSION(String pERMISSION) {
+		PERMISSION = pERMISSION;
+	}
 	public int getUNI_B_NO() {
 		return UNI_B_NO;
 	}
@@ -62,11 +70,11 @@ public class UniregVO {
 	public void setS_DATE(Date s_DATE) {
 		S_DATE = s_DATE;
 	}
-	public Date getD_DATE() {
-		return D_DATE;
+	public Date getE_DATE() {
+		return E_DATE;
 	}
-	public void setD_DATE(Date d_DATE) {
-		D_DATE = d_DATE;
+	public void setE_DATE(Date e_DATE) {
+		E_DATE = e_DATE;
 	}
 	public String getB_CONTENT() {
 		return B_CONTENT;
@@ -75,5 +83,10 @@ public class UniregVO {
 		B_CONTENT = b_CONTENT;
 	}
 	
+	public List<UniregVO> uniregList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

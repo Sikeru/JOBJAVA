@@ -2,16 +2,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%-- <fmt:parseDate value="${list}" var="list" pattern="yyyy-MM-dd"/> --%>
-
-
 <%@ page session="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
-
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
+<c:set var="userID">
+	<s:authentication property="name" />
+</c:set>
 <!DOCTYPE html>
 <html>
 <head>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <meta charset="UTF-8">
 <title>Canvas</title>
 <style type="text/css">
@@ -118,35 +118,43 @@ ul, li {
 			<li>기업등록조회</li>
 
 			<!-- 게시판 목록  -->
-			<li>Table
-				<ul id="ulTable">
-					<li>
-						<ul>
-							<li>No</li>
-							<li>제목</li>
-							<li>시작날짜</li>
-							<li>종료날짜</li>
-
-						</ul>
-					</li>
-					<!-- 게시물이 출력될 영역 -->
-					<c:forEach var="list" items="${list}">
+			<form method="post"
+				action="${contextPath}/leader/viweApplicationfrom.do">
+				<li>Table <input value="${userID}" name="userID" type="hidden">
+					<ul id="ulTable">
 						<li>
 							<ul>
-								<li>${list.REGI_NO}</li>
-								<li class="left"><a href="${contextPath}/leader/companyDetail.do?regiNO=${list.REGI_NO}">${list.TITLE}</a></li>
-								<li><fmt:formatDate value="${list.S_DATE}"
-										pattern="yyyy-MM-dd" /></li>
-								<li><fmt:formatDate value="${list.E_DATE}"
-										pattern="yyyy-MM-dd" /></li>
+								<li>No</li>
+								<li>제목</li>
+								<li>시작날짜</li>
+								<li>종료날짜</li>
+								<li>관리</li>
 							</ul>
 						</li>
-					</c:forEach>
-					<li></li>
-				</ul>
+						<!-- 게시물이 출력될 영역 -->
+						<c:forEach var="list" items="${list}">
+							<li>
+								<ul>
+									<li>${list.REGI_NO}</li>
+									<li class="left"><a
+										href="${contextPath}/leader/companyDetail.do?regiNO=${list.REGI_NO}">${list.TITLE}</a></li>
+									<li><fmt:formatDate value="${list.S_DATE}"
+											pattern="yyyy-MM-dd" /></li>
+									<li><fmt:formatDate value="${list.E_DATE}"
+											pattern="yyyy-MM-dd" /></li>
+									<li><input type="hidden" value="${list.REGI_NO}"
+										name="regiNO"> <input type="hidden"
+										value="${list.S_DATE}" name="sdate"> <input
+										type="submit" value="신청"
+										onclick="location.href='${contextPath}/leader/viweApplicationfrom.do'"></li>
+								</ul>
+							</li>
+						</c:forEach>
 
-			</li>
+					</ul>
 
+				</li>
+			</form>
 
 			<!-- 게시판 페이징 영역 -->
 
@@ -173,17 +181,49 @@ ul, li {
 			</li>
 
 			<!-- 검색 폼 영역 -->
-			<li id='liSearchOption'>
-				<div>
-					<select id='selSearchOption'>
-						<option value='A'>제목+내용</option>
-						<option value='T'>제목</option>
-						<option value='C'>내용</option>
-					</select> <input id='txtKeyWord' /> <input type='button' value='검색' />
-				</div>
-			</li>
+			<form role="form" method="get">
+				<li id='liSearchOption'>
+
+					<div class="search">
+						<select name='searchType'>
+							<option value='TC'
+								<c:out value="${scri.searchType eq 'TC' ? 'selected' : ''}"/>>제목+내용</option>
+							<option value='T'
+								<c:out value="${scri.searchType eq 'T' ? 'selected' : ''}"/>>제목</option>
+							<option value='C'
+								<c:out value="${scri.searchType eq 'C' ? 'selected' : ''}"/>>내용</option>
+						</select> <input type="text" name="keyword" id="keywordInput"
+							value="${scri.keyword}" />
+						<button id="searchBtn" type="button">검색</button>
+
+					</div>
+				</li>
+			</form>
 
 		</ul>
 	</div>
+
+
+	<script>
+		$(function() {
+			$('#searchBtn').click(
+					function() {
+						self.location = "companyLegisterList.do"
+								+ '${paging.makeQuery(1)}' + "&searchType="
+								+ $("select option:selected").val()
+								+ "&keyword="
+								+ encodeURIComponent($('#keywordInput').val());
+					});
+		});
+	</script>
+
+	<script>
+		$('input[type="submit"]').keydown(function() {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+			}
+			;
+		});
+	</script>
 </body>
 </html>

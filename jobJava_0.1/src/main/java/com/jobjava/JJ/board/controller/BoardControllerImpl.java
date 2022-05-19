@@ -1,6 +1,5 @@
 package com.jobjava.JJ.board.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.board.service.BoardService;
+import com.jobjava.JJ.board.vo.EmploymentVO;
+import com.jobjava.JJ.board.vo.OnlineVO;
 import com.jobjava.JJ.board.vo.QnAVO;
 
 
@@ -109,13 +110,13 @@ public class BoardControllerImpl implements BoardController{
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 		    message  = "<script>";
-		    message +=" alert('������ ���ƽ��ϴ�. ���� �������� �̵��մϴ�.');";
+		    message +=" alert('수정을 마쳤습니다. 원래 페이지로 이동합니다.');";
 		    message += " location.href='"+request.getContextPath()+"/board/qnATableView.do?QNA_NO="+_qnAVO.getQNA_NO()+"';";
 		    message += " </script>";
 		    
 		}catch(Exception e) {
 			message  = "<script>";
-		    message +=" alert('�۾� �� ������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
 		    message += " location.href='"+request.getContextPath()+"/board/qnATableView.do?QNA_NO='"+_qnAVO.getQNA_NO()+"';";
 		    message += " </script>";
 			e.printStackTrace();
@@ -149,9 +150,287 @@ public class BoardControllerImpl implements BoardController{
 		return mav;
 	}
 	
-	
+	@Override
+	@RequestMapping(value="/qnADeleteTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity qnADeleteTable(@RequestParam("QNA_NO") int _QNA_NO, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		boardservice.qnADeleteTable(_QNA_NO);
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('삭제을 마쳤습니다. QNA페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/board/qnATable.do;'";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/board/qnATable.do;'";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+
+	@Override
+	@RequestMapping(value="/onlineConTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView onlineConTable(@RequestParam HashMap<String, Integer> paging, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		if(paging.isEmpty()) {
+			paging.put("section", 1);
+			paging.put("pageNum", 1);
+		}
+		
+		List<OnlineVO> onlinevo = boardservice.onlineSelectAll(paging);
+		int onlineTotalTable = boardservice.onlineTotalTable();
+		mav.addObject("onlineTotal", onlineTotalTable);
+		mav.addObject("online", onlinevo);
+		mav.addObject("paging", paging);
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value="/onlineAddTableView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView onlineAddTableView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value="/onlineAddTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String onlineAddTable(@ModelAttribute("OnlineVO") OnlineVO _onlineVO, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		boardservice.insertOnlineTable(_onlineVO);
+		return "redirect:/board/onlineConTable.do";
+	}
 
 	
+	@Override
+	@RequestMapping(value="/onlineTableView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView onlineTableView(@RequestParam("ON_COM_NO") int ON_COM_NO, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		ModelAndView mav=new ModelAndView();
+		OnlineVO onlinevo = boardservice.onlineSelectOne(ON_COM_NO);
+		mav.addObject("online", onlinevo);
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@Override
+	@RequestMapping(value="/onlineDeleteTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity onlineDeleteTable(@RequestParam("ON_COM_NO") int ON_COM_NO,
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		boardservice.onlineDeleteTable(ON_COM_NO);
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('삭제을 마쳤습니다. 온라인 상담 페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/board/onlineTable.do;'";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/board/onlineTable.do;'";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+
+	@Override
+	@RequestMapping(value="/upDateonlineTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity upDateonlineTable(@ModelAttribute("OnlineVO") OnlineVO _onlineVO, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		boardservice.upDateonlineTable(_onlineVO);
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('수정을 마쳤습니다. 원래 페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/board/onlineTableView.do?ON_COM_NO="+_onlineVO.getON_COM_NO()+"';";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/board/onlineTableView.do?ON_COM_NO='"+_onlineVO.getON_COM_NO()+"';";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@Override
+	@RequestMapping(value="/searchOnlineTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView searchOnlineTable(@RequestParam HashMap<String, Object> search, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		if(search.get("section") == null && search.get("pageNum") == null) {
+			search.put("section", 1);
+			search.put("pageNum", 1);
+		}
+		
+		HashMap<String, Integer> paging = new HashMap<String, Integer>();
+		List<OnlineVO> onlinevo = boardservice.onlineSelectSearch(search);
+		int	onlineTotalTable = boardservice.onlineSelectTotalSearch(search);
+		
+		paging.put("section", Integer.parseInt(String.valueOf(search.get("section"))));
+		paging.put("pageNum", Integer.parseInt(String.valueOf(search.get("pageNum"))));
+		mav.addObject("onlineTotal", onlineTotalTable);
+		mav.addObject("online", onlinevo);
+		mav.addObject("paging", paging);
+		mav.addObject("search", search);
+		
+		mav.setViewName("/board/onlineConTable");
+		return mav;
+		
+	}
+
+	@Override
+	@RequestMapping(value="/employmentConTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView employmentConTable(HashMap<String, Integer> paging, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		if(paging.isEmpty()) {
+			paging.put("section", 1);
+			paging.put("pageNum", 1);
+		}
+		
+		List<EmploymentVO> employmentvo = boardservice.employmentSelectAll(paging);
+		int employmentTotalTable = boardservice.employmentTotalTable();
+		mav.addObject("employmentTotal", employmentTotalTable);
+		mav.addObject("employment", employmentvo);
+		mav.addObject("paging", paging);
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@Override
+	@RequestMapping(value="/employmentTableView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView employmentTableView(@RequestParam("EMP_CON_NO") int _EMP_CON_NO ,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		EmploymentVO employmentvo = boardservice.employmentSelectOne(_EMP_CON_NO);
+		mav.addObject("employment", employmentvo);
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	
+	@Override
+	@RequestMapping(value="/employmentAddTableView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView employmentAddTableView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+	
+	@Override
+	@RequestMapping(value="/employmentDeleteTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity employmentDeleteTable(@RequestParam("EMP_CON_NO") int EMP_CON_NO,
+			HttpServletRequest request, HttpServletResponse response) throws Exception{
+		boardservice.employmentDeleteTable(EMP_CON_NO);
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('삭제을 마쳤습니다. 온라인 상담 페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/board/employmentConTable.do;'";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/board/employmentConTable.do;'";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+
+	@Override
+	@RequestMapping(value="/upDateEmploymentTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity upDateEmploymentTable(@ModelAttribute("EmploymentVO") EmploymentVO _employmentVO, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		boardservice.upDateemploymentTable(_employmentVO);
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('수정을 마쳤습니다. 원래 페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/board/employmentTableView.do?ON_COM_NO="+_employmentVO.getEMP_CON_NO()+"';";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/board/employmentTableView.do?ON_COM_NO='"+_employmentVO.getEMP_CON_NO()+"';";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	@Override
+	@RequestMapping(value="/employmentAddTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String employmentAddTable(@ModelAttribute("EmploymentVO") EmploymentVO _employmentVO,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		boardservice.insertEmploymentTable(_employmentVO);
+		return "redirect:/board/employmentConTable.do";
+	}
+	
+	
+	@Override
+	@RequestMapping(value="/searchEmploymentTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView searchEmploymentTable(@RequestParam HashMap<String, Object> search, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		if(search.get("section") == null && search.get("pageNum") == null) {
+			search.put("section", 1);
+			search.put("pageNum", 1);
+		}
+		
+		HashMap<String, Integer> paging = new HashMap<String, Integer>();
+		List<EmploymentVO> employmentvo = boardservice.employmentSelectSearch(search);
+		int	employmentTotalTable = boardservice.employmentSelectTotalSearch(search);
+		
+		paging.put("section", Integer.parseInt(String.valueOf(search.get("section"))));
+		paging.put("pageNum", Integer.parseInt(String.valueOf(search.get("pageNum"))));
+		mav.addObject("employmentTotal", employmentTotalTable);
+		mav.addObject("employment", employmentvo);
+		mav.addObject("paging", paging);
+		mav.addObject("search", search);
+		
+		mav.setViewName("/board/employmentConTable");
+		return mav;
+		
+	}
 
 }
 	

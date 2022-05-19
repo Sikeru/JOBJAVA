@@ -28,9 +28,11 @@
         <div id="loginMenu">
             <ul>
                 <c:if test="${not empty pageContext.request.userPrincipal}">
-				<li><a href="${contextPath}/logout.do?ID=${pageContext.request.userPrincipal.name}">로그아웃</a></li>
-				<li><a href="javascript:myPage('${pageContext.request.userPrincipal.name}')">마이페이지</a></li>
-				<!-- <li><a href="${contextPath}/member/mypageForm.do?ID=${pageContext.request.userPrincipal.name}">마이페이지</a> -->
+				<li><a href="${contextPath}/logout.do">로그아웃</a></li>
+				<li><a href="${contextPath}/member/mypageForm.do">마이페이지</a></li>
+				<s:authorize access="hasRole('ROLE_EMP')">
+				 <li><a href="${contextPath}/counselor/main.do"><img src="${contextPath}/resources/image/counselorMainGoImg.png" style="width: 70px;height: 26px;"/></a></li>
+				</s:authorize>
 			</c:if>
 	        <c:if test="${empty pageContext.request.userPrincipal}">
 				<li><a href="${contextPath}/member/termsgree.do">회원가입</a></li>
@@ -42,10 +44,10 @@
 
         <div id="topMenu">
             <ul>
-	            <li><a href="${contextPath}/main/jobSotCenter.do?mnName=일자리지원센터">일자리지원센터</a></li>
-                <li><a href="${contextPath}/main/bessinfo.do">프로그램목록</a></li>
-                <li><a href="${contextPath}/member/loginForm.do">알림마당</a></li>
-                <li><a href="${contextPath}/member/loginForm.do">기업홍보</a></li>
+	            <li><a href="#">일자리지원센터</a></li>
+                <li><a href="#">프로그램목록</a></li>
+                <li><a href="${contextPath}/main/alarmCenter.do?mnName=알림마당">알림마당</a></li>
+                <li><a href="${contextPath}/main/bestCompany.do?mnName=기업홍보">기업홍보</a></li>
                 <li><a href="${contextPath}/main/bessinfo.do?mnName=사업안내">사업안내</a></li>
                 <s:authorize access="hasRole('ROLE_ADMIN')">
 				 <li class="no_line"><a href="">관리자</a></li>

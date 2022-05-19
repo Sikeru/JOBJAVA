@@ -1,30 +1,29 @@
 package com.jobjava.JJ.leader.controller;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jobjava.JJ.leader.vo.Criteria;
+import com.jobjava.JJ.leader.vo.SearchCriteria;
 
 public interface LeaderController {
-	// ´º¸®´õ ¸ŞÀÎ È¨ÆäÀÌÁö È£Ãâ
+	// ë‰´ë¦¬ë” ë©”ì¸ í™ˆí˜ì´ì§€ í˜¸ì¶œ
 	public ModelAndView leaderMain(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	// ´º¸®´õ ±â¾÷µî·Ï ÆäÀÌÁö È£Ãâ
+	// ë‰´ë¦¬ë” ê¸°ì—…ë“±ë¡ í˜ì´ì§€ í˜¸ì¶œ
 	public String companyLegister(Model model) throws Exception;
 
-	// ´º¸®´õ ±â¾÷µî·Ï insert
-	public String legister(@RequestParam HashMap<String, String> cRegVO, HttpServletRequest request,
-			HttpServletResponse response) throws Exception;
+	// ë‰´ë¦¬ë” ê¸°ì—…ë“±ë¡ insert
+	public ResponseEntity legister(MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception;
 
-	// ±â¾÷µî·Ï ¸ñ·Ï ÆäÀÌÁö È£Ãâ
-	public ModelAndView boardList(Criteria cri, Model model, HttpServletRequest request, HttpServletResponse response)
-			throws Exception;
+	// ê¸°ì—…ë“±ë¡ ëª©ë¡ í˜ì´ì§€ í˜¸ì¶œ
+	public ModelAndView boardList(SearchCriteria scri, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
 
 	public ModelAndView companyDetail(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("regiNO") String regiNO) throws Exception;

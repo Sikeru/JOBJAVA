@@ -3,9 +3,7 @@
 <%@ page session="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
-<c:set var="userID">
-	<s:authentication property="name" />
-</c:set>
+<c:set var="userID"><s:authentication property="name" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +19,7 @@
 	var cnt = 1
 	$(document).ready(
 			function() {
-				for (var i = 0; i < 10; i++) {
+				for (var i = 0; i < 5; i++) {
 					$("#surver>tbody:last").append(
 							"<tr><td>" + cnt
 									+ "</td><td><input name = 'qno"+cnt+"'></td></td></tr>");
@@ -31,7 +29,7 @@
 
 	function s_add() {
 		$("#surver>tbody:last").append(
-				"<tr><td>" + cnt + "</td><td><input></td></td></tr>");
+				"<tr><td>" + cnt + "</td><td><input name = 'qno"+cnt+"'></td></td></tr>");
 		cnt++;
 	}
 	function s_del() {
@@ -50,8 +48,8 @@
 			<thead>
 				<tr>
 					<td>작성자</td>
-					<td><input type="text" name="name" value="${userID}" disabled></td>
-
+					<td>${userID}</td>
+					<td><input type="hidden" name="name" value="${userID}"></td>
 				</tr>
 				<tr>
 					<td>설문제목</td>
@@ -73,8 +71,8 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="submit" value="설문조사 등록" /> <input type="button"
-			value="취소" onclick="" />
+		<input type="submit" value="설문조사 등록" /> 
+		<input type="button" value="취소" onclick="location.href='${contextPath}/leader/surveylist.do'">
 	</form>
 
 </body>

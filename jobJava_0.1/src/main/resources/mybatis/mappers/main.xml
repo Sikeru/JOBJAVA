@@ -9,4 +9,44 @@
 		INSERT INTO MENU_STATISTICS VALUES(MN_LOG.nextval,#{param1})
 	]]>
 	</insert>
+	
+	<select id="selectBestCompany" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT * FROM BESTCOMPANY
+		WHERE ROWNUM < 10
+		ORDER BY BC_NO DESC
+	]]>
+	</select>
+	
+	<insert id="insertBestCompany">
+	<![CDATA[
+		INSERT INTO BESTCOMPANY VALUES(BC_NO.nextval,#{param1},#{param2},#{param3})
+	]]>
+	</insert>
+	
+	<select id="selectBCNO" resultType="int">
+	<![CDATA[
+		SELECT BC_NO.CURRVAL FROM DUAL
+	]]>
+	</select>
+	
+	<delete id="deleteBestCompany">
+	<![CDATA[
+		DELETE FROM BESTCOMPANY
+		WHERE BC_NO = #{param1}
+	]]>
+	</delete>
+	
+	<update id="updateBestCompany" parameterType="java.util.HashMap">
+		UPDATE BESTCOMPANY
+		<set>
+		 <if test="BC_NAME !='' and BC_NAME != null">
+		BC_NAME=#{BC_NAME},
+	     </if>
+	      <if test="BC_FILENAME !='' and BC_FILENAME != null">
+		BC_FILENAME=#{BC_FILENAME},
+	     </if>
+	    </set>
+		WHERE BC_NO=#{BC_NO}
+	</update>
 </mapper>

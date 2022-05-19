@@ -1,5 +1,7 @@
 package com.jobjava.JJ;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,22 +37,25 @@ public class HomeController {
 	
 	@RequestMapping("/login.html")
 	public String login(HttpServletRequest request, Model model, Authentication authentication) {
-        String uri = request.getHeader("Referer"); //ÀÌÀü °æ·Î
-        //ÀÌÀü °æ·Î°¡ ·Î±×ÀÎ °ü·Ã ÆäÀÌÁö°¡ ¾Æ´Ò °æ¿ì¿¡¸¸ ÀúÀå, ¼Ó¼º°ªÀÌ nullÀÌ µÇ¸é ¿À·ù°¡ ¹ß»ýÇÏ¹Ç·Î ÀÌ °æ¿ìµµ Ã³¸®ÇÑ´Ù.
+        String uri = request.getHeader("Referer"); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Î°ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ì¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½Ó¼ï¿½ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½ ï¿½Ç¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½Ï¹Ç·ï¿½ ï¿½ï¿½ ï¿½ï¿½ìµµ Ã³ï¿½ï¿½ï¿½Ñ´ï¿½.
 		if(uri!=null && !(uri.contains("/member/loginForm.do")||uri.contains("/login_check"))) request.getSession().setAttribute("prevPage", uri);
 		return "/main/main";
 	}
 	
 	@RequestMapping(value="/logout.do",method={RequestMethod.POST,RequestMethod.GET})
-	public String logOut(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String logOut(HttpServletRequest request, HttpServletResponse response, Principal principal) throws Exception {
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
-		dao.log_Logout(request.getParameter("ID"));
+		dao.log_Logout(principal.getName());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	      if (auth != null && auth.isAuthenticated()) {
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	      }
 	      return "/main/main";
 	}
+	
+
+
 	
 	
 	

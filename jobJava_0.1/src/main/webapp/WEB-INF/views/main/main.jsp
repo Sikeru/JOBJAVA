@@ -16,9 +16,12 @@
 		#contain {
 		  width: 100%;
   		  height: 700px;
+  		  margin-bottom: 20px;
+  		  background: rgb(89,166,255);
 		}
+
 		.d-block {
-			width: 70%;
+			width: 1500px;
 			height: 700px;
 			margin: 0 auto;
 		}
@@ -26,11 +29,12 @@
 			width: 49%;
 			height: 400px;
 		}
+		
 	</style>
 </head>
 <body>
 <div id="contain">
-<div id="mainimg" class="carousel slide" data-bs-ride="carousel">
+<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="${contextPath}/resources/image/mainimg1.png" class="d-block" alt="...">

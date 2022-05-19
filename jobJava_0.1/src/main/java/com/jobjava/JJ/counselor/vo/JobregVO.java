@@ -1,7 +1,7 @@
 package com.jobjava.JJ.counselor.vo;
 
-import java.util.Date;
-
+import java.sql.Date;
+ 
 public class JobregVO {
 	private int JOB_NO;
 	private String CAREER;

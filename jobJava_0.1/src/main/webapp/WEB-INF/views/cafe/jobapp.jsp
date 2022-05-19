@@ -16,6 +16,16 @@
 				"<br>" + "<input  type='file' name='file"+cnt+"' />");
 		cnt++;
 	}
+	
+	//취소
+	function cancel() {
+		if (confirm("정말 취소하시겠습니까?") == true) { //확인
+			window.location.href = '/JJ/cafe/main.do';
+		} else { //취소
+			return false;
+		}
+	}
+	
 	//유효성
 	function jobappCheck() {
 		var form = document.jobboxform;
@@ -35,7 +45,7 @@
 
 <div id = "totaljobbox">
 
- <form name="jobboxform" action="${contextPath}/jobresult.do" method="post">
+ <form name="jobboxform" action="${contextPath}/cafe/jobresult.do" method="post">
            <br>
     <legend><h2>선호지역</h2></legend>
                 <select name="AREA">
@@ -111,11 +121,11 @@
             <input type="hidden"
 					value="${pageContext.request.userPrincipal.name}" name="ID"><br>
 					
-				<input type=button value="구직등록하기"
-					OnClick="javascript:jobappCheck();">
+				<input type="submit" value="구직등록하기"
+					OnClick="jobappCheck();">
 		
 					&nbsp; &nbsp; &nbsp; 
-					 <input type="reset" value="취소">
+					 <input type="reset" value="취소" OnClick="cancel()">
 				<br> <br>
             
         </form>

@@ -24,6 +24,31 @@
 		<put-attribute name="title" value="상담사 메인페이지" />
  		<put-attribute name="body" value="/WEB-INF/views/counselor/uniregForm.jsp" /> 
 	</definition>
+	
+	<definition name="/counselor/uniregList" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="상담사 메인페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/uniregList.jsp" /> 
+	</definition>
+	
+	<definition name="/counselor/uniregView" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="상담사 메인페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/uniregView.jsp" /> 
+	</definition>
+	
+	<definition name="/counselor/attendance" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="상담사 메인페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/attendance.jsp" /> 
+	</definition>
+	
+	<definition name="/counselor/commuteCheck" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="상담사 메인페이" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/attendance.jsp" /> 
+	</definition>
+	
+	<definition name="/counselor/jobMatchingView" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="일자리 매칭페이지" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/jobMatchingView.jsp" /> 
+	</definition>
 
 </tiles-definitions>
 

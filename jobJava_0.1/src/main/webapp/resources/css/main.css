@@ -24,10 +24,9 @@
 
     header #loginMenu ul {
         width: 100%;
-        height: 200px;
+        height: 190px;
         background: #0F4C75;
-        overflow: hidden;
-        margin:0;     
+        margin:0;
     }
 
     header #loginMenu li {
@@ -46,29 +45,22 @@
         color: white;
     }
 
-    /*    logo Ω∫≈∏¿œ*/
+    /*    logo ¬Ω¬∫√Ö¬∏√Ä√è*/
     header #topLogo {
         width: 100%;
         height: 250px;
         position: relative;
-        left: 45%;
+        left: 40%;
         bottom: 250px;
-         z-index: 0;
-        
-        
-
+        z-index: 0;
     }
 
-    /*    logo Ω∫≈∏¿œ end*/
+    /*    logo ¬Ω¬∫√Ö¬∏√Ä√è end*/
 
     header #topMenu ul {
         width: 100%;
-        background: #0F4C75;
-        
         overflow: hidden;
         margin:0;
-
-
     }
 
     header #topMenu li {
@@ -78,7 +70,7 @@
         margin: 20px;
         float: right;
         position: relative;
-        right: 35%;
+        right: 33%;
         top: 30%;
         z-index: 2;
     }
@@ -295,9 +287,3 @@ aside{
         width: 100%;
         height: 150px;
     }
-
-
-
-
-
-

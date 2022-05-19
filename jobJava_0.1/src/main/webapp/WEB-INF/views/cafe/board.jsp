@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
+
 <%-- <fmt:parseDate value="${list}" var="list" pattern="yyyy-MM-dd"/> --%>
 
 
@@ -111,6 +113,7 @@ ul, li {
 
 </head>
 <body>
+<form role="form" method="get">
    <div id="mainWrapper">
 
       <ul>
@@ -134,7 +137,8 @@ ul, li {
                   <li>
                      <ul>
                         <li>${list.PROGRAM_NO}</li>
-                        <li class="left">${list.TITLE}</li>
+                        <li class="left"><a
+                           href="${contextPath}/cafe/hireInfoDetail.do?programNO=${list.PROGRAM_NO}">${list.TITLE}</a></li>
                         <li><fmt:formatDate value="${list.S_DATE}"
                               pattern="yyyy-MM-dd" /></li>
                         <li><fmt:formatDate value="${list.E_DATE}"
@@ -157,16 +161,16 @@ ul, li {
                <ul class="paging">
                   <c:if test="${paging.prev}">
                      <span><a
-                        href='<c:url value="boardList?page=${paging.startPage-1}"/>'>이전</a></span>
+                        href='<c:url value="hireinfopaging.do?page=${paging.startPage-1}"/>'>이전</a></span>
                   </c:if>
                   <c:forEach begin="${paging.startPage}" end="${paging.endPage}"
                      var="num">
                      <span><a
-                        href='<c:url value="boardList.do?page=${num}"/>'>${num}</a></span>
+                        href='<c:url value="hireinfopaging.do?page=${num}"/>'>${num}</a></span>
                   </c:forEach>
                   <c:if test="${paging.next && paging.endPage>0}">
                      <span><a
-                        href='<c:url value="boardList?page=${paging.endPage+1}"/>'>다음</a></span>
+                        href='<c:url value="hireinfopaging.do?page=${paging.endPage+1}"/>'>다음</a></span>
                   </c:if>
                </ul>
             </div>
@@ -174,16 +178,28 @@ ul, li {
 
          <!-- 검색 폼 영역 -->
          <li id='liSearchOption'>
-            <div>
-               <select id='selSearchOption'>
-                  <option value='A'>제목+내용</option>
-                  <option value='T'>제목</option>
-                  <option value='C'>내용</option>
-               </select> <input id='txtKeyWord' /> <input type='button' value='검색' />
+         
+            <div class = "search">
+               <select name='searchType'>
+                  <option value='TC' <c:out value="${scri.searchType eq 'TC' ? 'selected' : ''}"/>>제목+내용</option>
+                  <option value='T' <c:out value="${scri.searchType eq 'T' ? 'selected' : ''}"/>>제목</option>
+                  <option value='C' <c:out value="${scri.searchType eq 'C' ? 'selected' : ''}"/>>내용</option>
+               </select> 
+                <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+                <button id="searchBtn" type="button">검색</button>
+   <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+    $(function(){
+        $('#searchBtn').click(function() {
+          self.location = "companyLegisterList.do" + '${paging.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+        });
+      });   
+    </script>
             </div>
          </li>
 
       </ul>
    </div>
+   </form>
 </body>
 </html>

@@ -33,6 +33,7 @@
                 $('.title').removeClass('on');
                 $('.title').css({
                     color: '#000'
+                    
                 })
                 $(this).next().show(500);
                 $(this).addClass('on');
@@ -45,12 +46,14 @@
             $('.sub li').hover(function() {
                 $(this).find('a').css({
                     fontWeight: 'bold'
+                   
                 });
 
 
             }, function() {
                 $(this).find('a').css({
                     fontWeight: 'normal'
+                    
                 });
 
 
@@ -77,140 +80,140 @@
     </style>
 
 <body>
-	<div id = "reg">
-		<br><br>
-		<b><font size = "6" color = "gray">일자리 등록</font></b>
-		<br><br><br>
-		
-		<form action="${contextPath}/counselor/addJob.do" method = "post">
-			<table>
-				<tr>
-					<td id = "regtitle">경력</td>
-					<td>
-					<input type = "text" name = "CAREER">
-					</td>
-				</tr>
-			
-				<tr>
-					<td id = "regtitle">학력</td>
-					<td>
-					<input type = "text" name = "EDU">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">지역</td>
-					<td>
-					<input type = "text" name = "AREA">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">임금</td>
-					<td>
-					<input type = "text" name = "SAL">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">고용형태</td>
-					<td>
-					<input type = "text" name = "EMP_TYPE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">근무형태</td>
-					<td>
-					<input type = "text" name = "WORK_TYPE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">복리후생</td>
-					<td>
-					<input type = "text" name = "WELFARE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">기업명</td>
-					<td>
-					<input type = "text" name = "COMPANY">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">업종</td>
-					<td>
-					<input type = "text" name = "B_TYPE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">기업규모</td>
-					<td>
-					<input type = "text" name = "SCALE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">설립년도</td>
-					<td>
-					<input type = "date" name = "ESTABLISH">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">연매출액</td>
-					<td>
-					<input type = "text" name = "Y_SALES">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">홈페이지</td>
-					<td>
-					<input type = "text" name = "HP">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">근로자수</td>
-					<td>
-					<input type = "text" name = "EMP_NUM">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">시작일</td>
-					<td>
-					<input type = "date" name = "S_DATE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">종료일</td>
-					<td>
-					<input type = "date" name = "D_DATE">
-					</td>
-				</tr>
-				
-				<tr>
-					<td id = "regtitle">상세설명</td>
-					<td>
-					<input type = "text" name = "JOB_D">
-					</td>
-				</tr>
-				
-			</table>
-			<br>
-			
-			<input type = "submit" value = "등록하기">
-			<input type = "reset" value = "다시입력">
-		</form>
-		
-	</div>
+   <div id = "reg">
+      <br><br>
+      <b><font size = "6" color = "gray">일자리 등록</font></b>
+      <br><br><br>
+      
+      <form action="${contextPath}/counselor/addJob.do" method = "post">
+         <table>
+            <tr>
+               <td id = "regtitle">경력</td>
+               <td>
+               <input type = "text" name = "CAREER">
+               </td>
+            </tr>
+         
+            <tr>
+               <td id = "regtitle">학력</td>
+               <td>
+               <input type = "text" name = "EDU">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">지역</td>
+               <td>
+               <input type = "text" name = "AREA">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">임금</td>
+               <td>
+               <input type = "text" name = "SAL">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">고용형태</td>
+               <td>
+               <input type = "text" name = "EMP_TYPE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">근무형태</td>
+               <td>
+               <input type = "text" name = "WORK_TYPE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">복리후생</td>
+               <td>
+               <input type = "text" name = "WELFARE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">기업명</td>
+               <td>
+               <input type = "text" name = "COMPANY">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">업종</td>
+               <td>
+               <input type = "text" name = "B_TYPE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">기업규모</td>
+               <td>
+               <input type = "text" name = "SCALE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">설립년도</td>
+               <td>
+               <input type = "date" name = "ESTABLISH">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">연매출액</td>
+               <td>
+               <input type = "text" name = "Y_SALES">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">홈페이지</td>
+               <td>
+               <input type = "text" name = "HP">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">근로자수</td>
+               <td>
+               <input type = "text" name = "EMP_NUM">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">시작일</td>
+               <td>
+               <input type = "date" name = "S_DATE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">종료일</td>
+               <td>
+               <input type = "date" name = "D_DATE">
+               </td>
+            </tr>
+            
+            <tr>
+               <td id = "regtitle">상세설명</td>
+               <td>
+               <input type = "text" name = "JOB_D">
+               </td>
+            </tr>
+            
+         </table>
+         <br>
+         
+         <input type = "submit" value = "등록하기">
+         <input type = "reset" value = "다시입력">
+      </form>
+      
+   </div>
 
 </body>
 </html>

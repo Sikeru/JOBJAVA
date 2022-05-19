@@ -2,6 +2,8 @@ package com.jobjava.JJ.board.vo;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Component;
+
 public class QnAVO {
 	private int RECNUM;
 	private int QNA_NO;

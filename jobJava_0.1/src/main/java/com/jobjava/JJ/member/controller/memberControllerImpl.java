@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.security.Principal;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -89,7 +89,7 @@ public class memberControllerImpl implements memberController {
 	@RequestMapping("/signUp.do")
 	public String signUp(@ModelAttribute("memberVO") MemberVO _memberVO,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//»ç¿ëÀÚ°¡ ÀÔ·ÂÇÑ Á¤º¸¸¦ ÆÄ¶ó¹ÌÅÍ·Î ³Ñ±è
+		//ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½Ñ±ï¿½
 		boolean isInserted = memberservice.insertUserInfo(_memberVO);
 		if(isInserted) return "/member/loginForm";
 		else return "/member/signUpView";
@@ -104,9 +104,9 @@ public class memberControllerImpl implements memberController {
 	}
 	
 	@RequestMapping(value="/mypageForm.do" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView mypageForm(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	public ModelAndView mypageForm(Principal principal,HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mav=new ModelAndView();
-		String userId = request.getParameter("ID");
+		String userId = principal.getName();
 		MemberVO membervo = memberservice.myInfo(userId);
 		if(membervo.getAUTHORITY().equals("ROLE_USER")) {
 			NMemberVO nmembervo = memberservice.NUmyInfo(userId);
@@ -142,13 +142,13 @@ public class memberControllerImpl implements memberController {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 		    message  = "<script>";
-		    message +=" alert('È¸¿ø ¼öÁ¤À» ¸¶ÃÆ½À´Ï´Ù.¸¶ÀÌÆäÀÌÁöÃ¢À¸·Î ÀÌµ¿ÇÕ´Ï´Ù.');";
+		    message +=" alert('ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.');";
 		    message += " location.href='"+request.getContextPath()+"/member/mypageForm.do?ID="+member.get("ID")+"';";
 		    message += " </script>";
 		    
 		}catch(Exception e) {
 			message  = "<script>";
-		    message +=" alert('ÀÛ¾÷ Áß ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
+		    message +=" alert('ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.');";
 		    message += " location.href='"+request.getContextPath()+"/member/mypageForm.do?ID='"+member.get("ID")+"';";
 		    message += " </script>";
 			e.printStackTrace();
