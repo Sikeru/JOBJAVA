@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -18,11 +19,13 @@ td {
 	<h2>${userID}입니다!</h2>
 	나중에 꼭지울것!
 	<div>
-		<form method="post" action="${contextPath}/leader/addApplicationfrom.do">
+		<form method="post"
+			action="${contextPath}/leader/addApplicationfrom.do?uniBNO=${uniBNO}">
+			<input name="userID" value="${userID}" type="hidden">
 			<table>
 				<tr>
 					<td>사업명</td>
-					<td>${title}</td>
+					<td>${uniInfo.b_NAME}</td>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -40,22 +43,22 @@ td {
 				</tr>
 				<tr>
 					<td>희망직무</td>
-					<td><input type="text" name="desiredJob"></td>
+					<td><input type="text" name="hopeJob"></td>
 				</tr>
 				<tr>
 					<td>신청사유</td>
 					<td><input type="text" name="reason"></td>
 				</tr>
 				<tr>
-					<td>체험가능기간</td>
-					<td><input type="date" name="sdate" value="${sdate}"></td>
+					<td>사업기간</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${uniInfo.s_DATE}"/>~<fmt:formatDate pattern="yyyy-MM-dd" value="${uniInfo.e_DATE}"/></td>
 				</tr>
 				<tr>
 					<td>파일 업로드</td>
-					<td>fileuplode</td>
+					<td><input type="text" name="fileName"></td>
 				</tr>
 			</table>
-			<input type="submit" value="신청완료" >
+			<input type="submit" value="신청완료">
 		</form>
 	</div>
 

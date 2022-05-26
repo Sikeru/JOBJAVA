@@ -4,6 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.jobjava.JJ.main.dao.MainDAO">
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'T'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+				LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
+
+
 	<insert id="mnLog">
 	<![CDATA[
 		INSERT INTO MENU_STATISTICS VALUES(MN_LOG.nextval,#{param1})
@@ -49,4 +60,43 @@
 	    </set>
 		WHERE BC_NO=#{BC_NO}
 	</update>
+	
+	<select id="selectAllF_BOARD" resultType="hashmap" parameterType="hashmap">
+   <![CDATA[
+   SELECT BOARD_NO, 
+                TITLE, 
+                CONTENT,
+                TO_CHAR(F_DATE,'YYYY/MM/DD') F_DATE,
+                NAME
+         FROM ( 
+                SELECT BOARD_NO,
+                       TITLE, 
+                       CONTENT, 
+                       F_DATE,
+                       NAME,
+                       ROW_NUMBER() OVER(ORDER BY BOARD_NO) AS RNUM
+                 FROM F_BOARD, EMP
+                 WHERE 1=1 AND EMP.EMP_NO = F_BOARD.EMP_NO]]>
+        
+        <include refid="search"></include>
+
+		<![CDATA[
+		) 
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		ORDER BY BOARD_NO ASC
+		]]>
+   
+   </select>
+   
+   <select id="boardListCnt" parameterType="SearchCriteria"
+		resultType="int">
+
+   <![CDATA[
+      SELECT count(*)
+      FROM F_BOARD
+       WHERE 1=1
+      ]]>
+		<include refid="search"></include>
+	</select>
+	
 </mapper>

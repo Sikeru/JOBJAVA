@@ -13,24 +13,29 @@ import com.jobjava.JJ.cafe.vo.JobAppVO;
 import com.jobjava.JJ.cafe.vo.SearchCriteria;
 
 public interface CafeController {
-	// ²ŞÅÍ ¸ŞÀÎ È¨ÆäÀÌÁö·Î ÀÌµ¿
+	// ê¿ˆí„° ë©”ì¸ í™ˆí˜ì´ì§€ë¡œ ì´ë™
 	public ModelAndView cafeMain(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	// ²ŞÅÍ ±¸Á÷µî·Ï ÆäÀÌÁö·Î ÀÌµ¿
+	// ê¿ˆí„° êµ¬ì§ë“±ë¡ í˜ì´ì§€ë¡œ ì´ë™
 	public String jobapp(Model model) throws Exception;
 
-	// ²ŞÅÍ ±¸Á÷µî·Ï
+	// ê¿ˆí„° êµ¬ì§ë“±ë¡
 	public String jobAppresult(@ModelAttribute("JobAppVO") JobAppVO jobAppVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
-	// ±â¾÷ÇÁ·Î±×·¥½ÅÃ»(´ÙÁßÆÄÀÏ)
+	// ê¸°ì—…í”„ë¡œê·¸ë¨ì‹ ì²­(ë‹¤ì¤‘íŒŒì¼)
 	public ResponseEntity addNewArticle(MultipartHttpServletRequest multipartRequest, HttpServletResponse response)
 			throws Exception;
 
-	// ²ŞÅÍ °Ô½ÃÆÇ
+	// ê¿ˆí„° ê²Œì‹œíŒ
 	public ModelAndView boardList(SearchCriteria scri, Model model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
 
+	// ì±„ìš©ì •ë³´
 	ModelAndView hireinfo(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception;
+
+	// ì±„ìš©ê³µê³ 
+	public ModelAndView postingList(SearchCriteria scri, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception;
 
 }

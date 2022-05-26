@@ -11,61 +11,83 @@ import com.jobjava.JJ.leader.vo.CRegVO;
 import com.jobjava.JJ.leader.vo.FileVO;
 import com.jobjava.JJ.leader.vo.SearchCriteria;
 import com.jobjava.JJ.leader.vo.SurveyVO;
+import com.jobjava.JJ.leader.vo.UniVO;
 
 public interface LeaderDAO {
 	// 기업정보 등록
-	public void legisterAdd(HashMap<String, String> cRegVO);
+		public void legisterAdd(HashMap<String, String> company);
 
-	// 기업 id값 불러오기
-	public String selectCompanyID(Map articleMap);
+		// 기업 id값 불러오기
+		public String selectCompanyID(Map articleMap);
 
-	public int selectREGI_NO(Map articleMap);
+		public int selectREGI_NO(Map articleMap);
 
-	// 프로그램신청
-	public int insertNewArticle(Map articleMap) throws DataAccessException;
+		// 기업등록조회
+		public int insertNewArticle(Map articleMap) throws DataAccessException;
 
-	public void insertNewImage(List<FileVO> imageFileList) throws DataAccessException;
+		public void insertNewImage(List<FileVO> imageFileList) throws DataAccessException;
 
-	public int selectNewImageFileNO();
+		public int selectNewImageFileNO();
 
-	// 湲곗뾽�벑濡� 議고쉶
-	public List<CRegVO> selectCompanyLegister();
+		// 기업등록목록 조회
+		public List<CRegVO> selectCompanyLegister();
 
-	// 페이징
-	public List<Map<String, Object>> boardList(SearchCriteria scri);
+		// 기업등록 수정
+		public void legisterUpdate(CRegVO cRegVO);
 
-	public int boardListCnt(SearchCriteria scri);
+		// 기업등록 삭제
+		public void legisterDelete(int REGI_NO);
 
-	// 기업번호조회
-	public CRegVO selectRegi(String regiNO);
+		// 페이징
+		public List<Map<String, Object>> boardList(SearchCriteria scri);
 
-	// �궗�썝 �븘�씠�뵒濡� �궗�썝踰덊샇 議고쉶
-	public int selectEmpNO(String id);
+		// 게시글 총 갯수
+		public int boardListCnt(SearchCriteria scri);
 
-	// �쑀���븘�씠�뵒濡� 湲곕낯�젙蹂� 議고쉶
-	public AppVO selectUserInfo(String id);
+		// 기업번호조회
+		public CRegVO selectRegi(String regiNO);
 
-	// �궗�뾽踰덊샇濡� �젣紐⑹“�쉶
-	public String selectCregtitle(int regiNO);
+		// 직원번호
+		public int selectEmpNO(String id);
 
-	// �꽕臾몄“�궗 �젙蹂대벑濡�
-	public void addSurvery(int empNO, String title, String sDate, String eDate);
+		// 학생정보
+		public AppVO selectUserInfo(String id);
 
-	//
-	public int selectSvNO(String title);
+		// 사업명
+		public UniVO selectbName(int uniBNO);
 
-	// �꽕臾몄“�궗 臾명빆�벑濡�
-	public void addQuestion(String ql, int svNO);
+		// 사업신청 학생
+		public void insertApplication(String userID, int uniBNO, String hopeJob, String reason, String fileName);
 
-	// �꽕臾몃━�뒪�듃議고쉶
-	public List<SurveyVO> selectAllSurveyList();
+		// 설문조사등록
+		public void addSurvery(int empNO, String title, String sDate, String eDate);
 
-	// �꽕臾몃Ц�빆 議고쉶
-	public List<SurveyVO> selectContent(int svNO);
+		// 설문조사번호
+		public int selectSvNO(String title);
 
-	// �꽕臾몄“�궗 踰덊샇濡� �긽�꽭�럹�씠吏�議고쉶
-	public SurveyVO selectSurvey(int svNO);
+		// 문항등록
+		public void addQuestion(String ql, int svNO);
 
-	// �떟蹂��벑濡�
-	public void insertAnswer(int qno, String answer, String id);
+		// 설문조사조회
+		public List<SurveyVO> selectAllSurveyList();
+
+		// 문항내용디테일
+		public List<SurveyVO> selectContent(int svNO);
+
+		// 설문조사디테일
+		public SurveyVO selectSurvey(int svNO);
+
+		// 답변적음
+		public void insertAnswer(int qno, String answer, String id);
+
+	//	
+
+		// 업로드파일조회
+		public List<Map<String, String>> selectFileName(String regiNO);
+
+		// 업로드 파일번호 조회
+		public List<String> selectFileNO(String regiFileNO);
+		
+		//신청여부확인
+		public List<Integer> selectAppCount(String userID);
 }

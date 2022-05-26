@@ -2,6 +2,7 @@ package com.jobjava.JJ.board.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.jobjava.JJ.board.vo.EmploymentVO;
 import com.jobjava.JJ.board.vo.OnlineVO;
@@ -32,5 +33,11 @@ public interface BoardService {
 	public void insertEmploymentTable(EmploymentVO _employmentVO);
 	public List<EmploymentVO> employmentSelectSearch(HashMap<String, Object> search);
 	public int employmentSelectTotalSearch(HashMap<String, Object> search);
-	
+	public int insertFileTable(List<String> fileName , Map<String, Object> articleMap);
+	public HashMap<String, String> selectOneFileTable(String BOARD_NO);
+	public List<HashMap<String, String>> selectFileNames(String BOARD_NO);
+	public void deleteFile(Map<String, Object> articleMap);
+	public void updateFileTable(Map<String, Object> articleMap);
+	public void updateTableFile(List<String> fileName , Map<String, Object> articleMap);
+	public void deleteFileTable(String BOARD_NO);
 }

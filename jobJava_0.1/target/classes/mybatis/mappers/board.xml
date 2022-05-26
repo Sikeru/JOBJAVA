@@ -12,6 +12,15 @@
             LIKE '%' || #{txtKeyWord} || '%')</if>
       </if>
    </sql>
+   
+   <sql id="search2">
+      <if test="search != null">
+         <if test="search == 'T'.toString()"> AND TITLE LIKE '%' || #{txtKeyWord} || '%'</if>
+         <if test="search == 'C'.toString()"> AND CONTENT LIKE '%' || #{txtKeyWord} || '%'</if>
+         <if test="search == 'TC'.toString()"> AND (TITLE LIKE '%' || #{txtKeyWord} || '%') or (CONTENT
+            LIKE '%' || #{txtKeyWord} || '%')</if>
+      </if>
+   </sql>
 
 	<select id="qnaSelectAll" resultType="QnAVO" parameterType="java.util.HashMap">
 	<![CDATA[
@@ -250,5 +259,100 @@
 
 	</select>
 	
-
+	<insert id="insertF_BOARD" parameterType="java.util.Map">
+	<![CDATA[
+	INSERT INTO F_BOARD VALUES(BOARD_NO.NEXTVAL, (SELECT EMP_NO FROM EMP WHERE ID=#{ID}), #{TITLE}, #{CONTENT}, SYSDATE)
+	]]>
+	</insert>
+	
+	<insert id="insertBOARD_FILE" parameterType="java.util.List">
+      INSERT INTO BOARD_FILE
+            (
+            BOARD_FILENO, 
+            BOARD_NO, 
+            BOARD_FILENAME,
+            BOARD_DATE
+            )
+         SELECT BOARD_FILENO.NEXTVAL, A.*
+         FROM (
+      <foreach collection="list" item="item" separator="UNION ALL" >
+         SELECT (SELECT MAX(BOARD_NO) FROM F_BOARD) AS BOARD_NO, 
+	            #{item} AS BOARD_FILENAME, 
+    	        SYSDATE AS BOARD_DATE
+         FROM DUAL   
+      </foreach>
+      ) A
+   </insert>
+   
+   <select id="selectNowBOARD_NO" resultType="int">
+   <![CDATA[
+   SELECT BOARD_NO.CURRVAL FROM DUAL
+   ]]>
+   </select>
+   
+   <select id="selectOneFileTable" resultType="java.util.HashMap" parameterType="String">
+   <![CDATA[
+   SELECT BOARD_NO, F_BOARD.EMP_NO, TITLE, CONTENT, F_DATE, NAME FROM F_BOARD, EMP
+   WHERE EMP.EMP_NO = F_BOARD.EMP_NO AND BOARD_NO = #{BOARD_NO}
+   ]]>
+   </select>
+   
+   <select id="selectFileNames" resultType="java.util.HashMap" parameterType="String">
+   <![CDATA[
+   SELECT * FROM BOARD_FILE
+   WHERE BOARD_NO = #{BOARD_NO}
+   ]]>
+   </select>
+   
+   <delete id="deleteFile">
+   <![CDATA[
+   DELETE FROM BOARD_FILE
+   WHERE BOARD_NO = #{param1} AND BOARD_FILENAME = #{param2}
+   ]]>
+   </delete>
+   
+   
+   <update id="updateFileTable" parameterType="java.util.Map">
+		UPDATE F_BOARD
+		<set>
+		<if test="ID !='' and ID != null">	
+		EMP_NO= (SELECT EMP_NO FROM EMP
+				WHERE ID = #{ID}),
+	     </if>
+	     <if test="TITLE !='' and TITLE != null">
+		TITLE=#{TITLE},
+	     </if>
+	     <if test="CONTENT !='' and CONTENT != null">
+		CONTENT=#{CONTENT},
+	     </if>
+	     </set>
+	    WHERE BOARD_NO=#{BOARD_NO}
+	</update>
+	
+	<insert id="updateTableFile" parameterType="java.util.List">
+      INSERT INTO BOARD_FILE
+            (
+            BOARD_FILENO, 
+            BOARD_NO, 
+            BOARD_FILENAME,
+            BOARD_DATE
+            )
+         SELECT BOARD_FILENO.NEXTVAL, A.*
+         FROM (
+      <foreach collection="param2" item="item" separator="UNION ALL" >
+         SELECT #{param1} AS BOARD_NO, 
+	            #{item} AS BOARD_FILENAME, 
+    	        SYSDATE AS BOARD_DATE
+         FROM DUAL   
+      </foreach>
+      ) A
+   </insert>
+   
+   <delete id="deleteFileTable">
+   <![CDATA[
+   DELETE FROM F_BOARD 
+   WHERE BOARD_NO = #{param1}
+   ]]>
+   </delete>
+   
 </mapper>

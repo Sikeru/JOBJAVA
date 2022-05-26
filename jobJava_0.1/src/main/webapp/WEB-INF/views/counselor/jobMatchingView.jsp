@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" isELIgnored="false"%>
+   pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
@@ -69,7 +69,7 @@
 }
 
 .btn {
-	background: rgb(89,166,255);
+   background: rgb(89,166,255);
 }
   </style>
 
@@ -116,18 +116,18 @@
     </div>
     <div class="accordion-item-body">
       <div class="accordion-item-body-content">
-      		<form action="${contextPath}/counselor/memberMatching.do" method="post">
-        	기업 : ${bInfo.COMPANY }<br>
-        	경력 : ${bInfo.JOB_NO }<br>
-        	학력 : ${bInfo.EDU }<br>
-        	직무내용 <br> ${bInfo.JOB_D }<br>
-        	<input type="hidden" name="SHOP_NO" value="${bInfo.SHOP_NO }" />
-        	<c:forEach var="member" items="${member}" varStatus="i">
-        	<input type='checkbox' name='CM_NO${i.count}' value='${member.CM_NO }' />
-        	<button type="button" class="btn btn-secondary" data-bs-toggle="popover" title="나이 : ${member.AGE}" data-bs-content="선호지역 : ${member.AREA}　　　　　　　 선호직종 : ${member.OCC_TYPE } ">${member.NAME }</button>
-        	</c:forEach>
-        	<br><input type="submit" value="매칭"/>
-        	</form>
+            <form action="${contextPath}/counselor/memberMatching.do" method="post">
+           기업 : ${bInfo.COMPANY }<br>
+           경력 : ${bInfo.JOB_NO }<br>
+           학력 : ${bInfo.EDU }<br>
+           직무내용 <br> ${bInfo.JOB_D }<br>
+           <input type="hidden" name="SHOP_NO" value="${bInfo.SHOP_NO }" />
+           <c:forEach var="member" items="${member}" varStatus="i">
+           <input type='checkbox' name='CM_NO${i.count}' value='${member.CM_NO }' />
+           <button type="button" class="btn btn-secondary" data-bs-toggle="popover" title="나이 : ${member.AGE}" data-bs-content="선호지역 : ${member.AREA}　　　　　　　 선호직종 : ${member.OCC_TYPE } ">${member.NAME }</button>
+           </c:forEach>
+           <br><input type="submit" value="매칭"/>
+           </form>
       </div>
     </div>
   </div>

@@ -31,6 +31,13 @@
       <put-attribute name="body"
          value="/WEB-INF/views/leader/companyLegister.jsp" />
    </definition>
+   
+   <definition name="/leader/legisterUpdateView"
+      extends="leaderbaseLayout">
+      <put-attribute name="title" value="뉴리더 수정페이지" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/leader/companyLegisterUpdate.jsp" />
+   </definition>
 
    <definition name="/leader/companyLegisterList"
       extends="leaderbaseLayout">
@@ -79,6 +86,13 @@
 		<put-attribute name="title" value="설문조사 답변" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/leader/surveyList.jsp" />
+	</definition>
+	
+	<definition name="/leader/commuteCheck"
+		extends="leaderbaseLayout">
+		<put-attribute name="title" value="설문조사 답변" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/leader/commuteCheck.jsp" />
 	</definition>
 
 </tiles-definitions>

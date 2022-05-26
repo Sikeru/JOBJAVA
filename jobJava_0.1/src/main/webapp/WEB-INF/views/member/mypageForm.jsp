@@ -67,7 +67,7 @@
 				console.log(mac)
 				$('input[name=MAC_ADDR]').attr('value',mac);
 			}
-		})
+		});
 	}
 	
 	function user_submit() {
@@ -293,7 +293,10 @@
 		NAME : <input type="text" id="SNAME" name="NAME" value="${member.NAME}"/><br>
 		DEPT : <input type="text" id="DEPT" name="DEPT" value="${member.DEPT}"/><br>
 		MAC : <input type="text" name="MAC_ADDR" value="${member.MAC_ADDR}" readonly/>
-		<input type="button" onclick="mac_get()" value="맥정보가져오기"><br>
+		<c:if test="${member.MAC_ADDR == null} ">
+		<input type="button" onclick="mac_get()" value="맥정보가져오기">
+		</c:if>
+		<br>
 		BIRTH : <input type="date" id="SBIRTH" name="BIRTH" value="${member.BIRTH}"/><br>
 		U_NAME : <input type="text" id="U_NAME" name="U_NAME" value="${member.u_NAME}"/><br>
 		<input class="btn-secondary" type="button" value="정보수정" onclick="stu_submit()"/>

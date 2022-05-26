@@ -31,9 +31,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.cafe.Calendar;
 import com.jobjava.JJ.cafe.service.CafeService;
-import com.jobjava.JJ.cafe.vo.Criteria;
 import com.jobjava.JJ.cafe.vo.FileVO;
 import com.jobjava.JJ.cafe.vo.JobAppVO;
+import com.jobjava.JJ.cafe.vo.JobInfoVO;
 import com.jobjava.JJ.cafe.vo.Paging;
 import com.jobjava.JJ.cafe.vo.ProgramVO;
 import com.jobjava.JJ.cafe.vo.SearchCriteria;
@@ -41,7 +41,7 @@ import com.jobjava.JJ.cafe.vo.SearchCriteria;
 @Controller("CafeController")
 @RequestMapping(value = "/cafe")
 public class CafeControllerImpl implements CafeController {
-	private static final String CURR_IMAGE_REPO_PATH = "C:\\JJ\\file_repo\\cafe\\program";
+	private static final String CURR_IMAGE_REPO_PATH = "C:\\project\\file";
 	@Autowired
 	private CafeService cafeService;
 
@@ -127,7 +127,7 @@ public class CafeControllerImpl implements CafeController {
 				for (FileVO fileVO : imageFileList) {
 					fILENAME = fileVO.getEMP_FILENAME();
 					File srcFile = new File(CURR_IMAGE_REPO_PATH + "\\" + "temp" + "\\" + fILENAME);
-					File destDir = new File(CURR_IMAGE_REPO_PATH + "\\" + pROGRAM_NO);
+					File destDir = new File(CURR_IMAGE_REPO_PATH + "\\" + articleMap.get("PROGRAM_NO"));
 
 					FileUtils.moveFileToDirectory(srcFile, destDir, true);
 				}
@@ -180,10 +180,6 @@ public class CafeControllerImpl implements CafeController {
 						file.getParentFile().mkdirs(); // 경로에 해당하는 디렉토리들을 생성
 
 						mFile.transferTo(new File(CURR_IMAGE_REPO_PATH + "\\" + "temp" + "\\" + originalFileName)); // 임시로
-																													// 저장된
-																													// multipartFile을
-																													// 실제
-																													// 파일로
 																													// 전송
 					}
 				}
@@ -215,9 +211,9 @@ public class CafeControllerImpl implements CafeController {
 			File oldFile = new File(CURR_IMAGE_REPO_PATH + "\\" + pROGRAM_NO + "\\" + eMP_FILE);
 			oldFile.delete();
 
-			writer.print("success");
+			writer.print("완료");
 		} catch (Exception e) {
-			writer.print("failed");
+			writer.print("대실패");
 		}
 
 	}
@@ -246,7 +242,7 @@ public class CafeControllerImpl implements CafeController {
 		return fileList;
 	}
 
-   // 채용정보 페이징..필요한데 x
+	// 채용정보 페이징..필요한데 x
 	@RequestMapping(value = "/hireinfo/hireinfo.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView hireinfo(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
@@ -287,23 +283,27 @@ public class CafeControllerImpl implements CafeController {
 	// 채용정보 상세창
 	@RequestMapping(value = "/hireInfoDetail.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView hireInfoDetail(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("programNO") int programNO) throws Exception {
-		
-		ModelAndView mav = new ModelAndView();
+			@RequestParam("programNO") String programNO) throws Exception {
+        ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		ProgramVO detail = cafeService.selectProgram(programNO);
-		mav.addObject("detail", detail);
+		List<Map<String, String>> fileName = cafeService.file(programNO);
+		System.out.println(fileName);
+		List<String> fileNO = cafeService.selectFileNO(programNO);
+		
+		mav.addObject("detail", detail);		
+		mav.addObject("empFile", fileName);
+		mav.addObject("empFileNO", fileNO);
 		mav.setViewName(viewName);
 		return mav;
 	}
 
-	// 채용정보 수정뷰
-	@RequestMapping(value = "/updateView", method = RequestMethod.GET)
-	public String updateView(ProgramVO programVO, Model model) throws Exception {
-		model.addAttribute("update", programVO);
-		System.out.println("updateView");
-		return "/cafe/updateView";
-	}
+	 @RequestMapping(value = "/updateView", method = RequestMethod.GET)
+	   public String updateView(ProgramVO programVO, Model model) throws Exception {
+	      model.addAttribute("update", programVO);
+	      System.out.println("updateView");
+	      return "/cafe/updateView";
+	   }
 
 	// 채용정보 수정
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
@@ -321,7 +321,7 @@ public class CafeControllerImpl implements CafeController {
 		System.out.println("delete");
 		cafeService.delete(programVO.getPROGRAM_NO());
 
-		return "/cafe/hireinfopaging";
+		return "redirect:/cafe/hireinfopaging.do?programNO=" + programVO.getPROGRAM_NO();
 	}
 
 	// 캘린더
@@ -356,6 +356,130 @@ public class CafeControllerImpl implements CafeController {
 		mav.setViewName(viewName);
 		return mav;
 	}
+	
+	// 취업특강(이미지랑 내용 4개표시)
+
+		@RequestMapping(value = "/lecture.do")
+		public ModelAndView joblecture(SearchCriteria scri, Model model, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
+
+			// 전체 글 개수
+			int boardListCnt2 = cafeService.boardListCnt2(scri);
+			System.out.println(boardListCnt2);
+
+			// 페이징 객체
+			Paging paging = new Paging();
+			paging.setCri(scri);
+			paging.setTotalCount(boardListCnt2);
+
+			List<Map<String, Object>> list2 = cafeService.boardList2(scri);
+			System.out.println(list2);
+			model.addAttribute("list2", list2);
+			model.addAttribute("paging", paging);
+			return mav;
+		}
+
+		// 취업컨설팅(이미지랑 내용 4개표시)
+
+		@RequestMapping(value = "/consulting.do")
+		public ModelAndView jobconsulting(SearchCriteria scri, Model model, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
+
+			// 전체 글 개수
+			int boardListCnt2 = cafeService.boardListCnt2(scri);
+			System.out.println(boardListCnt2);
+
+			// 페이징 객체
+			Paging paging = new Paging();
+			paging.setCri(scri);
+			paging.setTotalCount(boardListCnt2);
+
+			List<Map<String, Object>> list2 = cafeService.boardList2(scri);
+			System.out.println(list2);
+			model.addAttribute("list2", list2);
+			model.addAttribute("paging", paging);
+			return mav;
+		}
+		
+		
+		// 채용공고 조회, 페이징
+
+		@RequestMapping(value = "/jobposting.do")
+		public ModelAndView jobposting(SearchCriteria scri, Model model, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			String viewName = (String) request.getAttribute("viewName");
+			mav.setViewName(viewName);
+			System.out.println(viewName);
+
+			// 전체 글 개수
+			int postingListCnt = cafeService.postingListCnt(scri);
+			System.out.println(postingListCnt);
+
+			// 페이징 객체
+			Paging paging = new Paging();
+			paging.setCri(scri);
+			paging.setTotalCount(postingListCnt);
+
+			List<Map<String, Object>> list = cafeService.postingList(scri);
+			System.out.println(list);
+			model.addAttribute("list", list);
+			model.addAttribute("paging", paging);
+			return mav;
+		}
+
+		@Override
+		public ModelAndView postingList(SearchCriteria scri, Model model, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		// 채용공고 상세창
+		@RequestMapping(value = "/jobpostingdetail.do", method = { RequestMethod.POST, RequestMethod.GET })
+		public ModelAndView jobpostingdetail(HttpServletRequest request, HttpServletResponse response,
+				@RequestParam("JOB_NO") int JOB_NO) throws Exception {
+
+			ModelAndView mav = new ModelAndView();
+			String viewName = (String) request.getAttribute("viewName");
+			System.out.println(viewName);
+			JobInfoVO detail = cafeService.jobpostingdetail(JOB_NO);
+			mav.addObject("detail", detail);
+			mav.setViewName(viewName);
+			return mav;
+		}
+
+		// 채용공고 수정
+		@RequestMapping(value = "/jobpostingupdate.do", method = RequestMethod.POST)
+		public String jobpostingupdate(JobInfoVO jobinfoVO) throws Exception {
+			System.out.println(jobinfoVO.getJOB_NO());
+			System.out.println("update");
+			cafeService.jobpostingupdate(jobinfoVO);
+
+			return "redirect:/cafe/jobpostingdetail.do?JOB_NO=" + jobinfoVO.getJOB_NO();
+		}
+
+		// 채용공고 수정뷰
+		@RequestMapping(value = "/jobPostingUpdateView.do", method = RequestMethod.GET)
+		public String jobPostingUpdateView(JobInfoVO jobinfoVO, Model model) throws Exception {
+			model.addAttribute("update", jobinfoVO);
+			System.out.println("update");
+			return "jobPostingUpdateView";
+		}
+
+		// 채용공고 삭제
+		@RequestMapping(value = "/jobPostingDelete.do", method = RequestMethod.POST)
+		public String jobPostingDelete(JobInfoVO jobinfoVO) throws Exception {
+			cafeService.jobPostingDelete(jobinfoVO.getJOB_NO());
+
+			return "redirect:/cafe/jobposting.do?JOB_NO=" + jobinfoVO.getJOB_NO();
+		}
 
 
 }

@@ -1,11 +1,18 @@
 package com.jobjava.JJ.board.controller;
 
+import java.io.File;
+import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,19 +22,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.board.service.BoardService;
 import com.jobjava.JJ.board.vo.EmploymentVO;
 import com.jobjava.JJ.board.vo.OnlineVO;
 import com.jobjava.JJ.board.vo.QnAVO;
+import com.jobjava.JJ.cafe.vo.FileVO;
+import com.jobjava.JJ.main.service.MainService;
 
 
 @Controller("BoardController")
 @RequestMapping(value="/board")
 public class BoardControllerImpl implements BoardController{
+	private static String CURR_FILE_REPO_PATH = "C:\\project\\file";
 	@Autowired
 	BoardService boardservice;
+	@Autowired
+	MainService mainservice;
 
 	@Override
 	@RequestMapping(value = "/board/listArticles.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -57,6 +71,7 @@ public class BoardControllerImpl implements BoardController{
 	@RequestMapping(value="/qnATable.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView qnATable(@RequestParam HashMap<String, Integer> paging,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
+		mainservice.mnLog("질의응답");
 		if(paging.isEmpty()) {
 			paging.put("section", 1);
 			paging.put("pageNum", 1);
@@ -181,6 +196,7 @@ public class BoardControllerImpl implements BoardController{
 	public ModelAndView onlineConTable(@RequestParam HashMap<String, Integer> paging, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
+		mainservice.mnLog("온라인상담");
 		if(paging.isEmpty()) {
 			paging.put("section", 1);
 			paging.put("pageNum", 1);
@@ -309,6 +325,7 @@ public class BoardControllerImpl implements BoardController{
 	public ModelAndView employmentConTable(HashMap<String, Integer> paging, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
+		mainservice.mnLog("취업상담");
 		if(paging.isEmpty()) {
 			paging.put("section", 1);
 			paging.put("pageNum", 1);
@@ -430,6 +447,222 @@ public class BoardControllerImpl implements BoardController{
 		mav.setViewName("/board/employmentConTable");
 		return mav;
 		
+	}
+
+	@Override
+	@RequestMapping(value="/supportAddTableView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView supportAddTableView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+	@Override
+	@RequestMapping(value="/supportAddTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String supportAddTable(Principal principal,MultipartHttpServletRequest multipartRequest,
+			HttpServletResponse response) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+
+		Map<String, Object> articleMap = new HashMap<String, Object>();
+		Enumeration enu = multipartRequest.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String value = multipartRequest.getParameter(name);
+			articleMap.put(name, value);
+		}
+		articleMap.put("ID", principal.getName());
+		
+		List<String> fileName = upload(multipartRequest,articleMap);
+		
+		try {
+			int BOARD_NO = boardservice.insertFileTable(fileName, articleMap);
+			File destDir = new File(CURR_FILE_REPO_PATH + "\\support\\" + BOARD_NO);
+			destDir.mkdir();
+			if (fileName != null && fileName.size() != 0) {
+				for (String filename : fileName) {
+					File srcFile = new File(CURR_FILE_REPO_PATH + "\\" + "temp" + "\\" + filename);
+					FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				}
+			}
+			
+		}catch(Exception e) {
+			if (fileName != null && fileName.size() != 0) {
+				for (String filename : fileName) {
+					File srcFile = new File(CURR_FILE_REPO_PATH + "\\" + "temp" + "\\" + filename);
+					srcFile.delete();
+				}
+			}
+			return "redirect:/board/supportAddTableView.do";
+		}
+		
+		
+		return "redirect:/main/supportTable.do";
+	}
+	
+	@Override
+	@RequestMapping(value="/supportTableView.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView supportTableView(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		try {
+			String BOARD_NO = request.getParameter("BOARD_NO");
+			HashMap<String, String> f_board = boardservice.selectOneFileTable(BOARD_NO);
+			List<HashMap<String, String>> fileList = boardservice.selectFileNames(BOARD_NO);
+			mav.addObject("fileList", fileList);
+			mav.addObject("board", f_board);
+			
+			String viewName=(String)request.getAttribute("viewName");
+			mav.setViewName(viewName);
+		}catch(Exception e) {
+			mav.setViewName("redirect:/main/supportTable.do");
+		}
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value="/supportUpdateTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity supportUpdateTable(Principal principal, MultipartHttpServletRequest multipartRequest,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		Map<String, Object> articleMap = new HashMap<String, Object>();
+		Enumeration enu = multipartRequest.getParameterNames();
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		articleMap.put("ID", principal.getName());
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String value = multipartRequest.getParameter(name);
+			articleMap.put(name, value);
+		}
+		
+		List<String> fileName = upload(multipartRequest, articleMap);
+		
+		try {
+			File destDir = new File(CURR_FILE_REPO_PATH + "\\support\\" + articleMap.get("BOARD_NO"));
+			if(articleMap.get("delfile1") != null) {
+				boardservice.updateFileTable(articleMap);
+				for(int i=0; i<articleMap.size();i++) {
+					if(articleMap.get("delfile"+i) != null && articleMap.get("delfile"+i) != "") {
+						boardservice.deleteFile(articleMap);
+						File delfile = new File(CURR_FILE_REPO_PATH + "\\support\\" + articleMap.get("BOARD_NO") + "\\"+ articleMap.get("delfile"+i));
+						delfile.delete();
+					}
+				}
+			}
+			
+			
+			if (fileName != null && fileName.size() != 0) {
+				boardservice.updateTableFile(fileName, articleMap);
+				for (String filename : fileName) {
+					File srcFile = new File(CURR_FILE_REPO_PATH + "\\" + "temp" + "\\" + filename);
+					FileUtils.moveFileToDirectory(srcFile, destDir, true);
+				}
+			}
+			
+
+		    message  = "<script>";
+		    message +=" alert('수정을 마쳤습니다. 원래 페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/board/supportTableView.do?BOARD_NO="+ articleMap.get("BOARD_NO")+"';";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			if (fileName != null && fileName.size() != 0) {
+				for (String filename : fileName) {
+					File srcFile = new File(CURR_FILE_REPO_PATH + "\\" + "temp" + "\\" + filename);
+					srcFile.delete();
+				}
+			}
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/board/supportTableView.do?BOARD_NO='"+ articleMap.get("BOARD_NO")+"';";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+	
+	
+	
+
+	@Override
+	@RequestMapping(value="/supportDeleteTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity supportDeleteTable(@RequestParam("BOARD_NO") String BOARD_NO, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		boardservice.deleteFileTable(BOARD_NO);
+		File foder = new File(CURR_FILE_REPO_PATH + "\\support\\" + BOARD_NO);
+        FileUtils.deleteDirectory(foder);
+        
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('삭제을 마쳤습니다.  파일 게시판 페이지로 이동합니다.');";
+		    message += " location.href='"+request.getContextPath()+"/main/supportTable.do';";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('작업 중 오류가 발생했습니다. 다시 시도해 주세요');";
+		    message += " location.href='"+request.getContextPath()+"/main/supportTable.do';";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+
+	private List<String> upload(MultipartHttpServletRequest multipartRequest, Map<String, Object> articleMap) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		List<String> fileList = new ArrayList<String>();
+		Iterator<String> fileNames = multipartRequest.getFileNames();
+		while (fileNames.hasNext()) {
+			String fileName = fileNames.next();
+			MultipartFile mFile = multipartRequest.getFile(fileName);
+			String originalFileName = mFile.getOriginalFilename();
+			int count = 1;
+			
+			if (originalFileName != "" && originalFileName != null) {
+				for(String FN : fileList) {
+					String result = originalFileName.substring(0,originalFileName.lastIndexOf("."));
+					String fnTest = FN.substring(0,FN.lastIndexOf("."));
+				
+					if(fnTest.equals(result)) {
+						if(result.contains("("+(count-1)+")")) {
+						originalFileName = result.substring(0,originalFileName.lastIndexOf("("))+" ("+count+")" + originalFileName.substring(originalFileName.lastIndexOf("."));
+						count++;
+						}else {
+							originalFileName = result+" ("+count+")" + originalFileName.substring(originalFileName.lastIndexOf("."));
+							count++;
+						}
+					}
+				}
+			}
+			
+			if(new File(CURR_FILE_REPO_PATH + "\\support\\" + articleMap.get("BOARD_NO") + "\\" + originalFileName).exists()
+					&& originalFileName != ""){
+				String result = originalFileName.substring(0,originalFileName.lastIndexOf("."));
+				while(true) {
+					originalFileName = result+" ("+count+")" + originalFileName.substring(originalFileName.lastIndexOf("."));
+					if(!new File(CURR_FILE_REPO_PATH + "\\support\\" + articleMap.get("BOARD_NO") + "\\" + originalFileName).exists()) {
+						break;
+					}
+					count++;
+				}
+			}
+			
+			if (originalFileName != "" && originalFileName != null) {
+				fileList.add(originalFileName);
+				File file = new File(CURR_FILE_REPO_PATH + "\\support" + "\\" + fileName);
+				if (mFile.getSize() != 0) { // File Null Check
+					mFile.transferTo(new File(CURR_FILE_REPO_PATH + "\\" + "temp" + "\\" + originalFileName)); // 임시로
+				}
+			}
+		}
+		return fileList;
 	}
 
 }

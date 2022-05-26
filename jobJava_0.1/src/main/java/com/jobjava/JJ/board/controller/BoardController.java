@@ -1,14 +1,16 @@
 package com.jobjava.JJ.board.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.board.vo.EmploymentVO;
@@ -52,4 +54,9 @@ public interface BoardController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView searchEmploymentTable(@RequestParam HashMap<String, Object> search, HttpServletRequest request,
 			HttpServletResponse response) throws Exception;
+	public ModelAndView supportAddTableView(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String supportAddTable(Principal principal,MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws Exception;
+	public ModelAndView supportTableView(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ResponseEntity supportUpdateTable(Principal principal,MultipartHttpServletRequest multipartRequest,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ResponseEntity supportDeleteTable(@RequestParam("BOARD_NO") String BOARD_NO,HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

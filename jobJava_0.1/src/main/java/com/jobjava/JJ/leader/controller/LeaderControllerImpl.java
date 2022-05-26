@@ -1,6 +1,7 @@
 package com.jobjava.JJ.leader.controller;
 
 import java.io.File;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ import com.jobjava.JJ.leader.vo.FileVO;
 import com.jobjava.JJ.leader.vo.Paging;
 import com.jobjava.JJ.leader.vo.SearchCriteria;
 import com.jobjava.JJ.leader.vo.SurveyVO;
+import com.jobjava.JJ.leader.vo.UniVO;
 
 @Controller("LeaderController")
 @RequestMapping(value = "/leader")
@@ -73,8 +75,8 @@ public class LeaderControllerImpl implements LeaderController {
 			String value = multipartRequest.getParameter(name);
 			articleMap.put(name, value);
 		}
-		
-		  // 로그인 시 세션에 저장된 회원 정보에서 글쓴이 아이디를 얻어와서 Map에 저장합니다.
+
+		// 로그인 시 세션에 저장된 회원 정보에서 글쓴이 아이디를 얻어와서 Map에 저장합니다.
 //		HttpSession session = multipartRequest.getSession();
 //		CMemberVO cmemberVO = (CMemberVO) session.getAttribute("cmember");
 //		String ID = cmemberVO.getID();
@@ -82,7 +84,7 @@ public class LeaderControllerImpl implements LeaderController {
 //		
 		List<String> fileList = upload(multipartRequest);
 		List<FileVO> imageFileList = new ArrayList<FileVO>();
-		
+
 		if (fileList != null && fileList.size() != 0) {
 			for (String fileName : fileList) {
 				FileVO fileVO = new FileVO();
@@ -96,7 +98,7 @@ public class LeaderControllerImpl implements LeaderController {
 		ResponseEntity resEnt = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-	
+
 		try {
 			int rEGI_NO = leaderService.addCompany(articleMap);
 			if (imageFileList != null && imageFileList.size() != 0) {
@@ -104,14 +106,15 @@ public class LeaderControllerImpl implements LeaderController {
 					fILENAME = fileVO.getREGI_FILENAME();
 					File srcFile = new File(CURR_IMAGE_REPO_PATH + "\\" + "temp" + "\\" + fILENAME);
 					File destDir = new File(CURR_IMAGE_REPO_PATH + "\\" + rEGI_NO);
-					
+
 					FileUtils.moveFileToDirectory(srcFile, destDir, true);
 				}
 			}
 
 			message = "<script>";
 			message += " alert('신청이 완료되었습니다.');";
-			message += " location.href='" + multipartRequest.getContextPath() + "/main.do?REGI_NO=" + articleMap.get("rEGI_NO") + "';" ;
+			message += " location.href='" + multipartRequest.getContextPath() + "/main.do?REGI_NO="
+					+ articleMap.get("rEGI_NO") + "';";
 			message += " </script>";
 			resEnt = new ResponseEntity(message, responseHeaders, HttpStatus.CREATED);
 
@@ -133,7 +136,7 @@ public class LeaderControllerImpl implements LeaderController {
 		}
 		return resEnt;
 	}
-	
+
 	// 프로그램신청시 다중 파일 업로드하기
 	private List<String> upload(MultipartHttpServletRequest multipartRequest) throws Exception {
 		List<String> fileList = new ArrayList<String>();
@@ -142,10 +145,10 @@ public class LeaderControllerImpl implements LeaderController {
 			String fileName = fileNames.next();
 			MultipartFile mFile = multipartRequest.getFile(fileName);
 			String originalFileName = mFile.getOriginalFilename();
-			
-		   if (originalFileName != "" && originalFileName != null) {
+
+			if (originalFileName != "" && originalFileName != null) {
 				fileList.add(originalFileName);
-				File file = new File(CURR_IMAGE_REPO_PATH + "\\"  + fileName);
+				File file = new File(CURR_IMAGE_REPO_PATH + "\\" + fileName);
 				if (mFile.getSize() != 0) { // File Null Check
 					if (!file.exists()) { // 경로상에 파일이 존재하지 않을 경우
 						file.getParentFile().mkdirs(); // 경로에 해당하는 디렉토리들을 생성
@@ -158,12 +161,50 @@ public class LeaderControllerImpl implements LeaderController {
 		}
 		return fileList;
 	}
+	
+	// 기업등록수정뷰 호출
+		@Override
+		@RequestMapping("/legisterUpdateView.do")
+		public ModelAndView legisterUpdateView(HttpServletRequest request, HttpServletResponse response,
+				@RequestParam("regiNO") String regiNO) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			String viewName = (String) request.getAttribute("viewName");
+			CRegVO detail = leaderService.selectRegi(regiNO);
+			List<Map<String, String>> fileName = leaderService.file(regiNO);
+
+			mav.addObject("detailList", detail);
+			mav.addObject("regiFile", fileName);
+
+			mav.setViewName(viewName);
+			return mav;
+		}
+		
+		// 기업등록수정
+		@Override
+		@RequestMapping(value = "/legisterUpdate.do", method = { RequestMethod.POST, RequestMethod.GET })
+		public String legisterUpdate(CRegVO cRegVO) {
+			leaderService.legisterUpdate(cRegVO);
+			System.out.println(cRegVO);
+
+			return "redirect:/leader/companyLegisterList.do";
+		}
+		
+		// 기업등록삭제
+		@Override
+		@RequestMapping(value = "/legisterDelete.do", method = { RequestMethod.POST, RequestMethod.GET })
+		public String legisterDelete(int REGI_NO) {
+			leaderService.legisterDelete(REGI_NO);
+			System.out.println(REGI_NO);
+
+			return "redirect:/leader/companyLegisterList.do";
+		}
+
 
 	@Override
-	// //기업등록 목록 페이지 호출
-	@RequestMapping("/companyLegisterList.do")
+	// //대학사업 목록 페이지 호출
+	@RequestMapping(value = "/companyLegisterList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView boardList(SearchCriteria scri, Model model, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response, Principal principal) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
 		mav.setViewName(viewName);
@@ -179,10 +220,22 @@ public class LeaderControllerImpl implements LeaderController {
 		List<Map<String, Object>> list = leaderService.boardList(scri);
 		// 한페이지당 보여줄 게시물 갯수
 
-		model.addAttribute("list", list);
-		model.addAttribute("paging", paging);
+		//신청여부 확인하기
+		try {
+			String userID = principal.getName();
+			List<Integer> appCheck = leaderService.appCheck(userID);
+			mav.addObject("appCheck", appCheck);
+			model.addAttribute("list", list);
+			model.addAttribute("paging", paging);
 
-		return mav;
+			return mav;
+		}catch (NullPointerException e) {
+			mav.addObject("appCheck", null);
+			model.addAttribute("list", list);
+			model.addAttribute("paging", paging);
+
+			return mav;
+		}
 	}
 
 	// 기업정보 상세창
@@ -200,25 +253,27 @@ public class LeaderControllerImpl implements LeaderController {
 	// 사업신청페이지(학생용)
 	@RequestMapping(value = "/viweApplicationfrom.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView viweApplication(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("regiNO") int regiNO, @RequestParam("userID") String userID,
-			@RequestParam("sdate") String sdate) throws Exception {
+			@RequestParam("uniBNO") int uniBNO, @RequestParam("userID") String userID) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		String viewName = (String) request.getAttribute("viewName");
-		String title = leaderService.cregTitle(regiNO);
+		UniVO uniInfo = leaderService.bName(uniBNO);
 		AppVO userInfo = leaderService.userInfo(userID);
 
-		mav.addObject("title", title);
+		mav.addObject("uniBNO", uniBNO);
 		mav.addObject("userID", userID);
+		mav.addObject("uniInfo", uniInfo);
 		mav.addObject("userInfo", userInfo);
-		mav.addObject("sdate",sdate);
 		mav.setViewName(viewName);
 		return mav;
 	}
 
 	@RequestMapping(value = "/addApplicationfrom.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String addApplication(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("신청완료 테스트");
-		return "/leader/companyLegisterList";
+	public String addApplication(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("hopeJob") String hopeJob, @RequestParam("reason") String reason,
+			@RequestParam("userID") String userID, @RequestParam("fileName") String fileName,
+			@RequestParam("uniBNO") int uniBNO) throws Exception {
+		leaderService.addApplication(userID, uniBNO, hopeJob, reason, fileName);
+		return "redirect:/leader/companyLegisterList.do";
 	}
 
 	// 설문조사리스트
@@ -310,5 +365,21 @@ public class LeaderControllerImpl implements LeaderController {
 				return mav;
 			}
 		}
+	}
+
+	// 출퇴근 조회
+	@RequestMapping(value = "/commuteCheck.do", method = RequestMethod.GET)
+	public String commuteCheckView() {
+		return "/leader/commuteCheck";
+	}
+
+	@RequestMapping(value = "/commuteCheck.do", method = RequestMethod.POST)
+	public String commuteCheckList(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("userID") String userID, @RequestParam("sdate") String sdate,
+			@RequestParam("edate") String edate) {
+		System.out.println(userID);
+		System.out.println(sdate);
+		System.out.println(edate);
+		return "/leader/commuteCheck";
 	}
 }

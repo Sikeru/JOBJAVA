@@ -6,18 +6,18 @@ import java.util.Map;
 
 import com.jobjava.JJ.leader.vo.AppVO;
 import com.jobjava.JJ.leader.vo.CRegVO;
-import com.jobjava.JJ.leader.vo.Criteria;
 import com.jobjava.JJ.leader.vo.SearchCriteria;
 import com.jobjava.JJ.leader.vo.SurveyVO;
+import com.jobjava.JJ.leader.vo.UniVO;
 
 public interface LeaderService {
-	// �������ϱ� insert
+	// 기업등록하기 insert
 	public void insertCompany(HashMap<String, String> company);
 
-	// ������ select
+	// 기업등록 select
 	public List<CRegVO> selectlegister();
 
-	// ��������ȸ ����Ʈ ����¡
+	// 기업등록조회 리스트 페이징
 
 	public CRegVO selectRegi(String regiNO);
 
@@ -37,7 +37,7 @@ public interface LeaderService {
 	
 	public void addAnswer(int qno, String answer, String id);
 	
-	public String cregTitle(int regiNO);
+	public UniVO bName(int uniBNO);
 	
 	public AppVO userInfo(String id);
 
@@ -46,4 +46,16 @@ public interface LeaderService {
 	public int boardListCnt(SearchCriteria scri);
 	
 	public List<Map<String, Object>> boardList(SearchCriteria scri);
+
+	public void addApplication(String userID, int uniBNO, String hopeJob, String reason, String fileName);
+	
+	public List<Integer> appCheck(String userID);
+	
+	public List<Map<String, String>> file(String regiNO);
+
+	public List<String> selectFileNO(String regiFileNO);
+
+	public void legisterUpdate(CRegVO cRegVO);
+
+	public void legisterDelete(int REGI_NO);
 }

@@ -12,6 +12,24 @@
 	]]>
 	</insert>
 
+	<!-- 기업등록수정 -->
+	<update id="legisterUpdate" parameterType="CRegVO">
+	<![CDATA[
+		UPDATE C_REG
+		SET TITLE = #{TITLE}, CONTENT = #{CONTENT}
+		WHERE REGI_NO = #{REGI_NO}
+		]]>
+	</update>
+
+	<!-- 기업등록삭제 -->
+	<delete id="legisterDelete" parameterType="int">
+	<![CDATA[
+		DELETE 
+		  FROM C_REG
+		 WHERE REGI_NO = #{REGI_NO}
+		 ]]>
+	</delete>
+
 	<!--다중 이미지 추가 SQL문 --><!-- 꿈터기업마이페이지 -->
 	<insert id="insertNewArticle" parameterType="java.util.Map">
 	 <![CDATA[
@@ -24,7 +42,8 @@
 		<foreach item="item" collection="list" open="INSERT ALL"
 			separator=" " close="SELECT * FROM DUAL">
 
-			INTO C_REGI_FILE(REGI_FILENO, REGI_NO, REGI_FILENAME,
+			INTO C_REGI_FILE(REGI_FILENO, REGI_NO,
+			REGI_FILENAME,
 			REGI_DATE)
 			VALUES(#{item.REGI_FILENO}, #{item.REGI_NO},
 			#{item.REGI_FILENAME},
@@ -38,7 +57,6 @@
 		<![CDATA[
 			SELECT nvl(max(REGI_FILENO), 0) from C_REGI_FILE]]>
 	</select>
-
 
 	<!-- ID에 따른 사업자번호 가져오기 -->
 	<select id="selectCompanyID" resultType="String"
@@ -56,8 +74,22 @@
 	]]>
 	</select>
 
-
-
+	<!-- 파일목록 가져오기 -->
+	<select id="selectFileName" resultType="java.util.Map">
+	<![CDATA[
+		 SELECT REGI_FILENAME FROM C_REGI_FILE
+		 WHERE REGI_NO = #{param1}
+		
+	]]>
+	</select>
+	<!-- 파일 번호가져오기 -->
+	<select id="selectFileNO" resultType="String">
+	<![CDATA[
+		 SELECT REGI_FILENO FROM C_REGI_FILE
+		 WHERE REGI_NO = #{param1}
+		
+	]]>
+	</select>
 
 	<!-- 기업등록조회 + 페이징 + 검색 -->
 	<sql id="search">
@@ -73,22 +105,24 @@
 	<select id="boardList" resultType="hashmap"
 		parameterType="hashmap">
         <![CDATA[
-            SELECT REGI_NO, 
-                TITLE, 
-                CONTENT,
-                S_DATE, 
-                E_DATE
-                
+            SELECT UNI_B_NO, B_NAME, U_NAME, CASE 
+                                 WHEN TO_CHAR(E_DATE, 'YYYY-MM-DD')>TO_CHAR(SYSDATE, 'YYYY-MM-DD') THEN '진행중'
+                                 WHEN TO_CHAR(E_DATE, 'YYYY-MM-DD')<TO_CHAR(SYSDATE, 'YYYY-MM-DD') THEN '마감'
+                                 END AS STATE
          FROM ( 
-                SELECT REGI_NO,
-                        B_NO,
-                       TITLE, 
-                       CONTENT, 
-                       FILENAME, 
+                SELECT UNI_B_NO,
+                	   MG_NO,
+                       U_NAME, 
+                       UNI_ADDR, 
+                       UNI_HP, 
+                       B_NAME,
+                       B_CONTENT,
+                       PERMISSION,
+                       B_EXPENSE,
                        S_DATE,
                        E_DATE,
-                       ROW_NUMBER() OVER(ORDER BY REGI_NO) AS RNUM
-                 FROM C_REG 
+                       ROW_NUMBER() OVER(ORDER BY UNI_B_NO) AS RNUM
+                 FROM UNI_BUSINESS 
                  WHERE 1=1]]>
 
 
@@ -99,7 +133,7 @@
                    )
        
         WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-        ORDER BY REGI_NO ASC
+        ORDER BY UNI_B_NO ASC
         
         ]]>
 
@@ -109,7 +143,7 @@
 		resultType="int">
 	<![CDATA[
 		SELECT count(*)
-		FROM C_REG
+		FROM UNI_BUSINESS
 		WHERE 1=1
 		]]>
 
@@ -146,9 +180,9 @@
 	</select>
 
 	<!-- 사업번호로 제목가져오기 -->
-	<select id="selectCregtitle" resultType="String">
+	<select id="selectbName" resultType="UniVO">
 	<![CDATA[
-		SELECT TITLE FROM C_REG WHERE REGI_NO= #{param1}
+		SELECT B_NAME, S_DATE, E_DATE FROM UNI_BUSINESS WHERE UNI_B_NO= #{param1}
 	]]>
 	</select>
 
@@ -160,6 +194,15 @@
 		WHERE M.ID='gkrtod' AND SM.ID=#{param1}
 	]]>
 	</select>
+
+	<!-- 사업신청 등록하기 (학생) -->
+	<insert id="insertApplication">
+	<![CDATA[
+		INSERT 
+			INTO APPLICATION 
+			VALUES(APP_NO.NEXTVAL, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL,'신청대기중')
+	]]>
+	</insert>
 
 
 
@@ -219,6 +262,17 @@
     		VALUES(A_NO.NEXTVAL, ${param1}, 1, #{param3})
 	]]>
 	</update>
+
+
+
+	<select id="selectAppCount" resultType="int"
+		parameterType="String">
+    <![CDATA[
+    	SELECT B.UNI_B_NO
+    		FROM UNI_BUSINESS B, APPLICATION A 
+    		WHERE A.UNI_B_NO=B.UNI_B_NO AND ID = #{param1}
+    ]]>
+	</select>
 
 
 </mapper>

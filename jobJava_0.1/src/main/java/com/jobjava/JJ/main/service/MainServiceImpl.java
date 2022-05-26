@@ -2,6 +2,7 @@ package com.jobjava.JJ.main.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jobjava.JJ.main.dao.MainDAO;
+import com.jobjava.JJ.main.vo.SearchCriteria;
 
 @Service("MainService")
 @Transactional(propagation=Propagation.REQUIRED)
@@ -46,6 +48,18 @@ public class MainServiceImpl implements MainService{
 	public void updateBestCompany(HashMap<String, String> company) {
 		MainDAO dao = sqlSession.getMapper(MainDAO.class);
 		dao.updateBestCompany(company);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectAllF_BOARD(SearchCriteria scri) {
+		MainDAO dao = sqlSession.getMapper(MainDAO.class);
+		return dao.selectAllF_BOARD(scri);
+	}
+
+	@Override
+	public int boardListCnt(SearchCriteria scri) {
+		MainDAO dao = sqlSession.getMapper(MainDAO.class);
+		return dao.boardListCnt(scri);
 	}
 
 }

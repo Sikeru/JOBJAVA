@@ -40,9 +40,27 @@
 
 		// 목록
 		$(".list_btn").on("click", function() {
-
-			location.href = "/JJ/cafe/hireinfopaging";
+			formObj.attr("action", "/JJ/cafe/hireinfopaging.do");
+			formObj.attr("method", "post");
+			formObj.submit();
+			/*    location.href = "/JJ/cafe/hireinfopaging.do)"; */
 		})
+
+		/* 		// 이미지 업로드
+		 $('#img').on('change', function() {
+		 ext = $(this).val().split('.').pop().toLowerCase(); //확장자
+		 //배열에 추출한 확장자가 존재하는지 체크
+		 if ($.inArray(ext, [ 'gif', 'png', 'jpg', 'jpeg' ]) == -1) {
+		 resetFormElement($(this)); //폼 초기화
+		 } else {
+		 file = $('#img').prop("files")[0];
+		 blobURL = window.URL.createObjectURL(file);
+		 $('#image_preview img').attr('src', blobURL);
+		 $('#image_preview').slideDown(); //업로드한 이미지 미리보기 
+		 $(this).slideUp(); //파일 양식 감춤
+		 }
+		 }); */
+
 	})
 </script>
 
@@ -72,13 +90,30 @@
 							<td><label for="content">내용</label> <textarea id="content"
 									name="CONTENT" readonly><c:out
 										value="${detail.CONTENT}" /></textarea></td>
+
 						</tr>
 						<tr>
-							<td><label for="regdate">작성날짜</label> <fmt:formatDate
+							<td><label for="regdate">시작일</label> <fmt:formatDate
 									value="${detail.s_DATE}" pattern="yyyy-MM-dd" /></td>
 						</tr>
+						<tr>
+							<td><label for="regdate1">종료일</label> <fmt:formatDate
+									value="${detail.e_DATE}" pattern="yyyy-MM-dd" /></td>
+						</tr>
+
+		<tr>
+			<th>파일</th>
+			
+			<c:forEach var="file" items="${empFile}" varStatus="i">
+		<%-- 	<th><input type="hidden" name="fileNO" value="${regiFileNO}"/></th> --%>
+			<td><a href="${contextPath}/Cafedownload.do?fileNO=${detail.PROGRAM_NO}&fileName=${file.EMP_FILENAME}">${file.EMP_FILENAME}</a></td>
+			
+			</c:forEach>
+		</tr>
+
 					</tbody>
 				</table>
+
 				<div>
 					<button type="submit" class="update_btn">수정</button>
 					<button type="submit" class="delete_btn">삭제</button>

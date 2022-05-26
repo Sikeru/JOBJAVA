@@ -12,9 +12,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jobjava.JJ.cafe.dao.CafeDAO;
-import com.jobjava.JJ.cafe.vo.Criteria;
 import com.jobjava.JJ.cafe.vo.FileVO;
 import com.jobjava.JJ.cafe.vo.JobAppVO;
+import com.jobjava.JJ.cafe.vo.JobInfoVO;
 import com.jobjava.JJ.cafe.vo.ProgramVO;
 import com.jobjava.JJ.cafe.vo.SearchCriteria;
 
@@ -52,11 +52,17 @@ public class CafeServiceImpl implements CafeService {
 		return dao.boardList(scri);
 	}
 
-
 	@Override
-	public ProgramVO selectProgram(int programNO) throws Exception {
+	public ProgramVO selectProgram(String programNO) {
 		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
 		return dao.selectProgram(programNO);
+	}
+
+	// 프로그램 파일보여주기
+	@Override
+	public List<Map<String, String>> file(String programNO) {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.selectProgramFile(programNO);
 	}
 
 	// 채용정보 수정
@@ -68,15 +74,9 @@ public class CafeServiceImpl implements CafeService {
 	// 채용정보 삭제
 
 	@Override
-	public void delete(ProgramVO programVO) throws Exception {
+	public void delete(int programNO) throws Exception {
 		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
-		dao.delete(programVO);
-	}
-
-	@Override
-	public void delete(int i) throws Exception {
-		// TODO Auto-generated method stub
-
+		dao.delete(programNO);
 	}
 
 	// 프로그램신청 다중 이미지 추가하기(다중파일)
@@ -136,6 +136,67 @@ public class CafeServiceImpl implements CafeService {
 		List dDatelist = null;
 		dDatelist = dao.selectDdata(date);
 		return dDatelist;
+	}
+
+	@Override
+	public List<String> selectFileNO(String empFileNO) {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.selectFileNO(empFileNO);
+	}
+
+	@Override
+	public List<Map<String, Object>> boardList2(SearchCriteria scri) {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.boardList2(scri);
+	}
+
+	@Override
+	public int boardListCnt2(SearchCriteria scri) {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.boardListCnt2(scri);
+	}
+
+	// 채용공고 조회
+	public List<JobInfoVO> postingList() throws DataAccessException {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		List<JobInfoVO> joninfo = dao.selectJobPosting();
+		return joninfo;
+	}
+
+	// 채용공고
+	public int postingListCnt(SearchCriteria scri) throws Exception {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.postingListCnt(scri);
+	}
+
+	// 채용공고
+	public List<Map<String, Object>> postingList(SearchCriteria scri) throws Exception {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.postingList(scri);
+	}
+
+	// 채용공고 조회
+	public JobInfoVO selectJobPosting(int JOB_NO) throws Exception {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.selectJobPosting(JOB_NO);
+	}
+
+	// 채용공고 상세조회
+	public JobInfoVO jobpostingdetail(int JOB_NO) throws Exception {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		return dao.jobpostingdetail(JOB_NO);
+	}
+
+	// 채용공고 수정
+	public void jobpostingupdate(JobInfoVO jobinfoVO) throws Exception {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		dao.jobpostingupdate(jobinfoVO);
+	}
+
+	// 채용공고 삭제
+	public void jobPostingDelete(int JOB_NO) throws Exception {
+		CafeDAO dao = sqlSession.getMapper(CafeDAO.class);
+		dao.jobPostingDelete(JOB_NO);
 	}
 
 }

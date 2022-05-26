@@ -177,6 +177,9 @@
 	<update id="upDateCOM" parameterType="java.util.HashMap">
 		UPDATE C_MEMBER
 		<set>
+		<if test="B_NO !='' and B_NO != null">
+		B_NO=#{B_NO},
+	     </if>
 		 <if test="AGENT !='' and AGENT != null">
 		AGENT=#{AGENT},
 	     </if>

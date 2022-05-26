@@ -23,27 +23,27 @@
 <html>
 <head>
 <title>Insert title here</title>
-<head>
-
-
-
 <script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+
+<script type="text/javascript">
 function fn_modify_unireg_state(UNI_B_NO){
 	var uni_reg_state = document.getElementById("uni_reg_state");
 	
 	var value
-	if (uni_reg_state == 'uniregallow'){
+	if (uni_reg_state == '승인'){
 		value = '승인'
 	}
-	else if(uni_reg_state == 'uniregcancle'){
+	else if(uni_reg_state == '거부'){
 		value = '거부'
 	}
 	else{
 		
 	}	
 	
-/* 	var index = uni_reg_state.selectIndex;
+	/* 	var index = uni_reg_state.selectIndex;
 	var value = uni_reg_state[index].value();
 	console.log("value: " +value); */
 	$.ajax({
@@ -104,6 +104,9 @@ function fn_modify_unireg_state(UNI_B_NO){
             }); //sub li hover 끝  
            
           });
+          
+ 
+
 </script>
         
 <style>
@@ -124,79 +127,80 @@ function fn_modify_unireg_state(UNI_B_NO){
    		
 
    </style>
-    
-<body>
-<div id = "unibox">
-	<div class = "uni">
+	<body>
+	<div id = "unibox">
+		<div class = "uni">
+		
+		<div class = "unireg"><h1>대학교 사업계획서 수정</h1></div>
+		
+		<form id = "frm" method = "post">
+			<input type = "hidden" name = "UNI_B_NO" value = "${list.UNI_B_NO }" readonly/>
+			
+			<hr>
 
-	
-		<div class = "unireg"><h1>대학교 사업계획서 등록</h1></div>
-		
-		<form method = "post"> 
-	
-		<hr>
-	
-		<input type="hidden" name="ID"><br>
-		
-		
 		<br>
 		
-		<div class = "uninum">
+		<div class = "uninum" name = "UNI_B_NO">
 			<label>사업번호</label>
-			${uniread.UNI_B_NO }
+			${list.UNI_B_NO }
 		</div>
 		
-		<div class = "uniname">
+		
+		
+		<div class = "uniname" name = "U_NAME">
 			<label>대학교 이름</label>
-			${uniread.u_NAME }
+			${list.u_NAME }
 		</div>
-		<br>
 		
 		
-		<div class = "uniaddr">
+		
+		<div class = "uniaddr" name = "UNI_ADDR">
 			<label>대학교 주소</label>
-			${uniread.UNI_HP }
+			${list.UNI_ADDR }
+		</div>
+		
+		<div class = "unihp" name = "UNI_HP">
+			<label>전화번호</label>
+			${list.UNI_HP }
 		</div>
 		
 		<br>
 		
 		
-		<div class = "unibname">
+		<div class = "unibname" name = "B_NAME">
 			<label>사업명</label>
-			${uniread.b_NAME }
+			${list.b_NAME }
+			</div>
+		<div class = "bexpense" name = "B_EXPENSE">
 			<label>사업비</label>
-			${uniread.b_EXPENSE }
+			<input type = "text" id = "expense" name = "B_EXPENSE" value = "${list.b_EXPENSE }"/>
 		</div>
 		
 		<br>
 		
 		<div class = "unidate">
-			<label>시작날짜</label> ${uniread.s_DATE } - <label>종료날짜</label> ${uniread.e_DATE }
+			<label name = "S_DATE">시작날짜</label> 
+			<input type = "date" id = "s_date" name = "S_DATE" value = "${list.s_DATE }"/> - 
+			<label name = "E_DATE">종료날짜</label> 
+			<input type = "date" id = "e_date" name = "E_DATE" value = "${list.e_DATE }"/>
 		</div>
 		
 		<br>
 		
-		<div class = "unicontent">
+		<div class = "unicontent" name = "B_CONTENT">
 			<label>사업내용</label>
-			${uniread.b_CONTENT }
+			${list.b_CONTENT }
 		</div>
 		
-		<br>
-			<p>배송상태</p>
-			<div class="detail_table">
-		<table>
-			<tbody>
-				<tr class="dot_line">
-				
-	
-					
-					<form action="${contextPath}/counselor/regcheck.do"  method = "post">
+		</form>
+		
+		<form action="${contextPath}/counselor/regcheck.do"  method = "post">
 					
 				<select name="uni_reg_state"  id="uni_reg_state">
 
-				     <option  value="unireg_prepared" selected>접수진행중</option>
-				     <option  value="uniregallow">수락</option>
-				     <option  value="uniregcancle">거절</option>
+				     <option  value="접수진행중" selected>접수진행중</option>
+				     <option  value="수락">수락</option>
+				     <option  value="거절">거절</option>
 
 				 </select> 
 				
@@ -205,17 +209,33 @@ function fn_modify_unireg_state(UNI_B_NO){
 				
 				
 				<td width=10%>
-			     <input  type="button" value="접수수정" name="PERMISSION" onClick="fn_modify_unireg_state(${uniread.UNI_B_NO})"/>
+			     <input  type="button" value="접수수정" name="PERMISSION" onClick="fn_modify_unireg_state(${list.UNI_B_NO})"/>
 			    </td>
 			    </form>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 		
-	
-		</form>
+	<input type = "button" id = "update" value = "수정하기">
+	<input type = "button" id = "delete" value = "삭제하기">
+	 
+	 <script type="text/javascript">
+	 
+	 $("#update").on("click", function(){
+         var frm = $("#frm")[0];
+         frm.action = "update.do";
+         frm.submit();
+     });
+
+     $("#delete").on("click", function(){
+         var frm = $("#frm")[0];
+         frm.action = "delete.do";
+         frm.submit();
+     });
+	 
+	 </script>
+	 
+		</div>
 	</div>
-</div>
-</body>
+
+	
+	</body>
+	
 </html>

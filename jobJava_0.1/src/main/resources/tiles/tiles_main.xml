@@ -36,6 +36,12 @@
 		<put-attribute name="body" value="/WEB-INF/views/main/bestCompany.jsp" />
 	</definition>
 	
+	<definition name="/main/supportTable" extends="baseLayout">
+		<put-attribute name="title" value="JOB JAVA 메인페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/main/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/main/supportTable.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>
 

@@ -24,6 +24,7 @@
 			invalidate-session="true"
 			delete-cookies="true"
 		/>
+		 <s:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 		 <s:intercept-url pattern="/counselor/**" access="hasRole('ROLE_EMP')" />
 		 <s:intercept-url pattern="/member/mypageForm.do" access="isAuthenticated()" />
 		 <s:intercept-url pattern="/member/loginForm.do" access="isAnonymous()" />

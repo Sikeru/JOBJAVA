@@ -1,6 +1,6 @@
 package com.jobjava.JJ.counselor.controller;
 
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.counselor.service.CounselorService;
 import com.jobjava.JJ.counselor.vo.CriteriaVO;
+import com.jobjava.JJ.counselor.vo.Paging;
+import com.jobjava.JJ.counselor.vo.SearchCriteria;
 import com.jobjava.JJ.counselor.vo.UniregVO;
 
 
@@ -32,11 +34,6 @@ import com.jobjava.JJ.counselor.vo.UniregVO;
 public class CounselorControllerImpl implements CounselorController  {
 	@Autowired
 	CounselorService counselorService;
-
-	private CounselorService service;
-
-	private CounselorService counseolrService;
-
 	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(CounselorController.class);
 	
@@ -57,44 +54,33 @@ public class CounselorControllerImpl implements CounselorController  {
 	      
 	   }
 	
-	@RequestMapping(value = "/attendance.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView attendance(CriteriaVO cri, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView();
-		String viewName = (String) request.getAttribute("viewName");
-		List<HashMap<String, String>> attendanceCheck = counselorService.attendancelist();
-		mav.addObject("attendanceCheck", attendanceCheck);
-		mav.setViewName(viewName);
-		
-		/*
-		 * int boardListCnt = counselorService.boardListCnt();
-		 * System.out.println(boardListCnt);
-		 * 
-		 * // 페이징 객체 PagingVO paging = new PagingVO(); paging.setCri(cri);
-		 * paging.setTotalCount(boardListCnt);
-		 * 
-		 * 
-		 * List<Map<String, Object>> list = counselorService.boardList(cri); //한페이지당 보여줄
-		 * 게시물 갯수 System.out.println(list);
-		 * 
-		 * model.addAttribute("list", list); model.addAttribute("paging", paging);
-		 */
+//	@RequestMapping(value = "/attendance.do", method = { RequestMethod.POST, RequestMethod.GET })
+//	public ModelAndView attendance(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		ModelAndView mav = new ModelAndView();
+//		String viewName = (String) request.getAttribute("viewName");
+//		
+//		List<HashMap<String, String>> attendanceCheck = counselorService.attendancelist();
+//		mav.addObject("attendanceCheck", attendanceCheck);
+//		
+//		mav.setViewName(viewName);
+//
+//		return mav;
+//	}
+//	
+//	@RequestMapping(value = "/commuteCheck.do", method = { RequestMethod.POST, RequestMethod.GET })
+//	public ModelAndView commuteCheck(@RequestParam HashMap<String, String> commuteDate, HttpServletRequest request,
+//			HttpServletResponse response) throws Exception {
+//		List<HashMap<String, String>> commuteCheck = counselorService.commutelist(commuteDate);
+//		System.out.println(commuteDate);
+//		ModelAndView mav = new ModelAndView();
+//
+//		mav.addObject("commuteCheck", commuteCheck);
+//		mav.setViewName("/counselor/commuteCheck");
+//
+//		return mav;
+//	}
 
-		return mav;
-	}
-	
-	@RequestMapping(value = "/commuteCheck.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView commuteCheck(@RequestParam HashMap<String, String> commuteDate, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		List<HashMap<String, String>> commuteCheck = counselorService.commutelist(commuteDate);
-		System.out.println(commuteDate);
-		ModelAndView mav = new ModelAndView();
 
-		mav.addObject("commuteCheck", commuteCheck);
-		mav.setViewName("/counselor/commuteCheck");
-
-		return mav;
-	}
-	
 	@RequestMapping(value = "/jobregForm.do", method = { RequestMethod.POST, RequestMethod.GET })
 	   public ModelAndView jobregForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	      ModelAndView mav = new ModelAndView("redirect:/counselor/uniregList");
@@ -135,33 +121,115 @@ public class CounselorControllerImpl implements CounselorController  {
 	      return mav;
 	   }
 	
-	// 대학 등록시 등록 목록으로 가게 하는(?) 코드
-	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(UniregVO uniregVO) throws Exception {
+		System.out.println(uniregVO.getUNI_B_NO());
+		System.out.println("update");
+		counselorService.update(uniregVO);
 
-	// 대학 리스트
-
-	@RequestMapping(value = "/uniregList.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView uniregList(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("uniregList", counselorService.uniList());
-		String viewName = (String) request.getAttribute("viewName");
-	     mav.setViewName(viewName);
-		return mav;
+		return "redirect:/counselor/uniregView.do?UNI_B_NO=" + uniregVO.getUNI_B_NO();
 	}
-
 	
+	// 채용정보 삭제
+	   @RequestMapping(value = "/delete", method = RequestMethod.POST)
+	   public String delete(UniregVO uniregVO) throws Exception {
+	      counselorService.delete(uniregVO.getUNI_B_NO());
+
+	      return "redirect:/counselor/uniregList.do?UNI_B_NO=" + uniregVO.getUNI_B_NO();
+	   }
+	
+
+//	 대학 리스트
+//
+//	@RequestMapping(value = "/uniregList.do", method = { RequestMethod.POST, RequestMethod.GET })
+//	public ModelAndView uniregList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("uniregList", counselorService.uniList());
+//		String viewName = (String) request.getAttribute("viewName");
+//	     mav.setViewName(viewName);
+//		return mav;
+//	}
+	 
+	   
+	// 20220519 페이징 부분 (안되면 위에 주석 풀기)
+	 @RequestMapping(value = "/uniregList.do")
+		public ModelAndView uniregList(CriteriaVO cri, Model model, HttpServletRequest request,
+				HttpServletResponse response) throws Exception {
+			ModelAndView mav = new ModelAndView();
+			String viewName = (String) request.getAttribute("viewName");
+		     mav.setViewName(viewName);
+		     
+		     int uniregListCnt = counselorService.uniregListCnt(cri);
+		  
+		     Paging paging = new Paging();
+		     paging.setCri(cri);
+		     paging.setTotalCount(uniregListCnt); 
+		     
+		     List<Map<String, Object>> list = counselorService.uniregList(cri);
+		     System.out.println(list);
+		     model.addAttribute("list", list);
+		     model.addAttribute("paging", paging);
+		     
+			 return mav;
+		}
+
+	// 학생 등록
+			@RequestMapping(value = "/studenregForm.do", method = { RequestMethod.POST, RequestMethod.GET })
+			public ModelAndView studenregForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			      ModelAndView mav = new ModelAndView();
+			      String viewName = (String) request.getAttribute("viewName");
+			      mav.setViewName(viewName);
+			      return mav;
+			   }
+			
+			@Override
+			@RequestMapping(value = "/addstu.do")
+			public String addstu(@RequestParam HashMap<String, String> sturegVO,HttpServletRequest request, HttpServletResponse response) throws Exception {
+				System.out.println(sturegVO);
+			      counselorService.addstu(sturegVO);
+			      return "redirect:/counselor/studenList.do";
+			}
+			
+			@RequestMapping(value = "/studenList.do", method = { RequestMethod.POST, RequestMethod.GET })
+			public ModelAndView studenList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+				ModelAndView mav = new ModelAndView();
+				mav.addObject("studenlist", counselorService.stulist());
+				String viewName = (String) request.getAttribute("viewName");
+			     mav.setViewName(viewName);
+				return mav;
+			}
+			
+			// 기업 등록
+			@RequestMapping(value = "/companyregForm.do", method = { RequestMethod.POST, RequestMethod.GET })
+			public ModelAndView companyregForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			      ModelAndView mav = new ModelAndView();
+			      String viewName = (String) request.getAttribute("viewName");
+			      mav.setViewName(viewName);
+			      return mav;
+			   }
+
+			@Override
+			@RequestMapping(value = "/addcompany.do", method = RequestMethod.GET)
+			public String addcompany(@RequestParam HashMap<String, String> ComregVO,HttpServletRequest request, HttpServletResponse response) throws Exception {
+				System.out.println(ComregVO);
+			      counselorService.addcompany(ComregVO);
+			      return "redirect:/counselor/main.do"; // 임시로 작성
+			}
+			
 	  //채용정보 상세창
     @RequestMapping(value = "/uniregView.do", method = { RequestMethod.POST, RequestMethod.GET })
     public ModelAndView uniregView(HttpServletRequest request, HttpServletResponse response,
-          @RequestParam String unibno) throws Exception {
+          @RequestParam int UNI_B_NO) throws Exception {
        ModelAndView mav = new ModelAndView();
        String viewName = (String) request.getAttribute("viewName");
-       UniregVO detail = counselorService.selectProgram(unibno);
-       mav.addObject("uniread", detail); // ("jsp에서 받는 이름", 주는 데이터) 
+       UniregVO detail = counselorService.selectProgram(UNI_B_NO);
+       mav.addObject("list", detail); // ("jsp에서 받는 이름", 주는 데이터) 
        mav.setViewName(viewName);
        return mav;
     }
-
+    
+ 
+  
 
 
 	@Override
@@ -182,6 +250,7 @@ public class CounselorControllerImpl implements CounselorController  {
 	@RequestMapping(value = "/regcheck.do")
 	public String regcheck(HashMap<String, String> uniregVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+			System.out.println(uniregVO);
 			counselorService.regcheck(uniregVO);
 			return "redirect:/counselor/uniregList.do";
 	}
@@ -193,17 +262,6 @@ public class CounselorControllerImpl implements CounselorController  {
 		return null;
 	}
 
-	@Override
-	public ModelAndView attendance(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*
-	 * @Override public ModelAndView boardList(CriteriaVO cri, Model model,
-	 * HttpServletRequest request, HttpServletResponse response) throws Exception {
-	 * // TODO Auto-generated method stub return null; }
-	 */
 
 	@Override
 	public ModelAndView companyDetail(HttpServletRequest request, HttpServletResponse response, String regiNO)
@@ -211,14 +269,75 @@ public class CounselorControllerImpl implements CounselorController  {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	@Override
+	//업무일지
+	@RequestMapping("/journal.do")
+	public ModelAndView journalList(SearchCriteria scri, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		
+		int counseolrServiceCnt = counselorService.counseolrServiceCnt(scri);
+		
+		List<HashMap<String, String>> journalCheck = counselorService.journalList();
+		mav.addObject("journalCheck", journalCheck);
+		// 페이징 객체
+		Paging paging = new Paging();
+		paging.setCri(scri);
+		paging.setTotalCount(counseolrServiceCnt);
+		
+		List<Map<String, Object>> list = counselorService.journalList(scri);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		
+		mav.setViewName(viewName);
+		return mav;
+	}
 
 	@Override
+	// //기업등록 목록 페이지 호출
+	@RequestMapping("/attendance.do")
+	public ModelAndView boardList(SearchCriteria scri, Model model, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		
+		
+//		List<HashMap<String, Object>> list =  new ArrayList<HashMap<String, Object>>();
+//		list = counselorService.boardList();
+//		// 한페이지당 보여줄 게시물 개수
+
+		
+//		// 전체 글 개수
+		int counseolrServiceCnt = counselorService.counseolrServiceCnt(scri);
+//		System.out.println(counseolrServiceCnt);
+		
+//		// 페이징 객체
+		Paging paging = new Paging();
+		paging.setCri(scri);
+		paging.setTotalCount(counseolrServiceCnt);
+
+		List<Map<String, Object>> list = counselorService.boardList(scri);
+		
+		// 한페이지당 보여줄 게시물 개수
+		model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+
+		return mav;
+	}
+
+	// 일자리 매칭
+	@Override
 	@RequestMapping(value = "/jobMatchingView.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView jobMatchingView(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView jobMatchingView(Principal principal, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ModelAndView mav = new ModelAndView();
 		try {
-			String user_id = request.getParameter("ID");
+			String user_id = principal.getName();
 			List<HashMap<String, Object>> bInfo = counselorService.selectAllBasketInfo(user_id);
 			List<HashMap<String, String>> chMember = counselorService.selectAllChMember(user_id);
 			mav.addObject("bInfo", bInfo);
@@ -258,7 +377,5 @@ public class CounselorControllerImpl implements CounselorController  {
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
 	}
-	
-	
-	
+
 }

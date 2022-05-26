@@ -15,6 +15,7 @@ import com.jobjava.JJ.leader.vo.CRegVO;
 import com.jobjava.JJ.leader.vo.FileVO;
 import com.jobjava.JJ.leader.vo.SearchCriteria;
 import com.jobjava.JJ.leader.vo.SurveyVO;
+import com.jobjava.JJ.leader.vo.UniVO;
 
 @Service("leaderService")
 public class LeaderServiceImpl implements LeaderService {
@@ -99,6 +100,13 @@ public class LeaderServiceImpl implements LeaderService {
 		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
 		return dao.selectUserInfo(id);
 	}
+	
+	//사업 신청(학생)
+	@Override
+	public void addApplication(String userID, int uniBNO, String hopeJob, String reason, String fileName) {
+		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
+		dao.insertApplication(userID, uniBNO, hopeJob, reason, fileName);
+	}
 
 	// 설문조사 정보등록
 	@Override
@@ -151,10 +159,43 @@ public class LeaderServiceImpl implements LeaderService {
 		dao.insertAnswer(qno, answer, id);
 	}
 
-	// 사업번호로 제목조회
-	public String cregTitle(int regiNO) {
+	// 대학사업번호로 제목,날짜조회
+	public UniVO bName(int uniBNO) {
 		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
-		return dao.selectCregtitle(regiNO);
+		return dao.selectbName(uniBNO);
 	}
-
+	
+	// 사업신청확인 (학생)
+	public List<Integer> appCheck(String userID) {
+		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
+		return dao.selectAppCount(userID);
+	}
+	
+/* 파일업로드 */
+	
+	@Override
+	public List<Map<String, String>> file(String regiNO){
+		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
+		return dao.selectFileName(regiNO);
+	}
+	
+	@Override
+	public List<String> selectFileNO(String regiFileNO){
+		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
+		return dao.selectFileNO(regiFileNO);
+	}
+	
+	//기업신청수정
+	@Override
+	public void legisterUpdate(CRegVO cRegVO) {
+		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
+		dao.legisterUpdate(cRegVO);
+	}
+	
+	//기업신청삭제
+	@Override
+	public void legisterDelete(int REGI_NO) {
+		LeaderDAO dao = sqlSession.getMapper(LeaderDAO.class);
+		dao.legisterDelete(REGI_NO);
+	}
 }

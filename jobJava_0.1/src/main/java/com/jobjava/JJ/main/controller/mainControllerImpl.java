@@ -3,9 +3,9 @@ package com.jobjava.JJ.main.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jobjava.JJ.main.service.MainService;
+import com.jobjava.JJ.main.vo.Paging;
+import com.jobjava.JJ.main.vo.SearchCriteria;
 
 @Controller("mainController")
 @RequestMapping(value="/main")
@@ -34,6 +36,7 @@ public class mainControllerImpl implements mainController{
 	@RequestMapping(value= "/main.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView tomain(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mav=new ModelAndView();
+		mainservice.mnLog("메인페이지");
 		String viewName=(String)request.getAttribute("viewName");
 		mav.setViewName(viewName);
 		return mav;
@@ -43,14 +46,14 @@ public class mainControllerImpl implements mainController{
 	public ModelAndView bessinfoView(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		String viewName=(String)request.getAttribute("viewName");
-		mainservice.mnLog(request.getParameter("mnName"));
+		mainservice.mnLog("사업안내");
 		mav.setViewName(viewName);
 		return mav;
 	}
 	
 	@RequestMapping(value="/alarmCenter.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public String alarmCenter(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		mainservice.mnLog(request.getParameter("mnName"));
+		mainservice.mnLog("알림마당");
 		return "redirect:/board/qnATable.do";
 	}
 
@@ -59,7 +62,7 @@ public class mainControllerImpl implements mainController{
 	public ModelAndView bestCompany(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav=new ModelAndView();
 		List<HashMap<String,String>> bestCom = mainservice.selectBestCompany();
-		mainservice.mnLog(request.getParameter("mnName"));
+		mainservice.mnLog("기업홍보");
 		
 		mav.addObject("bestCom",bestCom);
 		String viewName=(String)request.getAttribute("viewName");
@@ -156,7 +159,6 @@ public class mainControllerImpl implements mainController{
 	@RequestMapping(value="/updateBestCompany.do" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ResponseEntity updateBestCompany(@RequestParam HashMap<String,String> company,@RequestParam("BC_FILENAME") MultipartFile files,
 			HttpServletRequest request,HttpServletResponse response) throws Exception{
-		
 		company.put("BC_FILENAME", files.getOriginalFilename());
 		mainservice.updateBestCompany(company);
 		
@@ -169,12 +171,6 @@ public class mainControllerImpl implements mainController{
 			FileUtils.moveFileToDirectory(modifiedFile, Folder,true);
 		}
 
-		
-		
-		
-		 
-		
-        
 		String message = null;
 		ResponseEntity resEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -194,6 +190,29 @@ public class mainControllerImpl implements mainController{
 		}
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
+	}
+	
+
+	@Override
+	@RequestMapping(value= "/supportTable.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView supportTable(SearchCriteria scri,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav=new ModelAndView();
+		
+		int boardListCnt = mainservice.boardListCnt(scri);
+
+		// 페이징 객체
+		Paging paging = new Paging();
+		paging.setCri(scri);
+		paging.setTotalCount(boardListCnt);
+
+		
+		List<Map<String, Object>> list = mainservice.selectAllF_BOARD(scri);
+		mav.addObject("list", list);
+		mav.addObject("paging", paging);
+		
+		String viewName=(String)request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
 	}
 
 	@RequestMapping("/download.do")

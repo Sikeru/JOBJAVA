@@ -1,39 +1,75 @@
 package com.jobjava.JJ.leader.vo;
 
-import java.sql.Date;
-
 public class CRegVO {
-	private int REGI_NO;
-	private String B_NO;
-	private String TITLE;
-	private String CONTENT;
-	private String FILENAME;
-	private Date S_DATE;
-	private Date E_DATE;
+	//C_MEMBER
+	private String B_NO;	// 사업자번호
+	private String AGENT;	//대표자
+	private String B_TYPE;	//업종
+	private String C_DIV;	//기업구분
+	private int EMP_NUM;	//근로자 수
+	private String HP;	//홈페이지
+	private String C_NAME; //회사명
 	
-	public int getREGI_NO() {
-		return REGI_NO;
-	}
-	public void setREGI_NO(int rEGI_NO) {
-		REGI_NO = rEGI_NO;
-	}
+	//C_REG
+	private int REGI_NO; // 기업신청번호
+	private int UNI_B_NO; // 대학사업번호
+	private String FILENAME; // 파일이름
+	private String M_RESULT; // 매칭결과
+	
+	
 	public String getB_NO() {
 		return B_NO;
 	}
 	public void setB_NO(String b_NO) {
 		B_NO = b_NO;
 	}
-	public String getTITLE() {
-		return TITLE;
+	public String getAGENT() {
+		return AGENT;
 	}
-	public void setTITLE(String tITLE) {
-		TITLE = tITLE;
+	public void setAGENT(String aGENT) {
+		AGENT = aGENT;
 	}
-	public String getCONTENT() {
-		return CONTENT;
+	public String getB_TYPE() {
+		return B_TYPE;
 	}
-	public void setCONTENT(String cONTENT) {
-		CONTENT = cONTENT;
+	public void setB_TYPE(String b_TYPE) {
+		B_TYPE = b_TYPE;
+	}
+	public String getC_DIV() {
+		return C_DIV;
+	}
+	public void setC_DIV(String c_DIV) {
+		C_DIV = c_DIV;
+	}
+	public int getEMP_NUM() {
+		return EMP_NUM;
+	}
+	public void setEMP_NUM(int eMP_NUM) {
+		EMP_NUM = eMP_NUM;
+	}
+	public String getHP() {
+		return HP;
+	}
+	public void setHP(String hP) {
+		HP = hP;
+	}
+	public String getC_NAME() {
+		return C_NAME;
+	}
+	public void setC_NAME(String c_NAME) {
+		C_NAME = c_NAME;
+	}
+	public int getREGI_NO() {
+		return REGI_NO;
+	}
+	public void setREGI_NO(int rEGI_NO) {
+		REGI_NO = rEGI_NO;
+	}
+	public int getUNI_B_NO() {
+		return UNI_B_NO;
+	}
+	public void setUNI_B_NO(int uNI_B_NO) {
+		UNI_B_NO = uNI_B_NO;
 	}
 	public String getFILENAME() {
 		return FILENAME;
@@ -41,17 +77,10 @@ public class CRegVO {
 	public void setFILENAME(String fILENAME) {
 		FILENAME = fILENAME;
 	}
-	public Date getS_DATE() {
-		return S_DATE;
+	public String getM_RESULT() {
+		return M_RESULT;
 	}
-	public void setS_DATE(Date s_DATE) {
-		S_DATE = s_DATE;
+	public void setM_RESULT(String m_RESULT) {
+		M_RESULT = m_RESULT;
 	}
-	public Date getE_DATE() {
-		return E_DATE;
-	}
-	public void setE_DATE(Date e_DATE) {
-		E_DATE = e_DATE;
-	}
-	
 }

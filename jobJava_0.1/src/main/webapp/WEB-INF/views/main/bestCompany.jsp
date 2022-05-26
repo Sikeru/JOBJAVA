@@ -20,6 +20,52 @@
 	function deletCom(bc_no) {
 		location.href = '${contextPath}/main/deleteBestCompany.do?BC_NO='+bc_no;
 	}
+	
+	function R_joinform_check() {
+		var BC_NAME = $('#R_BC_NAME').val();
+        var BC_HP = $('#R_BC_HP').val();
+        
+        if (BC_NAME == "") { //해당 입력값이 없을 경우 같은말: if(!uid.value)
+		    alert("회사이름을 입력하세요.");
+		    $('#R_BC_NAME').focus(); //focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+		    return false; //return: 반환하다 return false:  아무것도 반환하지 말아라 아래 코드부터 아무것도 진행하지 말것
+		};
+		if (BC_HP == "") { //해당 입력값이 없을 경우 같은말: if(!uid.value)
+	    	alert("회사홈페이지를 입력하세요.");
+	    	$('#R_BC_HP').focus(); //focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+	    	return false; //return: 반환하다 return false:  아무것도 반환하지 말아라 아래 코드부터 아무것도 진행하지 말것
+		};
+		
+		var regHomePage = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
+  		
+		if (!regHomePage.test(BC_HP)) {
+			alert("올라른 홈페이지을 입력하세요");
+			$('#R_BC_HP').focus();
+			return false;
+		};
+		
+		$('#R_BsetCompany').submit();
+	}
+	
+	function joinform_check() {
+		var BC_NAME = $('#BC_NAME').val();
+        var BC_HP = $('#BC_HP').val();
+        
+        if (BC_NAME == "" && BC_HP == "") { //해당 입력값이 없을 경우 같은말: if(!uid.value)
+		    alert("회사이름을 또는 회사홈페이지을 입력하세요.");
+		    $('#R_BC_NAME').focus(); //focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+		    return false; //return: 반환하다 return false:  아무것도 반환하지 말아라 아래 코드부터 아무것도 진행하지 말것
+		};
+		
+		var regHomePage = /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
+  		
+		if (!regHomePage.test(BC_HP) && BC_HP != "") {
+			alert("올라른 홈페이지을 입력하세요");
+			$('#R_BC_HP').focus();
+			return false;
+		};
+		$('#BsetCompany').submit();
+	}
 
 	
 </script>
@@ -67,13 +113,13 @@
     
     <details>
     	<summary>수정</summary>
-    	  <form action="${contextPath}/main/updateBestCompany.do" method="post" enctype="multipart/form-data">
+    	  <form id="BsetCompany" action="${contextPath}/main/updateBestCompany.do" method="post" enctype="multipart/form-data">
     	  <input type="hidden" name="BC_NO" value="${bestCom.BC_NO}"/>
     	  <input type="hidden" name="originalFile" value="${bestCom.BC_FILENAME }"/>
           <input id="BC_NAME" name="BC_NAME" type="text" placeholder="　회사이름"/><br><br>
           <input id="BC_HP" name="BC_HP" type="text" placeholder="　회사홈페이지"/><br><br>
           <input type="file" name="BC_FILENAME"/>
-          <input type="submit" value="수정"/>
+          <button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button>
           </form>
     </details>
     </s:authorize>
@@ -94,11 +140,11 @@
       <div class="popup_cont">
           <h3> 우수기능 등록</h3>
           <hr>
-          <form id="BsetCompany" action="${contextPath}/main/insertBestCompany.do" method="post" enctype="multipart/form-data">
-          <input id="BC_NAME" name="BC_NAME" type="text" placeholder="　회사이름"/><br><br>
-          <input id="BC_HP" name="BC_HP" type="text" placeholder="　회사홈페이지"/><br><br>
+          <form id="R_BsetCompany" action="${contextPath}/main/insertBestCompany.do" method="post" enctype="multipart/form-data">
+          <input id="R_BC_NAME" name="BC_NAME" type="text" placeholder="　회사이름"/><br><br>
+          <input id="R_BC_HP" name="BC_HP" type="text" placeholder="　회사홈페이지"/><br><br>
           <input type="file" name="BC_FILENAME"/>
-          <input type="submit" value="등록"/>
+          <button class="btn btn-secondary" type="button" onclick="R_joinform_check()">등록</button>
           </form>
       </div>
       <!--팝업 버튼 영역-->

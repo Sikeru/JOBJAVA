@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,8 +29,9 @@
 				<td>${slist.NAME}</td>
 			</tr>
 		</c:forEach>
-
 	</table>
-	<a href="${contextPath}/leader/addsurveryfrom.do">설문조사등록</a>
+	<s:authorize access="hasAnyRole('ROLE_EMP')">
+		<a href="${contextPath}/leader/addsurveryfrom.do">설문조사등록</a>
+	</s:authorize>
 </body>
 </html>

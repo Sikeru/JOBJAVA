@@ -4,22 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jobjava.JJ.counselor.dao.CounselorDAO">
-	<resultMap id="officerResult" type="java.util.HashMap">
-		<result property="NAME" column="NAME" />
-		<result property="AGE" column="AGE" />
-		<result property="HP" column="HP" />
-		<result property="CAREER" column="CAREER" />
-		<result property="EDU" column="EDU" />
-		<result property="AREA" column="AREA" />
-		<result property="COMPANY" column="COMPANY" />
-		<result property="ID" column="ID" />
-		<result property="CD" column="CD" />
-		<result property="AT" column="AT" />
-		<result property="QT" column="QT" />
-		<result property="PROCESS" column="PROCESS" />
-
-
-	</resultMap>
+	
 	<!-- resultMap="officerResult"> -->
 	<select id="JobDao" resultType="java.util.HashMap">
 		SELECT NM.NAME,
@@ -51,41 +36,95 @@
 		SB.EMP_NO = CM.EMP_NO
 	</select>
 
-	<select id="attendanceDao" resultType="java.util.HashMap">
-		SELECT ME.ID,
-		TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD,
-		TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT
-		,TO_CHAR(QUT_TIME,'HH24:MI:SS') QT,
-		PROCESS FROM MEMBER ME, COMMUTE CO,
-		ST_SALARY SS
-		WHERE ME.ID = CO.ID AND CO.COM_NO = SS.COM_NO
-		ORDER BY CD
-		ASC
-	</select>
 
+
+	<!-- 기업등록조회 + 페이징 + 검색 -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'T'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+				LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
+
+
+	<select id="boardList" resultType="java.util.HashMap"
+	parameterType="java.util.HashMap">
+	 <![CDATA[
+            SELECT *
+			FROM (SELECT ME.ID
+				, TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD
+				, TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT
+				, TO_CHAR(QUT_TIME, 'HH24:MI:SS') QT
+				, PROCESS
+				, ROW_NUMBER() OVER(ORDER BY CO.COM_NO) AS RNUM
+                , CO.COM_NO
+			FROM 
+				MEMBER ME
+				, COMMUTE CO
+				, ST_SALARY SS
+			WHERE ME.ID = CO.ID 
+			AND CO.COM_NO = SS.COM_NO
+			AND ME.ID LIKE '%' || #{keyword} || '%')
+			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+ 		   	ORDER BY COM_NO ASC
+        	]]>
+	</select>
+	
 	<select id="commuteDao" parameterType="java.util.HashMap"
 		resultType="java.util.HashMap">
-		SELECT ME.ID, TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD,
-		TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT, TO_CHAR(QUT_TIME,'HH24:MI:SS') QT,
-		PROCESS FROM MEMBER ME, COMMUTE CO, ST_SALARY SS
-		WHERE ME.ID = CO.ID
-		AND CO.COM_NO = SS.COM_NO AND COM_DATE
+		SELECT 
+			ME.ID, 
+			TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD,
+			TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT,
+			TO_CHAR(QUT_TIME,'HH24:MI:SS') QT,
+			PROCESS
+		FROM 
+			MEMBER ME, 
+			COMMUTE CO, 
+			ST_SALARY SS
+		WHERE 
+			ME.ID = CO.ID
+		AND 
+			CO.COM_NO = SS.COM_NO 
+		AND 
+			COM_DATE
 		BETWEEN
 		TO_DATE(#{one,jdbcType=VARCHAR}, 'YYYY-MM-DD') AND
 		TO_DATE(#{two,jdbcType=VARCHAR}, 'YYYY-MM-DD')
 		ORDER BY CD ASC
 	</select>
+	
+	
+	
+	
+	
+	
+	<!-- 게시물 총 개수 -->
+	<select id="counseolrServiceCnt" parameterType="SearchCriteria"
+		resultType="int">
+	<![CDATA[
+		SELECT count(*)
+		FROM 
+			 COMMUTE
+		WHERE 1=1
+		]]>
+
+		<!-- <include refid="search"></include> -->
+	</select>
+	
 
 	<insert id="insertNewJob" parameterType="JobregVO">
    <![CDATA[
       INSERT INTO JOB_INFO(JOB_NO, CAREER, EDU, AREA, SAL, EMP_TYPE, WORK_TYPE, WELFARE, COMPANY, B_TYPE, SCALE, ESTABLISH,
-      						Y_SALES, HP, EMP_NUM, S_DATE, D_DATE, JOB_D) 
+      						Y_SALES, HP, EMP_NUM, S_DATE, D_DATE, JOB_D, TITLE) 
                VALUES(JOB_NO.nextval,#{CAREER, jdbcType=VARCHAR}, #{EDU, jdbcType=VARCHAR}, #{AREA, jdbcType=VARCHAR},
                 #{SAL, jdbcType=VARCHAR}, #{EMP_TYPE, jdbcType=VARCHAR}, #{WORK_TYPE, jdbcType=VARCHAR}, #{WELFARE, jdbcType=VARCHAR},
                		#{COMPANY, jdbcType=VARCHAR}, #{B_TYPE, jdbcType=VARCHAR}, #{SCALE, jdbcType=VARCHAR}, #{ESTABLISH, jdbcType=DATE}, 
                		#{Y_SALES, jdbcType=VARCHAR}, 
                		#{HP, jdbcType=VARCHAR}, #{EMP_NUM, jdbcType=VARCHAR}, #{S_DATE, jdbcType=DATE}, 
-               		#{D_DATE, jdbcType=DATE}, #{JOB_D, jdbcType=VARCHAR})
+               		#{D_DATE, jdbcType=DATE}, #{JOB_D, jdbcType=VARCHAR}, #{TITLE, jdbcType=VARCHAR})
    ]]>
 	</insert>
 
@@ -104,31 +143,11 @@
    ]]>
 	</insert>
 
-	<!-- <select id="boardList" resultType="hashmap"
-		parameterType="hashmap">
-        <![CDATA[
-            SELECT REGI_NO, 
-                TITLE, 
-                CONTENT,
-                S_DATE, 
-                E_DATE
-             
-         		FROM ( 
-                		SELECT REGI_NO,
-                   	   	 B_NO,
-                   	   	 TITLE, 
-                   	   	 CONTENT, 
-                   	   	 FILENAME, 
-                   	   	 S_DATE,
-                   	   	 E_DATE, 
-                   	   	 ROW_NUMBER() OVER(ORDER BY REGI_NO) AS RNUM
-                 		FROM C_REG 
-              		 ) 
-        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
-        ORDER BY REGI_NO ASC
-        ]]>
-	</select> -->
 
+	<select id = "countBoard" resultType = "int">
+		select 
+	</select>
+	
 	<select id="selectUniID" resultType="String"
 		parameterType="UniregVO">
 	<![CDATA[
@@ -139,13 +158,6 @@
 
 	</select>
 
-	<select id="uniList" resultType="UniregVO">
-	<![CDATA[
-		SELECT UNI_B_NO, B_NAME, U_NAME, PERMISSION
-		FROM UNI_BUSINESS
-	]]>
-	</select>
-
 	<select id="selectProgram" resultType="UniregVO">
 	<![CDATA[
 		SELECT UNI_B_NO, U_NAME, UNI_HP, UNI_ADDR, B_NAME, B_EXPENSE, S_DATE, E_DATE, B_CONTENT, PERMISSION
@@ -153,7 +165,26 @@
 		WHERE UNI_B_NO = #{UNI_B_NO} 
 	]]>
 	</select>
- 
+	
+	<!-- 페이징  -->
+	<select id = "uniregList" resultType="hashmap" parameterType="hashmap">
+		<![CDATA[
+			SELECT * FROM
+					(SELECT ROWNUM RNUM, UNI_B_NO,
+										 B_NAME, U_NAME, 
+										 PERMISSION 
+					FROM UNI_BUSINESS)
+			WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+			ORDER BY UNI_B_NO ASC
+		]]>
+	</select>
+	
+	<select id = "uniregListCnt" resultType = "int">
+		SELECT count(*)
+		FROM UNI_BUSINESS
+		
+	</select>
+
 	<update id="updatePermissionState" parameterType="UniregVO">
 		update UNI_BUSINESS
 		<set>
@@ -165,26 +196,98 @@
 		UNI_B_NO=#{UNI_B_NO}
 	</update>
 	
-	<select id="selectAllBasketInfo" parameterType="String" resultType="java.util.HashMap">
-	<![CDATA[
-	SELECT * FROM JOB_INFO JI, SHOP_BASKET SB
-	WHERE JI.JOB_NO = SB.JOB_NO AND SB.EMP_NO = (SELECT EMP_NO FROM EMP WHERE ID = #{user_id})
-	]]>
+	<!--  대학 수정 기능 -->
+	<update id="update" parameterType="UniregVO">
+		UPDATE UNI_BUSINESS
+		<set> 
+		<if test = "B_EXPENSE !='' and B_EXPENSE != null">
+		B_EXPENSE = #{B_EXPENSE},
+		</if>
+		<if test = "S_DATE != '' and S_DATE != null">
+		S_DATE = #{S_DATE},
+		</if>
+		<if test = "E_DATE != '' and E_DATE != null">
+		E_DATE = #{E_DATE},
+		</if>
+		</set>
+		WHERE UNI_B_NO = #{UNI_B_NO} 
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE
+		FROM UNI_BUSINESS
+		WHERE UNI_B_NO = #{UNI_B_NO}
+	</delete>
+	
+	<!-- 학생 등록 -->
+	<insert id="insertNewStu" parameterType="SturegVO">
+   <![CDATA[
+      insert into CHARGE_MEMBER values(CM_NO.nextval, (select member.id from member, st_member
+        												where member.id = st_member.id  AND email = 'test@test.com'), 
+   									  (select EMP_NO from emp 
+        							   where id = 'wlrdnjs'))
+   ]]>
+	</insert>
+	
+	<select id="stuList" resultType="SturegVO">
+		<![CDATA[
+			SELECT  ST_NO, C.ID, T.ID, NAME, DEPT, U_NAME 
+			 FROM  CHARGE_MEMBER C, ST_MEMBER T
+			where C.ID = T.ID
+		]]>
 	</select>
-	<select id="selectAllChMember" parameterType="String" resultType="java.util.HashMap">
-	<![CDATA[
-	SELECT NM.NAME, (TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(BIRTH,'YYYY')) AGE, JA.AREA, JA.OCC_TYPE, CM.ID, CM.CM_NO
-	FROM CHARGE_MEMBER CM, N_MEMBER NM, JOB_APPLICATION JA
-	WHERE CM.ID = NM.ID AND JA.ID = CM.ID AND CM.EMP_NO = 
+	
+	<!-- 기업 등록  -->
+	<insert id="insertNewCompany" parameterType="ComregVO">
+   <![CDATA[
+      INSERT INTO C_MEMBER(B_NO, ID, AGNET, B_TYPE, C_DIV, EMP_NUM, HOMEPAGE, C_NAME) 
+               VALUES(#{B_NO}, #{ID}, #{AGENT}, #{B_TYPE}, #{C_DIV}, #{EMP_NUM}, 
+               #{HOMEPAGE}, #{C_NAME})
+   ]]>
+	</insert>
+	
+	<!--  일자리 매칭 -->
+	 <select id="selectAllBasketInfo" parameterType="String" resultType="java.util.HashMap">
+   <![CDATA[
+   SELECT * FROM JOB_INFO JI, SHOP_BASKET SB
+   WHERE JI.JOB_NO = SB.JOB_NO AND SB.EMP_NO = (SELECT EMP_NO FROM EMP WHERE ID = #{user_id})
+   ]]>
+   </select>
+
+   
+  <select id="selectAllChMember" parameterType="String" resultType="java.util.HashMap">
+   <![CDATA[
+   SELECT NM.NAME, (TO_CHAR(SYSDATE,'YYYY') - TO_CHAR(BIRTH,'YYYY')) AGE, JA.AREA, JA.OCC_TYPE, CM.ID, CM.CM_NO
+   FROM CHARGE_MEMBER CM, N_MEMBER NM, JOB_APPLICATION JA
+   WHERE CM.ID = NM.ID AND JA.ID = CM.ID AND CM.EMP_NO = 
     (SELECT EMP_NO FROM EMP
     WHERE ID = #{user_id})
     ]]>
     </select>
+
     
-    <insert id="memberMatching"  parameterType="java.util.HashMap">
+   <insert id="memberMatching"  parameterType="java.util.HashMap">
     <![CDATA[
     INSERT INTO MATCHING VALUES(MAT_NO.NEXTVAL, #{CM_NO}, #{SHOP_NO}, '처리중')
     ]]>
     </insert>
+    
+    <select id="journalDao" parameterType="java.util.HashMap"
+		resultType="java.util.HashMap">
+		 SELECT *
+		    FROM (
+		        SELECT 
+		            ID, 
+		            TITLE, 
+		            CONTENT,
+		            ROW_NUMBER() OVER(ORDER BY JN_NO) AS RNUM
+		        FROM 
+		            JOURNAL
+		        WHERE 1=1
+		        AND ID LIKE '%' || #{keyword} || '%'
+		        ORDER BY JN_NO ASC)
+		    WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+	</select>
+
 
 </mapper>

@@ -42,7 +42,19 @@
 
 	</definition>
 
+	<!-- 취업컨설팅 조회하는거 -->
+	<definition name="/cafe/consulting" extends="cafebaseLayout">
+		<put-attribute name="title" value="프로그램 취업컨설팅" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/boardConsulting.jsp" />
+	</definition>
 
+	<!-- 취업특강 조회하는거 -->
+	<definition name="/cafe/lecture" extends="cafebaseLayout">
+		<put-attribute name="title" value="프로그램 취업특강" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/boardLecture.jsp" />
+	</definition>
 
 
 	<!-- 게시판에 조회하는거 -->
@@ -68,6 +80,47 @@
 			value="/WEB-INF/views/cafe/updateView.jsp" />
 	</definition>
 
+	<!-- 사업안내 -->
+	<definition name="/cafe/bguide" extends="cafebaseLayout">
+		<put-attribute name="title" value="글상세창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/bguide.jsp" />
+	</definition>
+
+
+	<!-- 채용공고 게시판 조회 -->
+	<definition name="/cafe/jobposting" extends="cafebaseLayout">
+		<put-attribute name="title" value="채용공고" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/jobposting.jsp" />
+	</definition>
+
+	<!-- 채용공고 상세조회 -->
+	<definition name="/cafe/jobpostingdetail"
+		extends="cafebaseLayout">
+		<put-attribute name="title" value="글상세창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/jobPostingReadView.jsp" />
+	</definition>
+
+	<!-- 채용공고 수정뷰 -->
+	<definition name="jobPostingUpdateView"
+		extends="cafebaseLayout">
+		<put-attribute name="title" value="글수정" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/jobPostingUpdateView.jsp" />
+	</definition>
+
+
+
+
+	<!-- 설문조사 -->
+	<definition name="/cafe/addsurveryfrom"
+		extends="cafebaseLayout">
+		<put-attribute name="title" value="글상세창" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/surveyList.jsp" />
+	</definition>
 
 
 
@@ -79,7 +132,6 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/cafe/celender.jsp" />
 	</definition>
-
 
 
 

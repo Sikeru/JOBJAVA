@@ -10,15 +10,15 @@
 <body>
 	 
             <div id="side">
-                <li><a href="${contextPath}/member/loginForm.do">채용공고</a></li>
-                <li><a href="${contextPath}/member/loginForm.do">채용일정</a></li>
+          <li><a href="${contextPath}/cafe/jobposting.do">채용공고</a></li>
+                <li><a href="${contextPath}/cafe/celender.do">채용일정</a></li>
                 <li id="menu1">
                     <label class="program" for="program" style="cursor: pointer">프로그램</label>
                     <input id="program" type="checkbox">
                     <nav id="main_nav">
                         <ul>
-                            <li><a href="#">취업특강</a></li>
-                            <li><a href="#">취업컨설팅</a></li>
+                            <li><a href="${contextPath}/cafe/lecture.do">취업특강</a></li>
+                            <li><a href="${contextPath}/cafe/consulting.do">취업컨설팅</a></li>
                         </ul>
                     </nav>
                 </li>
@@ -32,7 +32,7 @@
                         </ul>
                     </nav>
                 </li>
-                <li><a href="${contextPath}/member/loginForm.do">설문조사</a></li>
+                <li><a href="${contextPath}/cafe/addsurveryfrom.do">설문조사</a></li>
 
 
             </div>

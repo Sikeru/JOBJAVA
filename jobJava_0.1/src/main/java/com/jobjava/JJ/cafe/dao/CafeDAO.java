@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
-import com.jobjava.JJ.cafe.vo.Criteria;
 import com.jobjava.JJ.cafe.vo.FileVO;
 import com.jobjava.JJ.cafe.vo.JobAppVO;
+import com.jobjava.JJ.cafe.vo.JobInfoVO;
 import com.jobjava.JJ.cafe.vo.ProgramVO;
 import com.jobjava.JJ.cafe.vo.SearchCriteria;
 
@@ -45,8 +45,6 @@ public interface CafeDAO {
 
 	public int selectTotArticles();
 
-	
-
 	// 페이징
 	public List<Map<String, Object>> boardList(SearchCriteria scri);
 
@@ -54,17 +52,46 @@ public interface CafeDAO {
 	public int boardListCnt(SearchCriteria scri);
 
 	// 채용정보 상세조회
-	public ProgramVO selectProgram(int programNO)throws Exception;
+	public ProgramVO selectProgram(String programNO);
+
+//	public List<String> selectProgramFile(String programNO);
+	public List<Map<String, String>> selectProgramFile(String programNO);
+
+	public List<String> selectFileNO(String empFileNO);
 
 	// 채용정보 수정
 	public void update(ProgramVO programVO) throws Exception;
 
 	// 채용정보 삭제
-	public void delete(ProgramVO programVO) throws Exception;
+	public void delete(int programNO) throws Exception;
 
 	// 캘린더
 	public List selectSdata(String date);
 
 	public List selectDdata(String date);
+
+	// 취업컨설팅
+	public List<Map<String, Object>> boardList2(SearchCriteria scri);
+
+	public int boardListCnt2(SearchCriteria scri);
+
+	// 채용공고
+	public int postingListCnt(SearchCriteria scri);
+
+	// 채용공고
+	public List<Map<String, Object>> postingList(SearchCriteria scri);
+
+	public List<JobInfoVO> selectJobPosting();
+
+	public JobInfoVO selectJobPosting(int JOB_NO);
+
+	// 채용공고 상세조회
+	public JobInfoVO jobpostingdetail(int JOB_NO) throws Exception;
+
+	// 채용공고 수정
+	public void jobpostingupdate(JobInfoVO jobinfoVO) throws Exception;
+
+	// 채용공고 삭제
+	public void jobPostingDelete(int JOB_NO) throws Exception;
 
 }

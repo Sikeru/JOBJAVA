@@ -10,10 +10,10 @@
 	rel="stylesheet"
 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
 	crossorigin="anonymous">
- <script
+<script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-	crossorigin="anonymous"></script> 
+	crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script
@@ -22,7 +22,8 @@
 
 <style>
 @import
-	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap');
+	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap')
+	;
 </style>
 
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet"
@@ -61,13 +62,8 @@
 	<div id='main'>
 		<div id="jobseeker">
 			<a> 구직자 정보 리스트</a>
-			<P>이름 나이 전화번호</P>
 			<c:forEach var="counselor" items="${counselor }">
-				<p>
-				${counselor.NAME} 
-				${counselor.AGE} 
-				${counselor.HP}
-				</p>
+				<p>${counselor.NAME}${counselor.AGE} ${counselor.HP}</p>
 			</c:forEach>
 		</div>
 

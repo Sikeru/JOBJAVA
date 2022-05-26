@@ -39,7 +39,7 @@
                     </div>
                     <ul class="sub">
                         <li><a href="${contextPath}/counselor/uniregList.do" id="sub_01">대학 관리</a></li>
-                        <li><a href="#" id="sub_02">학생, 기업 관리</a></li>
+                        <li><a href="${contextPath}/counselor/studenList.do" id="sub_02">학생, 기업 관리</a></li>
                         <li><a href="${contextPath}/counselor/attendance.do" id="sub_03">출퇴근 및 일지 관리</a></li>
                         <li><a href="#" id="sub_04">급여관리</a></li>
                         <li><a href="#" id="sub_05">직무체험 관리</a></li>

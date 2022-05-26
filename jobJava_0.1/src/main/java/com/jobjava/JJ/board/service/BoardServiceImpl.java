@@ -4,6 +4,7 @@ package com.jobjava.JJ.board.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jobjava.JJ.board.dao.BoardDAO;
+import com.jobjava.JJ.board.vo.DelBoardTableVO;
 import com.jobjava.JJ.board.vo.EmploymentVO;
 import com.jobjava.JJ.board.vo.OnlineVO;
 import com.jobjava.JJ.board.vo.QnAVO;
@@ -173,6 +175,58 @@ public class BoardServiceImpl  implements BoardService{
 		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
 		return dao.employmentSelectTotalSearch(search);
 	}
+
+	@Override
+	public int insertFileTable(List<String> fileName, Map<String, Object> articleMap) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		dao.insertF_BOARD(articleMap);
+		if (fileName != null && fileName.size() != 0) {
+			dao.insertBOARD_FILE(fileName);
+		}
+		return dao.selectNowBOARD_NO();
+	}
+
+	@Override
+	public HashMap<String, String> selectOneFileTable(String BOARD_NO) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		return dao.selectOneFileTable(BOARD_NO);
+	}
+
+	@Override
+	public List<HashMap<String, String>> selectFileNames(String BOARD_NO) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		return dao.selectFileNames(BOARD_NO);
+	}
+
+	@Override
+	public void deleteFile(Map<String, Object> articleMap) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		for(int i=0; i <articleMap.size(); i++) {
+			if(articleMap.get("delfile"+i) != null) {
+				dao.deleteFile((String) articleMap.get("BOARD_NO"), (String) articleMap.get("delfile"+i));
+			}
+		}
+	}
+
+	@Override
+	public void updateFileTable(Map<String, Object> articleMap) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		dao.updateFileTable(articleMap);
+	}
+
+	@Override
+	public void updateTableFile(List<String> fileName, Map<String, Object> articleMap) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		dao.updateTableFile((String) articleMap.get("BOARD_NO"), fileName);		
+	}
+
+	@Override
+	public void deleteFileTable(String BOARD_NO) {
+		BoardDAO dao = sqlSession.getMapper(BoardDAO.class);
+		dao.deleteFileTable(BOARD_NO);
+	}
+	
+	
 	
 
 }

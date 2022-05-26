@@ -3,8 +3,10 @@ package com.jobjava.JJ.counselor.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
- 
+
 import com.jobjava.JJ.counselor.vo.CriteriaVO;
+import com.jobjava.JJ.counselor.vo.SearchCriteria;
+import com.jobjava.JJ.counselor.vo.SturegVO;
 import com.jobjava.JJ.counselor.vo.UniregVO;
 
 public interface CounselorService {
@@ -17,11 +19,23 @@ public interface CounselorService {
 
 	public void regcheck(HashMap<String, String> uniregVO);
 
-	public List<UniregVO> uniList() throws Exception;
+	// 페이징 오류나면 주석 살리기
+	/* public List<UniregVO> uniList() throws Exception; */
+	
+	public void update(UniregVO uniregVO) throws Exception;
+	
+	public void delete(int UNI_B_NO) throws Exception;
+	
+	// 20220519 페이징 부분
+	public int uniregListCnt(CriteriaVO cri);
+	
+	public List<Map<String, Object>> uniregList(CriteriaVO cri);
+	
+
 
 	/* public UniregVO uniread(int UNI_B_NO); */
 
-	public UniregVO selectProgram(String unibno) throws Exception;
+	public UniregVO selectProgram(int UNI_B_NO) throws Exception;
 
 	public void modifyuniregState(HashMap<String, String> uniregVO);
 
@@ -33,14 +47,30 @@ public interface CounselorService {
 
 	public void addUni(HashMap<String, String> unireg);
 	
-	public List<HashMap<String, Object>> selectAllBasketInfo(String user_id);
-	public List<HashMap<String, String>> selectAllChMember(String user_id);
-	public void memberMatching(HashMap<String, String> member);
+	public void addstu(HashMap<String, String> sturegVO);
+	
+	public List<SturegVO> stulist() throws Exception;
+	
+	public void addcompany(HashMap<String, String> comregVO);
+	
 
-	/*
-	 * public int boardListCnt();
-	 * 
-	 * public List<Map<String, Object>> boardList(CriteriaVO cri);
-	 */
+	 
+	// 출석 조회
+	 public int counseolrServiceCnt(SearchCriteria scri) throws Exception;
 
+		public List<Map<String, Object>> boardList(SearchCriteria scri) throws Exception;
+
+		// 업무일지
+		public List<HashMap<String, String>> journalList() throws Exception;
+
+		public List<Map<String, Object>> journalList(SearchCriteria scri) throws Exception;
+		
+	// 일자리 매칭
+		public List<HashMap<String, Object>> selectAllBasketInfo(String user_id);
+		public List<HashMap<String, String>> selectAllChMember(String user_id);
+		public void memberMatching(HashMap<String, String> member);
+
+
+
+	
 }

@@ -133,10 +133,6 @@ function joinform_check() {
 		  alert("주소를 입력하세요.");
 		  ADDRFOCUS.focus();
 		  return false;
-	  }else if(EXTRAADDRESS.value == ""){
-		  alert("주소를 입력하세요.");
-		  ADDRFOCUS.focus();
-		  return false;
 	  };
 	  
 	  $("#ADDR").val(ADDRESS.value +" "+ DERAIOLADDRESS.value + EXTRAADDRESS.value)

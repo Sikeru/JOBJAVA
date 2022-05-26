@@ -1,7 +1,9 @@
 package com.jobjava.JJ.counselor.vo;
 
-public class CriteriaVO {    
- 
+
+public class CriteriaVO {
+    
+
     private int page;
     private int perPageNum;
     private int rowStart;
@@ -65,3 +67,4 @@ public class CriteriaVO {
      return rowEnd;
     }
    }
+

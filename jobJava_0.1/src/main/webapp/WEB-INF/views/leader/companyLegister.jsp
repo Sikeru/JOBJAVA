@@ -73,19 +73,32 @@ section {
 	</section>
 	<section>
 		<form name="" action="${contextPath}/leader/legister.do" method="post" enctype="multipart/form-data">
-			<!--그냥 번호<br> <input type="text" name="REGI_NO" placeholder="아이디 입력"><br>-->
-		<!-- B_NO 자동추가 -->
-			<!--  사업자번호<br> <input type="text" name="B_NO" placeholder=""><br> -->
-			제목<br> <input type="text" name="TITLE" value=""><br>
-			<br> 내용<br> <input type="text" name="CONTENT" value="">
-			<br> 파일첨부<br> <input type="file" name="FILENAME" multiple="multiple" onClick="fn_addFile()">
-			
-			<br> 시작날짜 <input type="date" name="S_DATE"><br> <br>
-			종료날짜 <input type="date" name="E_DATE"><br> <br> <br>
-			<input type= "hidden" value="${pageContext.request.userPrincipal.name}" name="ID">
-			<input type="submit"  value="사업 참여" OnClick="javascript:mypageCheck();"> <br> <br>
-
-
+			사업자번호<br> <input type="text" name="B_NO" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					대표자<br> <input type="text" name="AGEMT" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					업종<br> <input type="text" name="B_TYPE" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					기업구분<br> <input type="text" name="C_DIV" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					근로자수<br> <input type="text" name="EMP_NUM" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					홈페이지<br> <input type="text" name="HP" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					회사명<br> <input type="text" name="C_NAME" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+					매칭결과<br> <input type="text" name="M_RESULT" value=""
+					placeholder="제목을 입력해주세요." size=69><br>
+				
+				<br> 파일첨부<br> <input type="file" name="REGI_FILENO" multiple="multiple" />
+				<input type= "button" value = "파일추가" onClick="fn_addFile()" >
+				<div id="d_file"></div>
+				
+				<input type="hidden" value="${pageContext.request.userPrincipal.name}" name="ID"><br>
+				<input type="submit" value="사업참여하기" OnClick="javascript:legisterCheck();" >
+					&nbsp; &nbsp; &nbsp; 
+					 <input type="reset" value="취소" OnClick="javascript:cancle();">
+				<br> <br>
 		</form>
 	</section>
 

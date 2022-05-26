@@ -118,10 +118,10 @@ ul, li {
 
       <ul>
          <!-- 게시판 제목 -->
-         <li>기업등록조회</li>
+         <br><li>채용정보</li><br>
 
          <!-- 게시판 목록  -->
-         <li>Table
+         <li>
             <ul id="ulTable">
                <li>
                   <ul>
@@ -191,10 +191,19 @@ ul, li {
     <script>
     $(function(){
         $('#searchBtn').click(function() {
-          self.location = "companyLegisterList.do" + '${paging.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+          self.location = "hireinfopaging.do" + '${paging.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
         });
       });   
     </script>
+    
+    <script>
+		$('input[type="submit"]').keydown(function() {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+			}
+			;
+		});
+	</script>
             </div>
          </li>
 

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.jobjava.JJ.admin.dao.AdminDAO">
+
+   
+   <sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'ID'.toString()"> AND ID LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'EM'.toString()"> AND EMAIL LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'A'.toString()"> AND AUTHORITY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'E'.toString()"> AND ENABLED LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'LOGIN'.toString()"> AND TO_CHAR(LOGIN,'YYYYMMDD') LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'LOGOUT'.toString()"> AND TO_CHAR(LOGOUT,'YYYYMMDD') LIKE '%' || #{keyword} || '%'</if>
+		</if>
+	</sql>
+   
+	<select id="selectAllMember" resultType="MemberVO" parameterType="hashmap">
+   <![CDATA[
+   SELECT ID, 
+           EMAIL, 
+                AUTHORITY,
+                ENABLED
+         FROM ( 
+                SELECT ID,
+                       EMAIL, 
+                       AUTHORITY, 
+                       ENABLED,
+                       ROW_NUMBER() OVER(ORDER BY ID) AS RNUM
+                 FROM MEMBER
+                 WHERE 1=1]]>
+        
+        <include refid="search"></include>
+
+		<![CDATA[
+		) 
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		]]>
+   </select>
+   
+     <select id="selectAllMemberCnt" parameterType="SearchCriteria"
+		resultType="int">
+
+   <![CDATA[
+      SELECT count(*)
+      FROM MEMBER
+       WHERE 1=1
+      ]]>
+		<include refid="search"></include>
+	</select>
+	
+	<update id="updateMember" parameterType="MemberVO">
+		UPDATE MEMBER
+		<set>
+		<if test="AUTHORITY !='' and AUTHORITY != null">
+		AUTHORITY=#{AUTHORITY},
+	     </if>
+	     <if test="ENABLED !='' and ENABLED != null">
+		ENABLED=#{ENABLED},
+	     </if>
+	     </set>	 
+		WHERE ID=#{ID}
+	
+	</update>
+	
+	
+		<select id="selectAllLoginStatistics" resultType="hashmap" parameterType="hashmap">
+   <![CDATA[
+   SELECT ID, 
+           LOGIN, 
+                LOGOUT
+         FROM ( 
+                SELECT ID,
+                TO_CHAR(LOGIN,'YYYY-MM-DD HH24:MI:SS') LOGIN, 
+                TO_CHAR(LOGOUT,'YYYY-MM-DD HH24:MI:SS') LOGOUT, 
+                 ROW_NUMBER() OVER(ORDER BY LOGIN) AS RNUM
+                 FROM LOG_STATISTICS
+                 WHERE 1=1]]>
+        
+        <include refid="search"></include>
+
+		<![CDATA[
+		) 
+		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+		]]>
+   </select>
+   
+     <select id="selectAllLoginStatisticsCnt" parameterType="SearchCriteria"
+		resultType="int">
+
+   <![CDATA[
+      SELECT count(*)
+      FROM LOG_STATISTICS
+       WHERE 1=1
+      ]]>
+		<include refid="search"></include>
+	</select>
+	
+	<select id="selectAuthorityStatistics" resultType="String">
+	<![CDATA[
+    SELECT COUNT(AUTHORITY) FROM MEMBER
+    WHERE AUTHORITY != 'ROLE_ADMIN'
+    GROUP BY AUTHORITY
+    ]]>
+	</select>
+	
+	<select id="selectAllMemuLog" resultType="hashMap">
+	<![CDATA[
+    SELECT MN_NAME, COUNT(MN_NAME) AS COUNT FROM MENU_STATISTICS
+    GROUP BY MN_NAME
+    ]]>
+	</select>
+	
+</mapper>

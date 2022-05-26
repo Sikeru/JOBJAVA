@@ -3,7 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Config 3.1//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <!-- 꿈터게시판 -->
 <mapper namespace="com.jobjava.JJ.cafe.dao.CafeDAO">
 
@@ -48,13 +47,11 @@
                        ROW_NUMBER() OVER(ORDER BY PROGRAM_NO) AS RNUM
                  FROM PROGRAM
                  WHERE 1=1]]>
+
 		<include refid="search"></include>
 
 <![CDATA[
-
 		)
-
-
 		WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
 		ORDER BY PROGRAM_NO ASC
 		]]>
@@ -76,13 +73,32 @@
 
 
 	<!-- 채용정보 상세조회 -->
-	<select id="selectProgram" parameterType="int" resultType="ProgramVO">
+	<select id="selectProgram" parameterType="String"
+		resultType="ProgramVO">
    <![CDATA[
       SELECT * FROM PROGRAM
       WHERE PROGRAM_NO = #{PROGRAM_NO}  
    ]]>
 	</select>
 
+
+
+	<!--프로그램 파일표시 -->
+	<select id="selectProgramFile" resultType="java.util.Map">
+   <![CDATA[
+   SELECT EMP_FILENAME FROM PROGRAM_FILE
+       WHERE PROGRAM_NO = #{param1}
+   ]]>
+	</select>
+
+	<!-- 파일 번호가져오기 -->
+	<select id="selectFileNO" resultType="String">
+	<![CDATA[
+		 SELECT EMP_FILE FROM PROGRAM_FILE
+		 WHERE PROGRAM_NO = #{param1}
+		
+	]]>
+	</select>
 
 
 
@@ -93,8 +109,10 @@
 		UPDATE PROGRAM
 		SET TITLE =
 		#{TITLE, jdbcType=VARCHAR},
-		CONTENT = #{CONTENT, jdbcType=VARCHAR}
-		WHERE PROGRAM_NO = #{PROGRAM_NO}
+		CONTENT =
+		#{CONTENT, jdbcType=VARCHAR}
+		WHERE
+		PROGRAM_NO = #{PROGRAM_NO}
 	</update>
 
 
@@ -171,6 +189,8 @@
 	]]>
 	</select>
 
+
+
 	<!-- 프로그램 게시판 파일삭제 -->
 	<delete id="deleteModImage" parameterType="FileVO">
 	  <![CDATA[
@@ -179,6 +199,8 @@
 	      and EMP_FILE = #{EMP_FILE}
 	    ]]>
 	</delete>
+
+
 
 	<!-- 여기부터 -->
 	<!-- 프로그램 게시판 수정 파일만 추가 -->
@@ -243,8 +265,197 @@
 		]]>
 	</select>
 
+	<!-- 취업컨설팅 -->
+	<select id="boardList2" resultType="hashmap"
+		parameterType="hashmap">
+        <![CDATA[
+           SELECT * FROM (SELECT PROGRAM.PROGRAM_NO, EMP_FILENAME, TITLE, CONTENT, S_DATE, E_DATE 
+           FROM PROGRAM_FILE ,PROGRAM 
+           WHERE EMP_FILE  = ANY(SELECT MIN(EMP_FILE) EMP_FILE FROM PROGRAM_FILE
+           GROUP BY PROGRAM_NO) AND PROGRAM_FILE.program_no = PROGRAM.PROGRAM_NO 
+           ORDER BY PROGRAM.PROGRAM_NO DESC)
+           WHERE ROWNUM <6
+           ]]>
+
+	</select>
+
+	<!-- 취업컨설팅2 -->
+	<select id="boardListCnt2" parameterType="SearchCriteria"
+		resultType="int">
+
+   <![CDATA[
+      SELECT count(*)
+      FROM PROGRAM
+       WHERE 1=1
+      ]]>
+		<include refid="search"></include>
+	</select>
 
 
 
 
+
+	<!-- 채용공고 게시판 -->
+	<select id="selectJobPosting" resultType="JobInfoVO">
+   <![CDATA[
+      SELECT JOB_NO, COMPANY, TITLE, S_DATE, D_DATE, CAREER, AREA, EDU FROM JOB_INFO
+      ]]>
+	</select>
+
+
+	<sql id="infosearch">
+		<if test="searchType != null">
+			<if test="searchType == 'T'.toString()">AND COMPANY LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+				LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
+
+	<select id="postingList" resultType="hashmap"
+		parameterType="hashmap">
+        <![CDATA[
+            SELECT JOB_NO, 
+                COMPANY, 
+                TITLE,
+                JOB_D,
+                S_DATE,
+                D_DATE
+                
+         FROM ( 
+                SELECT JOB_NO,
+                       CAREER,
+                       EDU,
+                       AREA, 
+                       SAL, 
+                       EMP_TYPE, 
+                       WORK_TYPE,
+                       WELFARE,
+                       COMPANY,
+                       B_TYPE,
+                       SCALE,
+                       ESTABLISH,
+                       Y_SALES,
+                       HP,
+                       EMP_NUM,
+                       S_DATE,
+                       D_DATE,
+                       JOB_D,
+                       TITLE,
+                     ROW_NUMBER() OVER(ORDER BY JOB_NO) AS RNUM
+                 FROM JOB_INFO
+            WHERE 1=1]]>
+		<include refid="infosearch"></include>
+
+<![CDATA[
+      )
+      WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+      ORDER BY JOB_NO ASC
+      ]]>
+
+	</select>
+
+
+	<select id="postingListCnt" parameterType="SearchCriteria"
+		resultType="int">
+
+   <![CDATA[
+      SELECT count(*)
+      FROM JOB_INFO
+       WHERE 1=1
+      ]]>
+		<include refid="infosearch"></include>
+	</select>
+
+	<!-- 채용공고 상세조회 -->
+	<select id="jobpostingdetail" parameterType="int"
+		resultType="JobInfoVO">
+   <![CDATA[
+	   SELECT 
+	   JOB_NO,
+	   CAREER,
+	   EDU,
+	   AREA,
+	   SAL,
+	   EMP_TYPE,
+	   WORK_TYPE,
+	   WELFARE,
+	   COMPANY,
+	   B_TYPE,
+	   SCALE,
+	   ESTABLISH,
+	   Y_SALES,
+	   HP,
+	   EMP_NUM,
+	   S_DATE,
+	   D_DATE,
+	   JOB_D,
+	   TITLE
+	   FROM 
+	   JOB_INFO
+	   WHERE 
+	   JOB_NO = #{JOB_NO}  
+   ]]>
+	</select>
+
+	<!-- 채용공고 글 수정 -->
+	<update id="jobpostingupdate" parameterType="JobInfoVO">
+		UPDATE JOB_INFO
+		SET
+		TITLE =
+		#{TITLE, jdbcType=VARCHAR},
+		JOB_D =
+		#{JOB_D,
+		jdbcType=VARCHAR},
+		CAREER =
+		#{CAREER, jdbcType=VARCHAR},
+		EDU =
+		#{EDU ,
+		jdbcType=VARCHAR},
+		AREA =
+		#{AREA , jdbcType=VARCHAR},
+		SAL =
+		#{SAL ,
+		jdbcType=VARCHAR},
+		EMP_TYPE =
+		#{EMP_TYPE , jdbcType=VARCHAR},
+		WORK_TYPE =
+		#{WORK_TYPE ,
+		jdbcType=VARCHAR},
+		WELFARE =
+		#{WELFARE ,
+		jdbcType=VARCHAR},
+		COMPANY =
+		#{COMPANY , jdbcType=VARCHAR},
+		B_TYPE =
+		#{B_TYPE , jdbcType=VARCHAR},
+		SCALE =
+		#{SCALE , jdbcType=VARCHAR},
+		ESTABLISH =
+		#{ESTABLISH ,
+		jdbcType=DATE},
+		Y_SALES =
+		#{Y_SALES ,
+		jdbcType=VARCHAR},
+		HP =
+		#{HP ,
+		jdbcType=VARCHAR},
+		EMP_NUM =
+		#{EMP_NUM ,
+		jdbcType=VARCHAR},
+		s_DATE =
+		#{s_DATE , jdbcType=DATE},
+		d_DATE =
+		#{d_DATE , jdbcType=DATE}
+		WHERE
+		JOB_NO = #{JOB_NO}
+	</update>
+
+	<!-- 채용공고 글 삭제 -->
+	<delete id="jobPostingDelete" parameterType="int">
+		DELETE
+		FROM JOB_INFO
+		WHERE
+		JOB_NO = #{JOB_NO}
+	</delete>
 </mapper>

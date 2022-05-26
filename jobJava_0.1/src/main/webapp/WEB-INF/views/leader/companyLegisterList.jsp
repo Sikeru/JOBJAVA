@@ -5,6 +5,7 @@
 <%@ page session="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <c:set var="userID">
 	<s:authentication property="name" />
 </c:set>
@@ -118,48 +119,96 @@ ul, li {
 			<li>기업등록조회</li>
 
 			<!-- 게시판 목록  -->
-			<form method="post"
-				action="${contextPath}/leader/viweApplicationfrom.do">
-				<li>Table <input value="${userID}" name="userID" type="hidden">
-					<ul id="ulTable">
+			<li>Table
+				<ul id="ulTable">
+					<li>
+						<ul>
+							<li>No</li>
+							<li>사업명</li>
+							<li>대학명</li>
+							<li>진행상태</li>
+							<s:authorize access="hasAnyRole('ROLE_STU,ROLE_COM')">
+								<li>관리</li>
+							</s:authorize>
+						</ul>
+					</li>
+					<!-- 게시물이 출력될 영역 -->
+					<c:forEach var="list" items="${list}">
+
 						<li>
 							<ul>
-								<li>No</li>
-								<li>제목</li>
-								<li>시작날짜</li>
-								<li>종료날짜</li>
-								<li>관리</li>
+								<li>${list.UNI_B_NO}</li>
+								<li>${list.B_NAME}</li>
+								<li>${list.U_NAME}</li>
+								<li class="left">${list.STATE}</li>
+
+								<!-- 신청 수정버튼영역(학생)-->
+								<li><s:authorize access="hasRole('ROLE_STU')">
+										<form method="post"
+											action="${contextPath}/leader/viweApplicationfrom.do?uniBNO=${list.UNI_B_NO}">
+											<c:if test='${appCheck eq null}'>
+												<c:if test="${list.STATE eq '마감'}">
+													<input type="submit" disabled value="신청">
+												</c:if>
+												<c:if test="${list.STATE eq '진행중'}">
+													<input type="submit" value="신청">
+												</c:if>
+											</c:if>
+											<c:if test="${appCheck ne null}">
+												<c:choose>
+													<c:when test="${fn:contains(appCheck, list.UNI_B_NO)}">
+														<input type="submit" value="수정">
+													</c:when>
+													<c:otherwise>
+														<c:if test="${list.STATE eq '마감'}">
+															<input type="submit" disabled value="신청">
+														</c:if>
+														<c:if test="${list.STATE eq '진행중'}">
+															<input type="submit" value="신청">
+														</c:if>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<input value="${userID}" name="userID" type="hidden">
+										</form>
+									</s:authorize> <!-- 신청 수정버튼영역(기업)--> <s:authorize
+										access="hasRole('ROLE_COM')">
+										<form method="post" action="${contextPath}/leader/company.do">
+											<c:if test='${appCheck eq null}'>
+												<c:if test="${list.STATE eq '마감'}">
+													<input type="submit" disabled value="신청">
+												</c:if>
+												<c:if test="${list.STATE eq '진행중'}">
+													<input type="submit" value="신청">
+												</c:if>
+											</c:if>
+											<c:if test="${appCheck ne null}">
+												<c:choose>
+													<c:when test="${fn:contains(appCheck, list.UNI_B_NO)}">
+														<input type="submit" value="수정">
+													</c:when>
+													<c:otherwise>
+														<c:if test="${list.STATE eq '마감'}">
+															<input type="submit" disabled value="신청">
+														</c:if>
+														<c:if test="${list.STATE eq '진행중'}">
+															<input type="submit" value="신청">
+														</c:if>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<input value="${userID}" name="userID" type="hidden">
+										</form>
+									</s:authorize>
+								</li>
 							</ul>
 						</li>
-						<!-- 게시물이 출력될 영역 -->
-						<c:forEach var="list" items="${list}">
-							<li>
-								<ul>
-									<li>${list.REGI_NO}</li>
-									<li class="left"><a
-										href="${contextPath}/leader/companyDetail.do?regiNO=${list.REGI_NO}">${list.TITLE}</a></li>
-									<li><fmt:formatDate value="${list.S_DATE}"
-											pattern="yyyy-MM-dd" /></li>
-									<li><fmt:formatDate value="${list.E_DATE}"
-											pattern="yyyy-MM-dd" /></li>
-									<li><input type="hidden" value="${list.REGI_NO}"
-										name="regiNO"> <input type="hidden"
-										value="${list.S_DATE}" name="sdate"> <input
-										type="submit" value="신청"
-										onclick="location.href='${contextPath}/leader/viweApplicationfrom.do'"></li>
-								</ul>
-							</li>
-						</c:forEach>
+					</c:forEach>
 
-					</ul>
+				</ul>
 
-				</li>
-			</form>
-
+			</li>
 			<!-- 게시판 페이징 영역 -->
-
-
-
 			<li>
 				<div id="divPaging">
 					<ul class="paging">
@@ -169,8 +218,7 @@ ul, li {
 						</c:if>
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
 							var="num">
-							<span><a
-								href='<c:url value="companyLegisterList.do?page=${num}"/>'>${num}</a></span>
+							<span><a href="companyLegisterList.do${paging.makeSearch(num)}">${num}</a></span>
 						</c:forEach>
 						<c:if test="${paging.next && paging.endPage>0}">
 							<span><a

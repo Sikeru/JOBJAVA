@@ -16,10 +16,27 @@
 	 location.href="${contextPath}/board/employmentDeleteTable.do?EMP_CON_NO="+EMP_CON_NO;
 	 
  }
+ 
+	function joinform_check() {
+	 	var TITLE = $('#TITLE').val();
+	 	var CONTENT = $('#CONTENT').val();
+	 
+	 	if (TITLE == "") { //해당 입력값이 없을 경우 같은말: if(!uid.value)
+		    alert("제목를 입력하세요.");
+		    $('#TITLE').focus(); //focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+		    return false; //return: 반환하다 return false:  아무것도 반환하지 말아라 아래 코드부터 아무것도 진행하지 말것
+		};
+		if (CONTENT == "") { //해당 입력값이 없을 경우 같은말: if(!uid.value)
+	    	alert("내용를 입력하세요.");
+	    	$('#CONTENT').focus(); //focus(): 커서가 깜빡이는 현상, blur(): 커서가 사라지는 현상
+	    	return false; //return: 반환하다 return false:  아무것도 반환하지 말아라 아래 코드부터 아무것도 진행하지 말것
+		};
+		$('#join').submit();
+	}
 </script>
 </head>
 <body>
-<form action="${contextPath}/board/upDateEmploymentTable.do" method="post">
+<form id="join" action="${contextPath}/board/upDateEmploymentTable.do" method="post">
   <input type="text" name="ID" value="${employment.ID}" readonly><br>
   <input type="hidden" name="EMP_CON_NO" value="${employment.EMP_CON_NO}">
   <c:choose>
@@ -30,7 +47,7 @@
   	<input type="text" value="${employment.ANSWER }" style="width: 50%" disabled><br>
   	<input type="text" value="${employment.RESPON }" style="width: 50%" disabled><br>
   	</c:if>
-  	<input type="submit" value="수정"><br>
+  	<button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button><br>
   	<input type="button" value="삭제" onclick="deleteTable(${employment.EMP_CON_NO})"/>
 	</c:when>
   
@@ -43,7 +60,7 @@
   	<input type="hidden" name="RESPON" value="${pageContext.request.userPrincipal.name}">
     <input type="button" value="삭제" onclick="deleteTable(${employment.EMP_CON_NO})"/>
   
-  	<input type="submit" value="수정">
+  	<button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button><br>
   	
     </s:authorize>
  	<s:authorize access="hasAnyRole('ROLE_COM', 'ROLE_MAG')">
