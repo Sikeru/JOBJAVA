@@ -316,8 +316,7 @@
 		UPDATE F_BOARD
 		<set>
 		<if test="ID !='' and ID != null">	
-		EMP_NO= (SELECT EMP_NO FROM EMP
-				WHERE ID = #{ID}),
+		EMP_NO = (SELECT EMP_NO FROM EMP WHERE ID = #{ID}),
 	     </if>
 	     <if test="TITLE !='' and TITLE != null">
 		TITLE=#{TITLE},

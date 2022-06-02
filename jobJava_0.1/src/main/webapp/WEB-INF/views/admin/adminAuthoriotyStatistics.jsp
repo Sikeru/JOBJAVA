@@ -31,8 +31,8 @@ window.onload = function() {
 		data: [${authority[1]},${authority[2]} ,${authority[3]}, ${authority[0]}, ${authority[4]}] 
 		}] },
 		options: { title: { display: true, text: '권한별 사용자 수',
-		fontSize: 30, fontColor: 'rgba(46, 49, 49, 1)' },
-		legend: { labels: { fontColor: 'rgba(0, 0, 0, 1)',
+		fontSize: 30, fontColor: 'rgba(255, 255, 255, 1)' },
+		legend: { labels: { fontColor: 'rgba(255, 255, 255, 1)',
 		fontSize: 15 } },
 		 }
 		});

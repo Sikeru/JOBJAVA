@@ -11,7 +11,7 @@
 
 <title>Insert title here</title>
 <style>
-   body{
+    body{
         line-height:2em;        
         font-family:"맑은 고딕";
 }
@@ -45,7 +45,7 @@
     
 
     #ulTable > li:first-child > ul > li {
-        background-color: rgb(253,131,82);
+        background-color: bisque;
         font-weight:bold;
         text-align:center;
 }
@@ -106,7 +106,8 @@
 <div id="mainWrapper">
         <ul>
             <!-- 게시판 제목 -->
-            <li>온라인상담</li>
+            <li></li>
+            <li>취업상담</li>
 			
 				
             <!-- 게시판 목록  -->

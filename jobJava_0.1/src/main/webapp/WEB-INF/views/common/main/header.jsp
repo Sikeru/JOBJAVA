@@ -48,7 +48,7 @@
         <div id="topMenu">
             <ul>
 	            <li><a href="${contextPath}/main/supportTable.do">일자리지원센터</a></li>
-                <li><a href="#">프로그램목록</a></li>
+                <li><a href="${contextPath}/cafe/hireinfopaging.do">프로그램목록</a></li>
                 <li><a href="${contextPath}/main/alarmCenter.do?mnName=알림마당">알림마당</a></li>
                 <li><a href="${contextPath}/main/bestCompany.do?mnName=기업홍보">기업홍보</a></li>
                 <li><a href="${contextPath}/main/bessinfo.do?mnName=사업안내">사업안내</a></li>

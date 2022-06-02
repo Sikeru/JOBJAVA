@@ -36,8 +36,8 @@
 		${menu.COUNT},
 		</c:forEach>] }] },
 		options: { title: { display: true, text: '메뉴별 접속통계 ',
-		fontSize: 30, fontColor: 'rgba(46, 49, 49, 1)' },
-		legend: { labels: { fontColor: 'rgba(0, 0, 0, 1)',
+		fontSize: 30, fontColor: 'rgba(255, 255, 255, 1)' },
+		legend: { labels: { fontColor: 'rgba(255, 255, 255, 1)',
 		fontSize: 15 } },
 		 } });
 

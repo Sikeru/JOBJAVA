@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 import com.jobjava.JJ.member.dao.memberDAO;
 import com.jobjava.JJ.member.vo.MemberVO;
 
-//ÀÌ Å¬·¡½º¿¡ ´ëÇÑ bean °´Ã¼ ¸¸µé±â
+//ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ bean ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½
 @Service("loginAuthenticationProvider")
 public class LoginAuthenticationProvider implements AuthenticationProvider{
 	@Autowired
@@ -33,26 +33,26 @@ public class LoginAuthenticationProvider implements AuthenticationProvider{
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		
-		//DB¿¡¼­ À¯Àú ·¹ÄÚµå¸¦ DTO°´Ã¼·Î °¡Á®¿À±â
+		//DBï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Úµå¸¦ DTOï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String userId = authentication.getName();
 		String userPw = (String) authentication.getCredentials();
 		MemberVO membervo = (MemberVO) loginService.loadUserByUsername(userId);
 		
-		//LoginFailHandler·Î ¿À·ù¸¦ ´øÁü
+		//LoginFailHandlerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		if (membervo == null || !userId.equals(membervo.getUsername())
 				|| !bPasswordEncoder.matches(userPw, membervo.getPassword())) {
-			throw new BadCredentialsException(userId); //¾ÆÀÌµð, ºñ¹Ð¹øÈ£ ºÒÀÏÄ¡
+			throw new BadCredentialsException(userId); //ï¿½ï¿½ï¿½Ìµï¿½, ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½Ä¡
 		} else if(!membervo.isEnabled()) {
-			throw new DisabledException(userId); //°èÁ¤ ºñÈ°¼ºÈ­
+			throw new DisabledException(userId); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
 		} else if(!membervo.isAccountNonLocked()) {
-			throw new LockedException(userId); //°èÁ¤ Àá±è
+			throw new LockedException(userId); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		} else if (!membervo.isAccountNonExpired()) {
-			throw new AccountExpiredException(userId); //°èÁ¤ ¸¸·á
+			throw new AccountExpiredException(userId); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		} else if (!membervo.isCredentialsNonExpired()) {
-			throw new CredentialsExpiredException(userId); //ºñ¹Ð¹øÈ£ ¸¸·á
+			throw new CredentialsExpiredException(userId); //ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
 		}
 		
-		//·Î±×ÀÎ ¼º°ø
+		//ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		membervo.setPWD(null);
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
 		dao.log_Login(userId);
@@ -63,7 +63,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider{
 		return newAuth;		
 	}
 	
-	//¹ÝÈ¯ °´Ã¼ Å¸ÀÔ °Ë»ç
+	//ï¿½ï¿½È¯ ï¿½ï¿½Ã¼ Å¸ï¿½ï¿½ ï¿½Ë»ï¿½
 	@Override
 	public boolean supports(Class<?> authentication) {
 		// TODO Auto-generated method stub

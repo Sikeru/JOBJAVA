@@ -24,7 +24,7 @@
 	<select id="selectBestCompany" resultType="java.util.HashMap">
 	<![CDATA[
 		SELECT * FROM BESTCOMPANY
-		WHERE ROWNUM < 10
+		WHERE ROWNUM < 11
 		ORDER BY BC_NO DESC
 	]]>
 	</select>
@@ -97,6 +97,14 @@
        WHERE 1=1
       ]]>
 		<include refid="search"></include>
+	</select>
+	
+	<select id="selectF_BoardTOP3" resultType="hashmap">
+	<![CDATA[
+	SELECT BOARD_NO, TITLE, TO_CHAR(F_DATE,'YYYY.MM.DD') F_DATE FROM F_BOARD
+	WHERE ROWNUM < 4
+	ORDER BY BOARD_NO DESC
+	]]>
 	</select>
 	
 </mapper>

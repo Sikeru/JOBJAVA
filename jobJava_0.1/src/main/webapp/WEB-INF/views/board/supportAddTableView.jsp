@@ -9,6 +9,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    #fileMain {
+        width: 700px;
+        height: 850px;
+        margin: 0 auto;
+        position: relative;
+        top: 100px;
+        
+    }
+    #TITLE{
+         width: 700px;
+    }
+    #CONTENT{
+        width: 700px;
+        height: 300px;
+    }
+    .btn{
+    	position: relative;
+        left: 300px;
+    }
+
+</style>
+
 <script>
 	var maxAppend = 1;
  function file_add(){
@@ -47,18 +70,21 @@
 
 </head>
 <body>
+<div id="fileMain">
+<h1>파일게시판</h1>
 <form id="join" action="${contextPath}/board/supportAddTable.do" method="post" enctype="multipart/form-data">
-TITLE : <input id="TITLE" type="text" name="TITLE"> <br>
-CONTENT : <input type="text" id="CONTENT" name="CONTENT"> <br>
+제목 <br><input id="TITLE" type="text" name="TITLE"> <br>
+내용<input type="text" id="CONTENT" name="CONTENT"> <br><br>
 <ul class="file_add">
 	<li>
 		<input type="file" name="fileName"> <input type="button" value="파일추가" onclick="file_add()"/>
 	</li>
 
 </ul>
+<br>
 <button class="btn btn-secondary" type="button" onclick="joinform_check()">등록하기</button>
 
 </form>
-
+</div>
 </body>
 </html>

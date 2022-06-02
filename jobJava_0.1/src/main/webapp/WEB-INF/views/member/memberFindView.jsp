@@ -28,7 +28,12 @@
 			url: "${contextPath}/member/idFind.do", 
 			data: {email : EMAIL},
 			success: function(user_id) {
-				$('#findId').text('아이디는 : ' + user_id)
+				if(user_id == "" || user_id == null) {
+					$('#findId').text('찾으시는 아이디가 없습니다.' );
+				}else {
+					$('#findId').text('아이디는 : ' + user_id)	
+				}
+				
 			}
 		});
 		
@@ -151,31 +156,41 @@
         	width: 1400px;
         	margin-top: 50px;
     }
+    .mmbox{
+    	 width: 350px;
+         height: 150px;
+         position: relative;
+        left: 100px;
+    }
 </style>
 </head>
 <body>
 <div id="box">
 <div id="topbox">
-<h3>본인인증</h3>
-회원의 개인정보보호를 위해 인증을 거쳐 회원가입을 하고 있습니다.<br>
-원하시는 본인인증 방법을 선택해주세요.<br>
-<hr>
-<h3>본인인증방법 선택</h3>
+<h3>아이디/비밀번호 찾기</h3>
+회원의 개인정보보호를 위해 인증을 거쳐 아이디/비밀번호 찾기을 하고 있습니다.<br><br>
+<hr><br>
+
 </div>
 <div class="box">
        		<div class="mbox">
-       		<h4>아이디 찾기</h4>
-       		<input type="text" id="idEmail"><input class="btn-secondary" type="button" value="아이디찾기" onclick="idFind()"/><br>
+       		<div class="mmbox">
+       		<h2>아이디 찾기</h2>
+       		<input type="text" id="idEmail" placeholder="　이메일 입력"> <input class="btn-secondary" type="button" value="아이디찾기" onclick="idFind()"/><br><br>
+       		<hr>
        		<span id="findId"></span>
+       		</div>
             </div>
         </div>
         <div class="box">
        		<div class="mbox">
-       		<h4>비밀번호 찾기</h4>
-       		아이디 : <input type="text" id="id"/><br>
-       		이메일 : <input type="text" id="pwEmail"/><input class="btn-secondary" type="button" value="인증코드전송" onclick="pwFind()"/><br>
-       		인증코드 : <input type="text" id="code"/><input class="btn-secondary" type="button" value="코드확인" onclick="codeCheck()"/>
+       		<div class="mmbox">
+       		<h2>비밀번호 찾기</h2>
+       		<input type="text" id="id" placeholder="　아이디 입력"/><br>
+       		<input type="text" id="pwEmail" placeholder="　이메일 입력"/> <input class="btn-secondary" type="button" value="인증코드전송" onclick="pwFind()"/><br><br><hr><br>
+       		<input type="text" id="code" placeholder="　인증코드 입력"/> <input class="btn-secondary" type="button" value="코드확인" onclick="codeCheck()"/>
        		<input id="codecke" type="hidden"/>
+                </div>
             </div>
         </div>
 </div>

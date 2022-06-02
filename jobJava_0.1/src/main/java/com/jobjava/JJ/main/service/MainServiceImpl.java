@@ -62,4 +62,12 @@ public class MainServiceImpl implements MainService{
 		return dao.boardListCnt(scri);
 	}
 
+	@Override
+	public List<HashMap<String, String>> selectF_BoardTOP3() {
+		MainDAO dao = sqlSession.getMapper(MainDAO.class);
+		return dao.selectF_BoardTOP3();
+	}
+	
+	
+
 }

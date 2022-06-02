@@ -252,7 +252,13 @@
 	WHERE EMAIL = #{param1}
 	]]>
 	</select>
-
+	
+	<update id="deleteMember" >
+	<![CDATA[
+	UPDATE MEMBER SET ENABLED='0'
+	WHERE ID= #{param1}
+	]]>
+	</update>
 
 	
 </mapper>

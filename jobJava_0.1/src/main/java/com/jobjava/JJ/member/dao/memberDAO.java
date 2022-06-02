@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jobjava.JJ.member.vo.CMemberVO;
 import com.jobjava.JJ.member.vo.EMemberVO;
@@ -41,4 +43,5 @@ public interface memberDAO {
 	public String id_check(String userID);
 	public String email_check(String email);
 	public String idFind(String email);
+	public void deleteMember(String userID);
 }

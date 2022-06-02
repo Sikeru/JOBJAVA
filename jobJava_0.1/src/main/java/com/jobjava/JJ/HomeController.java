@@ -1,6 +1,8 @@
 package com.jobjava.JJ;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jobjava.JJ.main.service.MainService;
 import com.jobjava.JJ.member.dao.memberDAO;
 
 
@@ -25,11 +28,16 @@ import com.jobjava.JJ.member.dao.memberDAO;
 public class HomeController {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	@Autowired
+	MainService mainservice;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	
 	@RequestMapping(value= "/" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView main(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mav=new ModelAndView();
+		List<HashMap<String,String>> fboard = mainservice.selectF_BoardTOP3();
+		mav.addObject("fboard", fboard);
 		mav.setViewName("/main/main");
 		return mav;
 	}

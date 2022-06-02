@@ -25,8 +25,8 @@
                </div>
                <div class="copyright-wrap">
                 <div class="copyright">
-                    <a>㈜북토피아 <br>
-                        대표이사: 이병승 <br>
+                    <a >㈜JOBJAVA <br>
+                        대표이사: 오마주 <br>
                         주소 : 우편번호 03133 서울시 종로구 종로3 <br>
                         사업자등록번호 : 102-81-11111 <br>
                         서울특별시 통신판매업신고번호 : 제 666호 ▶사업자정보확인 개인정보보호최고책임자 : 김길동 privacy@google.co.kr <br>

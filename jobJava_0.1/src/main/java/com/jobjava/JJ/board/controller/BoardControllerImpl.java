@@ -528,19 +528,20 @@ public class BoardControllerImpl implements BoardController{
 		ResponseEntity resEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-		articleMap.put("ID", principal.getName());
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
 			String value = multipartRequest.getParameter(name);
 			articleMap.put(name, value);
 		}
+		articleMap.put("ID", principal.getName());
 		
 		List<String> fileName = upload(multipartRequest, articleMap);
 		
 		try {
 			File destDir = new File(CURR_FILE_REPO_PATH + "\\support\\" + articleMap.get("BOARD_NO"));
-			if(articleMap.get("delfile1") != null) {
-				boardservice.updateFileTable(articleMap);
+			boardservice.updateFileTable(articleMap);
+			if(articleMap.get("delfile1") != null || articleMap.get("delfile2") != null || articleMap.get("delfile3") != null
+					|| articleMap.get("delfile4") != null || articleMap.get("delfile5") != null) {
 				for(int i=0; i<articleMap.size();i++) {
 					if(articleMap.get("delfile"+i) != null && articleMap.get("delfile"+i) != "") {
 						boardservice.deleteFile(articleMap);

@@ -100,26 +100,34 @@
         }
     </style>
 </head>
-<body>
+<br><hr><br>
+
+<h1 style="text-align: center;">대표 기업</h1><br>
+<s:authorize access="!hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
+<div style="width: 1500;height: 380;margin: 0 auto;">
+</s:authorize>
+<s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
+<div style="width: 1500;height: 680;margin: 0 auto;">
+</s:authorize>
 <c:forEach var="bestCom" items="${bestCom}">
-<div class="card" style="width: 300px; height: auto;">
+<div class="card" style="width: 300px; height: auto;float: left;padding: 10px;">
  <div class="cardTotal" style="margin: 0 auto;width: 200px;">
-  <a href="${bestCom.BC_HP }"><img src="${contextPath}/main/download.do?fileName=${bestCom.BC_FILENAME}&fileNO=${bestCom.BC_NO}&folderName=bestCom" style="width: 100px; height: 100px;margin: 0 auto;"></a>
+  <a href="${bestCom.BC_HP }"><img src="${contextPath}/main/download.do?fileName=${bestCom.BC_FILENAME}&fileNO=${bestCom.BC_NO}&folderName=bestCom" style="width: 200px; height: 100px;margin: 0 auto;"></a>
 
   <div class="card-body">
-    <h5 class="card-title">${bestCom.BC_NAME}</h5>
+    <h5 class="card-title" style="text-align: center;">${bestCom.BC_NAME}</h5>
     <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
-    <input type="button" value="삭제" onclick="deletCom(${bestCom.BC_NO})" class="btn btn-primary">
-    
+  
     <details>
     	<summary>수정</summary>
     	  <form id="BsetCompany" action="${contextPath}/main/updateBestCompany.do" method="post" enctype="multipart/form-data">
     	  <input type="hidden" name="BC_NO" value="${bestCom.BC_NO}"/>
-    	  <input type="hidden" name="originalFile" value="${bestCom.BC_FILENAME }"/>
+    	  <input type="hidden" name="originalFile" value="${bestCom.BC_FILENAME }"/><br>
           <input id="BC_NAME" name="BC_NAME" type="text" placeholder="　회사이름"/><br><br>
           <input id="BC_HP" name="BC_HP" type="text" placeholder="　회사홈페이지"/><br><br>
-          <input type="file" name="BC_FILENAME"/>
+          <input type="file" name="BC_FILENAME"/><hr>
           <button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button>
+           <input type="button" value="삭제" onclick="deletCom(${bestCom.BC_NO})" class="btn btn-secondary">
           </form>
     </details>
     </s:authorize>
@@ -130,9 +138,13 @@
 	
 	
 </c:forEach>
+</div>
 <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
-<input class="btn" type="button" value="등록" onclick="openPop()"/>
+<input class="btn" type="button" value="등록" onclick="openPop()" style="font-size:24px;margin-left:850px;"/>
 </s:authorize>
+<br><hr><br>
+
+<br><br>
 
     <div class="popup_layer" id="popup_layer" style="display: none;">
       <div class="popup_box">

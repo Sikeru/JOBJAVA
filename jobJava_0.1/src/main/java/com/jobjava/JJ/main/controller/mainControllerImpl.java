@@ -37,6 +37,8 @@ public class mainControllerImpl implements mainController{
 	public ModelAndView tomain(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mav=new ModelAndView();
 		mainservice.mnLog("메인페이지");
+		List<HashMap<String,String>> fboard = mainservice.selectF_BoardTOP3();
+		mav.addObject("fboard", fboard);
 		String viewName=(String)request.getAttribute("viewName");
 		mav.setViewName(viewName);
 		return mav;

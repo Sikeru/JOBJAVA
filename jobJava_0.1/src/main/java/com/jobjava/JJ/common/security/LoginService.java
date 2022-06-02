@@ -23,12 +23,12 @@ public class LoginService implements UserDetailsService{
 		MemberVO membervo = dao.loginselectUser(username);
 		authList = dao.getAuthList(username);
 		
-		if (membervo == null) { //UserÀ» Ã£Áö ¸øÇßÀ» °æ¿ì
+		if (membervo == null) { //Userï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			throw new UsernameNotFoundException(username);
 		}
 		else {
 			membervo.setAuthority(authList);
 		}
-		return membervo; //¿ÏÀüÇÑ UserDetails °´Ã¼
+		return membervo; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UserDetails ï¿½ï¿½Ã¼
 	}
 }

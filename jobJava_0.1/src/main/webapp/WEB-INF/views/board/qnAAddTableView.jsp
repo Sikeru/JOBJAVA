@@ -7,6 +7,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    #fileMain {
+        width: 700px;
+        height: 850px;
+        margin: 0 auto;
+        position: relative;
+        top: 100px;
+        
+    }
+    #TITLE{
+         width: 700px;
+    }
+    #CONTENT{
+        width: 700px;
+        height: 300px;
+    }
+    .btn{
+    	position: relative;
+    	top: 20px;
+        left: 300px;
+    }
+</style>
 <script>
 	function joinform_check() {
 	 	var TITLE = $('#TITLE').val();
@@ -27,12 +49,18 @@
 </script>
 </head>
 <body>
+<div id="fileMain">
+<h1>질의응답게시판</h1>
 <form id="join" action="${contextPath}/board/qnAAddTable.do" method="post">
-  <input type="text" name="ID" value="${pageContext.request.userPrincipal.name}" readonly><br>
-  <input type="text" id="TITLE" name="TITLE" style="width:50%">
-  <input type="text" id="CONTENT" name="CONTENT" style="width: 50%; height: 100%">
+  작성자<br>
+ <input type="text" name="ID" value="${pageContext.request.userPrincipal.name}" readonly><br>
+  제목<br>
+ <input type="text" id="TITLE" name="TITLE">
+ 내용<br>
+  <input type="text" id="CONTENT" name="CONTENT" >
   <button class="btn btn-secondary" type="button" onclick="joinform_check()">등록하기</button>
 
 </form>
+</div>
 </body>
 </html>

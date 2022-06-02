@@ -183,7 +183,7 @@
           <input id="e-text" type="text" placeholder="　****@naver.com"/>
           <input class="btn-secondary" type="button" value="코드전송" onclick="emailCode()"/><br><br>
           <input id="code" type="text" placeholder="　인증코드입력" />
-          <input id="codecke" type="hidden" value="dd"/>
+          <input id="codecke" type="hidden" />
           <input class="btn-secondary" type="button" value="코드확인" onclick="codeCke()"/>
 
       </div>

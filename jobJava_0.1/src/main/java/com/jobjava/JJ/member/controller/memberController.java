@@ -25,4 +25,5 @@ public interface memberController {
 	public String logST_Logout(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String memberFindView(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String idFind(@RequestParam String userID, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String deleteMember(@RequestParam("ID") String userID,HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

@@ -28,185 +28,298 @@ ul, li {
    padding: 0;
    margin: 0;
 }
-
-#mainWrapper {
-   width: 800px;
-   margin: 0 auto; /*가운데 정렬*/
+      
+ 	a{
+         color: black;
+         text-decoration: none;
+			list-style: none;
 }
 
-#mainWrapper>ul>li:first-child {
-   text-align: center;
-   font-size: 14pt;
-   height: 40px;
-   vertical-align: middle;
-   line-height: 30px;
+#boardwrap {
+   width: 1400px;
+   margin: 0 auto;
 }
 
-#ulTable {
-   margin-top: 10px;
+#board {
+   width: 1400px;
+   margin: 0 auto;
+   margin-top: 60px;
 }
 
-#ulTable>li:first-child>ul>li {
-   background-color: #c9c9c9;
+#board table {
+   width: 1000px;
+   margin: 0 auto;
    font-weight: bold;
-   text-align: center;
 }
 
-#ulTable>li>ul {
-   clear: both;
-   padding: 0px auto;
-   position: relative;
-   min-width: 40px;
+#board td {
+   width: 1000px;
+   border-bottom: 1px solid #A4A4A4;;
+   border-right: 1px solid #A4A4A4;
+   height: 40px;
 }
 
-#ulTable>li>ul>li {
-   float: left;
-   font-size: 10pt;
-   border-bottom: 1px solid silver;
-   vertical-align: baseline;
+#board td:last-child {
+   border-right: none;
 }
 
-#ulTable>li>ul>li:first-child {
-   width: 10%;
-} /*No 열 크기*/
-#ulTable>li>ul>li:first-child+li {
-   width: 45%;
-} /*제목 열 크기*/
-#ulTable>li>ul>li:first-child+li+li {
-   width: 20%;
-} /*작성일 열 크기*/
-#ulTable>li>ul>li:first-child+li+li+li {
-   width: 15%;
-} /*작성자 열 크기*/
-#ulTable>li>ul>li:first-child+li+li+li+li {
-   width: 10%;
-} /*조회수 열 크기*/
-#divPaging {
-   clear: both;
-   margin: 0 auto;
-   width: 220px;
+#board th {
+   border-bottom: 1px solid #192E7E;
+   border-top: 1.5px solid #192E7E;
    height: 50px;
+   background-color: #f4f5f9;
+   font-size: 16px;
 }
 
-#divPaging>div {
-   float: left;
-   width: 30px;
-   margin: 0 auto;
+#board tbody td a {
+   color: black;
+   text-decoration: none;
+}
+
+#th-1 {
+   width: 10%;
+}
+
+#th-2 {
+   width: 50%;
+}
+
+#th-3 {
+   width: 10%;
+}
+
+#th-4 {
+   width: 20%;
+}
+
+table {
    text-align: center;
 }
 
-#liSearchOption {
+/* #liSearchOption {
    clear: both;
-}
+} */
 
-#liSearchOption>div {
+/* #liSearchOption>div {
    margin: 0 auto;
    margin-top: 30px;
    width: auto;
    height: 100px;
+} */
+#divPaging {
+   text-align: center;
+   font-size: 0;
+   list-style: none;
+   left: 500px;
+   clear: both;
+   text-align: center;
+   text-decoration: none;
+   font-size: 20px;
+   margin: 0 auto;
 }
 
-.left {
-   text-align: left;
+.paging {
+   display: inline-block;
+   list-style: none;
+   margin-top: 60px;
 }
+
+.paging .none {
+   display: none;
+}
+
+.paging a {
+   display: block;
+   margin: 0 4px;
+   float: left;
+   border: 1px solid #e6e6e6;
+   width: 28px;
+   height: 28px;
+   line-height: 28px;
+   text-align: center;
+   background-color: #fff;
+   font-size: 13px;
+   color: black;
+   text-decoration: none;
+}
+
+.paging .ul {
+   list-style: none;
+   text-align: center;
+}
+
+.paging .arrow {
+   border: 1px solid #ccc;
+}
+
+.paging .pprev {
+   background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
+   margin-left: 0;
+}
+
+.paging .prev {
+   background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
+   margin-right: 7px;
+}
+
+.paging .next {
+   background: #f8f8f8 url('img/page_next.png') no-repeat center center;
+   margin-left: 7px;
+}
+
+.paging .nnext {
+   background: #f8f8f8 url('img/page_nnext.png') no-repeat center center;
+   margin-right: 0;
+}
+
+.paging a.active {
+   background-color: #42454c;
+   color: #fff;
+   border: 1px solid #42454c;
+}
+
+.search {
+   margin-left: 745px;
+   margin-top: 40px;
+   margin-bottom: 100px;
+}
+
+h2 {
+   text-align: center;
+   margin-top: 40px;
+   font-size: 30px;
+}
+
+#searchBtn {
+   width: 70px;
+   heigth: 40px;
+   border: none;
+   border: 1px solid #e6e6e6;
+}
+
+#keywordInput {
+   width: 200px;
+}
+
+/* searchType {
+   width: 100px;
+} */
+#searchtitle {
+   width: 110px;
+   heigth: 80px;
+   text-align: center;
+   margin: 0 auto;
+   border: 1px solid #e6e6e6;
+   font-size : 14px;
+}
+
+#keywordInput {
+   border: 1px solid #e6e6e6;
+   text-align: center;
+}
+
 </style>
 
 </head>
 <body>
-<form role="form" method="get">
-   <div id="mainWrapper">
+<h2>파일게시판</h2>
+   <div id="boardwrap">
+      <div id="board" text>
+         <table>
+            <thead>
+               <tr>
+                  <th id=th-1>No</th>
+                  <th id=th-2>제목</th>
+                  <th id=th-3>작성자</th>
+                  <th id=th-4>작성일</th>
+               </tr>
+            </thead>
+            <tbody>
+               <c:choose>
+                  <c:when test="${not empty list }">
+                     <c:forEach var="list" items="${list}">
 
-      <ul>
-         <!-- 게시판 제목 -->
-         <br><li>파일 게시판</li><br>
+                        <tr align="center">
+                        <td>${list.BOARD_NO}</td>
+                        <td><a href="${contextPath}/board/supportTableView.do?BOARD_NO=${list.BOARD_NO}">${list.TITLE}</a></td>
+                        <td>${list.NAME}</td>
+                        <td>${list.F_DATE }</td>
+                        </tr>
 
-         <!-- 게시판 목록  -->
-         <li>
-            <ul id="ulTable">
-               <li>
-                  <ul>
-                     <li>No</li>
-                     <li>제목</li>
-                     <li>내용</li>
-                     <li>작성자</li>
-                     <li>작성일</li>
+                     </c:forEach>
 
-                  </ul>
-               </li>
-               <!-- 게시물이 출력될 영역 -->
-               <c:forEach var="list" items="${list}">
-                  <li>
-                     <ul>
-                        <li>${list.BOARD_NO}</li>
-                        <li><a href="${contextPath}/board/supportTableView.do?BOARD_NO=${list.BOARD_NO}">${list.TITLE}</a></li>
-                        <li>${list.CONTENT }</li>
-                        <li>${list.NAME}</li>
-                        <li>${list.F_DATE }</li>
-                     </ul>
-                  </li>
-               </c:forEach>
-               <li></li>
-            </ul>
+                  </c:when>
+               </c:choose>
 
-         </li>
+            </tbody>
+         </table>
+      </div>
 
-         <!-- 게시판 페이징 영역 -->
 
-         <li>
-            <div id="divPaging">
-               <ul class="paging">
-                  <c:if test="${paging.prev}">
-                     <span><a
-                        href='<c:url value="supportTable.do?page=${paging.startPage-1}"/>'>이전</a></span>
-                  </c:if>
-                  <c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-                     var="num">
-                     <span><a
-                        href='<c:url value="supportTable.do?page=${num}"/>'>${num}</a></span>
-                  </c:forEach>
-                  <c:if test="${paging.next && paging.endPage>0}">
-                     <span><a
-                        href='<c:url value="supportTable.do?page=${paging.endPage+1}"/>'>다음</a></span>
-                  </c:if>
-               </ul>
-            </div>
-         </li>
-         <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
-			<li><a href="${contextPath}/board/supportAddTableView.do?">글쓰기</a></li>
-		 </s:authorize>
-         <!-- 검색 폼 영역 -->
-         <li id='liSearchOption'>
-         
-            <div class = "search">
-               <select name='searchType'>
-                  <option value='TC' <c:out value="${scri.searchType eq 'TC' ? 'selected' : ''}"/>>제목+내용</option>
-                  <option value='T' <c:out value="${scri.searchType eq 'T' ? 'selected' : ''}"/>>제목</option>
-                  <option value='C' <c:out value="${scri.searchType eq 'C' ? 'selected' : ''}"/>>내용</option>
-               </select> 
-                <input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
-                <button id="searchBtn" type="button">검색</button>
-   <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script>
-    $(function(){
-        $('#searchBtn').click(function() {
-          self.location = "supportTable.do" + '${paging.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-        });
-      });   
-    </script>
-    
-    <script>
-		$('input[type="submit"]').keydown(function() {
-			if (event.keyCode === 13) {
-				event.preventDefault();
-			}
-			;
-		});
-	</script>
-            </div>
-         </li>
 
-      </ul>
    </div>
+
+
+
+   <!-- 게시판 페이징 영역 -->
+
+   <form role="form" method="get">
+
+      <div id="divPaging">
+         <ul class="paging">
+            <c:if test="${paging.prev}">
+               <span><a
+                  href='<c:url value="supportTable.do?page=${paging.startPage-1}"/>'>이전</a></span>
+            </c:if>
+            <c:forEach begin="${paging.startPage}" end="${paging.endPage}"
+               var="num">
+               <span><a
+                  href='<c:url value="supportTable.do?page=${num}"/>'>${num}</a></span>
+            </c:forEach>
+            <c:if test="${paging.next && paging.endPage>0}">
+               <span><a
+                  href='<c:url value="supportTable.do?page=${paging.endPage+1}"/>'>다음</a></span>
+            </c:if>
+         </ul>
+      </div>
+      
+       <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
+			<li style="margin-top:15px;"><a href="${contextPath}/board/supportAddTableView.do?">글쓰기</a></li>
+		 </s:authorize>
+
+      <!-- 검색 폼 영역 -->
+
+      <div class="search">
+         <select name='searchType' id="searchtitle">
+            <option value='TC'
+               <c:out value="${scri.searchType eq 'TC' ? 'selected' : ''}"/>>제목+내용</option>
+            <option value='T'
+               <c:out value="${scri.searchType eq 'T' ? 'selected' : ''}"/>>제목</option>
+            <option value='C'
+               <c:out value="${scri.searchType eq 'C' ? 'selected' : ''}"/>>내용</option>
+         </select> <input type="text" name="keyword" id="keywordInput"
+            value="${scri.keyword}" />
+         <button id="searchBtn" type="button">search</button>
+         <script src="http://code.jquery.com/jquery-latest.js"></script>
+         <script>
+         $(function(){
+             $('#searchBtn').click(function() {
+               self.location = "supportTable.do" + '${paging.makeQuery(1)}' + "&searchType=" + $("select option:selected").val() + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+             });
+           });   
+         </script>
+
+         <script>
+            $('input[type="submit"]').keydown(function() {
+               if (event.keyCode === 13) {
+                  event.preventDefault();
+               }
+               ;
+            });
+         </script>
+      </div>
    </form>
+
+
 </body>
 </html>

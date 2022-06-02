@@ -36,22 +36,22 @@ public class MailControllerImpl implements MailController{
 			throws Exception {
 		String generatedString = RandomValueGeneration();
 
-		// ½Ç »ç¿ë½Ã vo¿Í ¼­ºñ½º Å¬·¡½º ¹× JSPÀÇ ÀÛ¼ºÀÌ ÇÊ¿ä·Î »ı°¢ÇÕ´Ï´Ù.
-		String subject = "JOBJAVA ÀÌ¸ŞÀÏ ÀÎÁõ";
-		// ÀÌ¹ÌÁö ÆÄÀÏÀº ³»¿ë°ú ÇÔ²² °¡¾ßÇÕ´Ï´Ù.
+		// ì‹¤ ì‚¬ìš©ì‹œ voì™€ ì„œë¹„ìŠ¤ í´ë˜ìŠ¤ ë° JSPì˜ ì‘ì„±ì´ í•„ìš”ë¡œ ìƒê°í•©ë‹ˆë‹¤.
+		String subject = "JOBJAVA ì´ë©”ì¼ ì¸ì¦";
+		// ì´ë¯¸ì§€ íŒŒì¼ì€ ë‚´ìš©ê³¼ í•¨ê»˜ ê°€ì•¼í•©ë‹ˆë‹¤.
 		String content = "<div id=\"readFrame\">\r\n" + 
 				"        <div style=\"width:760px; margin:0 auto;\">\r\n" + 
-				"            <h1 style=\"display:block;width:430px;margin:51px auto 26px\">JOBJAVA ÀÌ¸ŞÀÏ ÀÎÁõÅ° ¹ß±Ş</h1>\r\n" + 
+				"            <h1 style=\"display:block;width:430px;margin:51px auto 26px\">JOBJAVA ì´ë©”ì¼ ì¸ì¦í‚¤ ë°œê¸‰</h1>\r\n" + 
 				"            <hr>\r\n" + 
-				"            <img src=\"http://image.happymoney.co.kr/image/mail//icon_5.gif\" alt=\"ÇØÇÇ¸Ó´Ï\" style=\"display:block;width:112px;height:112px;margin:51px auto 26px\" border=\"0\" loading=\"lazy\"><br>\r\n" + 
+				"            <img src=\"http://image.happymoney.co.kr/image/mail//icon_5.gif\" alt=\"í•´í”¼ë¨¸ë‹ˆ\" style=\"display:block;width:112px;height:112px;margin:51px auto 26px\" border=\"0\" loading=\"lazy\"><br>\r\n" + 
 				"            \r\n" + 
-				"            <p style=\"display:block;width:300px;margin:0 auto;\">È¸¿øÀÇ ÀÌ¸ŞÀÏ ÀÎÁõÀ» ¹ß±ŞÇÏ¿´½À´Ï´Ù.</p>\r\n" + 
+				"            <p style=\"display:block;width:300px;margin:0 auto;\">íšŒì›ì˜ ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ì„ ë°œê¸‰í•˜ì˜€ìŠµë‹ˆë‹¤.</p>\r\n" + 
 				"            <br>\r\n" + 
 				"            <h1 style=\"display:block;width:190px;margin:51px auto 26px\">"
 				+ generatedString 
 				+ "</h1>\r\n" + 
 				"            <br>\r\n" + 
-				"            <p style=\"display:block;width:220px;margin:0 auto;\">ÀÌ¸ŞÀÏÅ°¸¦ Á÷Á¢ ÀÔ·ÂÇØÁÖ¼¼¿ä</p>\r\n" + 
+				"            <p style=\"display:block;width:220px;margin:0 auto;\">ì„ì‹œ ë¹„ë°€ë²ˆí˜¸</p>\r\n" + 
 				"        </div>\r\n" + 
 				"    </div>";
 		String from = "jobjava1230@gmail.com"; //
@@ -66,9 +66,9 @@ public class MailControllerImpl implements MailController{
 			mailHelper.setSubject(subject);
 			mailHelper.setText(content, true);
 
-			// ¾÷·Îµå ÆÄÀÏ °æ·Î ¼³Á¤ new File ¾È¿¡ °ª ÀÛ¼º ex}"D:\\test.txt"
+			// ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ new File ï¿½È¿ï¿½ ï¿½ï¿½ ï¿½Û¼ï¿½ ex}"D:\\test.txt"
 //	            FileSystemResource file = new FileSystemResource(new File("")); 
-			// Ã·ºÎÆÄÀÏ ÀÌ¸§/È®ÀåÀÚ ¼³Á¤(°æ·Î »ó ½Ç ÆÄÀÏ°ú °°°Ô ¹Şµµ·Ï ÇØÁÖ¼¼¿ä)
+			// Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Şµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½)
 //	            mailHelper.addAttachment("test.txt", file);
 
 			mailSender.send(mail);
@@ -94,22 +94,22 @@ public class MailControllerImpl implements MailController{
 	public ResponseEntity pwdChange(@RequestParam HashMap<String, String> member,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		member.put("DecryptionPWD", RandomValueGeneration());
 		mailservice.pwdChange(member);
-		// ½Ç »ç¿ë½Ã vo¿Í ¼­ºñ½º Å¬·¡½º ¹× JSPÀÇ ÀÛ¼ºÀÌ ÇÊ¿ä·Î »ı°¢ÇÕ´Ï´Ù.
-		String subject = "JOBJAVA ÀÓ½Ã ºñ¹Ğ¹øÈ£";
-		// ÀÌ¹ÌÁö ÆÄÀÏÀº ³»¿ë°ú ÇÔ²² °¡¾ßÇÕ´Ï´Ù.
+		// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ voï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ JSPï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
+		String subject = "JOBJAVA ì„ì‹œ ë¹„ë°€ë²ˆí˜¸";
+		// ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô²ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 		String content = "<div id=\"readFrame\">\r\n" + 
 				"        <div style=\"width:760px; margin:0 auto;\">\r\n" + 
-				"            <h1 style=\"display:block;width:430px;margin:51px auto 26px\">JOBJAVA ÀÌ¸ŞÀÏ ÀÎÁõÅ° ¹ß±Ş</h1>\r\n" + 
+				"            <h1 style=\"display:block;width:430px;margin:51px auto 26px\">JOBJAVA ì´ë©”ì¼ ì¸ì¦í‚¤ ë°œê¸‰</h1>\r\n" + 
 				"            <hr>\r\n" + 
-				"            <img src=\"http://image.happymoney.co.kr/image/mail//icon_5.gif\" alt=\"ÇØÇÇ¸Ó´Ï\" style=\"display:block;width:112px;height:112px;margin:51px auto 26px\" border=\"0\" loading=\"lazy\"><br>\r\n" + 
+				"            <img src=\"http://image.happymoney.co.kr/image/mail//icon_5.gif\" alt=\"í•´í”¼ë¨¸ë‹ˆ\" style=\"display:block;width:112px;height:112px;margin:51px auto 26px\" border=\"0\" loading=\"lazy\"><br>\r\n" + 
 				"            \r\n" + 
-				"            <p style=\"display:block;width:300px;margin:0 auto;\">È¸¿øÀÇ ÀÓ½Ã ºñ¹Ğ¹øÈ£À» ¹ß±ŞÇÏ¿´½À´Ï´Ù.</p>\r\n" + 
+				"            <p style=\"display:block;width:300px;margin:0 auto;\">íšŒì›ì˜ ì„ì‹œ ë¹„ë°€ë²ˆí˜¸ì„ ë°œê¸‰í•˜ì˜€ìŠµë‹ˆë‹¤.</p>\r\n" + 
 				"            <br>\r\n" + 
 				"            <h1 style=\"display:block;width:190px;margin:51px auto 26px\">"
 				+ member.get("DecryptionPWD") 
 				+ "</h1>\r\n" + 
 				"            <br>\r\n" + 
-				"            <p style=\"display:block;width:100px;margin:0 auto;\">ÀÓ½Ã ºñ¹Ğ¹øÈ£</p>\r\n" + 
+				"            <p style=\"display:block;width:100px;margin:0 auto;\">ì„ì‹œ ë¹„ë°€ë²ˆí˜¸</p>\r\n" + 
 				"        </div>\r\n" + 
 				"    </div>";
 		String from = "jobjava1230@gmail.com"; //
@@ -124,9 +124,9 @@ public class MailControllerImpl implements MailController{
 			mailHelper.setSubject(subject);
 			mailHelper.setText(content, true);
 
-			// ¾÷·Îµå ÆÄÀÏ °æ·Î ¼³Á¤ new File ¾È¿¡ °ª ÀÛ¼º ex}"D:\\test.txt"
+			// ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ new File ï¿½È¿ï¿½ ï¿½ï¿½ ï¿½Û¼ï¿½ ex}"D:\\test.txt"
 //	            FileSystemResource file = new FileSystemResource(new File("")); 
-			// Ã·ºÎÆÄÀÏ ÀÌ¸§/È®ÀåÀÚ ¼³Á¤(°æ·Î »ó ½Ç ÆÄÀÏ°ú °°°Ô ¹Şµµ·Ï ÇØÁÖ¼¼¿ä)
+			// Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½/È®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Şµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½)
 //	            mailHelper.addAttachment("test.txt", file);
 
 			mailSender.send(mail);
@@ -141,13 +141,13 @@ public class MailControllerImpl implements MailController{
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 		    message  = "<script>";
-		    message +=" alert('ÀÓ½Ãºñ¹Ğ¹øÈ£¸¦ ÀÌ¸ŞÀÏ·Î Àü¼ÛÇß½À´Ï´Ù. ·Î±×ÀÎÃ¢À¸·Î ÀÌµ¿ÇÕ´Ï´Ù.');";
+		    message +=" alert('ï¿½Ó½Ãºï¿½Ğ¹ï¿½È£ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½Ï·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Î±ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Õ´Ï´ï¿½.');";
 		    message += " location.href='"+request.getContextPath()+"/member/loginForm.do;'";
 		    message += " </script>";
 		    
 		}catch(Exception e) {
 			message  = "<script>";
-		    message +=" alert('ÀÛ¾÷ Áß ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù. ´Ù½Ã ½ÃµµÇØ ÁÖ¼¼¿ä');";
+		    message +=" alert('ï¿½Û¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ãµï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½');";
 		    message += " location.href='"+request.getContextPath()+"/member/loginForm.do;'";
 		    message += " </script>";
 			e.printStackTrace();

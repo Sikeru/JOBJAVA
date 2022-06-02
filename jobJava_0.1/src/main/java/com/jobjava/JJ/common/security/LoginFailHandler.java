@@ -25,24 +25,24 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 			AuthenticationException exception) throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		if(exception instanceof AuthenticationServiceException) {
-			request.setAttribute("LoginFailMessage", "ÁË¼ÛÇÕ´Ï´Ù. ¿À·ù°¡ ¹ß»ıÇß½À´Ï´Ù.");
+			request.setAttribute("LoginFailMessage", "ì£„ì†¡í•©ë‹ˆë‹¤. ì˜¤ë¥˜ê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.");
 		}
 		else if(exception instanceof BadCredentialsException) {
-			request.setAttribute("LoginFailMessage", "¾ÆÀÌµğ&ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+			request.setAttribute("LoginFailMessage", "ì•„ì´ë””&ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 		}
 		else if(exception instanceof DisabledException) {
-			request.setAttribute("LoginFailMessage", "ÇöÀç »ç¿ëÇÒ ¼ö ¾ø´Â °èÁ¤ÀÔ´Ï´Ù.");
+			request.setAttribute("LoginFailMessage", "í˜„ì¬ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ê³„ì •ì…ë‹ˆë‹¤.");
 		}
 		else if(exception instanceof LockedException) {
-			request.setAttribute("LoginFailMessage", "ÇöÀç Àá±ä °èÁ¤ÀÔ´Ï´Ù.");
+			request.setAttribute("LoginFailMessage", "í˜„ì¬ ì ê¸´ ê³„ì •ì…ë‹ˆë‹¤.");
 		}
 		else if(exception instanceof AccountExpiredException) {
-			request.setAttribute("LoginFailMessage", "ÀÌ¹Ì ¸¸·áµÈ °èÁ¤ÀÔ´Ï´Ù.");
+			request.setAttribute("LoginFailMessage", "ì´ë¯¸ ë§Œë£Œëœ ê³„ì •ì…ë‹ˆë‹¤.");
 		}
 		else if(exception instanceof CredentialsExpiredException) {
-			request.setAttribute("LoginFailMessage", "ºñ¹Ğ¹øÈ£°¡ ¸¸·áµÈ °èÁ¤ÀÔ´Ï´Ù.");
+			request.setAttribute("LoginFailMessage", "ë¹„ë°€ë²ˆí˜¸ê°€ ë§Œë£Œëœ ê³„ì •ì…ë‹ˆë‹¤.");
 		}
-		else request.setAttribute("LoginFailMessage", "°èÁ¤À» Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+		else request.setAttribute("LoginFailMessage", "ê³„ì •ì„ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/member/loginForm.do");
 		dispatcher.forward(request, response);
 	}

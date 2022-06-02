@@ -48,7 +48,7 @@
     
 
     #ulTable > li:first-child > ul > li {
-        background-color: rgb(253,131,82);
+        background-color: bisque;
         font-weight:bold;
         text-align:center;
 }
@@ -105,9 +105,11 @@
 </head>
 <body>
 <Table>
+
 <div id="mainWrapper">
         <ul>
             <!-- 게시판 제목 -->
+            <li></li>
             <li>QNA</li>
 			
 				
@@ -169,6 +171,7 @@
 	    		    </c:if>
 	    		      <c:choose>
 	          		   <c:when test="${search.search != null }">
+	          		   
 			           <a class="no-uline" href="${contextPath}/board/searchQNATable.do?search=${search.search}&txtKeyWord=${search.txtKeyWord}&search=${search.search}&txtKeyWord=${search.txtKeyWord}&section=${paging.section}&pageNum=${page}">${(paging.section-1)*10 +page } </a>
 			           </c:when>
 			           <c:otherwise>

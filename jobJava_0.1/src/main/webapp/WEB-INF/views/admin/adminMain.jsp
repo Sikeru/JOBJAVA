@@ -63,6 +63,8 @@ function openLoading() {
 			}
 		})
     }
+   
+
 </script>
 <style>
     *{
@@ -78,6 +80,9 @@ function openLoading() {
         
     }
  	a{
+ 	
+ 	
+ 	
          color: black;
          text-decoration: none;
 			list-style: none;
@@ -229,7 +234,6 @@ function openLoading() {
 </head>
 <body>
 <div id="adminwrap">
-    
     <div id="adminside">
         <ul>
             <li><a href="${contextPath}/admin/main.do">사용자 권한변경</a></li>
@@ -240,8 +244,6 @@ function openLoading() {
     </div>
     <div id="amdinmain">
            <div id="mainWrapper">
-       
-            
 	
       <ul>
       	 
@@ -279,7 +281,6 @@ function openLoading() {
    							<option hidden="${member.ENABLED}" selected>${member.ENABLED}</option>
    							<option value="true">true</option>
    							<option value="false">false</option>
-
   							</select></li>
   						
   						<li><input id="subbtn" type="button" value="수정" onclick="updateMember('${member.ID}','${member.EMAIL}', ${i.count})"/></li>

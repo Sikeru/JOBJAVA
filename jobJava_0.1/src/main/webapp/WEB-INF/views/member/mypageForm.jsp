@@ -58,6 +58,22 @@
     }
 </script>
 <script>
+	function div2Resize() {
+		let element = document.getElementById('myPageW');
+	    var div1 = document.getElementById('myPageW');
+	    div1.style.height = (element.clientHeight + 300) + 'px';
+	    
+	    let element2 = document.getElementById('myPageMain');
+	    var div2 = document.getElementById('myPageMain');
+	    div2.style.height = (element2.clientHeight + 200) + 'px';
+	}
+	window.onload = function() {
+    	div2Resize();
+
+    	// 브라우저 크기가 변할 시 동적으로 사이즈를 조절해야 하는경우
+    	window.addEventListener('resize', div2Resize);
+	}
+
 	function mac_get() {
 		$.ajax({
 			type: "GET",
@@ -80,6 +96,7 @@
 		var EXTRAADDRESS = $("#sample6_extraAddress").val();
 		var ADDRFOCUS = document.getElementById("addrfocus");
 		
+		/* 
 		var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 		
 		if(PWD != '') {
@@ -89,7 +106,7 @@
 				return false;
 			}
 		};
-	  
+		*/
 	  if(ADDRESS != '' & DERAIOLADDRESS != '' & EXTRAADDRESS != ''){
 	  	$("#ADDR").val(ADDRESS +" "+ DERAIOLADDRESS + EXTRAADDRESS);
 	  }
@@ -265,65 +282,236 @@
 		
 		return user_submit();
 	}
-</script>
+	
+	 
+    function userDel() {
+    	if (confirm("༼ಢ_ಢ༽회원을 정말 탈퇴하실껀가요 ༼ಢ_ಢ༽ 	") == true){    //확인
+    		 $('#del_form').submit(); //유효성 검사의 포인트
+    	}else{   //취소
+	   	    return false;
 
+    	}
+    }
+</script>
+    <style>
+   		 #myPageW {
+   		 	position: relative;
+   		 	top: 30px;
+            width: 900px;
+            margin: 0 auto;
+            height: auto;
+        }
+        #myPageBox *{
+            margin-bottom: 10px;
+        }
+        #topTitle {
+            width: 140px;
+            height: 60px;
+            background-color: rgb(0,93,197);
+        }
+        #myPageMain {
+        	position: relative;
+            top: 30px;
+            width: 900px;
+            height: auto;
+            border: 1px solid;
+            border-color: rgb(187,194,211);
+        }
+        sapn {
+            font-size: 19px;
+        }
+        #myPageBox {
+			position: relative;
+            width: 800px;
+            height: auto;
+            left: 50px;
+            top: 30px;
+        }
+        .btn-secondary {
+        	width: 200px;
+            height: 40px;
+        	position: relative;
+        	left: 140px;
+            top: 50px;
+        }
+    </style>
 </head>
 <body>
-<form id="join_form" action="${contextPath}/member/myPageUpDate.do" method="post">
-	<c:if test="${not empty pageContext.request.userPrincipal}">
-		<input type="hidden" id="ID" name="ID" value="${member.ID}"><br>
-		PW : <input type="password" id="PWD" name="passwd"><br>
-		HP : <input type="text" id="HP" name="HP" value="${member.HP}"/><br>
-		<input type="text"  id="sample6_postcode" placeholder="　우편번호">
-		<input type="button" id="addrfocus" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-		<input type="text" id="sample6_address" placeholder="　주소"><br>
-		<input type="text" id="sample6_detailAddress" placeholder="　상세주소">
-		<input type="text" id="sample6_extraAddress" placeholder="　참고항목"><br>
-		ADDR : <input type="text" id="ADDR" name="ADDR" value="${member.ADDR}" readonly/><br>
-		EMAIL : <input type="text" id="EMAIL" name="EMAIL" value="${member.EMAIL}" readonly/><br>
-	</c:if>
-	<s:authorize access="hasRole('ROLE_USER')">
-		NAME : <input type="text" id="UNAME" name="NAME" value="${member.NAME}"/><br>
-		J_SEARCH : <input type="text" id="J_SEARCH" name="J_SEARCH" value="${member.j_SEARCH}"/><br>
-		BIRTH : <input type="date" id="UBIRTH" name="BIRTH" value="${member.BIRTH}"/><br>
-		LAST_EDU : <input type="text" id="LAST_EDU" name="LAST_EDU" value="${member.LAST_EDU}"/><br>
-		<input class="btn-secondary" type="button" value="정보수정" onclick="nuser_submit()"/>
-	</s:authorize>
-	<s:authorize access="hasRole('ROLE_STU')">
-		NAME : <input type="text" id="SNAME" name="NAME" value="${member.NAME}"/><br>
-		DEPT : <input type="text" id="DEPT" name="DEPT" value="${member.DEPT}"/><br>
-		MAC : <input type="text" name="MAC_ADDR" value="${member.MAC_ADDR}" readonly/>
-		<c:if test="${member.MAC_ADDR == null} ">
-		<input type="button" onclick="mac_get()" value="맥정보가져오기">
-		</c:if>
-		<br>
-		BIRTH : <input type="date" id="SBIRTH" name="BIRTH" value="${member.BIRTH}"/><br>
-		U_NAME : <input type="text" id="U_NAME" name="U_NAME" value="${member.u_NAME}"/><br>
-		<input class="btn-secondary" type="button" value="정보수정" onclick="stu_submit()"/>
-	</s:authorize>
-	<s:authorize access="hasRole('ROLE_COM')">
-		B_NO : <input type="text" id="B_NO" name="B_NO" value="${member.b_NO}"/><br>
-		AGENT : <input type="text" id="AGENT" name="AGENT" value="${member.AGENT}"/><br>
-		B_TYPE : <input type="text" id="B_TYPE" name="B_TYPE" value="${member.b_TYPE}"/><br>
-		C_DIV : <input type="text" id="C_DIV" name="C_DIV" value="${member.c_DIV}"/><br>
-		EMP_NUM : <input type="text" id="EMP_NUM" name="EMP_NUM" value="${member.EMP_NUM}"/><br>
-		HOMEPAGE : <input type="text" id="HOMEPAGE" name="HOMEPAGE" value="${member.HOMEPAGE}"/><br>
-		C_NAME : <input type="text" id="C_NAME" name="C_NAME" value="${member.c_NAME}"/><br>
-		<input class="btn-secondary" type="button" value="정보수정" onclick="com_submit()"/>
-	</s:authorize>
-	<s:authorize access="hasRole('ROLE_EMP')">
-		NAME : <input type="text" id="ENAME" name="NAME" value="${member.NAME}"/><br>
-		RANK : <input type="text" id="RANK" name="RANK" value="${member.RANK}"/><br>
-		<input class="btn-secondary" type="button" value="정보수정" onclick="emp_submit()"/>
-	</s:authorize>
-	<s:authorize access="hasRole('ROLE_MAG')">
-		U_NAME : <input type="text" id="M_U_NAME" name="U_NAME" value="${member.u_NAME}"/><br>
-		NAME : <input type="text" id="MNAME" name="NAME" value="${member.NAME}"/><br>
-		<input class="btn-secondary" type="button" value="정보수정" onclick="mag_submit()"/>
-	</s:authorize>
-		
-</form>
-
+<div id="myPageW">
+<h2>회원정보 변경</h2>
+	<form id="join_form" action="${contextPath}/member/myPageUpDate.do" method="post">
+    <div id="topTitle"><p style="color: white; position: relative;left: 20px;top: 15px;"><strong>회원정보 변경</strong></p></div>
+    <div id="myPageMain">
+      <div id="myPageBox">
+      <s:authorize access="hasRole('ROLE_USER')">
+       <span><strong>이름<span style="color: orange;">*</span></strong>
+       <input type="text" id="NNAME" name="NAME" style="border-radius: 5px;height: 30px" value="${member.NAME}" readonly></span>
+       <input type="hidden" id="PWD" name="passwd" value="">
+       <span style="position: absolute; right: 200px;"><strong>생년월일<span style="color: orange;">*</span></strong> <input type="text" style="border-radius: 5px;height: 30px" name="BIRTH" value="${member.BIRTH}" readonly></span>
+       <hr><br>
+       <span><strong>아이디<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="ID" name="ID" style="border-radius: 5px;height:40px; width: 280px;" value="${member.ID}" readonly></span><br>
+       <span><strong>핸드폰번호<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="HP" name="HP" style="border-radius: 5px;height:40px; width: 280px;" value="${member.HP}"></span><br>
+        <span><strong>이메일<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="EMAIL" name="EMAIL" style="border-radius: 5px;height:40px; width: 280px;" value="${member.EMAIL}" readonly></span><br>
+       <span>구직여부</span><br>
+       <input type="text" id="J_SEARCH" name="J_SEARCH" style="border-radius: 5px;height:40px; width: 280px;" value="${member.j_SEARCH}" readonly>
+       <span>* 구직을 구할시 이력서 제출</span><br>
+       <span>최종학력</span><br>
+       <input type="text" id="LAST_EDU" name="LAST_EDU" value="${member.LAST_EDU}" style="border-radius: 5px;height:40px; width: 280px;"><br>
+       <span>주소</span><br>
+       <span><input type="text" id="ADDR" name="ADDR" style="border-radius: 5px;height:40px; width: 400px;" value="${member.ADDR}"></span><br>
+       <details>
+        <summary>주소 수정</summary>
+           <input type="text"  id="sample6_postcode" placeholder="　우편번호" style="border-radius: 5px;height:40px; width: 280px;" readonly>	
+           <input type="text" id="sample6_address" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　주소" readonly><br>
+           <input type="text" id="sample6_detailAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　상세주소">
+           <input type="text" id="sample6_extraAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　참고항목"><br>
+           <input type="button" id="addrfocus" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+        </details>
+       </s:authorize>
+       <s:authorize access="hasRole('ROLE_STU')">
+       <span><strong>이름<span style="color: orange;">*</span></strong>
+       <input type="text" id="SNAME" name="NAME" style="border-radius: 5px;height: 30px" value="${member.NAME}" readonly></span> 
+       <span style="position: absolute; right: 200px;"><strong>생년월일<span style="color: orange;">*</span></strong> <input type="text" style="border-radius: 5px;height: 30px" name="BIRTH" value="${member.BIRTH}" readonly></span>
+       <input type="hidden" id="PWD" name="passwd" value="">
+       <hr><br>
+       <span><strong>아이디<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="ID" name="ID" style="border-radius: 5px;height:40px; width: 280px;" value="${member.ID}" readonly></span><br>
+       <span><strong>핸드폰번호<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="HP" name="HP" style="border-radius: 5px;height:40px; width: 280px;" value="${member.HP}"></span><br>
+        <span><strong>이메일<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="EMAIL" name="EMAIL" style="border-radius: 5px;height:40px; width: 280px;" value="${member.EMAIL}" readonly></span><br>
+       <span>대학교</span><br>
+       <input type="text" id="U_NAME" name="U_NAME" value="${member.u_NAME}" style="border-radius: 5px;height:40px; width: 280px;"><br>
+       <span>학과</span><br>
+       <input type="text" id="DEPT" name="DEPT" value="${member.DEPT}" style="border-radius: 5px;height:40px; width: 280px;"><br>
+       <span>MAC 주소</span><br>
+       <input type="text" name="MAC_ADDR" value="${member.MAC_ADDR}" style="border-radius: 5px;height:40px; width: 280px;" readonly>
+       <c:if test="${member.MAC_ADDR == null} ">
+		<input class="btn btn-outline-secondary" type="button" onclick="mac_get()" value="맥정보가져오기">
+		</c:if><br>
+       <span>주소</span><br>
+       <span><input type="text" id="ADDR" name="ADDR" style="border-radius: 5px;height:40px; width: 400px;" value="　${member.ADDR}" readonly></span><br>
+       <details>
+        <summary>주소 수정</summary>
+           <input type="text"  id="sample6_postcode" placeholder="　우편번호" style="border-radius: 5px;height:40px; width: 280px;" readonly>
+           <input type="text" id="sample6_address" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　주소" readonly><br>
+           <input type="text" id="sample6_detailAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　상세주소">
+           <input type="text" id="sample6_extraAddress" style="height:40px; width: 280px;" placeholder="　참고항목"><br>
+           <input type="button" id="addrfocus" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+        </details>
+       </s:authorize>
+       
+       <s:authorize access="hasRole('ROLE_COM')">
+       <span><strong>회사이름<span style="color: orange;">*</span></strong>
+       <input type="text" id="C_NAME" name="C_NAME" value="${member.c_NAME}" style="border-radius: 5px;height: 30px"></span> 
+       <span style="position: absolute; right: 200px;"><strong>회사홈페이지<span style="color: orange;">*</span></strong> <input id="HOMEPAGE" name="HOMEPAGE" value="${member.HOMEPAGE}" style="border-radius: 5px;height: 30px"></span>
+       <input type="hidden" id="PWD" name="passwd" value="">
+       <hr><br>
+       <span><strong>아이디<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="ID" name="ID" style="border-radius: 5px;height:40px; width: 280px;" value="${member.ID}" readonly></span><br>
+       <span><strong>핸드폰번호<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="HP" name="HP" style="border-radius: 5px;height:40px; width: 280px;" value="${member.HP}"></span><br>
+        <span><strong>이메일<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="EMAIL" name="EMAIL" value="${member.EMAIL}" style="border-radius: 5px;height:40px; width: 280px;" readonly></span><br>
+       <span><strong>사업자번호<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="B_NO" name="B_NO" style="border-radius: 5px;height:40px; width: 280px;" value="${member.b_NO}"></span><br>
+       <span>대표자</span><br>
+       <input type="text" id="AGENT" name="AGENT" style="border-radius: 5px;height:40px; width: 280px;" value="${member.AGENT}" style="height:40px; width: 280px;"><br>
+       <span>업종</span><br>
+       <input type="text" id="B_TYPE" name="B_TYPE" style="border-radius: 5px;height:40px; width: 280px;" value="${member.b_TYPE}" style="height:40px; width: 280px;"><br>
+       <span>기업구분</span><br>
+       <input type="text" id="C_DIV" name="C_DIV" style="border-radius: 5px;height:40px; width: 280px;" value="${member.c_DIV}" style="height:40px; width: 280px;"><br>
+       <span>근로자수</span><br>
+       <input type="text" id="EMP_NUM" name="EMP_NUM" value="${member.EMP_NUM}" style="border-radius: 5px;height:40px; width: 280px;"><br>
+       <span>주소</span><br>
+       <span><input type="text" id="ADDR" name="ADDR" style="border-radius: 5px;height:40px; width: 400px;" value="${member.ADDR}" readonly></span><br>
+       <details>
+        <summary>주소 수정</summary>
+           <input type="text"  id="sample6_postcode" placeholder="　우편번호" style="border-radius: 5px;height:40px; width: 280px;" readonly>
+           <input type="text" id="sample6_address" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　주소" readonly><br>
+           <input type="text" id="sample6_detailAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　상세주소">
+           <input type="text" id="sample6_extraAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　참고항목"><br>
+           <input type="button" id="addrfocus" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+        </details>
+       </s:authorize>
+       
+       <s:authorize access="hasRole('ROLE_MAG')">
+       <span><strong>대학교이름<span style="color: orange;">*</span></strong>
+       <input type="text" id="M_U_NAME" name="U_NAME" style="border-radius: 5px;height: 30px" value="${member.u_NAME}" readonly></span> 
+       <span style="position: absolute; right: 200px;"><strong>이름<span style="color: orange;">*</span></strong> <input type="text" style="height: 30px" id="MNAME" name="NAME" value="${member.NAME}"></span>
+       <input type="hidden" id="PWD" name="passwd" value="">
+       <hr><br>
+       <span><strong>아이디<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="ID" name="ID" style="border-radius: 5px;height:40px; width: 280px;" value="${member.ID}" readonly></span><br>
+       <span><strong>핸드폰번호<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="HP" name="HP" style="border-radius: 5px;height:40px; width: 280px;" value="${member.HP}"></span><br>
+        <span><strong>이메일<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="EMAIL" name="EMAIL" style="border-radius: 5px;height:40px; width: 280px;" value="${member.EMAIL}" readonly></span><br>
+       <span>주소</span><br>
+       <span><input type="text" id="ADDR" name="ADDR" style="border-radius: 5px;height:40px; width: 400px;" value="${member.ADDR}" readonly></span><br>
+       <details>
+        <summary>주소 수정</summary>
+           <input type="text"  id="sample6_postcode" placeholder="　우편번호" style="border-radius: 5px;height:40px; width: 280px;" readonly>	
+           <input type="text" id="sample6_address" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　주소" readonly><br>
+           <input type="text" id="sample6_detailAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　상세주소">
+           <input type="text" id="sample6_extraAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　참고항목"><br>
+           <input type="button" id="addrfocus" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+        </details>
+	   </s:authorize>
+	   
+       <s:authorize access="hasRole('ROLE_EMP')">
+       <span><strong>이름<span style="color: orange;">*</span></strong>
+       <input type="text" id="ENAME" name="NAME" style="border-radius: 5px;height: 30px" value="${member.NAME}" readonly></span> 
+       <span style="position: absolute; right: 200px;"><strong>직급<span style="color: orange;">*</span></strong> <input type="text" style="border-radius: 5px;height: 30px" id="RANK" name="RANK" value="${member.RANK}"></span>
+       <input type="hidden" id="PWD" name="passwd" value="">
+       <hr><br>
+       <span><strong>아이디<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="ID" name="ID" style="border-radius: 5px;height:40px; width: 280px;" value="${member.ID}" readonly></span><br>
+       <span><strong>핸드폰번호<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="HP" name="HP" style="border-radius: 5px;height:40px; width: 280px;" value="${member.HP}"></span><br>
+        <span><strong>이메일<span style="color: orange;">*</span></strong><br>
+       <input type="text" id="EMAIL" name="EMAIL" style="border-radius: 5px;height:40px; width: 280px;" value="${member.EMAIL}" readonly></span><br>
+       <span>주소</span><br>
+       <span><input type="text" id="ADDR" name="ADDR" style="border-radius: 5px;height:40px; width: 400px;" value="${member.ADDR}" readonly></span><br>
+       <details>
+        <summary>주소 수정</summary>
+           <input type="text"  id="sample6_postcode" placeholder="　우편번호" style="border-radius: 5px;height:40px; width: 280px;" readonly>	
+           <input type="text" id="sample6_address" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　주소" readonly><br>
+           <input type="text" id="sample6_detailAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　상세주소">
+           <input type="text" id="sample6_extraAddress" style="border-radius: 5px;height:40px; width: 280px;" placeholder="　참고항목"><br>
+           <input type="button" id="addrfocus" class="btn btn-outline-secondary" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+        </details>
+       </s:authorize>
+       
+       </div>
+       </div>
+       
+       <s:authorize access="hasRole('ROLE_USER')">
+       <input class="btn-secondary" type="button" value="변경하기" onclick="nuser_submit()"/>
+       </s:authorize>
+       <s:authorize access="hasRole('ROLE_STU')">
+       <input class="btn-secondary" type="button" value="변경하기" onclick="stu_submit()"/>
+       </s:authorize>
+       <s:authorize access="hasRole('ROLE_COM')">
+       <input class="btn-secondary" type="button" value="정보수정" onclick="com_submit()"/>
+       </s:authorize>
+       <s:authorize access="hasRole('ROLE_EMP')">
+       <input class="btn-secondary" type="button" value="정보수정" onclick="emp_submit()"/>
+	   </s:authorize>
+       <s:authorize access="hasRole('ROLE_MAG')">
+       <input class="btn-secondary" type="button" value="정보수정" onclick="mag_submit()"/>
+       </s:authorize>
+       </form>
+       
+       <input class="btn-secondary" type="button" value="비밀번호 변경" onclick=""/>
+       <form id="del_form" action="${contextPath}/member/deleteMember.do" method="post">
+       <input class="btn-secondary" type="button" value="탈퇴" onclick="userDel()"/>
+       <input type="hidden" name="ID" value="${member.ID }"/>
+       </form>
+       </div>
 
 </body>
 </html>

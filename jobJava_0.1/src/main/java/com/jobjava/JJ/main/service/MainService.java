@@ -14,4 +14,5 @@ public interface MainService {
 	public void updateBestCompany(HashMap<String, String> company);
 	public List<Map<String, Object>> selectAllF_BOARD(SearchCriteria scri);
 	public int boardListCnt(SearchCriteria scri);
+	public List<HashMap<String, String>> selectF_BoardTOP3();
 }

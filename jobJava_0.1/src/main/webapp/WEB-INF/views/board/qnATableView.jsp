@@ -11,6 +11,79 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+ <style>
+  		input {
+  			background-color:transparent;
+			border : 0px solid transparent;
+  		}
+        #tableTotal {
+        	position: relative;
+        	top: 50px;
+            width: 1140px;
+            height: auto;
+            margin: 0 auto;
+        }
+        
+        #title {
+            position: relative;
+            width: 1140px;
+            height: 60px;
+            background: rgb(244,245,249);
+            border-top: 1.5px solid rgb(83,90,117);
+            border-bottom: 1px solid rgb(213,213,219);
+        }
+        #title input{
+            position: absolute;
+            font-size: 20px;
+        }
+            
+        #nameDate {
+            position: relative;
+            width: 1140px;
+            height: 100px;
+            border-top: 3px solid rgb(83,90,117);
+            border-bottom: 1px solid rgb(213,213,219);
+        }
+        
+        #nameDate table{
+            width: 1140px;
+            height: 100px;
+        }
+        #nameDate table{
+            border-collapse: collapse;
+        }
+        #nameDate tr,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        #content{
+            position: relative;
+            width: 1140px;
+            top: 30px;
+            height: auto;
+            text-align: center;
+        }
+        #answer{
+        	width: 1140px;
+        	height: auto;
+        }
+        
+        #answer table{
+        	width: 1140px;
+        	height: 100px;
+            border-collapse: collapse;
+        }
+        #answer tr,td{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        
+
+    </style>
+
+
+
 <script>
  function deleteTable(QNA_NO) {
 	 location.href="${contextPath}/board/qnADeleteTable.do?QNA_NO="+QNA_NO;
@@ -36,43 +109,91 @@
 </script>
 </head>
 <body>
-<form id="join" action="${contextPath}/board/qnAUpDateTable.do" method="post">
-  <input type="text" name="ID" value="${qna.ID}" readonly><br>
-  <input type="hidden" name="QNA_NO" value="${qna.QNA_NO}">
-  <c:choose>
-	<c:when test="${qna.ID == USER_ID}">
-  	<input type="text" id="TITLE" name="TITLE" value="${qna.TITLE }" style="width:50%">
-  	<input type="text" id="CONTENT" name="CONTENT" value="${qna.CONTENT }" style="width: 50%; height: 100%"><br>
-  	<c:if test="${not empty qna.RESPON}">
-  	<input type="text" value="${qna.ANSWER }" style="width: 50%" disabled><br>
-  	<input type="text" value="${qna.RESPON }" style="width: 50%" disabled><br>
-  	</c:if>
-  	<button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button>
-  	<input type="button" value="삭제" onclick="deleteTable(${qna.QNA_NO})"/>
-	</c:when>
-  
-    <c:otherwise>
-    <s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
-  	<input type="text" name="TITLE" value="${qna.TITLE }" style="width:50%">
-  	<input type="text" name="CONTENT" value="${qna.CONTENT }" style="width: 50%; height: 100%"><br>
-  	<input type="text" value="${qna.RESPON }" style="width: 50%" readonly><br>
-  	<input type="text" name="ANSWER" value="${qna.ANSWER }" style="width: 50%"><br>
-  	<input type="hidden" name="RESPON" value="${pageContext.request.userPrincipal.name}">
-    <input type="button" value="삭제" onclick="deleteTable(${qna.QNA_NO})"/><br>
-  
-  	<button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button>
-  	
-    </s:authorize>
- 	<s:authorize access="hasAnyRole('ROLE_COM', 'ROLE_MAG')">
- 	<input type="text" name="TITLE" value="${qna.TITLE }" readonly style="width:50%">
-  	<input type="text" name="CONTENT" value="${qna.CONTENT }" readonly style="width: 50%; height: 100%">
-  	</s:authorize>
- 	<s:authorize access="isAnonymous()">
- 	<input type="text" name="TITLE" value="${qna.TITLE }" readonly style="width:50%">
-  	<input type="text" name="CONTENT" value="${qna.CONTENT }" readonly style="width: 50%; height: 100%">
-  </s:authorize>
-  </c:otherwise>
-  </c:choose>
-</form>
+
+<div id="tableTotal">
+	<h1>질의응답 테이블</h1><br>
+	<form id="join" action="${contextPath}/board/qnAUpDateTable.do" method="post">
+        <div id="title">
+        	<c:choose>
+	           	<c:when test="${qna.ID == USER_ID}">
+            <span><strong><input type="text" id="TITLE" name="TITLE" value="${qna.TITLE }"></strong></span>
+            	</c:when>
+            	<c:otherwise>
+            <span><strong><input type="text" id="TITLE" name="TITLE" value="${qna.TITLE }" disabled></strong></span>
+            	</c:otherwise>
+            </c:choose>
+        </div>
+        <br>
+        <div id="nameDate">
+            <table>
+                <tr>
+                    <td style="width: 228px;text-align: center;background: rgb(244,245,249);">작성자</td>
+                    <td style="width: 340px;">　<input type="text" name="ID" value="${qna.ID}" readonly></td>
+                    <td style="width: 228px;text-align: center;background: rgb(244,245,249);">등록일</td>
+                    <td style="width: 340px;">　<input type="text" name="ID" value="${qna.QNA_DATE}" readonly></td>
+                </tr>
+                <tr>
+                    <td style="width: 228px;text-align: center;background: rgb(244,245,249);">첨부파일</td>
+                    <td colspan="3"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="content">
+        	<c:choose>
+	           	<c:when test="${qna.ID == USER_ID}">
+            <span><input type="text" id="CONTENT" name="CONTENT" value="${qna.CONTENT }"></span>
+            	</c:when>
+            	<c:otherwise>
+            <span><input type="text" id="CONTENT" name="CONTENT" value="${qna.CONTENT }" disabled></span>
+            	</c:otherwise>
+            </c:choose>
+            <br><br><br><br>
+            <hr>
+            <br><br><br><br>
+        </div>
+        <input type="hidden" name="QNA_NO" value="${qna.QNA_NO}">
+        <div id="answer">
+			<c:if test="${qna.ID == USER_ID}">
+				<c:if test="${not empty qna.RESPON}">
+				<table>
+					<tr>
+					 <td style="width: 228px;text-align: center;background: rgb(244,245,249);">답변자</td>
+  					 <td><input type="text" value="　　${qna.ANSWER }" disabled></td>
+  					 
+  					</tr>
+  					<tr>
+  						<td style="width: 228px;text-align: center;background: rgb(244,245,249);">답변내용</td>
+  						<td><input type="text" value="　　${qna.RESPON }" disabled></td>
+  					</tr>
+  				</table>
+  				</c:if>
+  				<br>
+  				 		<button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button>
+  				 		<button class="btn btn-secondary" type="button" onclick="deleteTable(${qna.QNA_NO})">삭제</button>
+  				<hr><br><br><br>
+			</c:if>
+			<s:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_EMP')">
+			<table>
+					<tr>
+					 <td style="width: 228px;text-align: center;background: rgb(244,245,249);">답변자</td>
+					 <td><input type="text" value="　　${qna.RESPON }"></td>
+  					 
+  					</tr>
+  					<tr>
+  						<td style="width: 228px;text-align: center;background: rgb(244,245,249);">답변내용</td>
+  						<td><input type="text" value="${qna.ANSWER }" name="ANSWER"></td>	
+  					</tr>
+  			</table>
+  				<br>
+  						<input type="hidden" name="RESPON" value="${pageContext.request.userPrincipal.name}"/>	
+  				 		<button class="btn btn-secondary" type="button" onclick="joinform_check()">수정</button>
+  				 		<button class="btn btn-secondary" type="button" onclick="deleteTable(${qna.QNA_NO})">삭제</button>
+  				<hr><br><br><br>
+			</s:authorize>
+		</div>
+        </form>
+    </div>
+
+
 </body>
 </html>

@@ -45,7 +45,7 @@
     
 
     #ulTable > li:first-child > ul > li {
-        background-color: rgb(253,131,82);
+        background-color: bisque;
         font-weight:bold;
         text-align:center;
 }
@@ -106,6 +106,7 @@
 <div id="mainWrapper">
         <ul>
             <!-- 게시판 제목 -->
+            <li></li>
             <li>온라인상담</li>
 			
 				

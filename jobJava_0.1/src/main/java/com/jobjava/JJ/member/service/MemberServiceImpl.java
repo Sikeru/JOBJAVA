@@ -30,25 +30,31 @@ public class MemberServiceImpl implements MemberService{
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
 		membervo.setPWD(bPasswordEncoder.encode(membervo.getPWD()));
 		MemberVO user = dao.selectUser(membervo);
+		
+		HashMap<String,String> member = new HashMap<String,String>();
+		member.put("ID", "gkrtod");
+		member.put("HP", "gkrtod");
+		
 		if (user != null) {
 			return false;
 		}
 		else {
 			if(membervo.getAUTHORITY().equals("ROLE_USER")) {
-				dao.userSignUp(membervo); //À¯Àú µî·Ï
-				dao.NuserSignUp(membervo); //ÀÏ¹İ À¯Àú µî·Ï
+				dao.userSignUp(membervo); //ìœ ì € ë“±ë¡
+				dao.NuserSignUp(membervo); //ì¼ë°˜ ìœ ì € ë“±ë¡
 			}else if(membervo.getAUTHORITY().equals("ROLE_STU")){
-				dao.userSignUp(membervo); //À¯Àú µî·Ï
-				dao.SuserSignUp(membervo); //ÇĞ»ı À¯Àú µî·Ï
+				dao.userSignUp(membervo); //ìœ ì € ë“±ë¡
+				dao.SuserSignUp(membervo); //í•™ìƒ ìœ ì € ë“±ë¡
 			}else if(membervo.getAUTHORITY().equals("ROLE_COM")) {
-				dao.userSignUp(membervo); //À¯Àú µî·Ï
+				dao.userSignUp(membervo); //ìœ ì € ë“±ë¡
+				dao.upDateU(member);
 				dao.CuserSignUp(membervo);
 			}else if(membervo.getAUTHORITY().equals("ROLE_EMP")) {
-				dao.userSignUp(membervo); //À¯Àú µî·Ï
-				dao.EuserSignUp(membervo);//Á÷¿øµî·Ï
+				dao.userSignUp(membervo); //ìœ ì € ë“±ë¡
+				dao.EuserSignUp(membervo);//ì§ì›ë“±ë¡
 			}else if(membervo.getAUTHORITY().equals("ROLE_MAG")) {
-				dao.userSignUp(membervo); //À¯Àú µî·Ï
-				dao.MuserSignUp(membervo);//¸Å´ÏÀúµî·Ï
+				dao.userSignUp(membervo); //ìœ ì € ë“±ë¡
+				dao.MuserSignUp(membervo);//ë§¤ë‹ˆì €ë“±ë¡
 			}
 			return true;
 		}
@@ -140,6 +146,12 @@ public class MemberServiceImpl implements MemberService{
 	public String idFind(String email) {
 		memberDAO dao = sqlSession.getMapper(memberDAO.class);
 		return dao.idFind(email);
+	}
+
+	@Override
+	public void deleteMember(String userID) {
+		memberDAO dao = sqlSession.getMapper(memberDAO.class);
+		dao.deleteMember(userID);
 	}
 	
 
