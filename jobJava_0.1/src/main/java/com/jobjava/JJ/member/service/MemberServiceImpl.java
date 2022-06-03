@@ -32,8 +32,6 @@ public class MemberServiceImpl implements MemberService{
 		MemberVO user = dao.selectUser(membervo);
 		
 		HashMap<String,String> member = new HashMap<String,String>();
-		member.put("ID", "gkrtod");
-		member.put("HP", "gkrtod");
 		
 		if (user != null) {
 			return false;
@@ -123,6 +121,13 @@ public class MemberServiceImpl implements MemberService{
 			dao.upDateU(member);
 			dao.upDateMAG(member);
 		}
+	}
+
+	@Override
+	public void pwdUpDate(HashMap<String, String> member) throws Exception {
+		memberDAO dao = sqlSession.getMapper(memberDAO.class);
+		member.put("PWD",bPasswordEncoder.encode(member.get("passwd")));
+		dao.upDateU(member);
 	}
 
 	@Override

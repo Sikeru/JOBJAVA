@@ -221,4 +221,31 @@ public class memberControllerImpl implements memberController {
 		return "/main/main";
 	}
 
+	@Override
+	@RequestMapping(value="/pwdUpDate.do" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ResponseEntity pwdUpDate(@RequestParam HashMap<String, String> member, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		memberservice.pwdUpDate(member);
+		
+		String message = null;
+		ResponseEntity resEntity = null;
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		try {
+		    message  = "<script>";
+		    message +=" alert('수정되었습니다.');";
+		    message += " location.href='"+request.getContextPath()+"/member/mypageForm.do?ID="+member.get("ID")+"';";
+		    message += " </script>";
+		    
+		}catch(Exception e) {
+			message  = "<script>";
+		    message +=" alert('오류가 발생했습니다.');";
+		    message += " location.href='"+request.getContextPath()+"/member/mypageForm.do?ID='"+member.get("ID")+"';";
+		    message += " </script>";
+			e.printStackTrace();
+		}
+		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
+		return resEntity;
+	}
+
 }

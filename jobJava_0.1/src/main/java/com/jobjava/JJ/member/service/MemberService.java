@@ -23,6 +23,7 @@ public interface MemberService {
 	public EMemberVO EMPmyInfo(String userId) throws Exception;
 	public MMemberVO MAGmyInfo(String userID) throws Exception;
 	public void upDateMember(HashMap<String, String> member, String AUTHORITY) throws Exception;
+	public void pwdUpDate(HashMap<String, String> member) throws Exception;
 	public void logST_Logout() throws Exception;
 	public String id_check(String userID) throws Exception;
 	public String email_check(String email) throws Exception;

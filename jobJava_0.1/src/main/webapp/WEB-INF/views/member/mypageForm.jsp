@@ -86,6 +86,20 @@
 		});
 	}
 	
+	function pwd_submit() {
+		var PWD = $('#PWD2').val();
+		var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+		
+		if(PWD != '') {
+			if (!pwdCheck.test(PWD)) {
+				alert("비밀번호는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
+				return false;
+			}
+		};
+		
+		$('#pwd_form').submit(); //유효성 검사의 포인트   
+	}
+	
 	function user_submit() {
 		var PWD = $('#PWD').val();
 		var HP = $('#HP').val();
@@ -96,7 +110,7 @@
 		var EXTRAADDRESS = $("#sample6_extraAddress").val();
 		var ADDRFOCUS = document.getElementById("addrfocus");
 		
-		/* 
+		 
 		var pwdCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 		
 		if(PWD != '') {
@@ -106,7 +120,7 @@
 				return false;
 			}
 		};
-		*/
+		
 	  if(ADDRESS != '' & DERAIOLADDRESS != '' & EXTRAADDRESS != ''){
 	  	$("#ADDR").val(ADDRESS +" "+ DERAIOLADDRESS + EXTRAADDRESS);
 	  }
@@ -292,6 +306,14 @@
 
     	}
     }
+    
+    function openPop() {
+        document.getElementById("popup_layer").style.display = "block";
+    }
+        
+    function closePop() {
+        document.getElementById("popup_layer").style.display = "none";
+    }
 </script>
     <style>
    		 #myPageW {
@@ -334,6 +356,29 @@
         	left: 140px;
             top: 50px;
         }
+        
+        #PWD2 {
+        	border: 0.2px solid;
+        }
+        
+         /*popup*/
+        .popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
+        /*팝업 박스*/
+        .popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:375px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
+        /*컨텐츠 영역*/
+        .popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px; }
+        .popup_box .popup_cont h2 {padding:15px 0;color:#333;margin:0;}
+        .popup_box .popup_cont p{ border-top: 1px solid #666;padding-top: 30px;}
+        /*버튼영역*/
+        .popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
+        .popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
+        .popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
+        .popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
+        .popup_box .popup_btn a.close_day {background:#5d5d5d;}
+        .popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after{display:none;}
+        /*오버레이 뒷배경*/
+        .popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
+        /*popup*/
     </style>
 </head>
 <body>
@@ -506,12 +551,32 @@
        </s:authorize>
        </form>
        
-       <input class="btn-secondary" type="button" value="비밀번호 변경" onclick=""/>
+       <input class="btn-secondary" type="button" value="비밀번호 변경" onclick="openPop()"/>
        <form id="del_form" action="${contextPath}/member/deleteMember.do" method="post">
        <input class="btn-secondary" type="button" value="탈퇴" onclick="userDel()"/>
        <input type="hidden" name="ID" value="${member.ID }"/>
        </form>
        </div>
+       
+        <div class="popup_layer" id="popup_layer" style="display: none;">
+      <div class="popup_box">
+      <!--팝업 컨텐츠 영역-->
+      <div class="popup_cont">
+          <h3> 비밀번호 번경</h3>
+          <hr>
+         <h4> 변경할 비밀번호를<br> 입력해주세요</h4><br>
+         <form id="pwd_form" action="${contextPath}/member/pwdUpDate.do" method="post">
+          <input type="password" id="PWD2" name="passwd" placeholder="　비밀번호 변경"/><br>
+          <input type="hidden" name="ID" value="${member.ID}"><br>
+          <input class="btn btn-outline-secondary" type="button" value="비밀번호 변경" onclick="pwd_submit()"/><br>
+		</form>
+      </div>
+      <!--팝업 버튼 영역-->
+      <div class="popup_btn" style="float: bottom; margin-top: 185px;">
+          <a href="javascript:closePop();">닫기</a>
+      </div>
+  </div>
+</div>
 
 </body>
 </html>

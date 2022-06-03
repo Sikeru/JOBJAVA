@@ -26,4 +26,5 @@ public interface memberController {
 	public String memberFindView(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String idFind(@RequestParam String userID, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String deleteMember(@RequestParam("ID") String userID,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ResponseEntity pwdUpDate(@RequestParam HashMap<String, String> member, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
