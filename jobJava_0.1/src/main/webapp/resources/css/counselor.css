@@ -1,183 +1,62 @@
 * {
-	margin: 0;
-	padding: 0;
+   margin: 0;
+   padding: 0;
 }
 
 #outer_wrap {
-	width: 100%;
-	height: auto;
+   width: 100%;
+   height: auto;
 }
 
 #wrap {
-	position: relative;
-	margin: 0 auto;
-	width: 3200px;
-	height: 100%;
+   position: relative;
+   margin: 0 auto;
+   width: 2000px;
+   height: 100%;
 }
 
 #logo {
-	width: 100%;
-	height: 200px;
-	position: relative;
-	top: -50px;
-	left: 50px;
+   width: 100%;
+   height: 200px;
+   position: relative;
+   top: -50px;
+   left: 50px;
+   overflow:hidden;
 }
 
 aside {
-	width: 400px;
-	height: 100%;
-	float: left;
-	background: #A9A9F5;
+   width: 370px;
+   height: 100%;
+   float: left;
+   background: #0F4C75;
+   color: #000;
 }
 
 article {
-	float: left;
-	height: auto;
-	width: 1600px;
+   float: left;
+   height: 100px;
+   
 }
 
 #logo img {
-	width: 300px;
+   width: 300px;
 }
 
 #navi {
-	position: relative;
-	top: 100px;
+   position: relative;
+ 
+   
 }
 
-/* aside #side {
-	width: 500px;
-	height: 100%;
-	float: left;
-	background: #CEE3F6;
-}
- */
-#main {
-	width: 100%;
-	height: 100%;
-}
+/*  aside #side { */
+/*    width: 500px; */
+/*    height: 100%; */
+/*    float: left; */
+/*    background: #CEE3F6; */
+/* } */
 
-#reg {
-	width: 100%;
-	height: 100%;
-}
-
-#side li {
-	list-style: none;
-}
-
-#side a {
-	text-decoration: none;
-}
-
-#jobseeker {
-	position: absolute;
-	border: 1px solid black;
-	width: 500px;
-	height: 700px;
-	left: 600px;
-	top: 180px;
-}
-
-#company {
-	width: 500px;
-	height: 700px;
-	position: absolute;
-	border: 1px solid black;
-	left: 1200px;
-	top: 180px;
-}
-
-/*       #company a {
-        	position: absolute;
-        	
-        } */
-.group {
-	margin-bottom: 5px;
-	margin-bottom: 40px;
-}
-
-.title {
-	height: 35px;
-	line-height: 35px;
-	cursor: pointer;
-	color: #000;
-	font-family: 'Black Han Sans', sans-serif;
-	font-size: 2.2em;
-}
-
-.sub li {
-	margin: 3px;
-	width: 400px;
-	height: 60px;
-	line-height: 35px;
-	/*    border: 1px solid #000;*/
-	font-family: 'Do Hyeon', sans-serif;
-	font-size: 1.8em;
-}
-
-
-.sub li a {
-	width: 100%;
-	height: 100%;
-	color: #000;
-}
-
-.title:hover, .on {
-	
-}
-
-input {
-	border: 1px solid black;
-	border-radius: 3px;
-	line-height: 35px;
-	font-size: 12px;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-.uniname {
-	width: 100%;
-}
-
-.unihp {
-	width: 100%;
-}
-
-.uniaddr {
-	width: 100%;
-}
-
-.unimanager {
-	width: 100%;
-}
-
-.uniemail {
-	width: 100%;
-}
-
-.uniexpenses {
-	width: 100%;
-}
-
-.unibname {
-	width: 100%;
-}
-
-.unicontent {
-	width: 100%;
-}
-
-/* 		.unireg2 button {
-   			 width: 80px;
-   			 cursor:pointer;
-			}
-
-			button{
- 		   cursor: pointer;
- 		   height: 30px;
-			} */
-.g-table {
+ 
+ .g-table {
 	border: 1px solid black;
 }
 
@@ -197,4 +76,124 @@ input {
 	width: 500px;
 	height: 40px;
 	border-bottom: 1px solid black;
+}
+#main {
+   width: 100%;
+   height: 100%;
+}
+
+#reg {
+   width: 100%;
+   height: 100%;
+}
+
+#side li {
+   list-style: none;
+   
+   
+}
+
+#side a {
+   text-decoration: none;
+    color: #fff;
+  
+}
+
+#jobseeker {
+   position: absolute;
+   border: 1px solid black;
+   width: 500px;
+   height: 700px;
+   left: 600px;
+   top: 180px;
+}
+
+#company {
+   width: 500px;
+   height: 700px;
+   position: absolute;
+   border: 1px solid black;
+   left: 1200px;
+   top: 180px;
+}
+
+/*       #company a {
+           position: absolute;
+           
+        } */
+.group {
+   margin-bottom: 5px;
+   margin-bottom: 40px;
+}
+
+.title {
+   height: 35px;
+   line-height: 35px;
+   cursor: pointer;
+    color: #fff;
+   font-size: 1.5em;
+}
+
+.sub li {
+   margin: 3px;
+   width: 400px;
+   height: 60px;
+   line-height: 35px;
+   /*    border: 1px solid #000;*/
+   font-size: 1.3em;
+}
+
+.sub li a {
+   width: 100%;
+   height: 100%;
+   
+}
+
+.title:hover, .on {
+   
+}
+
+input {
+   border: 1px solid black;
+   border-radius: 3px;
+   line-height: 35px;
+   font-size: 12px;
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.uniname {
+   width: 100%;
+}
+
+.unihp {
+   width: 100%;
+}
+
+.uniaddr {
+   width: 100%;
+}
+
+.unimanager {
+   width: 100%;
+}
+
+.uniemail {
+   width: 100%;
+}
+
+.uniexpenses {	
+   width: 100%;
+}
+
+.unibname {
+   width: 100%;
+}
+
+.unicontent {
+   width: 100%;
+}
+.title img{
+	width:27px;
+	height:27px;
 }
