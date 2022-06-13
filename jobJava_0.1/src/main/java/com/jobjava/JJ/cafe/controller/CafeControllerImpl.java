@@ -50,7 +50,7 @@ public class CafeControllerImpl implements CafeController {
 	@Autowired
 	private CafeService cafeService;
 
-	// 移댄럹硫붿씤�럹�씠吏��샇異�
+	// 메인
 	@RequestMapping(value = "/main.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView cafeMain(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
@@ -60,13 +60,13 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// 援ъ쭅�벑濡앹갹�샇異�
+	// 구직신청창 호출
 	@RequestMapping("/jobapp.do")
 	public String jobapp(Model model) {
 		return "/cafe/jobapp";
 	}
 
-	// 援ъ쭅�벑濡� 泥⑤��뙆�씪 �벑濡�(�떎以묓뙆�씪)
+	// 구직신청결과
 	@Override
 	@RequestMapping(value = "/jobresult.do", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
@@ -194,8 +194,8 @@ public class CafeControllerImpl implements CafeController {
 				fileList.add(originalFileName);
 				File file = new File(CURR_IMAGE_REPO_PATH + "\\" + "job" + "\\" + fileName);
 				if (mFile.getSize() != 0) { // File Null Check
-					if (!file.exists()) { // 寃쎈줈�긽�뿉 �뙆�씪�씠 議댁옱�븯吏� �븡�쓣 寃쎌슦
-						file.getParentFile().mkdirs(); // 寃쎈줈�뿉 �빐�떦�븯�뒗 �뵒�젆�넗由щ뱾�쓣 �깮�꽦
+					if (!file.exists()) { 
+						file.getParentFile().mkdirs(); 
 
 						mFile.transferTo(new File(
 								CURR_IMAGE_REPO_PATH + "\\" + "job" + "\\" + "temp" + "\\" + originalFileName));
@@ -208,13 +208,13 @@ public class CafeControllerImpl implements CafeController {
 		return fileList;
 	}
 
-	// �봽濡쒓렇�옩�떊泥��럹�씠吏��샇異�
+	// 마이페이지
 	@RequestMapping("/mypage.do")
 	public String mypage(Model model) {
 		return "/cafe/mypage";
 	}
 
-	// �떊泥��븯湲� �럹�씠吏�
+	// 학생프로그램신청서
 	@RequestMapping(value = "/apply.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView apply(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("PROGRAM_NO") String PROGRAM_NO) throws Exception {
@@ -227,7 +227,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// �떊泥��븯湲� �럹�씠吏�2
+	// 신청결과창
 	@RequestMapping("/applyresult.do")
 	public String jobAppresult(@ModelAttribute("ApplyVO") ApplyVO _applyVO, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -367,16 +367,12 @@ public class CafeControllerImpl implements CafeController {
 				fileList.add(originalFileName);
 				File file = new File(CURR_IMAGE_REPO_PATH + "\\" + "program" + "\\" + fileName);
 				if (mFile.getSize() != 0) { // File Null Check
-					if (!file.exists()) { // 寃쎈줈�긽�뿉 �뙆�씪�씠 議댁옱�븯吏� �븡�쓣 寃쎌슦
-						file.getParentFile().mkdirs(); // 寃쎈줈�뿉 �빐�떦�븯�뒗 �뵒�젆�넗由щ뱾�쓣 �깮�꽦
+					if (!file.exists()) { 
+						file.getParentFile().mkdirs(); 
 
 						mFile.transferTo(new File(
-								CURR_IMAGE_REPO_PATH + "\\" + "program" + "\\" + "temp" + "\\" + originalFileName)); // �엫�떆濡�
-						// ���옣�맂
-						// multipartFile�쓣
-						// �떎�젣
-						// �뙆�씪濡�
-						// �쟾�넚
+								CURR_IMAGE_REPO_PATH + "\\" + "program" + "\\" + "temp" + "\\" + originalFileName)); 
+						
 					}
 				}
 			}
@@ -385,7 +381,7 @@ public class CafeControllerImpl implements CafeController {
 		return fileList;
 	}
 
-	// 梨꾩슜�젙蹂� �럹�씠吏�..�븘�슂�븳�뜲 x
+	
 	@RequestMapping(value = "/hireinfo/hireinfo.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView hireinfo(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
@@ -398,7 +394,7 @@ public class CafeControllerImpl implements CafeController {
 
 	}
 
-	// 梨꾩슜�젙蹂� 議고쉶, �럹�씠吏�
+	// 페이징
 
 	@RequestMapping(value = "/hireinfopaging.do")
 	public ModelAndView boardList(SearchCriteria scri, Model model, HttpServletRequest request,
@@ -423,7 +419,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// �봽濡쒓렇�옩紐⑸줉 �긽�꽭李�
+	// 프고그램목록상세뷰
 	@RequestMapping(value = "/hireInfoDetail.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView hireInfoDetail(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("PROGRAM_NO") String PROGRAM_NO) throws Exception {
@@ -441,7 +437,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// �봽濡쒓렇�옩 �닔�젙李�
+	// 프로그램목록 수정뷰호출
 	@Override
 	@RequestMapping("/updateView.do")
 	public ModelAndView updateView(HttpServletRequest request, HttpServletResponse response,
@@ -458,7 +454,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// �봽濡쒓렇�옩 �닔�젙
+	// 프로그램목록 수정
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public ResponseEntity proupdate(ProgramVO programVO, MultipartHttpServletRequest multipartRequest,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -537,7 +533,7 @@ public class CafeControllerImpl implements CafeController {
 
 	}
 
-	// �봽濡쒓렇�옩 �궘�젣
+	// 프로그램목록 삭제
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public String delete(ProgramVO programVO) throws Exception {
 		System.out.println("delete");
@@ -546,7 +542,7 @@ public class CafeControllerImpl implements CafeController {
 		return "redirect:/cafe/hireinfopaging.do?PROGRAM_NO=" + programVO.getPROGRAM_NO();
 	}
 
-	// 罹섎┛�뜑
+	//캘린더
 	@RequestMapping(value = "/celender.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView calendar(HttpServletRequest request, HttpServletResponse response, Model model)
 			throws Exception {
@@ -579,7 +575,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// 痍⑥뾽�듅媛�(�씠誘몄��옉 �궡�슜 4媛쒗몴�떆)
+	// 특강4개씩 보여주기
 
 	@RequestMapping(value = "/lecture.do")
 	public ModelAndView joblecture(SearchCriteria scri, Model model, HttpServletRequest request,
@@ -588,11 +584,11 @@ public class CafeControllerImpl implements CafeController {
 		String viewName = (String) request.getAttribute("viewName");
 		mav.setViewName(viewName);
 
-		// �쟾泥� 湲� 媛쒖닔
+		
 		int boardListCnt3 = cafeService.boardListCnt3(scri);
 		System.out.println(boardListCnt3);
 
-		// �럹�씠吏� 媛앹껜
+		
 		Paging paging = new Paging();
 		paging.setCri(scri);
 		paging.setTotalCount(boardListCnt3);
@@ -604,7 +600,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// 痍⑥뾽而⑥꽕�똿(�씠誘몄��옉 �궡�슜 4媛쒗몴�떆)
+	// 컨설팅4개씩 보여주기
 
 	@RequestMapping(value = "/consulting.do")
 	public ModelAndView jobconsulting(SearchCriteria scri, Model model, HttpServletRequest request,
@@ -613,11 +609,11 @@ public class CafeControllerImpl implements CafeController {
 		String viewName = (String) request.getAttribute("viewName");
 		mav.setViewName(viewName);
 
-		// �쟾泥� 湲� 媛쒖닔
+		
 		int boardListCnt2 = cafeService.boardListCnt2(scri);
 		System.out.println(boardListCnt2);
 
-		// �럹�씠吏� 媛앹껜
+		
 		Paging paging = new Paging();
 		paging.setCri(scri);
 		paging.setTotalCount(boardListCnt2);
@@ -629,7 +625,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// 梨꾩슜怨듦퀬 議고쉶, �럹�씠吏�
+	//채용정보
 
 	@RequestMapping(value = "/jobposting.do")
 	public ModelAndView jobposting(SearchCriteria scri, Model model, HttpServletRequest request,
@@ -642,11 +638,11 @@ public class CafeControllerImpl implements CafeController {
 
 		// System.out.println(viewName);
 
-		// �쟾泥� 湲� 媛쒖닔
+		
 		int postingListCnt = cafeService.postingListCnt(scri);
 		// System.out.println(postingListCnt);
 
-		// �럹�씠吏� 媛앹껜
+		
 		Paging paging = new Paging();
 		paging.setCri(scri);
 		paging.setTotalCount(postingListCnt);
@@ -667,7 +663,7 @@ public class CafeControllerImpl implements CafeController {
 		return null;
 	}
 
-	// 梨꾩슜怨듦퀬 �긽�꽭李�
+	// 채용정보상세뷰
 	@RequestMapping(value = "/jobpostingdetail.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView jobpostingdetail(HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("JOB_NO") int JOB_NO) throws Exception {
@@ -681,7 +677,7 @@ public class CafeControllerImpl implements CafeController {
 		return mav;
 	}
 
-	// 梨꾩슜怨듦퀬 �닔�젙
+	// 채용정보수정
 	@RequestMapping(value = "/jobpostingupdate.do", method = RequestMethod.POST)
 	public String jobpostingupdate(JobInfoVO jobinfoVO) throws Exception {
 		System.out.println(jobinfoVO.getJOB_NO());
@@ -690,14 +686,14 @@ public class CafeControllerImpl implements CafeController {
 		return "redirect:/cafe/jobpostingdetail.do?JOB_NO=" + jobinfoVO.getJOB_NO();
 	}
 
-	// 梨꾩슜怨듦퀬 �닔�젙酉�
+	// 채용정보수정뷰
 	@RequestMapping(value = "/jobPostingUpdateView.do", method = RequestMethod.GET)
 	public String jobPostingUpdateView(JobInfoVO jobinfoVO, Model model) throws Exception {
 		model.addAttribute("update", jobinfoVO);
 		return "jobPostingUpdateView";
 	}
 
-	// 梨꾩슜怨듦퀬 �궘�젣
+	// 채용정보삭제
 	@RequestMapping(value = "/jobPostingDelete.do", method = RequestMethod.POST)
 	public String jobPostingDelete(JobInfoVO jobinfoVO) throws Exception {
 		cafeService.jobPostingDelete(jobinfoVO.getJOB_NO());
@@ -705,7 +701,7 @@ public class CafeControllerImpl implements CafeController {
 		return "redirect:/cafe/jobposting.do?JOB_NO=" + jobinfoVO.getJOB_NO();
 	}
 
-	// �옣諛붽뎄�땲
+	//채용정보장바구니
 	@RequestMapping(value = "/jobPostingInCart.do", method = RequestMethod.GET, produces = "application/text; charset=utf8")
 	public @ResponseBody String jobPostingInCart(@RequestParam("JOB_NO") int JOB_NO, HttpServletRequest request,
 			HttpServletResponse response, JobInfoVO JobInfoVO, ShopBasketVO ShopBasketVO, EmpVO EmpVO)
@@ -713,12 +709,12 @@ public class CafeControllerImpl implements CafeController {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String ID = (String) principal;
 
-		ShopBasketVO.setID(ID); // �삤�씪�겢�뿏 �뾾怨� 釉뚯씠�삤�뿉 �꽑�뼱�뻽�쓣�떆
+		ShopBasketVO.setID(ID); 
 		cafeService.selectJobPostingInCart(ShopBasketVO);
 		return "jobPostingInCart";
 	}
 
-	// �옣諛붽뎄�땲 �벑濡�
+	// 채용정보장바구니
 	@RequestMapping("/jobPostingInsertInCart.do")
 	public String jobPostingInsertInCart(@RequestParam("JOB_NO") int JOB_NO, ShopBasketVO ShopBasketVO, EmpVO EmpVO,
 			HttpServletRequest request, HttpServletResponse response, Principal principal) throws Exception {
@@ -727,7 +723,7 @@ public class CafeControllerImpl implements CafeController {
 		System.out.println(JOB_NO);
 		System.out.println(ID);
 		ShopBasketVO.setJOB_NO(JOB_NO);
-		ShopBasketVO.setID(ID); // �삤�씪�겢�뿏 �뾾怨� 釉뚯씠�삤�뿉 �꽑�뼱�뻽�쓣�떆
+		ShopBasketVO.setID(ID); 
 		int EMP_NO = cafeService.empnoid(ID);
 		ShopBasketVO.setEMP_NO(EMP_NO);
 
@@ -735,7 +731,7 @@ public class CafeControllerImpl implements CafeController {
 		return "redirect:/cafe/jobposting.do";
 
 	}
-	// �옣諛붽뎄�땲 由ъ뒪�듃 議고쉶
+	//채용정보리스트
 
 	@RequestMapping(value = "/jobPostingInCartList.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView jobPostingInCartList(SearchCriteria scri, Model model, HttpServletRequest request,
@@ -744,12 +740,12 @@ public class CafeControllerImpl implements CafeController {
 		String viewName = (String) request.getAttribute("viewName");
 		mav.setViewName(viewName);
 		System.out.println(viewName);
-		List<ShopBasketVO> list = cafeService.jobPostingInCartList(); // 由ъ뒪�듃
-		mav.addObject("list", list); // 諛붿씤�뵫
+		List<ShopBasketVO> list = cafeService.jobPostingInCartList(); 
+		mav.addObject("list", list); 
 		return mav;
 	}
 
-	// �옣諛붽뎄�땲 �궘�젣
+	// 채용정보삭제
 	@RequestMapping(value = "/jobPostingInCartDelete.do", method = RequestMethod.GET)
 	public String jobPostingInCartDelete(JobInfoVO jobinfoVO, ShopBasketVO ShopBasketVO, EmpVO EmpVO,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -777,7 +773,7 @@ public class CafeControllerImpl implements CafeController {
 		return null;
 	}
 
-	// �궗�뾽�븞�궡
+	// 사업소개
 	@RequestMapping(value = "/cafeBusinessGuide.do", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView cafeBusinessGuide(SearchCriteria scri, Model model, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -832,7 +828,7 @@ public class CafeControllerImpl implements CafeController {
 				return mav;
 			}
 			
-		// 학생프 상세창
+		// 학생마이페이지 상세창
 			@RequestMapping(value = "/studentmypageview.do", method = { RequestMethod.POST, RequestMethod.GET })
 			public ModelAndView studentmypageview(HttpServletRequest request, HttpServletResponse response,
 				@RequestParam("PROGRAM_NO") String PROGRAM_NO, String EMP_PAR_NO) throws Exception {
