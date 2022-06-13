@@ -162,5 +162,37 @@ public interface CounselorService {
 	public void updateName(String process, String comNO);
 
 	public void updateNameList(String permission, String unibNO);
+	
+	// 설문조사 리스트
+	public List<SurveyVO> SurveyList(SearchCriteria scri);
+
+	public int SurveyListcnt();
+
+	// 설문조사등록을위해 직원번호가져오기
+	public int selectEmpno(String Id);
+
+	// 설문조사 정보등록
+	public void addSurvery(int empNO, String title, String sDate, String eDate, String div);
+
+	// 설문타이틀로 번호가져오기
+	public int selectSvNO(String title);
+
+	// 설문 문항등록
+	public void addQuestion(String ql, int svNO);
+
+	// 설문조사 상세
+	public SurveyVO surveyDetail(int svNO);
+
+	public List<SurveyVO> viewSurvey(int svNO);
+
+	public List<Integer> firstQno(int svNO);
+
+	public void modQue(int svNO, String qTxt, int qNO);
+
+	public void delQue(int qn);
+
+	public void delSur(int svNO);
+
+	public List<Map<String, Object>> resultList(String svNO);
 		
 }
