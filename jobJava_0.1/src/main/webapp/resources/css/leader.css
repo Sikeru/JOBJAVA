@@ -53,7 +53,7 @@
         color: white;
     }
 
-    /*    logo ½ºÅ¸ÀÏ*/
+    /*    logo ï¿½ï¿½Å¸ï¿½ï¿½*/
     header #topLogo {
         width: 100%;
         height: 250px;
@@ -68,7 +68,7 @@
 
 
 
-    /*    logo ½ºÅ¸ÀÏ end*/
+    /*    logo ï¿½ï¿½Å¸ï¿½ï¿½ end*/
 
     header #topMenu ul {
         width: 100%;
@@ -102,7 +102,7 @@
     /* header style End */
         
     /* header style End */
-  #container{
+ /*  #container{
  
     width: 1600px;
     margin: 0 auto;
@@ -202,64 +202,19 @@ aside{
         }
 
         
-
+ */
 
     /* header style End */  
     
     
-    article{
+   /*  article{
     width:85%;
     height:auto;
     float:left;
-    background: #BBE1FA;
+    background: #fff;
     
-    }
+    } */
     
-       article #contain {
-            width: 100px;
-            height: auto;
-            background: #BBE1FA;
-        } 
-        
-        article #banner{
-            width: 80%;
-            height: 40%;
-            margin-left: 10%;
-            background: magenta;
-        }
-
-
-        article #content-wrap {
-            width: 80%;
-            height: 60%;
-            background: #3282B8;
-            margin-left: 10%;
-        }
-        article .content{
-            width: 50%;
-            height: 100%;
-           background: blue;
-            float: left;
-            
-            
-        }
-        article .about-us{
-            width: 0 auto;
-            height: 50%;
-            background: pink;
-        }
-        article .about-us2{
-            width: 0 auto;
-            height: 50%;
-            background: magenta;
-        }
-        article .content2{
-            width: 50%;
-            height: 100%;
-           background: red;
-            float: left;
-            
-        }
     	/* body style End */
     	
    footer {
@@ -270,7 +225,7 @@ aside{
 	footer #service{
 		width: 100%;
 		height:50px;
-		background: #0F4C75;
+		background: rgb(41,48,63);
 	}
     footer #service ul {
     	width:100%;
@@ -303,7 +258,7 @@ aside{
     footer .copyright-wrap{
         width: 80%;
         height: 100%;
-        background: #3282B8;
+        background: rgb(26,31,41);
         float: left;
         
     }
@@ -317,11 +272,18 @@ aside{
         line-height: 20px;
        
     }
+    
+    footer #copyrights .copyright a{
+        color: rgb(155,155,140);
+        line-height: 20px;
+        }
+       
+    
     footer .footerLogo{
         width: 20%;
         height: 100%;
         float: left;
-        background: #3282B8;
+        background: white;
         
         
     }
@@ -348,7 +310,3 @@ aside{
         width: 100%;
         height: 150px;
     }
-
-
-
-
