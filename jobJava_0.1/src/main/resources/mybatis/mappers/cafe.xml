@@ -105,47 +105,170 @@
 
 
 	<!-- 글 수정 -->
-	<update id="update" parameterType="ProgramVO">
-		UPDATE PROGRAM
+	<update id="proupdate" parameterType="java.util.Map">
+	<![CDATA[	UPDATE PROGRAM
 		SET TITLE =
 		#{TITLE, jdbcType=VARCHAR},
 		CONTENT =
 		#{CONTENT, jdbcType=VARCHAR}
 		WHERE
 		PROGRAM_NO = #{PROGRAM_NO}
+		]]>
 	</update>
 
 
 	<!-- 글 삭제 -->
-	<delete id="delete" parameterType="int">
+	<delete id="prodelete" parameterType="int">
 		DELETE
 		FROM PROGRAM
 		WHERE
 		PROGRAM_NO = #{PROGRAM_NO}
 	</delete>
+    
+    
+    	<!-- 파일 개당 삭제 -->
+	<delete id="updatefile" >
+		DELETE
+		FROM PROGRAM_FILE
+		WHERE
+		PROGRAM_NO = #{param1} AND EMP_FILENAME =#{param2}
+	</delete>
+
+	<!-- 수정시 파일 추가 -->
+	<insert id="updatefile2" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			separator=" " close="SELECT * FROM DUAL">
+			INTO PROGRAM_FILE(EMP_FILE, PROGRAM_NO,
+			EMP_FILENAME, EMP_DATE)
+			VALUES(#{item.EMP_FILE}, #{item.PROGRAM_NO},
+			#{item.EMP_FILENAME}, SYSDATE)
+		</foreach>
+	</insert>
+
+    
+    <!-- 기업 마이페이지 리스트 -->
+	<select id="companymypagelist" resultType="ProgramVO"> 
+    <![CDATA[
+ 	SELECT 
+    PP.PROGRAM_NO,
+    EMP_PAR_NO, 
+    TITLE, 
+    DIVISION, 
+    APP, 
+    PP.ID,
+    CM.ID,    
+    QUESTION
+	FROM 
+    PRO_PART PP, 
+    PROGRAM PR, 
+    C_MEMBER CM
+    WHERE 
+    PP.PROGRAM_NO = PR.PROGRAM_NO 
+	AND 
+    CM.ID = #{user_id}
+     ]]>
+	</select>
+
+	
+	<!-- 기업 마이페이지 신청서 상세뷰 -->
+	<select id="selectpro" resultType="ProgramVO" parameterType="int"> 
+    
+    <![CDATA[
+ 	  SELECT PP.PROGRAM_NO, EMP_PAR_NO, TITLE, DIVISION, ID, QUESTION, APP
+      FROM PROGRAM PR, PRO_PART PP
+      WHERE PR.PROGRAM_NO = PP.PROGRAM_NO AND PR.PROGRAM_NO = #{PROGRAM_NO}
+      ]]>
+      
+	</select>
+	
+	<!-- 기업 마이페이지 신청서 상태수정 -->
+	<update id="companymypageupdate" parameterType="String">
+      UPDATE
+          PRO_PART
+      SET
+          APP = #{param1}
+      WHERE 
+          EMP_PAR_NO = #{param2}
+   </update>
 
 
+	<!-- 학생 마이페이지 리스트 -->
+	<select id="studentmypagelist" resultType="ProgramVO"> 
+    <![CDATA[
+ 	SELECT PP.PROGRAM_NO, EMP_PAR_NO, TITLE, DIVISION , APP, ID
+    	 FROM PROGRAM PR, PRO_PART PP
+    	 WHERE PR.PROGRAM_NO = PP.PROGRAM_NO AND ID = #{user_id}
+ 	     
+      ]]>
+	</select>
 
 
 	<!-- 꿈터구직등록 -->
 
 
-	<insert id="jobAppresultAdd" parameterType="JobAppVO">
+	<insert id="JobinsertNewArticle" parameterType="java.util.Map">
 	<![CDATA[
 		INSERT INTO JOB_APPLICATION(JOB_APP_NO, ID, FILENAME, AREA, OCC_TYPE, E_DATE, F_FAMILY, DISCLOSURE, DISABILITY, MILITARY) 
-					VALUES(JOB_APP_NO.NEXTVAL,#{ID}, #{FILENAME}, #{AREA}, #{OCC_TYPE}, #{E_DATE}, #{F_FAMILY}, #{DISCLOSURE}, #{DISABILITY}, #{MILITARY})
+					VALUES(#{JOB_APP_NO} ,#{ID}, NULL, #{AREA}, #{OCC_TYPE}, #{E_DATE}, #{F_FAMILY}, #{DISCLOSURE}, #{DISABILITY}, #{MILITARY})
 	]]>
 	</insert>
 
 	<select id="selectMemberID" resultType="String"
 		parameterType="java.util.HashMap">
 	<![CDATA[ 
+	SELECT ID FROM MEMBER WHERE ID = #{ID}
+	]]>
+	</select>
+	
+	
+		<!-- 구직등록 파일번호 가져오기 -->
+	<select id="JobselectNewImageFileNO" resultType="int">
+		<![CDATA[
+			SELECT nvl(max(JA_FILENO), 0) from JA_FILE
+			]]>
+	</select>
+
+	<!-- 구직등록 번호 가져오기 -->
+	<select id="selectJOB_APP_NO" resultType="int">
+	<![CDATA[
+		 SELECT nvl(max(JOB_APP_NO),0) +1 from JOB_APPLICATION
+	]]>
+	</select>
+	
+	
+	
+	
+	<!-- 구직등록 파일추가 -->
+	<insert id="JobinsertNewImage" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL"
+			separator=" " close="SELECT * FROM DUAL">
+			INTO JA_FILE(JA_FILENO, JOB_APP_NO,
+			JA_DATE,
+			JA_FILENAME)
+			VALUES(#{item.JA_FILENO}, #{item.JOB_APP_NO},
+			SYSDATE, #{item.JA_FILENAME})
+		</foreach>
+	</insert>
+
+
+
+
+	<!-- 신청서 -->
+
+
+	<insert id="apply" parameterType="ApplyVO">
+	<![CDATA[
+		INSERT INTO PRO_PART(EMP_PAR_NO, PROGRAM_NO, ID, QUESTION, APP) 
+					VALUES(EMP_PAR_NO.NEXTVAL,#{PROGRAM_NO}, #{ID}, #{QUESTION}, '미승인')
+	]]>
+	</insert>
+
+	<select id="selectMemberID2" resultType="String"
+		parameterType="java.util.HashMap">
+	<![CDATA[ 
 	SELECT ID FROM MEMBER WHERE ID=#{ID}
 	]]>
 	</select>
-
-
-
 
 	<!--다중 이미지 추가 SQL문 --><!-- 꿈터기업마이페이지 -->
 	<insert id="insertNewArticle" parameterType="java.util.Map">
@@ -188,17 +311,6 @@
 		WHERE ID= #{ID}
 	]]>
 	</select>
-
-
-
-	<!-- 프로그램 게시판 파일삭제 -->
-	<delete id="deleteModImage" parameterType="FileVO">
-	  <![CDATA[
-	      delete from PROGRAM_FILE
-	      where PROGRAM_NO = #{PROGRAM_NO}
-	      and EMP_FILE = #{EMP_FILE}
-	    ]]>
-	</delete>
 
 
 
@@ -269,12 +381,12 @@
 	<select id="boardList2" resultType="hashmap"
 		parameterType="hashmap">
         <![CDATA[
-           SELECT * FROM (SELECT PROGRAM.PROGRAM_NO, EMP_FILENAME, TITLE, CONTENT, S_DATE, E_DATE 
+            SELECT * FROM (SELECT PROGRAM.PROGRAM_NO, EMP_FILENAME, TITLE, CONTENT, S_DATE, E_DATE, DIVISION
            FROM PROGRAM_FILE ,PROGRAM 
            WHERE EMP_FILE  = ANY(SELECT MIN(EMP_FILE) EMP_FILE FROM PROGRAM_FILE
-           GROUP BY PROGRAM_NO) AND PROGRAM_FILE.program_no = PROGRAM.PROGRAM_NO 
+           GROUP BY PROGRAM_NO) AND PROGRAM_FILE.program_no = PROGRAM.PROGRAM_NO
            ORDER BY PROGRAM.PROGRAM_NO DESC)
-           WHERE ROWNUM <6
+           WHERE DIVISION LIKE '취업컨설팅' AND ROWNUM <5 
            ]]>
 
 	</select>
@@ -290,8 +402,33 @@
       ]]>
 		<include refid="search"></include>
 	</select>
+	
+	
+		<!-- 취업특강-->
+	<select id="boardList3" resultType="hashmap"
+		parameterType="hashmap">
+        <![CDATA[
+            SELECT * FROM (SELECT PROGRAM.PROGRAM_NO, EMP_FILENAME, TITLE, CONTENT, S_DATE, E_DATE, DIVISION
+           FROM PROGRAM_FILE ,PROGRAM 
+           WHERE EMP_FILE  = ANY(SELECT MIN(EMP_FILE) EMP_FILE FROM PROGRAM_FILE
+           GROUP BY PROGRAM_NO) AND PROGRAM_FILE.program_no = PROGRAM.PROGRAM_NO
+           ORDER BY PROGRAM.PROGRAM_NO DESC)
+           WHERE DIVISION LIKE '취업특강' AND ROWNUM <5 
+           ]]>
 
+	</select>
 
+	<!-- 취업특강2 -->
+	<select id="boardListCnt3" parameterType="SearchCriteria"
+		resultType="int">
+
+   <![CDATA[
+      SELECT count(*)
+      FROM PROGRAM
+       WHERE 1=1
+      ]]>
+		<include refid="search"></include>
+	</select>
 
 
 
@@ -318,10 +455,11 @@
             SELECT JOB_NO, 
                 COMPANY, 
                 TITLE,
-                JOB_D,
+                CAREER,
+                EDU,
+                AREA,
                 S_DATE,
                 D_DATE
-                
          FROM ( 
                 SELECT JOB_NO,
                        CAREER,
@@ -393,6 +531,7 @@
 	   TITLE
 	   FROM 
 	   JOB_INFO
+	   
 	   WHERE 
 	   JOB_NO = #{JOB_NO}  
    ]]>
@@ -458,4 +597,63 @@
 		WHERE
 		JOB_NO = #{JOB_NO}
 	</delete>
+
+	<!-- 장바구니 조회 -->
+	<select id="selectJobPostingInCart" resultType="ShopBasketVO"
+		parameterType="String">
+	<![CDATA[
+	SELECT * FROM JOB_INFO J, SHOP_BASKET S
+   WHERE J.JOB_NO = S.JOB_NO AND S.EMP_NO = (SELECT EMP_NO FROM EMP WHERE ID = #{ID})
+	]]>
+	</select>
+
+
+	<!-- 장바구니 담기 -->
+	<select id="jobPostingInsertInCart" parameterType="ShopBasketVO">
+		<![CDATA[
+		INSERT INTO SHOP_BASKET VALUES(SHOP_NO.NEXTVAL, #{JOB_NO}, (SELECT
+		EMP_NO FROM EMP WHERE ID = #{ID}))	
+		]]>
+	</select>
+
+	<!-- 장바구니 리스트 조회 -->
+	<select id="jobPostingInCartList" resultType="ShopBasketVO">
+    <![CDATA[
+    	SELECT JOB_NO
+		FROM SHOP_BASKET
+    ]]>
+	</select>
+
+
+	<!-- 장바구니 리스트 조회 -->
+	<select id="bascketList" resultType="int">
+   <![CDATA[
+      SELECT JOB_NO FROM SHOP_BASKET
+      ]]>
+	</select>
+
+	<!-- 장바구니 조회 -->
+	<select id="empnoid" resultType="int">
+   <![CDATA[
+      SELECT EMP_NO 
+      FROM EMP 
+      WHERE ID = #{param1}
+      ]]>
+	</select>
+
+	<!-- 장바구니 삭제 -->
+	<delete id="jobPostingInCartDelete" parameterType="int">
+		DELETE
+		FROM
+		SHOP_BASKET
+		WHERE
+		JOB_NO = #{param1}
+	</delete>
+
+
+
+
+
+
+
 </mapper>
