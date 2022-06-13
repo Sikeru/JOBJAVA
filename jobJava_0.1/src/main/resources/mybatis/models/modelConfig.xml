@@ -36,6 +36,7 @@
       <typeAlias type="com.jobjava.JJ.leader.vo.SearchCriteria" alias="SearchCriteria" />
       <typeAlias type="com.jobjava.JJ.leader.vo.FileVO" alias="FileVO" />
       <typeAlias type="com.jobjava.JJ.leader.vo.UniVO" alias="UniVO" />
+      <typeAlias type="com.jobjava.JJ.leader.vo.UserVO" alias="UserVO" />
 	  
       <typeAlias type="com.jobjava.JJ.cafe.vo.JobAppVO" alias="JobAppVO" />
       <typeAlias type="com.jobjava.JJ.cafe.vo.ProgramVO" alias="ProgramVO" />
