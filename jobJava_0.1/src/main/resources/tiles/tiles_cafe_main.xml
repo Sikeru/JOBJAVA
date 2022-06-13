@@ -11,8 +11,8 @@
 		<put-attribute name="header"
 			value="/WEB-INF/views/common/cafe/header.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="side"
-			value="/WEB-INF/views/common/cafe/side.jsp" />
+	<!-- 	<put-attribute name="side"
+			value="/WEB-INF/views/common/cafe/side.jsp" /> -->
 		<put-attribute name="footer"
 			value="/WEB-INF/views/common/cafe/footer.jsp" />
 
@@ -40,6 +40,13 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/cafe/jobapp.jsp" />
 
+	</definition>
+
+	<!-- 신청뷰 -->
+	<definition name="/cafe/apply" extends="cafebaseLayout">
+		<put-attribute name="title" value="프로그램 신청" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/apply.jsp" />
 	</definition>
 
 	<!-- 취업컨설팅 조회하는거 -->
@@ -122,6 +129,14 @@
 			value="/WEB-INF/views/cafe/surveyList.jsp" />
 	</definition>
 
+<!-- 사업안내 조회 -->
+
+   <definition name="/cafe/cafeBusinessGuide"
+      extends="cafebaseLayout">
+      <put-attribute name="title" value="글상세창" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/cafe/cafeBusinessGuide.jsp" />
+   </definition>
 
 
 
@@ -132,8 +147,34 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/cafe/celender.jsp" />
 	</definition>
-
-
+	<!-- 장바구니 리스트 조회 -->
+	<definition name="/cafe/jobPostingInCartList"
+		extends="cafebaseLayout">
+		<put-attribute name="title" value="Calendar 연습" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/jobpostingInCartList.jsp" />
+	</definition>
+   
+   <!-- 기업마이페이지 -->
+	<definition name="/cafe/companymypagelist" extends="cafebaseLayout">
+		<put-attribute name="title" value="카페 마이(일반)페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/companymypagelist.jsp" />
+    </definition>
+    
+     <!-- 학생마이페이지 -->
+	<definition name="/cafe/studentmypagelist" extends="cafebaseLayout">
+		<put-attribute name="title" value="카페 마이(일반)페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/studentmypagelist.jsp" />
+    </definition>
+    
+    <!-- 학생마이페이지상세 -->
+	<definition name="/cafe/studentmypageview" extends="cafebaseLayout">
+		<put-attribute name="title" value="카페 마이(일반)페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/cafe/studentmypageview.jsp" />
+    </definition>
 
 </tiles-definitions>
 
