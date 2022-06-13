@@ -12,204 +12,660 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<meta charset="UTF-8">
 <title>Canvas</title>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+</script>
 <style type="text/css">
-body {
-	line-height: 2em;
-	font-family: "맑은 고딕";
+
+ * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    wrap{
+    width: 100%;
+    height: auto;
+    }
+
+#top{
+  width: 100%;
+  height: 300px;
+        background: #0F4C75;
+        border-bottom: 1px solid;
+  }     
+
+
+    header {
+      
+        
+    
+    width: 1600px;
+    margin: 0 auto;
+
+
+    }
+
+    header #loginMenu ul {
+        width: 100%;
+        height: 200px;
+        background: #0F4C75;
+        overflow: hidden;
+        margin:0;
+       
+    }
+
+    header #loginMenu li {
+        display: inline-block;
+        list-style: none;
+        text-decoration: none;
+        margin: 15px;
+        float: right;
+        position: relative;
+        right: 100px;
+        z-index: 1;
+    }
+
+    header #loginMenu li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    /*    logo style start*/
+    header #topLogo {
+        width: 100%;
+        height: 250px;
+        position: relative;
+        left: 45%;
+        bottom: 250px;
+         z-index: 0;
+        
+        
+
+    }
+
+
+
+    /*    logo style end*/
+    
+    
+
+    header #topMenu ul {
+        width: 100%;
+        background: #0F4C75;
+        overflow: hidden;
+        margin:0;
+        
+
+
+
+    }
+
+    header #topMenu li {
+        display: inline-block;
+        list-style: none;
+        text-decoration: none;
+        margin: 20px;
+        float: right;
+        position: relative;
+        right: 35%;
+        top: 30%;
+        z-index: 2;
+    }
+
+    header #topMenu li a {
+        text-decoration: none;
+        color: white;
+    }
+    
+    /* header style End */
+
+  #listMenu{
+width:100%;
+height: auto;
+color: #fff;
+background: #BBE1FA;
+
 }
 
-ul, li {
-	list-style: none;
-	text-align: center;
-	padding: 0;
-	margin: 0;
+#listMenu ul{
+width:100%;
+height:50px;
+margin:0;
+margin-left:25%;
+padding:0;
+text-align: center;
+
 }
 
-#mainWrapper {
-	width: 800px;
-	margin: 0 auto; /*가운데 정렬*/
+#listMenu li{
+width:200px;
+height:100%;
+text-align: center;
+list-style: none;
+font-size: 20px;
+float:left;
+margin-left: 1px;
+background: #3282B8;
 }
 
-#mainWrapper>ul>li:first-child {
-	text-align: center;
-	font-size: 14pt;
-	height: 40px;
-	vertical-align: middle;
-	line-height: 30px;
+#listMenu li p{
+
+margin:0;
+margin-top:10px;
+
 }
 
-#ulTable {
-	margin-top: 10px;
+#listMenu li a{
+
+text-decoration: none;
+color:white;
 }
 
-#ulTable>li:first-child>ul>li {
-	background-color: #c9c9c9;
-	font-weight: bold;
-	text-align: center;
+ #comListMenu{
+width:100%;
+height: auto;
+color: #fff;
+background: #BBE1FA;
+
 }
 
-#ulTable>li>ul {
-	clear: both;
-	padding: 0px auto;
-	position: relative;
-	min-width: 40px;
+#comListMenu ul{
+width:100%;
+height:50px;
+margin:0;
+margin-left:30%;
+padding:0;
+text-align: center;
+
 }
 
-#ulTable>li>ul>li {
-	float: left;
-	font-size: 10pt;
-	border-bottom: 1px solid silver;
-	vertical-align: baseline;
+#comListMenu li{
+width:200px;
+height:100%;
+text-align: center;
+list-style: none;
+font-size: 20px;
+float:left;
+margin-left: 1px;
+background: #3282B8;
 }
 
-#ulTable>li>ul>li:first-child {
-	width: 10%;
-} /*No 열 크기*/
-#ulTable>li>ul>li:first-child+li {
-	width: 45%;
-} /*제목 열 크기*/
-#ulTable>li>ul>li:first-child+li+li {
-	width: 20%;
-} /*작성일 열 크기*/
-#ulTable>li>ul>li:first-child+li+li+li {
-	width: 15%;
-} /*작성자 열 크기*/
-#ulTable>li>ul>li:first-child+li+li+li+li {
-	width: 10%;
-} /*조회수 열 크기*/
+#comListMenu li p{
+
+margin:0;
+margin-top:10px;
+
+}
+
+#comListMenu li a{
+
+text-decoration: none;
+color:white;
+}
+
+#boardwrap {
+   width: 1400px;
+   margin: 0 auto;
+}
+
+#board {
+   width: 1400px;
+   margin: 0 auto;
+   margin-top: 60px;
+}
+
+#board table {
+   width: 1000px;
+   margin: 0 auto;
+   font-weight: bold;
+}
+
+#board td {
+   width: 1000px;
+   border-bottom: 1px solid #A4A4A4;;
+   border-right: 1px solid #A4A4A4;
+   height: 40px;
+}
+
+#board td:last-child {
+   border-right: none;
+}
+
+#board th {
+   border-bottom: 1px solid #192E7E;
+   border-top: 1.5px solid #192E7E;
+   height: 50px;
+   background-color: #f4f5f9;
+   font-size: 16px;
+}
+
+#board tbody td a {
+   color: black;
+   text-decoration: none;
+}
+
+#th-1 {
+   width: 10%;
+}
+
+#th-2 {
+   width: 40%;
+}
+
+#th-3 {
+   width: 10%;
+}
+
+#th-4 {
+   width: 10%;
+}
+#th-5 {
+   width: 10%;
+}
+#th-6 {
+   width: 10%;
+}
+#th-7 {
+   width: 10%;
+}
+
+table {
+   text-align: center;
+}
+
+.legister_btn {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    background: white;
+    color: #4169E1;
+    border: 1px solid #4169E1;
+    width: 50px;
+    height: 30px;
+}
+
+.legister_btn:hover {
+    background: #4169E1;
+    color: white;
+    border: 0px solid;
+}
+
+.update_btn {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    width: 50px;
+    height: 30px;
+    background: #4169E1;
+    color: white;
+    border: 0px solid;
+}
+
+.update_btn:hover {
+background: white;
+    color: #4169E1;
+    border: 1px solid #4169E1;
+    
+}
+
+.disabled_btn {
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    background: white;
+    color: #4169E1;
+    border: 1px solid #4169E1;
+    width: 50px;
+    height: 30px;
+}
+
+.disabled_btn:hover {
+    background: #4169E1;
+    color: white;
+    border: 0px solid;
+}
+
+
+
+/* #liSearchOption {
+   clear: both;
+} */
+
+/* #liSearchOption>div {
+   margin: 0 auto;
+   margin-top: 30px;
+   width: auto;
+   height: 100px;
+} */
 #divPaging {
-	clear: both;
-	margin: 0 auto;
-	width: 220px;
-	height: 50px;
+   text-align: center;
+   font-size: 0;
+   list-style: none;
+   left: 500px;
+   clear: both;
+   text-align: center;
+   text-decoration: none;
+   font-size: 20px;
+   margin: 0 auto;
 }
 
-#divPaging>div {
-	float: left;
-	width: 30px;
-	margin: 0 auto;
-	text-align: center;
+.paging {
+   display: inline-block;
+   list-style: none;
+   margin-top: 60px;
 }
 
-#liSearchOption {
-	clear: both;
+.paging .none {
+   display: none;
 }
 
-#liSearchOption>div {
-	margin: 0 auto;
-	margin-top: 30px;
-	width: auto;
-	height: 100px;
+.paging a {
+   display: block;
+   margin: 0 4px;
+   float: left;
+   border: 1px solid #e6e6e6;
+   width: 28px;
+   height: 28px;
+   line-height: 28px;
+   text-align: center;
+   background-color: #fff;
+   font-size: 13px;
+   color: black;
+   text-decoration: none;
 }
 
-.left {
-	text-align: left;
+.paging .ul {
+   list-style: none;
+   text-align: center;
 }
+
+.paging .arrow {
+   border: 1px solid #ccc;
+}
+
+.paging .pprev {
+   background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
+   margin-left: 0;
+}
+
+.paging .prev {
+   background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
+   margin-right: 7px;
+}
+
+.paging .next {
+   background: #f8f8f8 url('img/page_next.png') no-repeat center center;
+   margin-left: 7px;
+}
+
+.paging .nnext {
+   background: #f8f8f8 url('img/page_nnext.png') no-repeat center center;
+   margin-right: 0;
+}
+
+.paging a.active {
+   background-color: #42454c;
+   color: #fff;
+   border: 1px solid #42454c;
+}
+
+.search {
+   margin-left: 495px;
+   margin-top: 40px;
+   margin-bottom: 50px;
+}
+
+h2 {
+   text-align: center;
+   margin-top: 40px;
+   font-size: 30px;
+}
+
+#searchBtn {
+   width: 70px;
+   heigth: 40px;
+   border: none;
+   border: 1px solid #e6e6e6;
+}
+
+#keywordInput {
+   width: 200px;
+}
+
+/* searchType {
+   width: 100px;
+} */
+#searchtitle {
+   width: 110px;
+   heigth: 80px;
+   text-align: center;
+   margin: 0 auto;
+   border: 1px solid #e6e6e6;
+   font-size : 14px;
+}
+
+#keywordInput {
+   border: 1px solid #e6e6e6;
+   text-align: center;
+}
+
+/*  footer {
+        width: 100%;
+        margin: 0 auto;
+        clear: both;
+    }
+	footer #service{
+		width: 100%;
+		height:50px;
+		background: #0F4C75;
+	}
+    footer #service ul {
+    	width:100%;
+        text-align: center;
+        margin:0;
+    }
+
+    footer #service li {
+        list-style: none;
+        text-decoration: none;
+        display: inline-block;
+        margin-right:30px;
+        line-height: 50px;
+        
+        
+
+    }
+
+    footer #service li a {
+        text-decoration: none;
+        color: white;
+    }
+
+    footer #copyrights {
+        width: 0 auto;
+        height: 200px;
+        
+        
+    }
+    footer .copyright-wrap{
+        width: 80%;
+        height: 100%;
+        background: #3282B8;
+        float: left;
+        
+    }
+    footer .copyright{
+        width: 0 auto;
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+    footer .copyright a{
+        color: white;
+        line-height: 20px;
+       
+    }
+    footer .footerLogo{
+        width: 20%;
+        height: 100%;
+        float: left;
+        background: #3282B8;
+        
+        
+    }
+    footer .footerLogo img{
+        width: 100%;
+        height: 100%;
+    }
+    footer #company{
+        width: 100%;
+        height: 50px;
+        
+    }
+    footer #company ul{
+        text-align: center;
+        background: #BBE1FA;
+    }
+    footer #company li{
+        list-style: none;
+        text-decoration: none;
+        display: inline-block;
+        margin-right: 70px;
+    }
+    footer #company img{
+        width: 100%;
+        height: 150px;
+    } */
+    
+    
 </style>
 
 </head>
 <body>
-	<div id="mainWrapper">
-
-		<ul>
-			<!-- 게시판 제목 -->
-			<li>기업등록조회</li>
-
-			<!-- 게시판 목록  -->
-			<li>Table
-				<ul id="ulTable">
-					<li>
-						<ul>
-							<li>No</li>
-							<li>사업명</li>
-							<li>대학명</li>
-							<li>진행상태</li>
+<s:authorize access="hasRole('ROLE_COM')">
+ <div id="comListMenu">
+<ul>
+<li><p><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></p></li>
+<li><p><a href="${contextPath}/leader/companyLegisterStuList.do">참여학생조회</a></p></li>
+<li><p><a href="${contextPath}/leader/surveylist.do">설문조사</a></p></li>
+</ul>
+</div>
+</s:authorize>
+<s:authorize access="hasRole('ROLE_STU')">
+ <div id="listMenu">
+<ul>
+<li><p><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></p></li>
+<li><p><a href="${contextPath}/leader/viewJournal.do">업무일지</a></p></li>
+<li><p><a href="${contextPath}/leader/commuteCheck.do">출퇴근조회</a></p></li>
+<li><p><a href="${contextPath}/leader/surveylist.do">설문조사</a></p></li>
+</ul>
+</div>
+</s:authorize>
+   <div id="boardwrap">
+      <div id="board" text>
+         <table>
+            <thead>
+               <tr>
+							<th id=th-1>No</th>
+							<th id=th-2>사업명</th>
+							<th id=th-3>대학명</th>
+							<th id=th-4>진행상태</th>
 							<s:authorize access="hasAnyRole('ROLE_STU,ROLE_COM')">
-								<li>관리</li>
+								<th id=th-5>관리</th>
 							</s:authorize>
-						</ul>
-					</li>
+							<s:authorize access="hasAnyRole('ROLE_STU')">
+								<th id=th-5>승인여부</th>
+							</s:authorize>
+				</tr>
+							
+				
 					<!-- 게시물이 출력될 영역 -->
+					 </thead>
+            <tbody>
+               <c:choose>
+                  <c:when test="${not empty list }">
 					<c:forEach var="list" items="${list}">
 
-						<li>
-							<ul>
-								<li>${list.UNI_B_NO}</li>
-								<li>${list.B_NAME}</li>
-								<li>${list.U_NAME}</li>
-								<li class="left">${list.STATE}</li>
+						 <tr align="center">
+								<td>${list.UNI_B_NO}</td>
+								<td>${list.B_NAME}</td>
+								<td>${list.U_NAME}</td>
+								<td class="left">${list.STATE}</td>
+								
 
 								<!-- 신청 수정버튼영역(학생)-->
-								<li><s:authorize access="hasRole('ROLE_STU')">
-										<form method="post"
-											action="${contextPath}/leader/viweApplicationfrom.do?uniBNO=${list.UNI_B_NO}">
-											<c:if test='${appCheck eq null}'>
+								<s:authorize access="hasRole('ROLE_STU')">
+											<td><c:if test='${appCheck eq null}'>
 												<c:if test="${list.STATE eq '마감'}">
-													<input type="submit" disabled value="신청">
+													<input type="button" class="disabled_btn" disabled value="신청">
 												</c:if>
 												<c:if test="${list.STATE eq '진행중'}">
-													<input type="submit" value="신청">
+													<input type="button"  class="legister_btn" value="신청">
 												</c:if>
 											</c:if>
 											<c:if test="${appCheck ne null}">
 												<c:choose>
 													<c:when test="${fn:contains(appCheck, list.UNI_B_NO)}">
-														<input type="submit" value="수정">
+														<input type="button" class="update_btn" value="수정" onclick="location.href='${contextPath}/leader/appDetail.do?uniBNO=${list.UNI_B_NO}'">
 													</c:when>
 													<c:otherwise>
 														<c:if test="${list.STATE eq '마감'}">
-															<input type="submit" disabled value="신청">
+															<input type="button" class="disabled_btn" disabled value="신청">
 														</c:if>
 														<c:if test="${list.STATE eq '진행중'}">
-															<input type="submit" value="신청">
+															<input type="button" class="legister_btn" value="신청" onclick="location.href='${contextPath}/leader/viweApplicationfrom.do?uniBNO=${list.UNI_B_NO}'">
 														</c:if>
 													</c:otherwise>
 												</c:choose>
-											</c:if>
+											</c:if></td>
 											<input value="${userID}" name="userID" type="hidden">
-										</form>
-									</s:authorize> <!-- 신청 수정버튼영역(기업)--> <s:authorize
-										access="hasRole('ROLE_COM')">
-										<form method="post" action="${contextPath}/leader/company.do">
-											<c:if test='${appCheck eq null}'>
+											
+									</s:authorize> 
+									<!-- 신청 수정버튼영역(기업)--> 
+									<s:authorize access="hasRole('ROLE_COM')">
+											<td><c:if test='${appCheckCom eq null}'>
 												<c:if test="${list.STATE eq '마감'}">
-													<input type="submit" disabled value="신청">
+													<input type="button" class="disabled_btn" disabled value="신청">
 												</c:if>
 												<c:if test="${list.STATE eq '진행중'}">
-													<input type="submit" value="신청">
+													<input type="button" class="legister_btn" value="신청" onclick="location.href='${contextPath}/leader/company.do?uniBNO=${list.UNI_B_NO}'">
 												</c:if>
 											</c:if>
-											<c:if test="${appCheck ne null}">
+											<c:if test="${appCheckCom ne null}">
 												<c:choose>
-													<c:when test="${fn:contains(appCheck, list.UNI_B_NO)}">
-														<input type="submit" value="수정">
+													<c:when test="${fn:contains(appCheckCom, list.UNI_B_NO)}">
+														<input type="button" class="update_btn" value="수정" onclick="location.href='${contextPath}/leader/legisterUpdateView.do?uniBNO=${list.UNI_B_NO}'">
 													</c:when>
 													<c:otherwise>
 														<c:if test="${list.STATE eq '마감'}">
-															<input type="submit" disabled value="신청">
+															<input type="button" class="disabled_btn" disabled value="신청">
 														</c:if>
 														<c:if test="${list.STATE eq '진행중'}">
-															<input type="submit" value="신청">
+															<input type="button" class="legister_btn" value="신청" onclick="location.href='${contextPath}/leader/company.do?uniBNO=${list.UNI_B_NO}'">
 														</c:if>
 													</c:otherwise>
 												</c:choose>
-											</c:if>
-											<input value="${userID}" name="userID" type="hidden">
-										</form>
+											</c:if></td>
 									</s:authorize>
-								</li>
-							</ul>
-						</li>
+									<s:authorize access="hasRole('ROLE_STU')">
+									<c:choose>
+										<c:when test="${userID eq list.ID }">
+										<td>${list.PERMISSION}</td>
+										</c:when>
+										<c:otherwise>
+										<td></td>
+										</c:otherwise>
+									</c:choose>
+									</s:authorize>
+									</tr>
 					</c:forEach>
+</c:when>
+</c:choose>
+</tbody>
+</table>
+</div>
+</div>
 
-				</ul>
-
-			</li>
 			<!-- 게시판 페이징 영역 -->
-			<li>
+			<form role="form" method="get">
+			
 				<div id="divPaging">
 					<ul class="paging">
 						<c:if test="${paging.prev}">
@@ -218,7 +674,8 @@ ul, li {
 						</c:if>
 						<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
 							var="num">
-							<span><a href="companyLegisterList.do${paging.makeSearch(num)}">${num}</a></span>
+							<span><a
+								href="companyLegisterList.do${paging.makeSearch(num)}">${num}</a></span>
 						</c:forEach>
 						<c:if test="${paging.next && paging.endPage>0}">
 							<span><a
@@ -226,32 +683,23 @@ ul, li {
 						</c:if>
 					</ul>
 				</div>
-			</li>
+			
 
 			<!-- 검색 폼 영역 -->
-			<form role="form" method="get">
-				<li id='liSearchOption'>
+			
+			
 
 					<div class="search">
 						<select name='searchType'>
-							<option value='TC'
-								<c:out value="${scri.searchType eq 'TC' ? 'selected' : ''}"/>>제목+내용</option>
 							<option value='T'
-								<c:out value="${scri.searchType eq 'T' ? 'selected' : ''}"/>>제목</option>
+								<c:out value="${scri.searchType eq 'T' ? 'selected' : ''}"/>>사업명</option>
 							<option value='C'
-								<c:out value="${scri.searchType eq 'C' ? 'selected' : ''}"/>>내용</option>
+								<c:out value="${scri.searchType eq 'C' ? 'selected' : ''}"/>>대학명</option>
 						</select> <input type="text" name="keyword" id="keywordInput"
 							value="${scri.keyword}" />
 						<button id="searchBtn" type="button">검색</button>
 
-					</div>
-				</li>
-			</form>
-
-		</ul>
-	</div>
-
-
+ <script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
 		$(function() {
 			$('#searchBtn').click(
@@ -272,6 +720,22 @@ ul, li {
 			}
 			;
 		});
+		
+		
 	</script>
+	
+	<script>
+    // id="test"를 가진 input를 disabled 처리
+    $(".disabled_btn").attr("disabled",true);
+ 
+    // id="test"를 가진 input의 disabled 삭제
+    $(".disabled_btn").removeAttr("disabled");
+    
+    $(".disabled_btn").click(function(){
+    	alert("마감 된 사업입니다.");
+    });
+</script>
+	</div>
+	</form>
 </body>
 </html>

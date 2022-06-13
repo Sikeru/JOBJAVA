@@ -33,6 +33,10 @@
 		cnt++;
 	}
 	function s_del() {
+		if(cnt<=1){
+			alert('문항은 1개이상 입력해야합니다.');
+			return false;
+		}
 		$('#surver>tbody>tr:last').remove();
 		cnt--;
 	}

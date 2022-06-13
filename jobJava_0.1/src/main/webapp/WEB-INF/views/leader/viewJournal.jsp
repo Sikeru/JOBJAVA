@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
+<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -192,71 +193,22 @@ text-decoration: none;
 color:white;
 }
 
-#comListMenu{
-width:100%;
-height: auto;
-color: #fff;
-background: #BBE1FA;
-
-}
-
-#comListMenu ul{
-width:100%;
-height:50px;
-margin:0;
-margin-left:30%;
-padding:0;
-text-align: center;
-
-}
-
-#comListMenu li{
-width:200px;
-height:100%;
-text-align: center;
-list-style: none;
-font-size: 20px;
-float:left;
-margin-left: 1px;
-background: #3282B8;
-}
-
-#comListMenu li p{
-
-margin:0;
-margin-top:10px;
-
-}
-
-#comListMenu li a{
-
-text-decoration: none;
-color:white;
-}
 </style>
-
 </head>
 <body>
-	<s:authorize access="hasRole('ROLE_STU')">
-		 <div id="listMenu">
-			<ul>
-				<li><p><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></p></li>
-				<li><p><a href="${contextPath}/leader/viewJournal.do">업무일지</a></p></li>
-				<li><p><a href="${contextPath}/leader/commuteCheck.do">출퇴근조회</a></p></li>
-				<li><p><a href="${contextPath}/leader/surveylist.do">설문조사</a></p></li>
-			</ul>
-		</div>
-	</s:authorize>
-	<s:authorize access="hasRole('ROLE_COM')">
-		 <div id="comListMenu">
-			<ul>
-				<li><p><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></p></li>
-				<li><p><a href="${contextPath}/leader/companyLegisterStuList.do">참여학생조회</a></p></li>
-				<li><p><a href="${contextPath}/leader/surveylist.do">설문조사</a></p></li>
-			</ul>
-		</div>
-	</s:authorize>
-	<h2>설문조사</h2>
+<s:authorize access="hasRole('ROLE_STU')">
+ <div id="listMenu">
+<ul>
+<li><p><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></p></li>
+<li><p><a href="${contextPath}/leader/viewJournal.do">업무일지</a></p></li>
+<li><p><a href="${contextPath}/leader/commuteCheck.do">출퇴근조회</a></p></li>
+<li><p><a href="${contextPath}/leader/surveylist.do">설문조사</a></p></li>
+</ul>
+</div>
+</s:authorize>
+
+	<h2>업무일지</h2>
+
 	<div id="boardwrap">
 		<div id="board">
 			<table>
@@ -264,46 +216,42 @@ color:white;
 					<tr>
 						<th id=th-1>번호</th>
 						<th id=th-2>제목</th>
-						<th id=th-3>시작날짜</th>
-						<th id=th-4>종료날짜</th>
-						<th id=th-5>작성자</th>
+						<th id=th-3>등록날짜</th>
+						<!-- 			<td>승인여부</td> -->
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="slist" items="${surverList}" varStatus="status">
+					<c:forEach var="list" items="${JournalList}">
 						<tr>
-							<td>${slist.SV_NO}</td>
+							<td>${list.JN_NO}</td>
 							<td><a
-								href="${contextPath}/leader/surveyDetail.do?svNO=${slist.SV_NO}">${slist.TITLE}</a></td>
-							<td>${slist.s_DATE}</td>
-							<td>${slist.e_DATE}</td>
-							<td>${slist.NAME}</td>
+								href="${contextPath}/leader/journalDetail.do?jnNO=${list.JN_NO}">${list.TITLE}</a></td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${list.J_DATE}" /></td>
+							<%-- 				<td>${list.JN_NO}</td> --%>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
-	<br>
-
+	
 	<!-- 페이징영역 -->
 	<div id="divPaging">
 		<ul class="paging">
 			<c:if test="${paging.prev}">
 				<span><a
-					href='<c:url value="surveylist?page=${paging.startPage-1}"/>'>이전</a></span>
+					href='<c:url value="viewJournal?page=${paging.startPage-1}"/>'>이전</a></span>
 			</c:if>
 			<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
 				var="num">
-				<span><a href="surveylist.do${paging.makeSearch(num)}">${num}</a></span>
+				<span><a href="viewJournal.do${paging.makeSearch(num)}">${num}</a></span>
 			</c:forEach>
 			<c:if test="${paging.next && paging.endPage>0}">
 				<span><a
-					href='<c:url value="surveylist?page=${paging.endPage+1}"/>'>다음</a></span>
+					href='<c:url value="viewJournal?page=${paging.endPage+1}"/>'>다음</a></span>
 			</c:if>
 		</ul>
 	</div>
-
 </body>
 </html>

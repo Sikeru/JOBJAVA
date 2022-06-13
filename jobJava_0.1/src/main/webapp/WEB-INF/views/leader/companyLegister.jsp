@@ -16,6 +16,8 @@ section {
 </style>
 
 <script type="text/javascript">
+
+
 	var cnt = 1;
 	function fn_addFile() {
 		$("#d_file").append(
@@ -30,6 +32,11 @@ section {
 		} else { //취소
 			return false;
 		}
+	}
+	
+	//클릭시 알림창
+	function d_click(){
+		alert("마이페이지에서 변경이 가능합니다.");
 	}
 
 	//유효성
@@ -64,31 +71,36 @@ section {
 
 	alert('사업참여등록이 완료되었습니다.');
 	window.location.href = "${contextPath}/leader/main.do"
+	
+	
+	
+	
+	
 </script>
 </head>
 <body>
 
 	<section>
-		<h1>기업등록 페이지</h1>
+		<h1>기업신청 페이지</h1>
 	</section>
 	<section>
 		<form name="" action="${contextPath}/leader/legister.do" method="post" enctype="multipart/form-data">
-			사업자번호<br> <input type="text" name="B_NO" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					대표자<br> <input type="text" name="AGEMT" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					업종<br> <input type="text" name="B_TYPE" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					기업구분<br> <input type="text" name="C_DIV" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					근로자수<br> <input type="text" name="EMP_NUM" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					홈페이지<br> <input type="text" name="HP" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					회사명<br> <input type="text" name="C_NAME" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
-					매칭결과<br> <input type="text" name="M_RESULT" value=""
-					placeholder="제목을 입력해주세요." size=69><br>
+			사업자번호<br> <input type="text" name="B_NO" value="${list.b_NO}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					대표자<br> <input type="text" name="AGENT" value="${list.AGENT}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					업종<br> <input type="text" name="B_TYPE" value="${list.b_TYPE}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					기업구분<br> <input type="text" name="C_DIV" value="${list.c_DIV}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					근로자수<br> <input type="text" name="EMP_NUM" value="${list.EMP_NUM}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					홈페이지<br> <input type="text" name="HOMEPAGE" value="${list.HOMEPAGE}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					회사명<br> <input type="text" name="C_NAME" value="${list.c_NAME}"
+					placeholder="마이페이지에서 정보를 입력해주세요." size=69 onclick="d_click()" readonly><br>
+					<input type="hidden" id="uniBNO" name="UNI_B_NO" value="${param.uniBNO}" />
+					<input type="hidden" id="REGI_NO" name="REGI_NO" value="" />
 				
 				<br> 파일첨부<br> <input type="file" name="REGI_FILENO" multiple="multiple" />
 				<input type= "button" value = "파일추가" onClick="fn_addFile()" >
