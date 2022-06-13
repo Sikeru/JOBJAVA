@@ -465,5 +465,92 @@ public class CounselorServiceImpl implements CounselorService {
 			CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
 			dao.programList(m_result, regi_NO);
 		}
+	
+	// 설문리스트조회
+	@Override
+	public List<SurveyVO> SurveyList(SearchCriteria scri) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		List<SurveyVO> list = dao.selectAllSurveyList(scri);
+		return list;
+	}
+
+	// 설문리스트 총갯수
+	@Override
+	public int SurveyListcnt() {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		return dao.selectAllSurveyListCount();
+	}
+
+	// 사원아이디로 사원번호 조회
+	@Override
+	public int selectEmpno(String Id) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		return dao.selectEmpNO(Id);
+	}
+
+	// 설문조사 정보등록
+	@Override
+	public void addSurvery(int empNO, String title, String sDate, String eDate, String div) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		dao.addSurvery(empNO, title, sDate, eDate, div);
+	}
+
+	// 설문타이틀로 번호가져오기
+	@Override
+	public int selectSvNO(String title) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		return dao.selectSvNO(title);
+	}
+
+	// 설문 문항등록
+	@Override
+	public void addQuestion(String ql, int svNO) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		dao.addQuestion(ql, svNO);
+	}
+
+	// 설문조사 상세
+	@Override
+	public SurveyVO surveyDetail(int svNO) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		return dao.selectSurvey(svNO);
+	}
+
+	@Override
+	public List<SurveyVO> viewSurvey(int svNO) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		List<SurveyVO> list = dao.selectContent(svNO);
+		return list;
+	}
+
+	@Override
+	public List<Integer> firstQno(int svNO) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		return dao.selectQno(svNO);
+	}
+
+	@Override
+	public void modQue(int svNO, String qTxt, int qn) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		dao.updateQue(svNO, qTxt, qn);
+	}
+
+	@Override
+	public void delQue(int qn) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		dao.deleteQue(qn);
+	}
+
+	@Override
+	public void delSur(int svNO) {
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		dao.deleteSur(svNO);
+	}
+	
+	@Override
+	public List<Map<String, Object>> resultList(String svNO){
+		CounselorDAO dao = sqlSession.getMapper(CounselorDAO.class);
+		return dao.selectSurveyResult(svNO);
+	}
 
 }
