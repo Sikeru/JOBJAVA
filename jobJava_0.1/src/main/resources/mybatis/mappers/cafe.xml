@@ -202,7 +202,14 @@
       ]]>
 	</select>
 
-
+<!-- 채용정보 상세조회 -->
+	<select id="selectProgram2" parameterType="String"
+		resultType="ProgramVO">
+   <![CDATA[
+      SELECT * FROM PROGRAM
+      WHERE PROGRAM_NO = #{PROGRAM_NO}  
+   ]]>
+	</select>  
 	<!-- 꿈터구직등록 -->
 
 
