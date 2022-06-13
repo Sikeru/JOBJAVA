@@ -782,8 +782,149 @@ public class CounselorControllerImpl implements CounselorController {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+// 설문조사 리스트
+	@RequestMapping(value = "/surveylist.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView surveylist(HttpServletRequest request, HttpServletResponse response, SearchCriteria scri,
+			Model model) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		List<SurveyVO> surverList = counselorService.SurveyList(scri);
+		mav.addObject("surverList", surverList);
 
+		String viewName = (String) request.getAttribute("viewName");
 
+		// 전체 글 개수
+		int surverListCnt = counselorService.SurveyListcnt();
 
+		// 페이징 객체
+		Paging paging = new Paging();
+		paging.setCri(scri);
+		paging.setTotalCount(surverListCnt);
+
+//				List<Map<String, Object>> list = leaderService.viewCommuteList(userID);
+		// 한페이지당 보여줄 게시물 갯수
+
+//				model.addAttribute("list", list);
+		model.addAttribute("paging", paging);
+		mav.setViewName(viewName);
+		return mav;
+	}
+
+	// 설문조사등록폼으로이동
+	@RequestMapping(value = "/addsurveryfrom.do", method = RequestMethod.GET)
+	public ModelAndView addSurveryFrom(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		return mav;
+	}
+
+	// 설문조사등록
+	@RequestMapping(value = "/addsurveryfrom.do", method = RequestMethod.POST)
+	public ModelAndView addSurvery(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView();
+
+		String viewName = (String) request.getAttribute("viewName");
+		List<String> qList = new ArrayList();
+		Enumeration enu = request.getParameterNames();
+		int empNO = counselorService.selectEmpno(request.getParameter("name"));
+		String title = request.getParameter("title");
+		String sDate = request.getParameter("sDate");
+		String eDate = request.getParameter("eDate");
+		String div = request.getParameter("div");
+
+		counselorService.addSurvery(empNO, title, sDate, eDate, div);
+
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String value = request.getParameter(name);
+			if (name.substring(0, 3).equals("qno") && !value.equals("")) {
+				qList.add(value);
+			}
+		}
+
+		int svNO = counselorService.selectSvNO(title);
+		for (String ql : qList) {
+			System.out.println(ql);
+			counselorService.addQuestion(ql, svNO);
+		}
+		mav.setViewName("redirect:/counselor/surveylist.do");
+		return mav;
+	}
+
+	@RequestMapping(value = "/surveyDetail.do", method = RequestMethod.GET)
+	public ModelAndView surveyDetail(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("svNO") int svNO) {
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		SurveyVO surveyDetail = counselorService.surveyDetail(svNO);
+		List<SurveyVO> surveyinfo = counselorService.viewSurvey(svNO);
+		mav.addObject("surveyDetail", surveyDetail);
+		mav.addObject("surveyinfo", surveyinfo);
+		mav.addObject("svNO", svNO);
+		return mav;
+	}
+
+	@RequestMapping(value = "/surveyUpdate.do", method = RequestMethod.POST)
+	public String surveyUpdate(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam Map<String, String> modQueList) {
+		// cnt는 수정된 길이를 반환하고 len은 기존길이를 가져온다
+
+		int svNO = Integer.parseInt(modQueList.get("svNO"));
+		int cnt = Integer.parseInt(modQueList.get("cnt"));
+		List<SurveyVO> surveyinfo = counselorService.viewSurvey(svNO);
+		List<Integer> qNO = counselorService.firstQno(svNO);
+		int len = surveyinfo.size();
+
+		// 항목의 수가 변하지 않았을때
+		if (len == cnt) {
+			for (int qn : qNO) {
+				System.out.println(svNO);
+				counselorService.modQue(svNO, modQueList.get(String.valueOf(qn)), qn);
+			}
+		}
+		// 항목의 수가 더 줄어들었을때
+		else if (len > cnt) {
+			for (int qn : qNO) {
+				if (modQueList.get(String.valueOf(qn)) == null) {
+					counselorService.delQue(qn);
+				} else {
+					counselorService.modQue(svNO, modQueList.get(String.valueOf(qn)), qn);
+				}
+			}
+		}
+		// 항목의 수가 늘어났을때
+		else {
+			for (int qn : qNO) {
+				counselorService.modQue(svNO, modQueList.get(String.valueOf(qn)), qn);
+			}
+			for (int i = 1; modQueList.get("insertno" + i) != null; i++) {
+				counselorService.addQuestion(modQueList.get("insertno" + i), svNO);
+			}
+		}
+		return "redirect:/counselor/surveyDetail.do?svNO=" + svNO;
+	}
+
+	// 설문조사 삭제
+	@RequestMapping(value = "/surveyDelete.do", method = RequestMethod.GET)
+	public String surveyDelete(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("svNO") int svNO) {
+		counselorService.delSur(svNO);
+
+		return "redirect:/counselor/surveylist.do";
+	}
+
+	// 설문조사 결과
+	@RequestMapping(value = "/surveyResult.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView surveyResult(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("svNO") String svNO) {
+		List<Map<String, Object>> resultList = counselorService.resultList(svNO);
+		ModelAndView mav = new ModelAndView();
+		String viewName = (String) request.getAttribute("viewName");
+		mav.setViewName(viewName);
+		mav.addObject("resultList", resultList);
+		return mav;
+	}
 
 }
