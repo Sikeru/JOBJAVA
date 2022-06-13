@@ -150,5 +150,38 @@ public interface CounselorDAO {
 	
 	public String checkID(SturegVO sturegVO);
 	
+	// 설문조사조회
+	public List<SurveyVO> selectAllSurveyList(SearchCriteria scri);
+
+	// 설문조사글 총갯수
+	public int selectAllSurveyListCount();
+
+	// 직원번호조회
+	public int selectEmpNO(String id);
+
+	// 설문조사 정보등록
+	public void addSurvery(int empNO, String title, String sDate, String eDate, String div);
+
+	// 설문타이틀로 번호가져오기
+	public int selectSvNO(String title);
+
+	// 설문조사 문항등록
+	public void addQuestion(String ql, int svNO);
+
+	// 설문조사상세
+	public SurveyVO selectSurvey(int svNO);
+
+	public List<SurveyVO> selectContent(int svNO);
+
+	public List<Integer> selectQno(int svNO);
+
+	public void updateQue(int svNO, String qTxt, int qn);
+
+	public void deleteQue(int qn);
+
+	public void deleteSur(int svNO);
+
+	public List<Map<String, Object>> selectSurveyResult(String svNO);
+	
 
 }
