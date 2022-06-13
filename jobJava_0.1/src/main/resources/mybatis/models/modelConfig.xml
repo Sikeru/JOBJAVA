@@ -17,12 +17,16 @@
      
       <typeAlias type="com.jobjava.JJ.board.vo.QnAVO" alias="QnAVO" />
       <typeAlias type="com.jobjava.JJ.board.vo.OnlineVO" alias="OnlineVO" />
-     <typeAlias type="com.jobjava.JJ.board.vo.EmploymentVO" alias="EmploymentVO" />
+      <typeAlias type="com.jobjava.JJ.board.vo.EmploymentVO" alias="EmploymentVO" />
      
       <typeAlias type="com.jobjava.JJ.counselor.vo.JobregVO" alias="JobregVO" />
       <typeAlias type="com.jobjava.JJ.counselor.vo.UniregVO" alias="UniregVO" />
+      <typeAlias type="com.jobjava.JJ.counselor.vo.ConsultationJournalVO" alias="ConsultationJournalVO" />
+      <typeAlias type="com.jobjava.JJ.counselor.vo.SalaryVO" alias="SalaryVO" />
       <typeAlias type="com.jobjava.JJ.counselor.vo.SturegVO" alias="SturegVO" />
       <typeAlias type="com.jobjava.JJ.counselor.vo.ComregVO" alias="ComregVO" />
+      <typeAlias type="com.jobjava.JJ.counselor.vo.JobcheckVO" alias="JobcheckVO" />
+      <typeAlias type="com.jobjava.JJ.counselor.vo.AlarmVO" alias="AlarmVO" />
      
       <typeAlias type="com.jobjava.JJ.leader.vo.CRegVO" alias="CRegVO" />
       <typeAlias type="com.jobjava.JJ.leader.vo.Criteria" alias="Criteria" />
