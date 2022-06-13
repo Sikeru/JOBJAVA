@@ -3,11 +3,12 @@ package com.jobjava.JJ.leader.vo;
 public class CRegVO {
 	//C_MEMBER
 	private String B_NO;	// 사업자번호
+	private String ID;		//멤버아이디
 	private String AGENT;	//대표자
 	private String B_TYPE;	//업종
 	private String C_DIV;	//기업구분
 	private int EMP_NUM;	//근로자 수
-	private String HP;	//홈페이지
+	private String HOMEPAGE;	//홈페이지
 	private String C_NAME; //회사명
 	
 	//C_REG
@@ -22,6 +23,12 @@ public class CRegVO {
 	}
 	public void setB_NO(String b_NO) {
 		B_NO = b_NO;
+	}
+	public String getID() {
+		return ID;
+	}
+	public void setID(String iD) {
+		ID = iD;
 	}
 	public String getAGENT() {
 		return AGENT;
@@ -47,11 +54,11 @@ public class CRegVO {
 	public void setEMP_NUM(int eMP_NUM) {
 		EMP_NUM = eMP_NUM;
 	}
-	public String getHP() {
-		return HP;
+	public String getHOMEPAGE() {
+		return HOMEPAGE;
 	}
-	public void setHP(String hP) {
-		HP = hP;
+	public void setHOMEPAGE(String hOMEPAGE) {
+		HOMEPAGE = hOMEPAGE;
 	}
 	public String getC_NAME() {
 		return C_NAME;

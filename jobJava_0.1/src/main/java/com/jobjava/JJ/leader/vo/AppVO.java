@@ -1,33 +1,34 @@
 package com.jobjava.JJ.leader.vo;
 
 public class AppVO {
-	private String name;
-	private String addr;
-	private String hp;
-	private String email;
+	private int APP_NO;
+	private String HOPE_JOB;
+	private String APP_REASON;
+	private String FILENAME;
 	
-	public String getName() {
-		return name;
+	public int getAPP_NO() {
+		return APP_NO;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setAPP_NO(int aPP_NO) {
+		APP_NO = aPP_NO;
 	}
-	public String getAddr() {
-		return addr;
+	public String getHOPE_JOB() {
+		return HOPE_JOB;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setHOPE_JOB(String hOPE_JOB) {
+		HOPE_JOB = hOPE_JOB;
 	}
-	public String getHp() {
-		return hp;
+	public String getAPP_REASON() {
+		return APP_REASON;
 	}
-	public void setHp(String hp) {
-		this.hp = hp;
+	public void setAPP_REASON(String aPP_REASON) {
+		APP_REASON = aPP_REASON;
 	}
-	public String getEmail() {
-		return email;
+	public String getFILENAME() {
+		return FILENAME;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setFILENAME(String fILENAME) {
+		FILENAME = fILENAME;
 	}
+	
 }

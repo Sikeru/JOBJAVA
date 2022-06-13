@@ -8,6 +8,7 @@ public class SurveyVO {
 	private String E_DATE;
 	private String Q_TXT;
 	private String NAME;
+	private String DIVISION;
 	
 	public int getSV_NO() {
 		return SV_NO;
@@ -51,6 +52,11 @@ public class SurveyVO {
 	public void setNAME(String nAME) {
 		NAME = nAME;
 	}
-	
+	public String getDIVISION() {
+		return DIVISION;
+	}
+	public void setDIVISION(String dIVISION) {
+		DIVISION = dIVISION;
+	}
 	
 }
