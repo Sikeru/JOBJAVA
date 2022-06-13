@@ -20,48 +20,96 @@
 
 	<definition name="/counselor/jobregForm"
 		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
+		<put-attribute name="title" value="일자리 등록" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/counselor/jobregForm.jsp" />
 	</definition>
 
 	<definition name="/counselor/uniregForm"
 		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
+		<put-attribute name="title" value="대학교 사업계획서 등록" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/counselor/uniregForm.jsp" />
 	</definition>
 
 	<definition name="/counselor/uniregList"
 		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
+		<put-attribute name="title" value="대학 관리" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/counselor/uniregList.jsp" />
 	</definition>
 
 	<definition name="/counselor/uniregView"
 		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
+		<put-attribute name="title" value="대학교 사업계획서" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/counselor/uniregView.jsp" />
 	</definition>
 
 	<definition name="/counselor/attendance"
 		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
-		<put-attribute name="body"
-			value="/WEB-INF/views/counselor/attendance.jsp" />
-	</definition>
-
-	<definition name="/counselor/commuteCheck"
-		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
+		<put-attribute name="title" value="이름 검색 페이지" />
 		<put-attribute name="body"
 			value="/WEB-INF/views/counselor/attendance.jsp" />
 	</definition>
 	
+	<definition name="/counselor/calendar"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="날짜 검색 페이지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/attendance.jsp" />
+	</definition>
+	
+	<definition name="/counselor/journal"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="업무일지" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/journal.jsp" />
+	</definition>
+	
+	<definition name="/counselor/studentSalary"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="학생 급여 조회" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/studentSalary.jsp" />
+	</definition>
+	<!-- 학생 급여 상세조회 -->
+	<definition name="/counselor/salaryInformation"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="학생 급여 상세" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/studentSalaryView.jsp" />
+	</definition>
+	<!-- 학생 급여 수정뷰 -->
+<!-- 	<definition name="/counselor/salaryInformation" -->
+<!-- 		extends="counseolr_baseLayout"> -->
+<!-- 		<put-attribute name="title" value="학생 급여 수정" /> -->
+<!-- 		<put-attribute name="body" -->
+<!-- 			value="/WEB-INF/views/counselor/salaryInformation.jsp" /> -->
+<!-- 	</definition> -->
+	<definition name="/counselor/universitySalary"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="대학사업비 조회" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/universitySalary.jsp" />
+	</definition>
+	
+	<definition name="/counselor/consultationJournalForm"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="상담일지관리 등록" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/consultationJournalForm.jsp" />
+	</definition>
+	
+	<definition name="/counselor/consultation"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="상담일지관리 등록" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/counselor/consultation.jsp" />
+	</definition>
+	
 	<definition name="/counselor/studenregForm" extends="counseolr_baseLayout">
-		<put-attribute name="title" value="상담사 메인페이지" />
+		<put-attribute name="title" value="담당 학생 등록 페이지" />
  		<put-attribute name="body" value="/WEB-INF/views/counselor/studenregForm.jsp" /> 
 	</definition>
 	
@@ -70,23 +118,63 @@
  		<put-attribute name="body" value="/WEB-INF/views/counselor/studenList.jsp" /> 
 	</definition>
 	
-	<definition name="/counselor/companyregForm" extends="counseolr_baseLayout">
+	<definition name="/counselor/studenupdateView" extends="counseolr_baseLayout">
 		<put-attribute name="title" value="학생 리스트" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/studenupdateView.jsp" /> 
+	</definition>
+	<definition name="/counselor/studenView" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="학생 리스트" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/studenView.jsp" /> 
+	</definition>
+	<definition name="/counselor/companyregForm" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="기업 등록 폼" />
  		<put-attribute name="body" value="/WEB-INF/views/counselor/companyregForm.jsp" /> 
 	</definition>
-	
+	<definition name="/counselor/companyupdateView" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="기업 등록 폼" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/companyupdateView.jsp" /> 
+	</definition>
+	<definition name="/counselor/companyView" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="기업 등록 폼" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/companyView.jsp" /> 
+	</definition>
+	<definition name="/counselor/companyList" extends="counseolr_baseLayout">
+		<put-attribute name="title" value="기업 리스트" />
+ 		<put-attribute name="body" value="/WEB-INF/views/counselor/companyList.jsp" /> 
+	</definition>	
 	<definition name="/counselor/jobMatchingView" extends="counseolr_baseLayout">
-      <put-attribute name="title" value="일자리 매칭페이지" />
-       <put-attribute name="body" value="/WEB-INF/views/counselor/jobMatchingView.jsp" /> 
-   </definition>
-   
-   <definition name="/counselor/journal"
+      	<put-attribute name="title" value="일자리 매칭페이지" />
+       	<put-attribute name="body" value="/WEB-INF/views/counselor/jobMatchingView.jsp" /> 
+   	</definition>
+<!-- 	<definition name="/counselor/JobcheckForm" extends="counseolr_baseLayout"> -->
+<!-- 		<put-attribute name="title" value="일자리 매칭페이지" /> -->
+<!-- 		<put-attribute name="body" value="/WEB-INF/views/counselor/JobcheckForm.jsp" />  -->
+<!-- 	</definition> -->
+	<definition name="/counselor/alarmSend"
 		extends="counseolr_baseLayout">
-		<put-attribute name="title" value="업무일지" />
+		<put-attribute name="title" value="이메일" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/counselor/journal.jsp" />
+		value="/WEB-INF/views/counselor/alarmSend.jsp" />	
+	</definition>
+	<definition name="/counselor/jobregList"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="회사리스트" />
+		<put-attribute name="body"
+		value="/WEB-INF/views/counselor/jobregList.jsp" />
+	</definition>
+	<definition name="/counselor/jobregView"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="회사리스트" />
+		<put-attribute name="body"
+		value="/WEB-INF/views/counselor/jobregView.jsp" />
+	</definition>
+	<definition name="/counselor/programPermission"
+		extends="counseolr_baseLayout">
+		<put-attribute name="title" value="회사리스트" />
+		<put-attribute name="body"
+		value="/WEB-INF/views/counselor/programPermission.jsp" />
 	</definition>
 	
+	
+	
 </tiles-definitions>
-
-
