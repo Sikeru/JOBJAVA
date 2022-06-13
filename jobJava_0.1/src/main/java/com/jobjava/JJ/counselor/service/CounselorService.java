@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.jobjava.JJ.counselor.vo.SearchCriteria;
-import com.jobjava.JJ.counselor.vo.UniregVO;
-import com.jobjava.JJ.counselor.vo.AlarmVO;
 import com.jobjava.JJ.counselor.vo.ComregVO;
 import com.jobjava.JJ.counselor.vo.CriteriaVO;
 import com.jobjava.JJ.counselor.vo.JobcheckVO;
 import com.jobjava.JJ.counselor.vo.JobregVO;
+import com.jobjava.JJ.counselor.vo.SearchCriteria;
 import com.jobjava.JJ.counselor.vo.SturegVO;
+import com.jobjava.JJ.counselor.vo.UniregVO;
+import com.jobjava.JJ.leader.vo.SurveyVO;
 
 
 public interface CounselorService {
