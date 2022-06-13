@@ -23,7 +23,7 @@ import net.coobird.thumbnailator.Thumbnails;
 
 @Controller("DownController")
 public class FileCafeProgramDownloadController {
-	private static String CURR_IMAGE_REPO_PATH = "C:\\project\\file";
+	private static String CURR_IMAGE_REPO_PATH = "C:\\project\\file\\program";
 	
 	@Autowired
 	CafeService cafeService;
