@@ -1,27 +1,26 @@
-<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
-
-
-<%-- <fmt:parseDate value="${list}" var="list" pattern="yyyy-MM-dd"/> --%>
-
-
-<%@ page session="true"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
-<script
-	src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page session="false"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="s"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<c:set var="userID">
+	<s:authentication property="name" />
+</c:set>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript"></script>
+<head>
+<meta charset="UTF-8">
 <title>게시판</title>
 </head>
 
 <script type="text/javascript">
-$(document).ready(function() {
+	$(document).ready(function() {
 	var formObj = $("form[name='readForm']");
 
 // 목록
@@ -34,83 +33,145 @@ $(".list_btn").on("click", function() {
 		
 })
 	
-		/* 		// 이미지 업로드
-		 $('#img').on('change', function() {
-		 ext = $(this).val().split('.').pop().toLowerCase(); //확장자
-		 //배열에 추출한 확장자가 존재하는지 체크
-		 if ($.inArray(ext, [ 'gif', 'png', 'jpg', 'jpeg' ]) == -1) {
-		 resetFormElement($(this)); //폼 초기화
-		 } else {
-		 file = $('#img').prop("files")[0];
-		 blobURL = window.URL.createObjectURL(file);
-		 $('#image_preview img').attr('src', blobURL);
-		 $('#image_preview').slideDown(); //업로드한 이미지 미리보기 
-		 $(this).slideUp(); //파일 양식 감춤
-		 }
-		 }); */
-
-	
 </script>
 <style>
+#listMenu {
+	width: 100%;
+	height: auto;
+	color: #fff;
+	background: #BBE1FA;
+	text-align: center;
+}
+#listMenu ul {
+	width: 100%;
+	height: 50px;
+	margin: 0;
+	padding: 0;
+	margin-left: 200px;
+}
 
+#listMenu li {
+	width: 200px;
+	height: 100%;
+	text-align: center;
+	list-style: none;
+	font-size: 17px;
+	float: left;
+	margin-left: 1px;
+	background: #3282B8;
+}
 
- #programheader {
-    width :1000px;
-    height:120px;
-    margin-left : 100px;
-    margin-top : 100px;
-    margin-bottom : 20px;
-   }
+#listMenu li p {
+	margin: 0;
+	margin-top: 10px;
+}
+
+#listMenu li a {
+	text-decoration: none;
+	color: white;
+}
+
+#programheader {
+	width: 1200px;
+	height: 120px;
+	margin-left: 300px;
+	margin-top: 100px;
+	margin-bottom: 20px;
+}
 
 #programhead {
-    font-size: 40px;
-    margin-bottom: 5px; 
-      }
-    
-    
-#procontainer {
-width : 1000px;
-height:800px;
-font-weight: 800px;
-    margin-left : 100px;
-    border-top : 3px solid #192E7E;
-    }
+	font-size: 40px;
+	margin-bottom: 5px;
+}
 
+#procontainer {
+	width: 1000px;
+	height: 800px;
+	font-weight: 800px;
+	margin-left: 300px;
+	border-top: 3px solid #192E7E;
+}
+
+#root {
+	width: 100%;
+	margin: 0 auto;
+	margin-top: 60px;
+	height: 1000px;
+}
 
 #programtitle {
-    width: 900px;
-    height:70px;
-    border-bottom: 2px solid #A4A4A4;
-   
+	width: 900px;
+	height: 70px;
+	border-bottom: 2px solid #A4A4A4;
 }
-#textcontent {
 
-    border : none;
-    border-bottom: 2px solid #A4A4A4;
-    margin-top : 20px;
-    
-    }
+#textcontent {
+	border: none;
+	border-bottom: 2px solid #A4A4A4;
+	margin-top: 20px;
+}
 
 #tt {
-font-size: 20px;
-font-weight: 800px;
+	font-size: 20px;
+	font-weight: 800px;
 }
 
- li {
-        list-style: none;
-    }
+li {
+	list-style: none;
+}
+
 #profile {
-margin-top : 20px;
-margin-bottom : 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
-   dl{
-    font-weight: 800px;
-    }
-    
-li a{
-text-decoration: none;
-     color :black;
+
+dl {
+	font-weight: 800px;
 }
+
+li a {
+	text-decoration: none;
+	color: black;
+}
+
+.delete_btn {
+	width: 80px;
+	height: 40px;
+	border: none;
+	border: 1px solid #e6e6e6;
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+.list_btn {
+	width: 80px;
+	height: 40px;
+	border: none;
+	border: 1px solid #e6e6e6;
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+.app_btn {
+	width: 80px;
+	height: 40px;
+	border: 1px solid #e6e6e6;
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+.update_btn {
+	width: 80px;
+	height: 40px;
+	border: 1px solid #e6e6e6;
+	font-size: 14px;
+	margin-left: 5px;
+}
+
+#ssdate {
+	margin-left: 300px;
+}
+
 .dropdown-menu {
 	background-color: #4CAF50;
 	color: white;
@@ -153,43 +214,6 @@ text-decoration: none;
 .dropdown:hover .dropdown-menu {
 	background-color: #3e8e41;
 }
-
-#listMenu {
-	width: 100%;
-	height: auto;
-	color: #fff;
-	background: #BBE1FA;
-	text-align: center;
-}
-
-#listMenu ul {
-	width: 100%;
-	height: 50px;
-	margin: 0;
-	padding: 0;
-	margin-left: 300px;
-}
-
-#listMenu li {
-	width: 200px;
-	height: 100%;
-	text-align: center;
-	list-style: none;
-	font-size: 17px;
-	float: left;
-	margin-left: 1px;
-	background: #3282B8;
-}
-
-#listMenu li p {
-	margin: 0;
-	margin-top: 10px;
-}
-
-#listMenu li a {
-	text-decoration: none;
-	color: white;
-}  
 
 </style>
 
