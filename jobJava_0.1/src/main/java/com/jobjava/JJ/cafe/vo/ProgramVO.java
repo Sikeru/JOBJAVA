@@ -14,6 +14,35 @@ public class ProgramVO {
 	private Date E_DATE;
 	private String FILENAME;
 	private String DIVISION;
+	private String ID;
+	private String APP;
+	private int EMP_PAR_NO;
+	private String QUESTION;
+	
+	public String getQUESTION() {
+		return QUESTION;
+	}
+	public void setQUESTION(String qUESTION) {
+		QUESTION = qUESTION;
+	}
+	public String getAPP() {
+		return APP;
+	}
+	public void setAPP(String aPP) {
+		APP = aPP;
+	}
+	public int getEMP_PAR_NO() {
+		return EMP_PAR_NO;
+	}
+	public void setEMP_PAR_NO(int eMP_PAR_NO) {
+		EMP_PAR_NO = eMP_PAR_NO;
+	}
+	public String getID() {
+		return ID;
+	}
+	public void setID(String iD) {
+		ID = iD;
+	}
 	
 	public int getPROGRAM_NO() {
 		return PROGRAM_NO;
