@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.jobjava.JJ.counselor.vo.ComregVO;
 import com.jobjava.JJ.counselor.vo.CriteriaVO;
+import com.jobjava.JJ.counselor.vo.JobcheckVO;
+import com.jobjava.JJ.counselor.vo.JobregVO;
 import com.jobjava.JJ.counselor.vo.SearchCriteria;
 import com.jobjava.JJ.counselor.vo.SturegVO;
 import com.jobjava.JJ.counselor.vo.UniregVO;
@@ -15,21 +18,54 @@ public interface CounselorDAO {
 	public List<HashMap<String, String>> JobDao2();
 
 	public void insertNewJob(HashMap<String, String> jobregVO);
+	
+	public HashMap<String, String> selectOnefileName(String MAT_NO);
+	
+	
+	//상담일지관리 등록
+	public void consultationJournalList(HashMap<String, String> consultationJournalVO);
 
 	public String selectNewJobID(HashMap<String, String> jobregVO);
 
+	// 대학 등록
 	public void insertNewUni(HashMap<String, String> uniregVO);
 
+	// 아이디 선택
 	public String selectUniID(HashMap<String, String> uniregVO);
-	
-	public void update(UniregVO uniregVO) throws Exception;
-	
-	public void delete(int UNI_B_NO) throws Exception;
+
+	// 참여목록
+	public List<UniregVO> uniList() throws Exception;
 
 	/* public UniregVO uniread(String UNI_B_NO); */
-	public UniregVO selectProgram(int UNI_B_NO) throws Exception;
+	public UniregVO selectProgram(String unibno) throws Exception;
 
 	public void updatePermissionState(HashMap unireg);
+
+	public List<HashMap<String, Object>> calendarList();
+
+	// 게시글 총 갯수
+	public int counseolrServiceCnt(SearchCriteria scri);
+
+	public int counseolrServiceCnt2(SearchCriteria scri);
+	
+	public List<Map<String, Object>> boardList2(SearchCriteria scri);
+	
+	// 학생 급여 조회
+	public List<HashMap<String, Object>> studentSalaryList(SearchCriteria scri);
+
+	// 대학사업비 조회
+	public List<HashMap<String, Object>> universitySalaryList(SearchCriteria scri);
+	
+	//상담일지관리리스트
+	public List<HashMap<String, Object>> consultationList(SearchCriteria scri);
+
+	public void updateNaem(String process, String comNO);
+
+	public void updateNameList(String permission, String unibNO);
+	
+	public UniregVO selectProgram(int UNI_B_NO) throws Exception;
+	public SturegVO selectStu(String CM_NO);
+	public ComregVO selectCom(String CM_NO) ;
 
 	public List<HashMap<String, String>> JobDao3();
 
@@ -45,35 +81,74 @@ public interface CounselorDAO {
 	//업무일지
 		public List<HashMap<String, String>> journalDao();
 
-		public List<Map<String, Object>> journalList(SearchCriteria scri);
+		public List<HashMap<String, Object>> journalList(SearchCriteria scri);
 	
-	
+		public List<HashMap<String, String>> selectAllMouList();
 
 
 	// 기업번호조회
 //	public CRegVO selectRegi(String regiNO);
-
-	public int counseolrServiceCnt(SearchCriteria scri);
-
 	public List<HashMap<String, String>> attendanceDao();
-	
-	// 오류나면 지우기 (20220519)
+
 	
 	public List<Map<String, Object>> uniregList(CriteriaVO cri);
 	public int uniregListCnt(CriteriaVO cri);
+
+	
+	public void update(UniregVO uniregVO) throws Exception;
+	public void delete(int UNI_B_NO) throws Exception;
 	
 	// 뉴리더 학생, 기업 등록 리스트 및 폼 작성
 	public void insertNewStu(HashMap<String, String> sturegVO);
+	public void studenupdate(SturegVO sturegVO) throws Exception;
+	public void studenupdate2(SturegVO sturegVO) throws Exception;
+	public int studendelete(int CM_NO)throws Exception;
 	
 	public List<SturegVO> stuList() throws Exception;
 	
 	public void insertNewCompany(HashMap<String, String> comregVO);
+	public void companyupdate(ComregVO comregVO) throws Exception;
+	public int companydelete(int CM_NO)throws Exception;
+	public List<ComregVO> comList() throws Exception; 
+	
+	// 프로그램 신청 리스트
+	public List<Map<String, Object>> proList(CriteriaVO cri);
+	public int programListCnt(CriteriaVO cri);
+	
+	// 등록된 기업 리스트
+	public List<Map<String, Object>> jobList(CriteriaVO cri);
+	public int jobListCnt(CriteriaVO cri);
+	public JobregVO selectjob(int JOB_NO) throws Exception;
+	
+	// 등록된 기업 수정 삭제 기능
+	public void jobupdate(JobregVO jobregVO) throws Exception;
+		
+	public void jobdelete(int JOB_NO) throws Exception;
+	
+	
+	// 프로그램 승인할 리스트
+	public List<Map<String, Object>> programPermission(CriteriaVO cri);
+	public int proListCnt(CriteriaVO cri);
+	
+	
+	
+	// 프로그램 신청 승인 (꿈터)
+	public void proNameList(String permission, String programNO);
+	public void programList(String m_result, String regi_NO);
+	
+	/* public AlarmVO selectproID(String PROGRAM_NO) throws Exception; */
+
+	// 직무체험점검
+	public void jobcheckAdd(JobcheckVO jobcheckVO); 
+	public List<HashMap <String, String>> selectID();
 	
 	// 일자리 매칭
 	public List<HashMap<String, Object>> selectAllBasketInfo(String user_id);
 	public List<HashMap<String, String>> selectAllChMember(String user_id);
 	public void memberMatching(HashMap<String, String> member);
-
-
+	public List<HashMap <String, String>> listAppNO(String id);
+	
+	public String checkID(SturegVO sturegVO);
+	
 
 }
