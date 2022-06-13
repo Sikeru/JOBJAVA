@@ -21,9 +21,10 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
 <style>
-@import
-	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap')
-	;
+
+.g-th {
+  	text-align : center;
+}
 </style>
 
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet"
@@ -37,7 +38,7 @@
 			$('.sub').hide(500);
 			$('.title').removeClass('on');
 			$('.title').css({
-				color : '#000'
+				color : '#fff'
 			})
 			$(this).next().show(500);
 			$(this).addClass('on');
@@ -58,38 +59,253 @@
 
 	}); //첫 function 끝
 </script>
-<body>
-	<div id='main'>
-		<div id="jobseeker">
-			<a> 구직자 정보 리스트</a>
-			<c:forEach var="counselor" items="${counselor }">
-				<p>${counselor.NAME}${counselor.AGE} ${counselor.HP}</p>
-			</c:forEach>
-		</div>
+<style type="text/css">
+#boardwrap {
+   width: 500px;
+   margin: 0 auto;
+   position: relative;
+   left: 100px;
+   top: 100px;
+}
+#boardwrap2 {
+   width: 500px;
+   margin: 0 auto;
+   position: relative;
+   left: 700px;
+   top: -298px;
+   
+}
 
-		<div id="company">
-			<a>일자리 정보 리스트</a>
-			<table class='g-table'>
-				<thead>
-					<tr class='g-tr'>
-						<th class='g-th'>경력</th>
-						<th class='g-th'>학력</th>
-						<th class='g-th'>지역</th>
-						<th class='g-th'>회사</th>
+
+#board {
+   width: 500px;
+   margin: 0 auto;
+}
+#board2 {
+   width: 500px;
+   margin: 0 auto;
+}
+
+
+#board table {
+   width: 1000px;
+   margin: 0 auto;
+   font-weight: bold;
+}
+
+#board td {
+   width: 500px;
+   border-bottom: 1px solid #A4A4A4;;
+   border-right: 1px solid #A4A4A4;
+   height: 40px;
+}
+
+#board td:last-child {
+   border-right: none;
+}
+
+#board2 table {
+   width: 1000px;
+   margin: 0 auto;
+   font-weight: bold;
+}
+
+#board2 td {
+   width: 500px;
+   border-bottom: 1px solid #A4A4A4;;
+   border-right: 1px solid #A4A4A4;
+   height: 40px;
+}
+
+#board2 td:last-child {
+   border-right: none;
+}
+
+#board th {
+   border-bottom: 1px solid black;
+   border-top: 1.5px solid black;
+   height: 50px;
+   background-color: #0F4C75;
+   font-size: 16px;
+}
+
+#board2 th {
+   border-bottom: 1px solid black;
+   border-top: 1.5px solid black;
+   height: 50px;
+   background-color: #0F4C75;
+   font-size: 16px;
+}
+
+#board tbody td a {
+   color: black;
+   text-decoration: none;
+}
+
+#board table {
+   width: 500px;
+   margin: 0 auto;
+   font-weight: bold;
+}
+
+#board2 tbody td a {
+   color: black;
+   text-decoration: none;
+}
+
+#board2 table {
+   width: 500px;
+   margin: 0 auto;
+   font-weight: bold;
+}
+
+
+#th-1 {
+   width: 20%;
+}
+
+#th-2 {
+   width: 20%;
+}
+
+#th-3 {
+   width: 60%;
+}
+
+#th-4 {
+   width: 20%;
+}
+#th-5 {
+   width: 25%;
+}
+#th-6 {
+   width: 25%;
+}
+#th-7 {
+   width: 30%;
+}
+
+table {
+   text-align: center;
+}
+
+/* #liSearchOption { */
+/*    clear: both; */
+/* } */
+
+/* #liSearchOption>div {
+   margin: 0 auto;
+   margin-top: 30px;
+   width: auto;
+   height: 100px;
+} */
+
+h2 {
+   text-align: center;
+   margin-top: 40px;
+   font-size: 30px;
+}
+
+
+
+/* searchType {
+   width: 100px;
+} */
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 24px;
+}
+
+ table td, th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 10px;
+}
+ 
+/* th {
+	background: #f2f2f2;
+} */
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+li{
+	list-style: none;
+}
+h4{
+	font-size : 20px;
+	position: absolute;
+	left: 700px;	
+}
+
+#registration{
+	position: relative;
+	left: 200px;
+}
+ th{
+	color:#fff;
+} 
+</style>
+<body>
+		<div id="boardwrap">
+			<h5>구직자 정보 리스트</h5>
+			<div id="board" text>
+				<table>
+            <thead>
+               <tr>
+		                <th id=th-1>이름</th>
+						<th id=th-2>나이</th>
+						<th id=th-3>전화 번호</th>
+					</tr>
+            </thead>
+            <tbody>
+			<c:forEach var="counselor" items="${counselor}" begin="0" end="9">
+				<tbody>
+						<tr>
+							<td>${counselor.NAME}</td>
+							<td>${counselor.AGE}</td>
+							<td>${counselor.HP}</td>
+						</tr>
+						</c:forEach>
+            </tbody>
+         </table>
+      </div>
+      </div>
+
+		<div id="boardwrap2">
+			<h5>일자리 정보 리스트</h5>
+			<div id="board2" text>
+			<table>
+            <thead>
+               <tr>
+		                <th id=th-4>경력</th>
+						<th id=th-5>학력</th>
+						<th id=th-6>지역</th>
+						<th id=th-7>회사</th>
 					</tr>
 				</thead>
 				<c:forEach var="counselor1" items="${counselor1}" begin="0" end="9">
 					<tbody>
 						<tr>
-							<td class='g-td'>${counselor1.CAREER}</td>
-							<td class='g-td'>${counselor1.EDU}</td>
-							<td class='g-td'>${counselor1.AREA}</td>
-							<td class='g-td'>${counselor1.COMPANY}</td>
-				</c:forEach>
-				</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+							<td>${counselor1.CAREER}</td>
+							<td>${counselor1.EDU}</td>
+							<td>${counselor1.AREA}</td>
+							<td>${counselor1.COMPANY}</td>
+						</tr>
+						</c:forEach>
+            </tbody>
+         </table>
+      </div>
+      </div>
 </body>
 </html>

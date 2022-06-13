@@ -2,7 +2,10 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<head>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <meta charset="UTF-8">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -19,17 +22,20 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap')
+	;
+</style>
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet"
 	type="text/css" media="screen">
-
-<%@ page session="false"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
 <html>
-</head>
-<title>일지관리</title>
+<head>
+<meta charset="EUC-KR">
+<title>사업참여 관리 목록</title>
 <script>
 	$(function() {
-		
 		$('.sub').hide();
 		$('.title').click(function() {
 			$('.sub').hide(500);
@@ -55,7 +61,34 @@
 		}); //sub li hover 끝
 
 	}); //첫 function 끝
-</script>
+	
+//  승인 저장
+	   function updateMember(cnt, regi_NO){
+	      let f = document.createElement('form');
+	      let process = document.getElementById("M_RESULT"+cnt).value;
+	       let obj;
+	       let obj1;
+	       
+	       obj = document.createElement('input');
+	       obj.setAttribute('type', 'hidden');
+	       obj.setAttribute('name', 'm_result');
+	       obj.setAttribute('value', process);
+	       
+	       obj1 = document.createElement('input');
+	       obj1.setAttribute('type', 'hidden');
+	       obj1.setAttribute('name', 'regi_NO');
+	       obj1.setAttribute('value', regi_NO);
+	       
+	       f.appendChild(obj);
+	       f.appendChild(obj1);
+	       f.setAttribute('method', 'post');
+	       f.setAttribute('action', ' ${contextPath}/counselor/updateleadproList.do');
+	       document.body.appendChild(f);
+	       f.submit();
+	        
+	       }
+	</script>
+
 <style type="text/css">
 #boardwrap {
    width: 1400px;
@@ -103,13 +136,20 @@
 }
 
 #th-2 {
-   width: 40%;
+   width: 30%;
 }
 
 #th-3 {
-   width: 40%;
+   width: 20%;
 }
 
+#th-4 {
+   width: 15%;
+}
+
+#th-5 {
+   width: 15%;
+}
 table {
    text-align: center;
 }
@@ -197,7 +237,7 @@ table {
 }
 
 .search {
-   margin-left: 600px;
+   margin-left: 700px;
    margin-top: 40px;
 }
 
@@ -275,7 +315,35 @@ h4{
 	position: absolute;
 	left: 700px;	
 }
-
+#stulist{
+    		width: 1000px;
+    		margin: auto;
+    		position: absolute;
+   			top: 180px;
+    	}
+    	
+    	table{
+    		width: 100%;
+    		border-collapse: collapse;
+    		line-height: 24px;
+    	}
+    	table td,th {
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px;
+}
+th {
+	background: #f2f2f2;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    text-decoration: underline;
+}
 #registration{
 	position: relative;
 	left: 200px;
@@ -283,16 +351,18 @@ h4{
 th{
 	color:#fff;
 }
+
+
 </style>
+
+</head>
+
 <body>
-<br>
 	<br>
-		
+		<br>
 		<h4>
-			<a href="${contextPath}/counselor/attendance.do">출퇴근 조회</a>
-			/
-			<a href="${contextPath}/counselor/journal.do">업무 일지</a>
-		</h4>
+		참여목록
+	    </h4>
 			<br>
 			<hr>
 		<div id="boardwrap">
@@ -300,78 +370,52 @@ th{
 		<table>
 			<thead>
 					<tr>
-						<th id=th-1>이름</th>
-						<th id=th-2>제목</th>
-						<th id=th-3>내용</th>
+						<th id=th-1>기업 신청 번호</th>
+						<th id=th-2>사업명</th>
+						<th id=th-3>기업명</th>
+						<th id=th-4>승인여부</th>
+						<th id=th-5>수정</th>
 					</tr>
 				</thead>
-			<tbody>
-				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}">
+				<tbody>
+
+					<c:forEach var="prolist" items="${prolist }"  varStatus="status">
+					
 						<tr>
-							<td>${list.ID}</td>
-							<td>${list.TITLE}</td>
-							<td>${list.CONTENT}</td>
-					</tr>
+							<td>${prolist.REGI_NO}</td>
+							<td>${prolist.B_NAME }
+							<td>${prolist.C_NAME}</td>
+							<td><select id="M_RESULT${status.count}" name="M_RESULT">
+                                <option hidden="${prolist.M_RESULT}" selected>${prolist.M_RESULT}</option>
+                                <option value="접수진행중">접수진행중</option>
+                                <option value="승인">승인</option>
+                                </select>
+                            </td>
+                             <td><input id="subbtn" type="button" value="수정" onclick="updateMember(${status.count}, ${prolist.REGI_NO})"/></td>
+						</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 </div>
-	<!-- 게시판 페이징 영역 -->
+            <div id="divPaging">
+               <ul class="paging">
+                  <c:if test="${paging.prev}">
+                     <span><a
+                        href='<c:url value="programPermission.do?page=${paging.startPage-1}"/>'>이전</a></span>
+                  </c:if>
+                  <c:forEach begin="${paging.startPage}" end="${paging.endPage}"
+                     var="num">
+                     <span><a
+                        href='<c:url value="programPermission..do?page=${num}"/>'>${num}</a></span>
+                  </c:forEach>
+                  <c:if test="${paging.next && paging.endPage>0}">
+                     <span><a
+                        href='<c:url value="programPermission.do?page=${paging.endPage+1}"/>'>다음</a></span>
+                  </c:if>
+               </ul>
+            </div>
+</div>
+	
 
-	<div id="divPaging">
-		
-			<ul class="paging">
-				<c:if test="${paging.prev}">
-					<span><a
-						href='<c:url value="journal?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전</a></span>
-				</c:if>
-				
-				<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-					var="num">
-					<c:if test="${paging.cri.keyword1 == ''}">
-					<span> <a href="journal.do${paging.makeSearch(num)}">${num}</a>
-					</span>
-					</c:if>
-					<c:if test="${paging.cri.keyword1 != ''}">
-					<span> <a href="journal2.do${paging.makeSearch(num)}">${num}</a>	
-					</span>
-					</c:if>
-				</c:forEach>
-				<c:if test="${paging.next && paging.endPage>0}">
-					<span><a
-						href='<c:url value="attendance?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음</a></span>
-				</c:if>
-
-			</ul>
-		</div>
-
-	<!-- 검색 폼 영역 -->
-	<form role="form" method="get">
-
-			<div class="search">
-
-				<input type="text" name="keyword" id="keywordInput"
-					value="${scri.keyword}" />
-				<button id="searchBtn" type="button">검색</button>
-				<script src="http://code.jquery.com/jquery-latest.js"></script>
-				<script>
-					    $(function(){
-					        $('#searchBtn').click(function() {self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-					        });
-					      });   
-					    </script>
-				
-						
-			</div>
-	</form>
-
-	<script>
-		$('input[type="submit"]').keydown(function() {
-			if (event.keyCode === 13) {
-				event.preventDefault();
-			}
-			;
-		});
-	</script>
 </body>
 </html>

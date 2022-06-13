@@ -26,7 +26,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html>
 </head>
-<title>일지관리</title>
+<title>학생 급여 조회</title>
 <script>
 	$(function() {
 		
@@ -55,6 +55,32 @@
 		}); //sub li hover 끝
 
 	}); //첫 function 끝
+	
+	
+	function updateMember(cnt, comNO){
+		let f = document.createElement('form');
+		let process = document.getElementById("PROCESS"+cnt).value;
+	    let obj;
+	    let obj1;
+	    
+	    obj = document.createElement('input');
+	    obj.setAttribute('type', 'hidden');
+	    obj.setAttribute('name', 'process');
+	    obj.setAttribute('value', process);
+	    
+	    obj1 = document.createElement('input');
+	    obj1.setAttribute('type', 'hidden');
+	    obj1.setAttribute('name', 'comNO');
+	    obj1.setAttribute('value', comNO);
+	    
+	    f.appendChild(obj);
+	    f.appendChild(obj1);
+	    f.setAttribute('method', 'post');
+	    f.setAttribute('action', ' ${contextPath}/counselor/updateSalary.do');
+	    document.body.appendChild(f);
+	    f.submit();
+	     
+	    }
 </script>
 <style type="text/css">
 #boardwrap {
@@ -99,17 +125,24 @@
 }
 
 #th-1 {
-   width: 20%;
+   width: 15%;
 }
 
 #th-2 {
-   width: 40%;
+   width: 20%;
 }
 
 #th-3 {
-   width: 40%;
+   width: 20%;
 }
 
+#th-4 {
+   width: 20%;
+}
+
+#th-5 {
+   width: 25%;
+}
 table {
    text-align: center;
 }
@@ -191,9 +224,9 @@ table {
 }
 
 .paging a.active {
-   background-color: #42454c;
+   background-color: #e6e6e6;
    color: #fff;
-   border: 1px solid #42454c;
+   border: 1px solid #e6e6e6;
 }
 
 .search {
@@ -254,10 +287,6 @@ table td, th {
 	padding: 10px;
 }
 
-th {
-	background: #f2f2f2;
-}
-
 a {
 	text-decoration: none;
 	color: black;
@@ -275,7 +304,32 @@ h4{
 	position: absolute;
 	left: 700px;	
 }
-
+#stulist{
+    		width: 1000px;
+    		margin: auto;
+    		position: absolute;
+   			top: 180px;
+    	}
+    	
+    	table{
+    		width: 100%;
+    		border-collapse: collapse;
+    		line-height: 24px;
+    	}
+    	table td,th {
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    text-decoration: underline;
+}
 #registration{
 	position: relative;
 	left: 200px;
@@ -283,15 +337,15 @@ h4{
 th{
 	color:#fff;
 }
+
 </style>
 <body>
-<br>
-	<br>
-		
+		<br>
+		<br>
 		<h4>
-			<a href="${contextPath}/counselor/attendance.do">출퇴근 조회</a>
-			/
-			<a href="${contextPath}/counselor/journal.do">업무 일지</a>
+		<a href="${contextPath}/counselor/studentSalary.do">학생 급여 조회</a>
+		/
+		<a href="${contextPath}/counselor/universitySalary.do">대학 별 사업비 조회</a>
 		</h4>
 			<br>
 			<hr>
@@ -301,77 +355,77 @@ th{
 			<thead>
 					<tr>
 						<th id=th-1>이름</th>
-						<th id=th-2>제목</th>
-						<th id=th-3>내용</th>
+						<th id=th-2>날짜</th>
+						<th id=th-3>급여</th>
+						<th id=th-4>승인 여부</th>
+						<th id=th-5>수정</th>
 					</tr>
-				</thead>
+			</thead>
 			<tbody>
-				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}">
+				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}" varStatus="status">
 						<tr>
 							<td>${list.ID}</td>
-							<td>${list.TITLE}</td>
-							<td>${list.CONTENT}</td>
-					</tr>
-				</c:forEach>
+							<td>${list.CD}</td>
+							<td>${list.SAL}</td>
+							<td><select id="PROCESS${status.count}" name="PROCESS">
+                       			<option hidden="${list.PROCESS}" selected>${list.PROCESS}</option>
+                       			<option value="Y">Y</option>
+                       			<option value="N">N</option>
+                      			</select></td>
+                      		<td><input id="subbtn" type="button" value="수정" onclick="updateMember(${status.count}, ${list.COM_NO})"/></td>
+							</tr>
+					</c:forEach>
 			</tbody>
 		</table>
 </div>
 	<!-- 게시판 페이징 영역 -->
-
-	<div id="divPaging">
-		
+		<div id="divPaging">
 			<ul class="paging">
 				<c:if test="${paging.prev}">
-					<span><a
-						href='<c:url value="journal?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전</a></span>
+					<span>
+						<a href='<c:url value="studentSalary?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전
+						</a>
+					</span>
 				</c:if>
-				
-				<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-					var="num">
-					<c:if test="${paging.cri.keyword1 == ''}">
-					<span> <a href="journal.do${paging.makeSearch(num)}">${num}</a>
+				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="num">
+					<span>
+						<a href="studentSalary.do${paging.makeSearch(num)}">${num}
+						</a>
 					</span>
-					</c:if>
-					<c:if test="${paging.cri.keyword1 != ''}">
-					<span> <a href="journal2.do${paging.makeSearch(num)}">${num}</a>	
-					</span>
-					</c:if>
 				</c:forEach>
 				<c:if test="${paging.next && paging.endPage>0}">
-					<span><a
-						href='<c:url value="attendance?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음</a></span>
+					<span>
+						<a href='<c:url value="studentSalary?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음
+						</a>
+					</span>
 				</c:if>
-
 			</ul>
 		</div>
-
 	<!-- 검색 폼 영역 -->
 	<form role="form" method="get">
-
+		<li id='liSearchOption'>
 			<div class="search">
-
-				<input type="text" name="keyword" id="keywordInput"
-					value="${scri.keyword}" />
-				<button id="searchBtn" type="button">검색</button>
+				<input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+					<button id="searchBtn" type="button">검색
+					</button>
 				<script src="http://code.jquery.com/jquery-latest.js"></script>
 				<script>
-					    $(function(){
-					        $('#searchBtn').click(function() {self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-					        });
-					      });   
-					    </script>
-				
-						
+				    $(function(){
+				        $('#searchBtn').click(function() {
+				          self.location = "studentSalary.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+				        });
+				      });   
+				</script>
 			</div>
+		</li>
 	</form>
-
 	<script>
 		$('input[type="submit"]').keydown(function() {
 			if (event.keyCode === 13) {
 				event.preventDefault();
-			}
-			;
+			};
 		});
 	</script>
+	</div>
 </body>
 </html>

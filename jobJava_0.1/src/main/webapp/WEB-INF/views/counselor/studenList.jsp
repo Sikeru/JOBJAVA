@@ -30,7 +30,7 @@
                 $('.sub').hide(500);
                 $('.title').removeClass('on');
                 $('.title').css({
-                    color: '#000'
+                    color: '#fff'
                 })
                 $(this).next().show(500);
                 $(this).addClass('on');
@@ -59,8 +59,233 @@
         }); //첫 function 끝
 
     </script>
-     <style>
-    	#stulist{
+<style type="text/css">
+#boardwrap {
+   width: 1400px;
+   margin: 0 auto;
+}
+
+#board {
+   width: 1400px;
+   margin: 0 auto;
+   margin-top: 60px;
+}
+
+#board table {
+   width: 1000px;
+   margin: 0 auto;
+   font-weight: bold;
+}
+
+#board td {
+   width: 1000px;
+   border-bottom: 1px solid #A4A4A4;;
+   border-right: 1px solid #A4A4A4;
+   height: 40px;
+}
+
+#board td:last-child {
+   border-right: none;
+}
+
+#board th {
+   border-bottom: 1px solid black;
+   border-top: 1.5px solid black;
+   height: 50px;
+   background-color: #0F4C75;
+   font-size: 16px;
+}
+
+#board tbody td a {
+   color: black;
+   text-decoration: none;
+}
+
+#th-1 {
+   width: 15%;
+}
+
+#th-2 {
+   width: 20%;
+}
+
+#th-3 {
+   width: 20%;
+}
+
+#th-4 {
+   width: 20%;
+}
+
+#th-5 {
+   width: 25%;
+}
+table {
+   text-align: center;
+}
+
+/* #liSearchOption { */
+/*    clear: both; */
+/* } */
+
+/* #liSearchOption>div {
+   margin: 0 auto;
+   margin-top: 30px;
+   width: auto;
+   height: 100px;
+} */
+#divPaging {
+   text-align: center;
+   font-size: 0;
+   list-style: none;
+   left: 500px;
+   clear: both;
+   text-align: center;
+   text-decoration: none;
+   font-size: 20px;
+   margin: 0 auto;
+}
+
+.paging {
+   display: inline-block;
+   list-style: none;
+   margin-top: 60px;
+}
+
+.paging .none {
+   display: none;
+}
+
+.paging a {
+   display: block;
+   margin: 0 4px;
+   float: left;
+   border: 1px solid #e6e6e6;
+   width: 28px;
+   height: 28px;
+   line-height: 28px;
+   text-align: center;
+   background-color: #fff;
+   font-size: 13px;
+   color: black;
+   text-decoration: none;
+}
+
+.paging .ul {
+   list-style: none;
+   text-align: center;
+}
+
+.paging .arrow {
+   border: 1px solid #ccc;
+}
+
+.paging .pprev {
+   background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
+   margin-left: 0;
+}
+
+.paging .prev {
+   background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
+   margin-right: 7px;
+}
+
+.paging .next {
+   background: #f8f8f8 url('img/page_next.png') no-repeat center center;
+   margin-left: 7px;
+}
+
+.paging .nnext {
+   background: #f8f8f8 url('img/page_nnext.png') no-repeat center center;
+   margin-right: 0;
+}
+
+.paging a.active {
+   background-color: #42454c;
+   color: #fff;
+   border: 1px solid #42454c;
+}
+
+.search {
+   margin-left: 700px;
+   margin-top: 40px;
+}
+
+h2 {
+   text-align: center;
+   margin-top: 40px;
+   font-size: 30px;
+}
+
+#searchBtn {
+   width: 70px;
+   heigth: 40px;
+   border: none;
+   border: 1px solid #e6e6e6;
+}
+#searchBtn1 {
+   width: 70px;
+   heigth: 40px;
+   border: none;
+   border: 1px solid #e6e6e6;
+}
+
+#keywordInput {
+   width: 200px;
+}
+
+/* searchType {
+   width: 100px;
+} */
+#searchtitle {
+   width: 110px;
+   heigth: 80px;
+   text-align: center;
+   margin: 0 auto;
+   border: 1px solid #e6e6e6;
+   font-size : 14px;
+}
+
+#keywordInput {
+   border: 1px solid #e6e6e6;
+   text-align: center;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 24px;
+}
+
+table td, th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 10px;
+}
+
+th {
+	background: #f2f2f2;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+li{
+	list-style: none;
+}
+h4{
+	font-size : 20px;
+	position: absolute;
+	left: 700px;	
+}
+#stulist{
     		width: 1000px;
     		margin: auto;
     		position: absolute;
@@ -80,7 +305,7 @@
     padding: 10px;
 }
 th {
-	background: rgb(221, 221, 221);
+	background: #f2f2f2;
 }
 a{
     text-decoration: none;
@@ -89,48 +314,58 @@ a{
 a:hover{
     text-decoration: underline;
 }
-
-    </style>
+#registration{
+	position: relative;
+	left: 200px;
+}
+th{
+	color:#fff;
+}
+</style>
 </head>
 <body>
-
-	<div id = "stulist">
-	
-	
+		<br>
+		<br>
+		<h4>
 		<a href="${contextPath}/counselor/studenList.do">대학생 목록</a>
-		<a href="${contextPath}/counselor/companyregList.do">기업 목록</a>
-		
-		<form role = "form" method = "post" action="${contextPath}/counselor/studenregForm.do">
+		/
+		<a href="${contextPath}/counselor/companyList.do">기업 목록</a>
+		</h4>
+			<br>
+			<hr>
+		<div id="boardwrap">
+			<div id="board" text>
 		<table>
-	<thead>
-			<tr>
-				<th>학생번호</th>
-				<th>아이디</th>
-				<th>이름</th>
-				<th>대학교</th>
-				<th>학과</th>
-			</tr>
-	</thead>
-	<tbody>
-	
-	<c:forEach var="studenlist" items = "${studenlist }">
-			<tr>
-			<td>${studenlist.ST_NO}</td>
-			<td>${studenlist.ID}</td>
-			<td>${studenlist.NAME}</td>
-			<td>${studenlist.U_NAME}</td>
-			<td>${studenlist.DEPT}</td>
-			</tr>
-</c:forEach>
+			<thead>
+					<tr>
+						<th id=th-1>학생번호</th>
+						<th id=th-2>아이디</th>
+						<th id=th-3>이름</th>
+						<th id=th-4>대학교</th>
+						<th id=th-5>학과</th>
+					</tr>
+			</thead>
+			<tbody>
+			
+				<c:forEach var="studenlist" items = "${studenlist }">
+			        <tr>
+							<td>${studenlist.ST_NO}</td>
+							<td>${studenlist.ID}</td>
+							<td><a href="${contextPath}/counselor/studenView.do?CM_NO=${studenlist.CM_NO}">${studenlist.NAME}</a></td>
+							<td>${studenlist.u_NAME}</td>
+							<td>${studenlist.DEPT}</td>
+						</tr>
+				</c:forEach>
 			</tbody>
 		</table>
-		<tr>
+</div>
+	<div id="registration">
+			<tr>
+			<br>
 				<td colspan = "5" style = "border:white:text-align:right;">
 				<a href = "${contextPath}/counselor/studenregForm.do">학생 등록</a></td>
 			</tr>
-			
-	</form>
 	</div>
-
+	</div>
 </body>
 </html>

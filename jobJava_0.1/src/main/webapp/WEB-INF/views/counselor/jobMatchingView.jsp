@@ -71,6 +71,12 @@
 .btn {
    background: rgb(89,166,255);
 }
+#main{
+	position: absolute;
+   	left: 500px;
+   	top: 20px;
+
+}
   </style>
 
  <script>
@@ -80,7 +86,7 @@
          $('.sub').hide(500);
          $('.title').removeClass('on');
          $('.title').css({
-             color: '#000'
+             color: '#fff'
          })
          $(this).next().show(500);
          $(this).addClass('on');
@@ -108,6 +114,7 @@
 </script>
 </head>
 <body>
+<div id="main"style="overflow:auto;; width:1000px; height:900px;">
 <div class="accordion">
   <c:forEach var="bInfo" items="${bInfo}" varStatus="qnaNUM">
   <div class="accordion-item">
@@ -117,10 +124,10 @@
     <div class="accordion-item-body">
       <div class="accordion-item-body-content">
             <form action="${contextPath}/counselor/memberMatching.do" method="post">
-           기업 : ${bInfo.COMPANY }<br>
-           경력 : ${bInfo.JOB_NO }<br>
-           학력 : ${bInfo.EDU }<br>
-           직무내용 <br> ${bInfo.JOB_D }<br>
+				           기업 : ${bInfo.COMPANY }<br>
+				           경력 : ${bInfo.JOB_NO }<br>
+				           학력 : ${bInfo.EDU }<br>
+				           직무내용 <br> ${bInfo.JOB_D }<br>
            <input type="hidden" name="SHOP_NO" value="${bInfo.SHOP_NO }" />
            <c:forEach var="member" items="${member}" varStatus="i">
            <input type='checkbox' name='CM_NO${i.count}' value='${member.CM_NO }' />
@@ -132,6 +139,7 @@
     </div>
   </div>
   </c:forEach>
+ </div>
  </div>
  <script type="text/javascript">
 const accordionItemHeaders = document.querySelectorAll(".accordion-item-header");

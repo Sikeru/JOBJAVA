@@ -2,7 +2,10 @@
 	pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<head>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <meta charset="UTF-8">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
@@ -19,17 +22,20 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 
+<style>
+@import
+	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap')
+	;
+</style>
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet"
 	type="text/css" media="screen">
-
-<%@ page session="false"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<!DOCTYPE html>
 <html>
-</head>
-<title>일지관리</title>
+<head>
+<meta charset="EUC-KR">
+<title>사업참여 관리 목록</title>
 <script>
 	$(function() {
-		
 		$('.sub').hide();
 		$('.title').click(function() {
 			$('.sub').hide(500);
@@ -58,18 +64,19 @@
 </script>
 <style type="text/css">
 #boardwrap {
-   width: 1400px;
+   width: 1200px;
    margin: 0 auto;
+   
 }
 
 #board {
-   width: 1400px;
+   width: 1100px;
    margin: 0 auto;
    margin-top: 60px;
+   margin-left: 200px;
 }
 
 #board table {
-   width: 1000px;
    margin: 0 auto;
    font-weight: bold;
 }
@@ -99,17 +106,24 @@
 }
 
 #th-1 {
-   width: 20%;
+   width: 5%;
 }
 
 #th-2 {
-   width: 40%;
+   width: 20%;
 }
 
 #th-3 {
-   width: 40%;
+   width: 55%;
 }
 
+#th-4 {
+   width: 10%;
+}
+
+#th-5 {
+   width: 10%;
+}
 table {
    text-align: center;
 }
@@ -275,24 +289,52 @@ h4{
 	position: absolute;
 	left: 700px;	
 }
-
-#registration{
+#stulist{
+    		width: 1000px;
+    		margin: auto;
+    		position: absolute;
+   			top: 180px;
+    	}
+    	
+    	table{
+    		width: 100%;
+    		border-collapse: collapse;
+    		line-height: 24px;
+    	}
+    	table td,th {
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px;
+}
+th {
+	background: #f2f2f2;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    text-decoration: underline;
+}
+#Enterprise{
 	position: relative;
+	top: 20px;
 	left: 200px;
 }
 th{
 	color:#fff;
 }
 </style>
+
+</head>
+
 <body>
-<br>
+
 	<br>
-		
-		<h4>
-			<a href="${contextPath}/counselor/attendance.do">출퇴근 조회</a>
-			/
-			<a href="${contextPath}/counselor/journal.do">업무 일지</a>
-		</h4>
+		<br>
+		<h4>기업목록</h4>
 			<br>
 			<hr>
 		<div id="boardwrap">
@@ -300,78 +342,52 @@ th{
 		<table>
 			<thead>
 					<tr>
-						<th id=th-1>이름</th>
-						<th id=th-2>제목</th>
-						<th id=th-3>내용</th>
+						<th id=th-1>NO</th>
+						<th id=th-2>기업명</th>
+						<th id=th-3>지역</th>
+						<th id=th-4>시작날짜</th>
+						<th id=th-5>종료날짜</th>
 					</tr>
 				</thead>
-			<tbody>
-				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}">
+				<tbody>
+
+					<c:forEach var="job" items="${job }">
 						<tr>
-							<td>${list.ID}</td>
-							<td>${list.TITLE}</td>
-							<td>${list.CONTENT}</td>
-					</tr>
-				</c:forEach>
+							<td>${job.JOB_NO}</td>
+
+							<td><a
+								href="${contextPath}/counselor/jobregView.do?JOB_NO=${job.JOB_NO}">${job.COMPANY}</a></td>
+							<td>${job.AREA}</td>
+							<td>${job.SD}</td>
+							<td>${job.DD}</td>
+						</tr>
+					</c:forEach>
 			</tbody>
 		</table>
 </div>
-	<!-- 게시판 페이징 영역 -->
-
-	<div id="divPaging">
-		
-			<ul class="paging">
-				<c:if test="${paging.prev}">
-					<span><a
-						href='<c:url value="journal?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전</a></span>
-				</c:if>
-				
-				<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-					var="num">
-					<c:if test="${paging.cri.keyword1 == ''}">
-					<span> <a href="journal.do${paging.makeSearch(num)}">${num}</a>
-					</span>
-					</c:if>
-					<c:if test="${paging.cri.keyword1 != ''}">
-					<span> <a href="journal2.do${paging.makeSearch(num)}">${num}</a>	
-					</span>
-					</c:if>
-				</c:forEach>
-				<c:if test="${paging.next && paging.endPage>0}">
-					<span><a
-						href='<c:url value="attendance?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음</a></span>
-				</c:if>
-
-			</ul>
-		</div>
-
-	<!-- 검색 폼 영역 -->
-	<form role="form" method="get">
-
-			<div class="search">
-
-				<input type="text" name="keyword" id="keywordInput"
-					value="${scri.keyword}" />
-				<button id="searchBtn" type="button">검색</button>
-				<script src="http://code.jquery.com/jquery-latest.js"></script>
-				<script>
-					    $(function(){
-					        $('#searchBtn').click(function() {self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-					        });
-					      });   
-					    </script>
-				
-						
-			</div>
-	</form>
-
-	<script>
-		$('input[type="submit"]').keydown(function() {
-			if (event.keyCode === 13) {
-				event.preventDefault();
-			}
-			;
-		});
-	</script>
+		<div id="Enterprise">
+			<tr>
+				<td colspan="5" style="border: white:text-align:right;">
+				<a href="${contextPath}/counselor/jobregForm.do">기업 등록</a></td>
+			</tr>	
+		</div>	
+            <div id="divPaging">
+               <ul class="paging">
+                  <c:if test="${paging.prev}">
+                     <span><a
+                        href='<c:url value="jobregList.do?page=${paging.startPage-1}"/>'>이전</a></span>
+                  </c:if>
+                  <c:forEach begin="${paging.startPage}" end="${paging.endPage}"
+                     var="num">
+                     <span><a
+                        href='<c:url value="jobregList.do?page=${num}"/>'>${num}</a></span>
+                  </c:forEach>
+                  <c:if test="${paging.next && paging.endPage>0}">
+                     <span><a
+                        href='<c:url value="jobregList.do?page=${paging.endPage+1}"/>'>다음</a></span>
+                  </c:if>
+               </ul>
+            </div>			
+	</div>
 </body>
 </html>

@@ -33,8 +33,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
-<head>
+<title>상담일지관리 등록</title>
+</head>
 
 <script>
 	$(function() {
@@ -81,53 +81,29 @@
 <body>
 	<div id="unibox">
 		<div class="uni">
-
-
 			<div class="unireg">
-				<h1>대학교 사업계획서 등록</h1>
+			<h2>상담 일지 관리 등록</h2>
 			</div>
 
-			<form action="${contextPath}/counselor/adduni.do" method="post">
+			<form action="${contextPath}/counselor/addjou.do" method="post">
 
+				<input type="hidden" name="CON_NO"> 
+				<input type="hidden" name="EMP_NO">
+				
 				<hr>
 
-				<input type="hidden" name="UNI_B_NO"> <input type="hidden"
-					name="ID"><br> <br>
-
+					
 				<div class="uniname">
-					<input id="uniname" type="text" name="U_NAME" size="51"
-						placeholder="대학교명"> <input id="unihp" type="text"
-						name="UNI_HP" size="51" placeholder="전화번호">
+				상담일 <input id="unistart" type="date" name="CJ_DATE" size="30">
+					<input id="unihp" type="text" name="ID" size="30" 
+						placeholder="학생 이름">
 				</div>
-				<br>
-
-
-				<div class="uniaddr">
-					<input id="uniaddr" type="text" name="UNI_ADDR" size=111
-						placeholder="대학교 주소">
-				</div>
-
-				<br>
-
-
-				<div class="unibname">
-					<input id="unibname" type="text" name="B_NAME" size=51
-						placeholder="사업명"> <input id="uniexpenses" type="text"
-						name="B_EXPENSE" size=51 placeholder="사업비">
-				</div>
-
-				<br>
-
-				<div class="unidate">
-					시작날짜 <input id="unistart" type="date" name="S_DATE" size="50">
-					~ 종료날짜 <input id="uniend" type="date" name="E_DATE" size=50>
-				</div>
-
+				
 				<br>
 
 				<div class="unicontent">
-					<textarea id="unicontent" cols=82 name="B_CONTENT"
-						placeholder="사업내용을 입력해주세요."></textarea>
+					<textarea id="unicontent" cols=90 name="CONTENT"
+						placeholder="상담내용"></textarea>
 				</div>
 
 				<br> <input type=submit value="등록하기">

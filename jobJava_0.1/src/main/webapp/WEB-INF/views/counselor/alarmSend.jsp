@@ -27,41 +27,68 @@
 	url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap')
 	;
 </style>
-<link href="${contextPath}/resources/css/counselor.css" rel="stylesheet"
-	type="text/css" media="screen">
+<link href="${contextPath}/resources/css/counselor.css" rel="stylesheet" type="text/css" media="screen">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>사업참여 관리 목록</title>
 <script>
-	$(function() {
-		$('.sub').hide();
-		$('.title').click(function() {
-			$('.sub').hide(500);
-			$('.title').removeClass('on');
-			$('.title').css({
-				color : '#'
-			})
-			$(this).next().show(500);
-			$(this).addClass('on');
+   $(function() {
+      
+      $('.sub').hide();
+      $('.title').click(function() {
+         $('.sub').hide(500);
+         $('.title').removeClass('on');
+         $('.title').css({
+            color : '#fff'
+         })
+         $(this).next().show(500);
+         $(this).addClass('on');
 
-		}); //title click끝 
+      }); //title click끝 
 
-		$('.sub li').hover(function() {
-			$(this).find('a').css({
-				fontWeight : 'bold'
-			});
+      $('.sub li').hover(function() {
+         $(this).find('a').css({
+            fontWeight : 'bold'
+         });
 
-		}, function() {
-			$(this).find('a').css({
-				fontWeight : 'normal'
-			});
+      }, function() {
+         $(this).find('a').css({
+            fontWeight : 'normal'
+         });
 
-		}); //sub li hover 끝
+      }); //sub li hover 끝
 
-	}); //첫 function 끝
+   }); //첫 function 끝
+   
+//    승인 저장
+   function updateMember(cnt, programNO){
+      let f = document.createElement('form');
+      let process = document.getElementById("PERMISSION"+cnt).value;
+       let obj;
+       let obj1;
+       
+       obj = document.createElement('input');
+       obj.setAttribute('type', 'hidden');
+       obj.setAttribute('name', 'permission');
+       obj.setAttribute('value', process);
+       
+       obj1 = document.createElement('input');
+       obj1.setAttribute('type', 'hidden');
+       obj1.setAttribute('name', 'programNO');
+       obj1.setAttribute('value', programNO);
+       
+       f.appendChild(obj);
+       f.appendChild(obj1);
+       f.setAttribute('method', 'post');
+       f.setAttribute('action', ' ${contextPath}/counselor/updateproList.do');
+       document.body.appendChild(f);
+       f.submit();
+        
+       }
 </script>
+ 
 <style type="text/css">
 #boardwrap {
    width: 1400px;
@@ -105,21 +132,24 @@
 }
 
 #th-1 {
-   width: 15%;
+   width: 20%;
 }
 
 #th-2 {
-   width: 55%;
+   width: 20%;
 }
 
 #th-3 {
-   width: 15%;
+   width: 20%;
 }
 
 #th-4 {
-   width: 15%;
+   width: 20%;
 }
 
+#th-5 {
+   width: 20%;
+}
 table {
    text-align: center;
 }
@@ -138,7 +168,7 @@ table {
    text-align: center;
    font-size: 0;
    list-style: none;
-   left: 200px;
+   left: 500px;
    clear: both;
    text-align: center;
    text-decoration: none;
@@ -149,8 +179,7 @@ table {
 .paging {
    display: inline-block;
    list-style: none;
-   margin-top: 20px;
-   margin-left:-1100px;
+   margin-top: 60px;
 }
 
 .paging .none {
@@ -208,7 +237,7 @@ table {
 }
 
 .search {
-   margin-left: 700px;
+   margin-left: 600px;
    margin-top: 40px;
 }
 
@@ -306,7 +335,7 @@ h4{
     padding: 10px;
 }
 th {
-	background: rgb(221, 221, 221);
+	background: #f2f2f2;
 }
 a{
     text-decoration: none;
@@ -325,68 +354,78 @@ th{
 
 </style>
 
+
+   
+
 </head>
 
 <body>
 
 	<br>
-		<br>
-		<h4>참여목록</h4>
-
-		<br>
+			<br>
+			<h4>알림보내기</h4>
+			<br>
 			<hr>
-		<div id="boardwrap">
-			<div id="board" text>
-		<table>
-			<thead>
+			<div id="boardwrap">
+		<form role="form" method="post"
+			action="${contextPath}/counselor/alarmList.do">
+			 <div id="board" text>
+			<table>
+				<thead>
 					<tr>
-						<th id=th-1>사업번호</th>
-						<th id=th-2>사업명</th>
-						<th id=th-3>대학명</th>
+						<th id=th-1>No</th>
+						<th id=th-2>제목</th>
+						<th id=th-3>구분</th>
 						<th id=th-4>승인여부</th>
+						<th id=th-5>수정</th>
 					</tr>
 				</thead>
 				<tbody>
 
-					<c:forEach var="list" items="${list }">
-						<tr>
-							<td>${list.UNI_B_NO}</td>
-							<td><a
-								href="${contextPath}/counselor/uniregView.do?UNI_B_NO=${list.UNI_B_NO}">${list.B_NAME}</a></td>
-							<td>${list.U_NAME}</td>
-							<td>${list.PERMISSION}</td>
+					<c:forEach var="alarm" items="${alarm }" varStatus="status">
+					
+						<tr> 
+							<td>${alarm.PROGRAM_NO}</td>
+							<td>${alarm.TITLE}
+							<details>
+						    	<summary>신청내용</summary>
+						    	  프로그램 내용 : <p>${alarm.CONTENT}</p>
+						    	  프로그램 기간 : <p>${alarm.S_DATE }</p> - <p>${alarm.E_DATE }</p>
+					 	    </details>
+							
+							</td>
+							<td>${alarm.DIVISION}</td>
+							<td><select id="PERMISSION${status.count}" name="PERMISSION">
+                                <option hidden="${alarm.PERMISSION}" selected>${alarm.PERMISSION}</option>
+                                <option value="접수진행중">접수진행중</option>
+                                <option value="승인">승인</option>
+                           </select></td>
+                           <td>
+                           <input id="subbtn" type="button" value="수정" onclick="updateMember(${status.count}, ${alarm.PROGRAM_NO})"/>
+                           </td>
 						</tr>
 					</c:forEach>
-				</tbody>
-		</table>
-</div>
-	<div id="registration">
-			<tr>
-			<br>
-				<td colspan="5" style="border: white:text-align:right;">
-				<a href="${contextPath}/counselor/uniregForm.do">대학 등록</a></td>
-			</tr>		
-		<li>
+			</table>
+			</div>
+		</form>
+	</div>
             <div id="divPaging">
                <ul class="paging">
                   <c:if test="${paging.prev}">
                      <span><a
-                        href='<c:url value="uniregList.do?page=${paging.startPage-1}"/>'>이전</a></span>
+                        href='<c:url value="alarmSend.do?page=${paging.startPage-1}"/>'>이전</a></span>
                   </c:if>
                   <c:forEach begin="${paging.startPage}" end="${paging.endPage}"
                      var="num">
                      <span><a
-                        href='<c:url value="uniregList.do?page=${num}"/>'>${num}</a></span>
+                        href='<c:url value="alarmSend.do?page=${num}"/>'>${num}</a></span>
                   </c:forEach>
                   <c:if test="${paging.next && paging.endPage>0}">
                      <span><a
-                        href='<c:url value="uniregList.do?page=${paging.endPage+1}"/>'>다음</a></span>
+                        href='<c:url value="alarmSend.do?page=${paging.endPage+1}"/>'>다음</a></span>
                   </c:if>
                </ul>
             </div>
-         </li>
-			
-	</div>
 
 </body>
 </html>

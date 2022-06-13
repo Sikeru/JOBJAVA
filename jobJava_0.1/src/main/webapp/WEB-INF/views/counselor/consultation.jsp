@@ -26,7 +26,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html>
 </head>
-<title>일지관리</title>
+<title>상담 일지 관리 리스트</title>
 <script>
 	$(function() {
 		
@@ -99,15 +99,15 @@
 }
 
 #th-1 {
-   width: 20%;
+   width: 25%;
 }
 
 #th-2 {
-   width: 40%;
+   width: 30%;
 }
 
 #th-3 {
-   width: 40%;
+   width: 45%;
 }
 
 table {
@@ -128,7 +128,7 @@ table {
    text-align: center;
    font-size: 0;
    list-style: none;
-   left: 500px;
+   left: 400px;
    clear: both;
    text-align: center;
    text-decoration: none;
@@ -275,7 +275,35 @@ h4{
 	position: absolute;
 	left: 700px;	
 }
-
+#stulist{
+    		width: 1000px;
+    		margin: auto;
+    		position: absolute;
+   			top: 180px;
+    	}
+    	
+    	table{
+    		width: 100%;
+    		border-collapse: collapse;
+    		line-height: 24px;
+    	}
+    	table td,th {
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px;
+}
+th {
+	background: #f2f2f2;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+a:hover{
+    text-decoration: underline;
+}
 #registration{
 	position: relative;
 	left: 200px;
@@ -283,15 +311,16 @@ h4{
 th{
 	color:#fff;
 }
+
+
 </style>
 <body>
 <br>
-	<br>
-		
-		<h4>
-			<a href="${contextPath}/counselor/attendance.do">출퇴근 조회</a>
-			/
-			<a href="${contextPath}/counselor/journal.do">업무 일지</a>
+		<br>
+		<h4>	
+		<a href="${contextPath}/counselor/consultation.do">상담 일지 관리 리스트</a>
+		/
+		<a href="${contextPath}/counselor/consultationJournalForm.do">상담 일지 관리 등록</a>
 		</h4>
 			<br>
 			<hr>
@@ -300,78 +329,75 @@ th{
 		<table>
 			<thead>
 					<tr>
-						<th id=th-1>이름</th>
-						<th id=th-2>제목</th>
+						<th id=th-1>순서</th>
+						<th id=th-2>학생 이름</th>
 						<th id=th-3>내용</th>
 					</tr>
-				</thead>
+			</thead>
 			<tbody>
 				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}">
 						<tr>
-							<td>${list.ID}</td>
-							<td>${list.TITLE}</td>
-							<td>${list.CONTENT}</td>
-					</tr>
-				</c:forEach>
+							<td>${list.CON_NO}</td>
+							<td>${list.NAME}</td>
+							<td>
+							<details>
+						    	<summary>내용</summary>
+						    	 <p>${list.CONTENT}</p>
+					 	    </details>
+							</tr>
+					</c:forEach>
 			</tbody>
 		</table>
 </div>
 	<!-- 게시판 페이징 영역 -->
 
-	<div id="divPaging">
-		
+		<div id="divPaging">
 			<ul class="paging">
 				<c:if test="${paging.prev}">
-					<span><a
-						href='<c:url value="journal?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전</a></span>
+					<span>
+						<a href='<c:url value="consultation?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전
+						</a>
+					</span>
 				</c:if>
-				
-				<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-					var="num">
-					<c:if test="${paging.cri.keyword1 == ''}">
-					<span> <a href="journal.do${paging.makeSearch(num)}">${num}</a>
+				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="num">
+					<span>
+						<a href="consultation.do${paging.makeSearch(num)}">${num}
+						</a>
 					</span>
-					</c:if>
-					<c:if test="${paging.cri.keyword1 != ''}">
-					<span> <a href="journal2.do${paging.makeSearch(num)}">${num}</a>	
-					</span>
-					</c:if>
 				</c:forEach>
 				<c:if test="${paging.next && paging.endPage>0}">
-					<span><a
-						href='<c:url value="attendance?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음</a></span>
+					<span>
+						<a href='<c:url value="consultation?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음
+						</a>
+					</span>
 				</c:if>
-
 			</ul>
 		</div>
-
 	<!-- 검색 폼 영역 -->
 	<form role="form" method="get">
-
+		<li id='liSearchOption'>
 			<div class="search">
-
-				<input type="text" name="keyword" id="keywordInput"
-					value="${scri.keyword}" />
-				<button id="searchBtn" type="button">검색</button>
+				<input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+					<button id="searchBtn" type="button">검색
+					</button>
 				<script src="http://code.jquery.com/jquery-latest.js"></script>
 				<script>
-					    $(function(){
-					        $('#searchBtn').click(function() {self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-					        });
-					      });   
-					    </script>
-				
-						
+				    $(function(){
+				        $('#searchBtn').click(function() {
+				          self.location = "consultation.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+				        });
+				      });   
+				</script>
 			</div>
+		</li>
 	</form>
-
 	<script>
 		$('input[type="submit"]').keydown(function() {
 			if (event.keyCode === 13) {
 				event.preventDefault();
-			}
-			;
+			};
 		});
 	</script>
+</div>
 </body>
 </html>

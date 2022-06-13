@@ -43,7 +43,7 @@
 			$('.sub').hide(500);
 			$('.title').removeClass('on');
 			$('.title').css({
-				color : '#000'
+				color : '#fff'
 
 			})
 			$(this).next().show(500);
@@ -68,123 +68,117 @@
 	}); //첫 function 끝
 </script>
 <style>
-table {
-	border: 3px solid gray
+.uni {
+	position: absolute;
+	top: 80px;
 }
 
-td {
-	border: 1px solid gray
-}
-
-#regtitle {
-	background-color: gray
+#unibox {
+	width: 500px;
+	height: 1000px;
+	position: absolute;
+	left: 500px;
 }
 </style>
 
 <body>
-	<div id="reg">
-		<br>
-		<br> <b><font size="6" color="gray">일자리 등록</font></b> <br>
-		<br>
-		<br>
+	<div id="unibox">
+		<div class="uni">
 
-		<form action="${contextPath}/counselor/addJob.do" method="post">
-			<table>
-				<tr>
-					<td id="regtitle">경력</td>
-					<td><input type="text" name="CAREER"></td>
-				</tr>
 
-				<tr>
-					<td id="regtitle">학력</td>
-					<td><input type="text" name="EDU"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">지역</td>
-					<td><input type="text" name="AREA"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">임금</td>
-					<td><input type="text" name="SAL"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">고용형태</td>
-					<td><input type="text" name="EMP_TYPE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">근무형태</td>
-					<td><input type="text" name="WORK_TYPE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">복리후생</td>
-					<td><input type="text" name="WELFARE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">기업명</td>
-					<td><input type="text" name="COMPANY"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">업종</td>
-					<td><input type="text" name="B_TYPE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">기업규모</td>
-					<td><input type="text" name="SCALE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">설립년도</td>
-					<td><input type="date" name="ESTABLISH"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">연매출액</td>
-					<td><input type="text" name="Y_SALES"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">홈페이지</td>
-					<td><input type="text" name="HP"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">근로자수</td>
-					<td><input type="text" name="EMP_NUM"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">시작일</td>
-					<td><input type="date" name="S_DATE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">종료일</td>
-					<td><input type="date" name="D_DATE"></td>
-				</tr>
-
-				<tr>
-					<td id="regtitle">상세설명</td>
-					<td><input type="text" name="JOB_D"></td>
-				</tr>
+			<div class="unireg">
+				<h1>일자리 등록</h1>
+				<br>
 				
-				<tr>
-					<td id="regtitle">제목</td>
-					<td><input type="text" name="TITLE"></td>
-				</tr>
+			</div>
+				<form action="${contextPath}/counselor/addjob.do" method="post">
+				<hr>
+			
+				<div class="uniname">
+					<input id="uniname" type="text" name="CAREER" size="51"
+						placeholder="경력"> 
+					<input id="unihp" type="text" name="EDU" size="51" 
+						placeholder="학력">
+				</div>
+				
+				<br>
+				
+				<div class="uniname">
+					<input id="uniname" type="text" name="AREA" size="51"
+						placeholder="지역"> 
+					<input id="unihp" type="text" name="SAL" size="51" 
+						placeholder="임금">
+				</div>
+				
+				<br>
 
-			</table>
+				<div class="uniname">
+					<input id="uniname" type="text" name="EMP_TYPE" size="51"
+						placeholder="고용형태"> 
+					<input id="unihp" type="text" name="WORK_TYPE" size="51" 
+						placeholder="근무형태">
+				</div>
+				
+				<br>
+				
+				<div class="uniname">
+					<input id="uniname" type="text" name="WELFARE" size="51"
+						placeholder="복리후생"> 
+					<input id="unihp" type="text" name="COMPANY" size="51" 
+						placeholder="기업명">
+				</div>
+				
+				<br>
+								
+				<div class="uniname">
+					<input id="uniname" type="text" name="B_TYPE" size="51"
+						placeholder="업종"> 
+					<input id="unihp" type="text" name="SCALE" size="51" 
+						placeholder="기업규모">
+				</div>
+				
+				<br>
+				
+				<div class="unidate">
+					설립년도 <input id="unistart" type="date" name="ESTABLISH" size="103">
+				</div>
+				
+				<br>
+				
+				<div class="uniname">
+					<input id="uniname" type="text" name="Y_SALES" size="51"
+						placeholder="연매출액"> 
+					<input id="unihp" type="text" name="HP" size="51" 
+						placeholder="홈페이지">
+				</div>
+				
+				<br>
+
+				<div class="uniname">
+					<input id="uniname" type="text" name="EMP_NUM" size="111"
+						placeholder="근로자수"> 
+				</div>
+				
+				<br>
+				
+				<div class="unidate">
+					시작날짜 <input id="unistart" type="date" name="S_DATE" size="51">
+					~ 종료날짜 <input id="uniend" type="date" name="D_DATE" size=51>
+				</div>
+				
+				<br>
+				
+				<div class="uniname">
+					<input id="unihp" type="text" name="TITLE" size="51" 
+						placeholder="제목">
+					<input id="uniname" type="text" name="JOB_D" size="51"
+						placeholder="상세설명"> 
+				</div>
+				
 			<br> <input type="submit" value="등록하기"> <input
 				type="reset" value="다시입력">
 		</form>
-
+			</div>
 	</div>
 
 </body>

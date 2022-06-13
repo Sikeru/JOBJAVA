@@ -19,6 +19,7 @@
 </style>
  
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet" type="text/css" media="screen">
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,58 +62,58 @@
            
           });
           
- 
+           $(document).ready(function() {
+              var formObj = $("form[name='frm']");
+                  
+                    //수정
+                  $('.companyupdate').on("click", function(){
+                      formObj.attr("action", "/JJ/counselor/companyupdateView.do?CM_NO=${companylist.CM_NO}");
+                     formObj.attr("method", "get");
+                     formObj.submit();
+                 }) 
 
+                 // 삭제
+                 $('.companydelete').on("click", function() {
+                    formObj.attr("action", "/JJ/counselor/companydelete.do");
+                    formObj.attr("method", "post");
+                    formObj.submit();
+                 })
+               
+                 
+           })
+          
 </script>
         
 <style>
-         .uni{
-         
-    position: absolute;
-    top: 100px;
-    left: -50px;
+         .com{
+         position: absolute;
+    top: 180px;
     border: 5px solid #0F4C75;
     padding: 40px;
     border-radius: 10px;
     width: 600px;
-
       
          }
          
-         #unibox{
+         #combox{
          width: 500px;
          height: 1000px;
          position: absolute;
          left: 600px;
- 
+
          }
          
-         label{
-             display: inline-block;
-             background: #0F4C75;
-          color: white;
-          padding: 5px;
-          border-radius: 5px;
-         }
-         
-         #buttonset{
-         margin-left : 180px;
-         }
-         
-         #hrset{
-          background-color: #0F4C75;
-         }
-         
-         .unireg{
-         border-bottom: 4px solid #0F4C75;
-         
-         }
-         
-         #uniregh{
-         text-align: center;
-      }
-      
-   #update:hover {
+    label {
+    display: inline-block;
+    background: #0F4C75;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100;
+    text-align: center;
+   }
+   
+    #update:hover {
    color: white;
    background: #E16106;
 }
@@ -125,104 +126,89 @@
       background-color:  #0F4C75;
       border:none;
       color: white;
+      padding: 5;
+    border-radius: 3px;
       }
       
       #delete{
       background-color:  #0F4C75;
       border:none;
       color: white;
+      padding: 5;
+    border-radius: 3px;
       }
+      
+      #comregh{
+      text-align: center;
+      }
+      
+      .comreg{
+      border-bottom: 4px solid #0F4C75;
+      }
+      
+          #buttonset{
+         margin-left : 180px;
+         }
 
    </style>
    <body>
-   <div id = "unibox">
-      <div class = "uni">
+   <div id = "combox">
+      <div class = "com">
       
-      <div class = "unireg"><h1 id = "uniregh">대학교 사업계획서</h1></div>
+      <div class = "comreg"><h1 id = "comregh">기업 상세창</h1></div>
       
-      <form id = "frm" method = "post">
-         <input type = "hidden" name = "UNI_B_NO" value = "${list.UNI_B_NO }" readonly/>
+      <form name = "frm" method = "post" role='form'>
+         <input type = "hidden" name = "CM_NO" value = "${companylist.CM_NO}" readonly/>
          
    
 
       <br>
       
-      <div class = "uninum" name = "UNI_B_NO">
-         <label>사업번호 </label>
-          ${list.UNI_B_NO } 
+      <div class = "AGENT" name = "AGENT">
+         <label>대표자</label> &nbsp;
+         ${companylist.AGENT }
+         </div> 
+      <br>
+       <div class = "C_NAME" name = "C_NAME">
+       <label>회사명</label> &nbsp;
+         ${companylist.c_NAME }
+      </div> 
+      <br>
+      
+      <div class = "B_TYPE" name = "B_TYPE">
+         <label>업종</label> &nbsp;
+         ${companylist.b_TYPE }
       </div>
+      <br>
+      <div class = "C_DIV" name = "C_DIV">
+         <label>기업구분</label> &nbsp;
+         ${companylist.c_DIV }
+      </div>
+      <br>
+      <div class = "HOMEPAGE" name ="HOMEPAGE">
+         <label>HOMEPAGE</label> &nbsp;
+         ${companylist.HOMEPAGE }
+      </div>
+      <br>
+      <div class = "EMP_NUM" name ="EMP_NUM">
+         <label>근로자수</label> &nbsp;
+         ${companylist.EMP_NUM }
+      </div>
+      
       
       <br>
       
-      <div class = "uniname" name = "U_NAME">
-         <label>대학명 </label>
-         ${list.u_NAME }
-      </div>
-      
-      <br>
-      
-      
-      <div class = "uniaddr" name = "UNI_ADDR">
-         <label>대학교 주소 </label>
-         ${list.UNI_ADDR }
-      </div>
-      <br>
-      
-      <div class = "unihp" name = "UNI_HP">
-         <label>전화번호 </label>
-         ${list.UNI_HP }
-      </div>
-      
-      <br>
-      
-      
-      <div class = "unibname" name = "B_NAME">
-         <label>사업명 </label>
-         ${list.b_NAME }
-         </div>
-         <br>
-      <div class = "bexpense" name = "B_EXPENSE">
-         <label>사업비 </label>
-         <input type = "text" id = "expense" name = "B_EXPENSE" value = "${list.b_EXPENSE }"/>
-      </div>
-      
-   <br>
-      <div class = "unidate">
-         <label name = "S_DATE">시작날짜</label> 
-         <input type = "date" id = "s_date" name = "S_DATE" value = "${list.s_DATE }"/> - 
-         <label name = "E_DATE">종료날짜</label> 
-         <input type = "date" id = "e_date" name = "E_DATE" value = "${list.e_DATE }"/>
-      </div>
-      
-      <br>
-      
-      <div class = "unicontent" name = "B_CONTENT">
-         <label>사업내용 </label>
-         ${list.b_CONTENT }
-      </div>
+         <div id = "buttonset">
+   <button type="submit" id="update">수정하기</button>
+   &nbsp;&nbsp;&nbsp;
+   <button type="submit" id="delete">삭제하기</button>
+   </div>
+   
    
       </form>
-      <br>
-      <div id = "buttonset">
-   <input type = "button" id = "update" value = "수정하기">
-   &nbsp;&nbsp;&nbsp;
-   <input type = "button" id = "delete" value = "삭제하기">
-    </div>
-    <script type="text/javascript">
-    
-    $("#update").on("click", function(){
-         var frm = $("#frm")[0];
-         frm.action = "update.do";
-         frm.submit();
-     });
+   
 
-     $("#delete").on("click", function(){
-         var frm = $("#frm")[0];
-         frm.action = "delete.do";
-         frm.submit();
-     });
-    
-    </script>
+   
     
       </div>
    </div>

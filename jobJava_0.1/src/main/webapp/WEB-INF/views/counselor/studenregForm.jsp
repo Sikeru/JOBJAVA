@@ -32,7 +32,7 @@
                 $('.sub').hide(500);
                 $('.title').removeClass('on');
                 $('.title').css({
-                    color: '#000'
+                    color: '#fff'
                 })
                 $(this).next().show(500);
                 $(this).addClass('on');
@@ -63,67 +63,67 @@
     </script>
 <style>
 .stu{
-   		position: absolute;
-   		top: 180px;
-   		
-   	
-   		}
-   		
-   		#stubox{
-   		width: 500px;
-   		height: 1000px;
-   		position: absolute;
-   		left: 600px;
+         position: absolute;
+         top: 80px;
+         
+      
+         }
+         
+         #stubox{
+         width: 500px;
+         height: 1000px;
+         position: absolute;
+         left: 500px;
  
-   		}
+         }
 .stuname {
-	width: 100%;
+   width: 100%;
 }
 
 .uname {
-	width: 100%;
+   width: 100%;
 }
 </style>
 <body>
 <div id = "stubox">
-	<div class = "stu">
+   <div class = "stu">
 
-	
-		<div class = "stureg"><h1>담당 학생 등록 페이지</h1></div>
-		
-		<form action="${contextPath}/counselor/addstu.do"  method = "post"> 
-	
-		<hr>
-		
-		<input type="hidden" name="ST_NO">
-		<input type="hidden" name="ID"><br>
-		
-		
-		<br>
-		
-		<div class = "stuname">
-			<input id = "stuname" type = "text" name = "NAME" size="51" placeholder = "학생이름">
-			<input id = "stuemain" type = "text" name = "BIRTH" size="51" placeholder = "생년월일">
-			
-		</div>
-		<br>
-		
-		<br>
-		
-		<div class = "uname">
-		
-		<input id = "u_name" type = "text" name = "U_NAME" size = "51" placeholder = "대학교">
-		<input id = "studept" type = "text" name = "DEPT" size="51"  placeholder = "학과">
-			
-		</div>
-		
-		<br>
-		
-		<input type = submit value = "등록하기">
-		
-		</form>
-		
-	</div>
+   
+      <div class = "stureg"><h1>담당 학생 등록 페이지</h1></div>
+      
+      <form action="${contextPath}/counselor/addstu.do"  method = "post"> 
+   
+      <hr>
+      
+      <input type="hidden" name="ST_NO">
+      <input type="hidden" name="ID"><br>
+      
+      
+      <br>
+      
+      <div class = "stuname">
+         <input id = "stuname" type = "text" name = "NAME" size="51" placeholder = "학생이름">
+         <input id = "stuemail" type = "text" name = "EMAIL" size="51" placeholder = "학생이메일">
+         
+      </div>
+      <br>
+      
+      <br>
+      
+      <div class = "uname">
+      
+      <input id = "u_name" type = "text" name = "U_NAME" size = "51" placeholder = "대학교">
+      <input id = "studept" type = "text" name = "DEPT" size="51"  placeholder = "학과">
+         
+      </div>
+      
+      <br>
+      
+      <input type = submit value = "등록하기">
+      
+      </form>
+      
+   </div>
 </div>
 
 </body>

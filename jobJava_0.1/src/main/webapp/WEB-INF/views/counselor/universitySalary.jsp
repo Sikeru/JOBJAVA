@@ -21,12 +21,11 @@
 
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet"
 	type="text/css" media="screen">
-
 <%@ page session="false"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html>
 </head>
-<title>일지관리</title>
+<title>대학사업비 조회</title>
 <script>
 	$(function() {
 		
@@ -55,6 +54,32 @@
 		}); //sub li hover 끝
 
 	}); //첫 function 끝
+	
+// 	승인 저장
+	function updateMember(cnt, unibNO){
+		let f = document.createElement('form');
+		let process = document.getElementById("PERMISSION"+cnt).value;
+	    let obj;
+	    let obj1;
+	    
+	    obj = document.createElement('input');
+	    obj.setAttribute('type', 'hidden');
+	    obj.setAttribute('name', 'permission');
+	    obj.setAttribute('value', process);
+	    
+	    obj1 = document.createElement('input');
+	    obj1.setAttribute('type', 'hidden');
+	    obj1.setAttribute('name', 'unibNO');
+	    obj1.setAttribute('value', unibNO);
+	    
+	    f.appendChild(obj);
+	    f.appendChild(obj1);
+	    f.setAttribute('method', 'post');
+	    f.setAttribute('action', ' ${contextPath}/counselor/updateSalaryList.do');
+	    document.body.appendChild(f);
+	    f.submit();
+	     
+	    }
 </script>
 <style type="text/css">
 #boardwrap {
@@ -76,8 +101,8 @@
 
 #board td {
    width: 1000px;
-   border-bottom: 1px solid #A4A4A4;;
-   border-right: 1px solid #A4A4A4;
+   border-bottom: 1px solid #A4A4A4 ;
+   border-right: 1px solid #A4A4A4 ;
    height: 40px;
 }
 
@@ -89,7 +114,7 @@
    border-bottom: 1px solid black;
    border-top: 1.5px solid black;
    height: 50px;
-   background-color: #0F4C75;
+   background-color: #0F4C75 ;
    font-size: 16px;
 }
 
@@ -99,17 +124,27 @@
 }
 
 #th-1 {
-   width: 20%;
+   width: 15%;
 }
 
 #th-2 {
-   width: 40%;
+   width: 15%;
 }
 
 #th-3 {
-   width: 40%;
+   width: 15%;
 }
 
+#th-4 {
+   width: 15%;
+}
+
+#th-5 {
+   width: 20%;
+}
+#th-6 {
+   width: 20%;
+}
 table {
    text-align: center;
 }
@@ -167,7 +202,7 @@ table {
 }
 
 .paging .arrow {
-   border: 1px solid #ccc;
+   border: 1px solid #0F4C75 ;
 }
 
 .paging .pprev {
@@ -209,15 +244,15 @@ h2 {
 
 #searchBtn {
    width: 70px;
-   heigth: 40px;
+   height: 30px;
    border: none;
-   border: 1px solid #e6e6e6;
+   border: 1px solid #e6e6e6 ;
 }
 #searchBtn1 {
    width: 70px;
-   heigth: 40px;
+   height:30px;
    border: none;
-   border: 1px solid #e6e6e6;
+   border: 1px solid #e6e6e6 ;
 }
 
 #keywordInput {
@@ -229,7 +264,7 @@ h2 {
 } */
 #searchtitle {
    width: 110px;
-   heigth: 80px;
+   height: 80px;
    text-align: center;
    margin: 0 auto;
    border: 1px solid #e6e6e6;
@@ -255,7 +290,7 @@ table td, th {
 }
 
 th {
-	background: #f2f2f2;
+	background: #e6e6e6;
 }
 
 a {
@@ -275,23 +310,23 @@ h4{
 	position: absolute;
 	left: 700px;	
 }
-
-#registration{
+#datebox{
 	position: relative;
 	left: 200px;
 }
 th{
 	color:#fff;
 }
+
+
 </style>
 <body>
 <br>
-	<br>
-		
+		<br>
 		<h4>
-			<a href="${contextPath}/counselor/attendance.do">출퇴근 조회</a>
-			/
-			<a href="${contextPath}/counselor/journal.do">업무 일지</a>
+		<a href="${contextPath}/counselor/studentSalary.do">학생 급여 조회</a>
+		/
+		<a href="${contextPath}/counselor/universitySalary.do">대학 별 사업비 조회</a>
 		</h4>
 			<br>
 			<hr>
@@ -300,78 +335,82 @@ th{
 		<table>
 			<thead>
 					<tr>
-						<th id=th-1>이름</th>
-						<th id=th-2>제목</th>
-						<th id=th-3>내용</th>
+						<th id=th-1>시작일</th>
+						<th id=th-2>종료일</th>
+						<th id=th-3>대학명</th>
+						<th id=th-4>급액</th>
+						<th id=th-5>승인 여부</th>
+						<th id=th-6>수정</th>
 					</tr>
-				</thead>
+			</thead>
 			<tbody>
-				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}">
+				<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}" varStatus="status">
 						<tr>
-							<td>${list.ID}</td>
-							<td>${list.TITLE}</td>
-							<td>${list.CONTENT}</td>
-					</tr>
+							<td>${list.SD}</td>
+							<td>${list.ED}</td>
+							<td>${list.U_NAME}</td>
+							<td>${list.B_EXPENSE}</td>
+<!-- 							승인 -->
+							<td><select id="PERMISSION${status.count}" name="PERMISSION">
+                       			<option hidden="${list.PERMISSION}" selected>${list.PERMISSION}</option>
+                       			<option value="접수진행중">접수진행중</option>
+                       			<option value="승인">승인</option>
+                       			<option value="거부">거부</option>
+                  			</select></td>
+                  			<td><input id="subbtn" type="button" value="수정" onclick="updateMember(${status.count}, ${list.UNI_B_NO})"/></td>
+						</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 </div>
 	<!-- 게시판 페이징 영역 -->
-
-	<div id="divPaging">
-		
+		<div id="divPaging">
 			<ul class="paging">
 				<c:if test="${paging.prev}">
-					<span><a
-						href='<c:url value="journal?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전</a></span>
+					<span>
+						<a href='<c:url value="universitySalary?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전
+						</a>
+					</span>
 				</c:if>
-				
-				<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
-					var="num">
-					<c:if test="${paging.cri.keyword1 == ''}">
-					<span> <a href="journal.do${paging.makeSearch(num)}">${num}</a>
+				<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="num">
+					<span>
+						<a href="universitySalary.do${paging.makeSearch(num)}">${num}
+						</a>
 					</span>
-					</c:if>
-					<c:if test="${paging.cri.keyword1 != ''}">
-					<span> <a href="journal2.do${paging.makeSearch(num)}">${num}</a>	
-					</span>
-					</c:if>
 				</c:forEach>
 				<c:if test="${paging.next && paging.endPage>0}">
-					<span><a
-						href='<c:url value="attendance?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음</a></span>
+					<span>
+						<a href='<c:url value="universitySalary?page=${paging.makeSearch(paging.startPage-1)}"/>'>다음
+						</a>
+					</span>
 				</c:if>
-
 			</ul>
 		</div>
-
 	<!-- 검색 폼 영역 -->
 	<form role="form" method="get">
-
+		<li id='liSearchOption'>
 			<div class="search">
-
-				<input type="text" name="keyword" id="keywordInput"
-					value="${scri.keyword}" />
-				<button id="searchBtn" type="button">검색</button>
+				<input type="text" name="keyword" id="keywordInput" value="${scri.keyword}"/>
+					<button id="searchBtn" type="button">검색
+					</button>
 				<script src="http://code.jquery.com/jquery-latest.js"></script>
 				<script>
-					    $(function(){
-					        $('#searchBtn').click(function() {self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
-					        });
-					      });   
-					    </script>
-				
-						
+				    $(function(){
+				        $('#searchBtn').click(function() {
+				          self.location = "universitySalary.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+				        });
+				      });   
+				</script>
 			</div>
+		</li>
 	</form>
-
 	<script>
 		$('input[type="submit"]').keydown(function() {
 			if (event.keyCode === 13) {
 				event.preventDefault();
-			}
-			;
+			};
 		});
 	</script>
+	</div>
 </body>
 </html>

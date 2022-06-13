@@ -5,15 +5,15 @@
 <head>
 <meta charset="UTF-8">
 
-<!-- <link -->
-<!-- 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" -->
-<!-- 	rel="stylesheet" -->
-<!-- 	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" -->
-<!-- 	crossorigin="anonymous"> -->
-<!-- <script -->
-<!-- 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" -->
-<!-- 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" -->
-<!-- 	crossorigin="anonymous"></script> -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+	crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script
@@ -36,197 +36,330 @@
 <title>출석관리 페이지</title>
 <script>
 	$(function() {
-		
 		$('.sub').hide();
 		$('.title').click(function() {
 			$('.sub').hide(500);
 			$('.title').removeClass('on');
 			$('.title').css({
-				color : '#000'
+				color : '#fff'
 			})
 			$(this).next().show(500);
 			$(this).addClass('on');
-
 		}); //title click끝 
-
+		
 		$('.sub li').hover(function() {
 			$(this).find('a').css({
 				fontWeight : 'bold'
 			});
-
 		}, function() {
 			$(this).find('a').css({
 				fontWeight : 'normal'
 			});
-
 		}); //sub li hover 끝
-
 	}); //첫 function 끝
 </script>
 <style type="text/css">
-body {
-	line-height: 2em;
-	font-family: "맑은 고딕";
+#boardwrap {
+   width: 1400px;
+   margin: 0 auto;
 }
 
-ul, li {
-	list-style: none;
-	text-align: center;
-	padding: 0;
-	margin: 0;
+#board {
+   width: 1400px;
+   margin: 0 auto;
+   margin-top: 60px;
 }
 
-#mainWrapper {
-	width: 800px;
-	margin: 0 auto; /*가운데 정렬*/
+#board table {
+   width: 1000px;
+   margin: 0 auto;
+   font-weight: bold;
 }
 
-#mainWrapper>ul>li:first-child {
-	text-align: center;
-	font-size: 14pt;
-	height: 40px;
-	vertical-align: middle;
-	line-height: 30px;
+#board td {
+   width: 1000px;
+   border-bottom: 1px solid #A4A4A4 ;
+   border-right: 1px solid #A4A4A4 ;
+   height: 40px;
 }
 
-#ulTable {
-	margin-top: 10px;
+#board td:last-child {
+   border-right: none;
 }
 
-#ulTable>li:first-child>ul>li {
-	background-color: #c9c9c9;
-	font-weight: bold;
-	text-align: center;
+#board th {
+   border-bottom: 1px solid black;
+   border-top: 1.5px solid black;
+   height: 50px;
+   background-color: #0F4C75 ;
+   font-size: 16px;
 }
 
-#ulTable>li>ul {
-	clear: both;
-	padding: 0px auto;
-	position: relative;
-	min-width: 40px;
+#board tbody td a {
+   color: black;
+   text-decoration: none;
 }
 
-#ulTable>li>ul>li {
-	float: left;
-	font-size: 10pt;
-	border-bottom: 1px solid silver;
-	vertical-align: baseline;
+#th-1 {
+   width: 20%;
 }
 
-#ulTable>li>ul>li:first-child {
-	width: 10%;
-} /*이름 열 크기*/
-#ulTable>li>ul>li:first-child+li {
-	width: 45%;
-} /*날짜 열 크기*/
-#ulTable>li>ul>li:first-child+li+li {
-	width: 20%;
-} /*출근 시간 열 크기*/
-#ulTable>li>ul>li:first-child+li+li+li {
-	width: 15%;
-} /*퇴근 시간 열 크기*/
-#ulTable>li>ul>li:first-child+li+li+li+li {
-	width: 10%;
-} /*처리 여부 열 크기*/
+#th-2 {
+   width: 20%;
+}
+
+#th-3 {
+   width: 20%;
+}
+
+#th-4 {
+   width: 20%;
+}
+
+#th-5 {
+   width: 20%;
+}
+table {
+   text-align: center;
+}
+
+/* #liSearchOption { */
+/*    clear: both; */
+/* } */
+
+/* #liSearchOption>div {
+   margin: 0 auto;
+   margin-top: 30px;
+   width: auto;
+   height: 100px;
+} */
 #divPaging {
-	clear: both;
-	margin: 0 auto;
-	width: 220px;
-	height: 50px;
+   text-align: center;
+   font-size: 0;
+   list-style: none;
+   left: 500px;
+   clear: both;
+   text-align: center;
+   text-decoration: none;
+   font-size: 20px;
+   margin: 0 auto;
 }
 
-#divPaging>div {
-	float: left;
-	width: 30px;
-	margin: 0 auto;
+.paging {
+   display: inline-block;
+   list-style: none;
+   margin-top: 60px;
+}
+
+.paging .none {
+   display: none;
+}
+
+.paging a {
+   display: block;
+   margin: 0 4px;
+   float: left;
+   border: 1px solid #e6e6e6;
+   width: 28px;
+   height: 28px;
+   line-height: 28px;
+   text-align: center;
+   background-color: #fff;
+   font-size: 13px;
+   color: black;
+   text-decoration: none;
+}
+
+.paging .ul {
+   list-style: none;
+   text-align: center;
+}
+
+.paging .arrow {
+   border: 1px solid #e6e6e6 ;
+}
+
+.paging .pprev {
+   background: #f8f8f8 url('img/page_pprev.png') no-repeat center center;
+   margin-left: 0;
+}
+
+.paging .prev {
+   background: #f8f8f8 url('img/page_prev.png') no-repeat center center;
+   margin-right: 7px;
+}
+
+.paging .next {
+   background: #f8f8f8 url('img/page_next.png') no-repeat center center;
+   margin-left: 7px;
+}
+
+.paging .nnext {
+   background: #f8f8f8 url('img/page_nnext.png') no-repeat center center;
+   margin-right: 0;
+}
+
+.paging a.active {
+   background-color: #42454c;
+   color: #fff;
+   border: 1px solid #42454c;
+}
+
+.search {
+   margin-left: 600px;
+   margin-top: 40px;
+}
+
+h2 {
+   text-align: center;
+   margin-top: 40px;
+   font-size: 30px;
+}
+
+#searchBtn {
+   width: 70px;
+   height: 30px;
+   border: none;
+   border: 1px solid #e6e6e6 ;
+}
+#searchBtn1 {
+   width: 70px;
+   height:30px;
+   border: none;
+   border: 1px solid #e6e6e6 ;
+}
+
+#keywordInput {
+   width: 200px;
+}
+
+/* searchType {
+   width: 100px;
+} */
+#searchtitle {
+   width: 110px;
+   height: 80px;
+   text-align: center;
+   margin: 0 auto;
+   border: 1px solid #e6e6e6;
+   font-size : 14px;
+}
+
+#keywordInput {
+   border: 1px solid #e6e6e6;
+   text-align: center;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	line-height: 24px;
+}
+
+table td, th {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	border-collapse: collapse;
 	text-align: center;
+	padding: 10px;
 }
 
-#liSearchOption {
-	clear: both;
+a {
+	text-decoration: none;
+	color: black;
 }
 
-#liSearchOption>div {
-	margin: 0 auto;
-	margin-top: 30px;
-	width: auto;
-	height: 100px;
+a:hover {
+	text-decoration: underline;
 }
 
-.left {
-	text-align: left;
+li{
+	list-style: none;
+}
+h4{
+	font-size : 20px;
+	position: absolute;
+	left: 700px;	
+}
+#datebox{
+	position: relative;
+	left: 200px;
+}
+th{
+	color:#fff;
 }
 </style>
 <body>
-
-	
-		<div id="mainWrapper">
 			<%-- 	<p>${list}</p> --%>
-			<ul>
-				<!-- 게시판 제목 -->
-				<li>출퇴근 조회</li>
-				<form role="form" action="${contextPath}/counselor/attendance.do"
-		method="post">
-
-				<!-- 게시판 목록  -->
-				<ul id="ulTable">
-					<input type="date" name='one' />
-					<input type="date" name='two' />
-					<input type='submit' value='검색' />
-
-					<li>
-						<ul>
-							<li>이름</li>
-							<li>날짜</li>
-							<li>출근 시간</li>
-							<li>퇴근 시간</li>
-							<li>처리 여부</li>
-						</ul>
-					</li>
+			<br>
+			<br>
+			<h4>
+			<a href="${contextPath}/counselor/attendance.do">출퇴근 조회</a>
+			/
+			<a href="${contextPath}/counselor/journal.do">업무 일지</a>
+			</h4>
+			<br>
+			<hr>
+			
+			<div id="boardwrap">
+			<div id="datebox">
+						<input type="date" id="keywordInput2" name='keyword' />
+						<input type="date" id="keywordInput3" name='keyword1' />
+						<button id="searchBtn1" type="button">검색</button>
+			</div>
+			<script>
+					    $(function(){
+					    	$('#searchBtn1').click(function() {self.location = "attendance2.do" + '${paging.makeQuery(1)}' + "&keyword=" + $('#keywordInput2').val() + "&keyword1=" + $('#keywordInput3').val();
+					        });
+					     });   
+			</script>
+			
+			<form role="form" action="${contextPath}/counselor/attendance.do" method="post">
+			 <div id="board" text>
+			<table>
+				<thead>
+					<tr>
+						<th id=th-1>이름</th>
+						<th id=th-2>날짜</th>
+						<th id=th-3>출근 시간</th>
+						<th id=th-4>퇴근 시간</th>
+						<th id=th-5>처리여부</th>
+					</tr>
+				</thead>
+				<tbody>
 					<!-- 게시물이 출력될 영역 -->
-					<c:forEach var="list" items="${list}" begin="0"
-						end="${paging.endPage}">
-						<li>
-							<ul>
-								<li>${list.ID}</li>
-								<li>${list.CD}</li>
-								<li>${list.AT}</li>
-								<li>${list.QT}</li>
-								<li>${list.PROCESS}</li>
-							</ul>
-						</li>
+					<c:forEach var="list" items="${list}" begin="0" end="${paging.endPage}">
+						<tr align="center">
+							<td>${list.ID}</td>
+							<td>${list.CD}</td>
+							<td>${list.AT}</td>
+							<td>${list.QT}</td>
+							<td>${list.PROCESS}</td>
+						</tr>
 					</c:forEach>
-					<c:forEach var="commuteCheck" items="${commuteCheck}" begin="0"
-						end="${paging.endPage}">
-						<li>
-							<ul>
-								<li>${commuteCheck.ID}</li>
-								<li>${commuteCheck.CD}</li>
-								<li>${commuteCheck.AT}</li>
-								<li>${commuteCheck.QT}</li>
-								<li>${commuteCheck.PROCESS}</li>
-							</ul>
-						</li>
-					</c:forEach>
-				</ul>
-				</form>
-			</ul>
-		</div>
-
+			</table>
+			</div>
+		</form>
+	</div>
 	<!-- 게시판 페이징 영역 -->
 
-	<li>
 		<div id="divPaging">
+		
 			<ul class="paging">
 				<c:if test="${paging.prev}">
 					<span><a
 						href='<c:url value="attendance?page=${paging.makeSearch(paging.startPage-1)}"/>'>이전</a></span>
 				</c:if>
+				
 				<c:forEach begin="${paging.startPage}" end="${paging.endPage}"
 					var="num">
+					<c:if test="${paging.cri.keyword1 == ''}">
 					<span> <a href="attendance.do${paging.makeSearch(num)}">${num}</a>
-						<%-- <span><a href='<c:url value="companyLegisterList.do?page=${num}"/>'>${num}</a></span> --%>
 					</span>
+					</c:if>
+					<c:if test="${paging.cri.keyword1 != ''}">
+					<span> <a href="attendance2.do${paging.makeSearch(num)}">${num}</a>	
+					</span>
+					</c:if>
 				</c:forEach>
 				<c:if test="${paging.next && paging.endPage>0}">
 					<span><a
@@ -235,11 +368,9 @@ ul, li {
 
 			</ul>
 		</div>
-	</li>
 
 	<!-- 검색 폼 영역 -->
 	<form role="form" method="get">
-		<li id='liSearchOption'>
 
 			<div class="search">
 
@@ -249,15 +380,13 @@ ul, li {
 				<script src="http://code.jquery.com/jquery-latest.js"></script>
 				<script>
 					    $(function(){
-					        $('#searchBtn').click(function() {
-					          self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
+					        $('#searchBtn').click(function() {self.location = "attendance.do" + '${paging.makeQuery(1)}' + "&keyword=" + encodeURIComponent($('#keywordInput').val());
 					        });
 					      });   
 					    </script>
+				
+						
 			</div>
-
-		</li>
-
 	</form>
 
 	<script>
@@ -268,7 +397,6 @@ ul, li {
 			;
 		});
 	</script>
-
 </body>
 </html>
 

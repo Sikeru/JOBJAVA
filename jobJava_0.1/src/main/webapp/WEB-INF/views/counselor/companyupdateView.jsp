@@ -17,18 +17,29 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&display=swap');
 </style>
-
+ 
 <link href="${contextPath}/resources/css/counselor.css" rel="stylesheet" type="text/css" media="screen">
-
 <!DOCTYPE html>
 <html>
 <head>
-
-
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
-<script>
-        $(function() {
+
+
+<script type="text/javascript">
+//취소
+function cancel() {
+	if (confirm("정말 취소하시겠습니까?") == true) { //확인
+		window.location.href = '/JJ/counselor/companyList.do';
+	} else { //취소
+		return false;
+	}
+}  
+
+
+           $(function() {
             $('.sub').hide();
             $('.title').click(function() {
                 $('.sub').hide(500);
@@ -56,91 +67,102 @@
                 });
 
 
-            }); //sub li hover 끝
-            
-
-
-        }); //첫 function 끝
-
-    </script>
+            }); //sub li hover 끝  
+           
+          });
+         
+           
+      
+           
+</script>
+        
 <style>
-.company{
+   		.com{
    		position: absolute;
    		top: 180px;
    		
    	
    		}
    		
-   		#companybox{
+   		#combox{
    		width: 500px;
    		height: 1000px;
    		position: absolute;
    		left: 600px;
  
    		}
-.companyagent {
-	width: 100%;
-}
+ label {
+   font-weight :800;
+ }   		
 
-.companydivi {
-	width: 100%;
-}
-.companynum {
-	width: 100%;
-}
-.companypage {
-	width: 100%;
-}
+   </style>
+	<body>
+	<div id = "combox">
+		<div class = "com">
+		
+		<div class = "comreg"><h1>기업 수정창</h1></div>
+		
+		<form name = "frm" method = "post" role='form' action="${contextPath}/counselor/companyupdate.do"> 
+		<input type = "hidden" name = "CM_NO" value = "${companylist.CM_NO}" readonly/>
+			
+			
+			<hr>
 
-
-</style>
-<body>
-<div id = "companybox">
-	<div class = "company">
-
-	
-		<div class = "companyreg"><h1>기업 등록</h1></div>
-		
-		<form action="${contextPath}/counselor/addcompany.do"  method = "post"> 
-	
-		<hr>
-		
-		<input type="hidden" name="B_NO">
-		<input type="hidden" name="ID"><br>
-		
-		
 		<br>
 		
-		<div class = "companyagent">
-			<input id = "AGENT" type = "text" name = "AGENT" size="51" placeholder = "대표자명">
-			<input id = "B_TYPE" type = "text" name = "b_TYPE" size="51"  placeholder = "업종">
-		</div>
-		<br>
+		<div class = "AGENT" name = "AGENT" >
+			<label>대표자</label><br>
+			<input type= "text" id="AGENT" name="AGENT" value="${companylist.AGENT }" size=10 readonly />
+		</div> 
 		
+	 	<div class = "C_NAME" name = "C_NAME" readonly>
+	 	<label>회사명</label><br>
+	 	<input type= "text" id="C_NAME" name="C_NAME" value="${companylist.c_NAME }" size=30 readonly />
+		</div> 
 		
-		<div class = "companydivi">
-			<input id = "C_DIV" type = "text" name = "c_DIV" size="51"  placeholder = "기업구분">
+		<div class = "B_TYPE" name = "B_TYPE">
+			<label>업종</label><br>
+			<input type= "text" id="B_TYPE" name="B_TYPE" value="${companylist.b_TYPE }" size=30 />
 		</div>
 		
-		<br>
-
+		<div class = "C_DIV" name = "C_DIV">
+			<label>기업구분</label><br>
+			<input type= "text" id="C_DIV" name="C_DIV" value="${companylist.c_DIV }"size=30  />
+		</div>
 		
-		<div class = "companypage">
-		<input id = "C_NAME" type = "text" name = "c_NAME" size="50" placeholder = "기업명">
+		<div class = "HOMEPAGE" name ="HOMEPAGE">
+			<label>HOMEPAGE</label><br>
+			<input type= "text" id="HOMEPAGE" name="HOMEPAGE" value="${companylist.HOMEPAGE }"size=100  />
+		</div>
+		
+		<div class = "EMP_NUM" name ="EMP_NUM">
+			<label>근로자수</label><br>
+			<input type= "text" id="EMP_NUM" name="EMP_NUM" value="${companylist.EMP_NUM }" size=10 />
 		</div>
 		
 		<br>
-		
-		
-		<br>
-	
 
-		<input type = submit value = "등록하기">
-		
+
+
+       <button type="submit" >저장</button>
 		</form>
-		
-	</div>
-</div>
+	
+	
+	<button type="submit" OnClick="cancel()">취소</button>
+	   
+	 
+	
+	 
+	 
 
-</body>
+ 
+	 
+	
+	 
+		</div>
+	</div>
+
+	
+	</body>
+	
 </html>
