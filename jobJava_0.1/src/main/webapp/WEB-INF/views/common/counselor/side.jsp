@@ -62,7 +62,7 @@
 			<ul class="sub">
 				<li><a href="${contextPath}/counselor/alarmSend.do" 
 						id="sub_12">알림보내기</a></li>
-				<li><a href="#" 
+				<li><a href="${contextPath}/counselor/surveylist.do" 
 						id="sub_13">설문조사 관리</a></li>
 			</ul>
 		</li>
