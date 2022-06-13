@@ -10,16 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jobjava.JJ.counselor.dao.CounselorDAO;
-import com.jobjava.JJ.counselor.vo.ConsultationJournalVO;
-import com.jobjava.JJ.counselor.vo.JobregVO;
-import com.jobjava.JJ.counselor.vo.SalaryVO;
-import com.jobjava.JJ.counselor.vo.SearchCriteria;
-import com.jobjava.JJ.counselor.vo.UniregVO;
-import com.jobjava.JJ.counselor.vo.AlarmVO;
 import com.jobjava.JJ.counselor.vo.ComregVO;
 import com.jobjava.JJ.counselor.vo.CriteriaVO;
 import com.jobjava.JJ.counselor.vo.JobcheckVO;
+import com.jobjava.JJ.counselor.vo.JobregVO;
+import com.jobjava.JJ.counselor.vo.SearchCriteria;
 import com.jobjava.JJ.counselor.vo.SturegVO;
+import com.jobjava.JJ.counselor.vo.UniregVO;
+import com.jobjava.JJ.leader.vo.SurveyVO;
 
 
 @Service("CounselorService")
