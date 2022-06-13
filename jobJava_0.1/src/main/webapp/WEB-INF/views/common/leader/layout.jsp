@@ -39,9 +39,6 @@
 			</header>
 		</div>
 		<div id="container">
-			<aside>
-				<tiles:insertAttribute name="side" />
-			</aside>
 			<article>
 				<tiles:insertAttribute name="body" />
 			</article>

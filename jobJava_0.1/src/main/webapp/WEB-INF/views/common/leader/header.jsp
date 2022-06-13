@@ -19,15 +19,9 @@
 
 			<c:if test="${empty pageContext.request.userPrincipal}">
 				<li><a href="${contextPath}/member/loginForm.do">로그인</a></li>
-				<li><a href="${contextPath}/member/memberForm.do">회원가입</a></li>
+				<li><a href="${contextPath}/member/termsgree.do">회원가입</a></li>
 			</c:if>
 
-			<s:authorize access="hasAnyRole('ROLE_MAG, ROLE_COM')">
-				<br>
-				<li><a>사업안내</a></li>
-				<li><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></li>
-				<li><a>일자리카페</a></li>
-			</s:authorize>
 		</ul>
 	</div>
 
@@ -35,18 +29,19 @@
 
 	<div id="topMenu">
 		<ul>
-			<li><a href="${contextPath}/member/loginForm.do">일자리카페</a></li>
+		<li><a href="${contextPath}/member/loginForm.do">서식자료실</a></li>
+			<li><a href="${contextPath}/cafe/main.do">일자리카페</a></li>
 			<li><a href="${contextPath}/leader/companyLegisterList.do">사업참여</a></li>
-			<li><a href="${contextPath}/member/loginForm.do">사업안내</a></li>
+			<li><a href="${contextPath}/leader/bessinfo.do?mnName=사업안내">사업안내</a></li>
 		</ul>
 	</div>
 
 	<div id="topLogo">
 
-		<img width="250px" height="250px"
-			src="${contextPath}/resources/image/jobleader_logo.png">
+		<a href="${contextPath}/main/main.do"><img width="250px" height="250px"
+			src="${contextPath}/resources/image/jobleader_logo.png"></a>
 	</div>
 
-</script>
+</body>
 </body>
 </html>
