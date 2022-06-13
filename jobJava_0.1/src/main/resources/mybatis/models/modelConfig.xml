@@ -3,15 +3,17 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-
- 
   <typeAliases>
+  	  <typeAlias type="com.jobjava.JJ.admin.vo.SearchCriteria" alias="SearchCriteria" />
+  
       <typeAlias type="com.jobjava.JJ.member.vo.MemberVO" alias="MemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.NMemberVO" alias="NMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.SMemberVO" alias="SMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.CMemberVO" alias="CMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.EMemberVO" alias="EMemberVO" />
       <typeAlias type="com.jobjava.JJ.member.vo.MMemberVO" alias="MMemberVO" />
+      
+      <typeAlias type="com.jobjava.JJ.main.vo.SearchCriteria" alias="SearchCriteria" />
      
       <typeAlias type="com.jobjava.JJ.board.vo.QnAVO" alias="QnAVO" />
       <typeAlias type="com.jobjava.JJ.board.vo.OnlineVO" alias="OnlineVO" />
@@ -21,11 +23,6 @@
       <typeAlias type="com.jobjava.JJ.counselor.vo.UniregVO" alias="UniregVO" />
       <typeAlias type="com.jobjava.JJ.counselor.vo.SturegVO" alias="SturegVO" />
       <typeAlias type="com.jobjava.JJ.counselor.vo.ComregVO" alias="ComregVO" />
-      <typeAlias type="com.jobjava.JJ.counselor.vo.Paging" alias="Paging" />
-      <typeAlias type="com.jobjava.JJ.counselor.vo.CriteriaVO" alias="CriteriaVO" />
-      <typeAlias type="com.jobjava.JJ.counselor.vo.JobcheckVO" alias="JobcheckVO" />
-      <typeAlias type="com.jobjava.JJ.counselor.vo.SearchCriteria" alias="SearchCriteria" />
-      
      
       <typeAlias type="com.jobjava.JJ.leader.vo.CRegVO" alias="CRegVO" />
       <typeAlias type="com.jobjava.JJ.leader.vo.Criteria" alias="Criteria" />
