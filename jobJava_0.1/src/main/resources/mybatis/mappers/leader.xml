@@ -4,6 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.jobjava.JJ.leader.dao.LeaderDAO">
+	<!-- 뉴리더 사업안내 -->
+	<insert id="mnLog">
+	<![CDATA[
+		INSERT INTO MENU_STATISTICS VALUES(MN_LOG.nextval,#{param1})
+	]]>
+
+	</insert>
 	<!-- 기업등록추가 -->
 	<insert id="legisterAdd" parameterType="java.util.HashMap">
 	<![CDATA[
@@ -12,13 +19,61 @@
 	]]>
 	</insert>
 
-	<!-- 기업등록수정 -->
-	<update id="legisterUpdate" parameterType="CRegVO">
-	<![CDATA[
-		UPDATE C_REG
-		SET TITLE = #{TITLE}, CONTENT = #{CONTENT}
-		WHERE REGI_NO = #{REGI_NO}
-		]]>
+	<!--다중 이미지 추가 SQL문 --><!-- 기업정보등록 -->
+	<select id="selectCompanyInfo" resultType="CRegVO"
+		parameterType="CRegVO">
+			<![CDATA[
+		SELECT * FROM C_MEMBER
+        WHERE ID = #{ID}
+	]]>
+	</select>
+
+	<select id="selectNewArticle" resultType="CRegVO"
+		parameterType="CRegVO">
+			<![CDATA[
+		SELECT REGI_NO, UNI_B_NO, FILENAME, M_RESULT, R.B_NO, AGENT, B_TYPE, C_DIV, EMP_NUM, HOMEPAGE, C_NAME FROM C_REG R, C_MEMBER M
+         WHERE R.B_NO = M.B_NO AND ID = #{param1} AND UNI_B_NO = #{param2}
+	]]>
+	</select>
+
+	<insert id="insertNewArticle" parameterType="java.util.Map">
+	 <![CDATA[
+		INSERT INTO C_MEMBER(B_NO, ID, AGENT, B_TYPE, C_DIV, EMP_NUM, HOMEPAGE, C_NAME) 
+					VALUES(#{B_NO}, #{ID}, #{AGENT}, #{B_TYPE}, #{C_DIV}, #{EMP_NUM}, #{HOMEPAGE}, #{C_NAME})
+	]]>
+	</insert>
+
+	<!-- 기업신청테이블 insert -->
+	<insert id="insertLegisterArticle" parameterType="java.util.Map">
+	 <![CDATA[
+		INSERT INTO C_REG(REGI_NO, UNI_B_NO, B_NO, M_RESULT) 
+					VALUES(REGI_NO.NEXTVAL,#{UNI_B_NO},#{B_NO}, null)
+	]]>
+	</insert>
+
+	<update id="updateNewArticle" parameterType="CRegVO">
+		UPDATE C_MEMBER
+		<set>
+			<if test="AGENT !='' and AGENT != null">
+				AGENT=#{AGENT},
+			</if>
+			<if test="B_TYPE !='' and B_TYPE != null">
+				B_TYPE=#{B_TYPE},
+			</if>
+			<if test="C_DIV !='' and C_DIV != null">
+				C_DIV=#{C_DIV},
+			</if>
+			<if test="EMP_NUM !='' and EMP_NUM != null">
+				EMP_NUM=#{EMP_NUM},
+			</if>
+			<if test="HOMEPAGE !='' and HOMEPAGE != null">
+				HOMEPAGE=#{HOMEPAGE},
+			</if>
+			<if test="C_NAME !='' and C_NAME != null">
+				C_NAME=#{C_NAME},
+			</if>
+		</set>
+		WHERE ID=#{ID}
 	</update>
 
 	<!-- 기업등록삭제 -->
@@ -30,32 +85,47 @@
 		 ]]>
 	</delete>
 
-	<!--다중 이미지 추가 SQL문 --><!-- 꿈터기업마이페이지 -->
-	<insert id="insertNewArticle" parameterType="java.util.Map">
-	 <![CDATA[
-		INSERT INTO C_REG(REGI_NO, B_NO, TITLE, CONTENT, FILENAME, S_DATE, E_DATE) 
-					VALUES(REGI_NO.NEXTVAL,#{B_NO}, #{TITLE}, #{CONTENT}, null, #{S_DATE}, #{E_DATE})
-	]]>
-	</insert>
-	<!-- 프로그램파일추가 -->
-	<insert id="insertNewImage" parameterType="java.util.Map">
-		<foreach item="item" collection="list" open="INSERT ALL"
-			separator=" " close="SELECT * FROM DUAL">
-
-			INTO C_REGI_FILE(REGI_FILENO, REGI_NO,
-			REGI_FILENAME,
-			REGI_DATE)
-			VALUES(#{item.REGI_FILENO}, #{item.REGI_NO},
-			#{item.REGI_FILENAME},
-			SYSDATE)
-
+	<!-- 기업신청 파일 등록 ,수정 -->
+	<insert id="legisterFileUpdate" parameterType="java.util.List">
+		INSERT INTO C_REGI_FILE
+		(
+		REGI_FILENO,
+		REGI_NO,
+		REGI_FILENAME,
+		REGI_DATE
+		)
+		SELECT REGI_FILENO.NEXTVAL, A.*
+		FROM (
+		<foreach collection="param2" item="item" separator="UNION ALL">
+			SELECT
+			#{param1} AS REGI_NO,
+			#{item} AS REGI_FILENAME,
+			SYSDATE AS REGI_DATE
+			FROM DUAL
 		</foreach>
+		) A
+	</insert>
+
+	<delete id="legisterFileDel">
+   <![CDATA[
+   	DELETE FROM C_REGI_FILE
+  	 WHERE REGI_NO = #{param1} AND REGI_FILENAME = #{param2}
+   ]]>
+	</delete>
+
+	<!-- 프로그램파일추가 -->
+	<insert id="insertNewImage">
+		INSERT INTO C_REGI_FILE(REGI_FILENO, REGI_NO,
+		REGI_FILENAME, REGI_DATE)
+		VALUES(REGI_FILENO.NEXTVAL, #{param1},
+		#{param2}, SYSDATE)
 	</insert>
 
 	<!-- 프로그램파일번호 생성 -->
 	<select id="selectNewImageFileNO" resultType="int">
 		<![CDATA[
-			SELECT nvl(max(REGI_FILENO), 0) from C_REGI_FILE]]>
+			SELECT nvl(max(REGI_FILENO), 0) from C_REGI_FILE
+			]]>
 	</select>
 
 	<!-- ID에 따른 사업자번호 가져오기 -->
@@ -67,18 +137,19 @@
 	]]>
 	</select>
 
-	<!-- 프로그램 번호 가져오기 -->
-	<select resultType="int" id="selectREGI_NO">
+	<!-- 기업신청 번호 가져오기 -->
+	<select resultType="String" id="selectREGI_NO">
 		<![CDATA[
-		 SELECT nvl(max(REGI_NO),0) +1 from C_REG
+		 SELECT MAX(REGI_NO) from C_REG
+		 	WHERE UNI_B_NO = #{UNI_B_NO}
 	]]>
 	</select>
 
 	<!-- 파일목록 가져오기 -->
 	<select id="selectFileName" resultType="java.util.Map">
 	<![CDATA[
-		 SELECT REGI_FILENAME FROM C_REGI_FILE
-		 WHERE REGI_NO = #{param1}
+		 SELECT REGI_FILENO, REGI_DATE, REGI_FILENAME FROM C_REGI_FILE F, C_REG R
+        WHERE F.REGI_NO = R.REGI_NO AND UNI_B_NO = #{param1}
 		
 	]]>
 	</select>
@@ -94,9 +165,19 @@
 	<!-- 기업등록조회 + 페이징 + 검색 -->
 	<sql id="search">
 		<if test="searchType != null">
-			<if test="searchType == 'T'.toString()">AND TITLE LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'C'.toString()">AND CONTENT LIKE '%' || #{keyword} || '%'</if>
-			<if test="searchType == 'TC'.toString()">AND (TITLE LIKE '%' || #{keyword} || '%') or (CONTENT
+			<if test="searchType == 'T'.toString()">AND B_NAME LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND U_NAME LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (B_NAME LIKE '%' || #{keyword} || '%') or (U_NAME
+				LIKE '%' || #{keyword} || '%')</if>
+		</if>
+	</sql>
+	
+	<!-- 참여학생 검색 -->
+	<sql id="searchStu">
+		<if test="searchType != null">
+			<if test="searchType == 'T'.toString()">AND B_NAME LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'C'.toString()">AND U_NAME LIKE '%' || #{keyword} || '%'</if>
+			<if test="searchType == 'TC'.toString()">AND (B_NAME LIKE '%' || #{keyword} || '%') or (U_NAME
 				LIKE '%' || #{keyword} || '%')</if>
 		</if>
 	</sql>
@@ -105,28 +186,59 @@
 	<select id="boardList" resultType="hashmap"
 		parameterType="hashmap">
         <![CDATA[
-            SELECT UNI_B_NO, B_NAME, U_NAME, CASE 
-                                 WHEN TO_CHAR(E_DATE, 'YYYY-MM-DD')>TO_CHAR(SYSDATE, 'YYYY-MM-DD') THEN '진행중'
+            SELECT UNI_B_NO, B_NAME, U_NAME,PERMISSION, CASE 
+                                 WHEN TO_CHAR(E_DATE, 'YYYY-MM-DD')>=TO_CHAR(SYSDATE, 'YYYY-MM-DD') THEN '진행중'
                                  WHEN TO_CHAR(E_DATE, 'YYYY-MM-DD')<TO_CHAR(SYSDATE, 'YYYY-MM-DD') THEN '마감'
                                  END AS STATE
          FROM ( 
-                SELECT UNI_B_NO,
+                SELECT B.UNI_B_NO,
                 	   MG_NO,
                        U_NAME, 
                        UNI_ADDR, 
                        UNI_HP, 
                        B_NAME,
                        B_CONTENT,
-                       PERMISSION,
+                       A.PERMISSION,
                        B_EXPENSE,
                        S_DATE,
                        E_DATE,
-                       ROW_NUMBER() OVER(ORDER BY UNI_B_NO) AS RNUM
-                 FROM UNI_BUSINESS 
-                 WHERE 1=1]]>
-
+                       ROW_NUMBER() OVER(ORDER BY B.UNI_B_NO) AS RNUM
+                 FROM UNI_BUSINESS B, APPLICATION A
+                 WHERE 1=1 AND B.UNI_B_NO = A.UNI_B_NO(+) 
+                 ]]>
 
 		<include refid="search"></include> 
+        <![CDATA[
+                   )
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+        ORDER BY UNI_B_NO ASC
+        ]]>
+	</select>
+
+	<select id="boardListStu" resultType="hashmap"
+		parameterType="hashmap">
+        <![CDATA[
+            SELECT * FROM(SELECT A.UNI_B_NO,
+            A.PERMISSION,
+            B_NAME,
+            NAME,U.U_NAME,
+            S_DATE, 
+            E_DATE, 
+            ROW_NUMBER() OVER(ORDER BY A.UNI_B_NO) AS RNUM 
+            FROM 
+            APPLICATION A, 
+            UNI_BUSINESS U,
+            MEMBER M,
+            ST_MEMBER S,
+            C_REG C
+			WHERE A.UNI_B_NO = U.UNI_B_NO AND U.UNI_B_NO = C.UNI_B_NO AND
+			A.ID = M.ID AND
+			M.ID = S.ID AND
+			1=1
+            ]]>
+
+
+		<include refid="searchStu"></include> 
                
                  
         <![CDATA[
@@ -138,6 +250,7 @@
         ]]>
 
 	</select>
+
 	<!-- 게시물 총 갯수 -->
 	<select id="boardListCnt" parameterType="SearchCriteria"
 		resultType="int">
@@ -145,6 +258,20 @@
 		SELECT count(*)
 		FROM UNI_BUSINESS
 		WHERE 1=1
+		]]>
+
+		<include refid="search"></include>
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="boardListStuCnt" parameterType="SearchCriteria"
+		resultType="int">
+	<![CDATA[
+		SELECT count(*) FROM
+		APPLICATION A, UNI_BUSINESS U,MEMBER M,ST_MEMBER S, C_REG C
+		WHERE A.UNI_B_NO = U.UNI_B_NO AND U.UNI_B_NO = C.UNI_B_NO AND
+		A.ID = M.ID AND
+		M.ID = S.ID
 		]]>
 
 		<include refid="search"></include>
@@ -166,12 +293,6 @@
 	]]>
 	</select>
 
-	<select id="insertIntosurvey">
-	<![CDATA[
-		INSERT INTO SURVEY()
-	]]>
-	</select>
-
 	<!-- 사원번호 가져오기 -->
 	<select id="selectEmpNO" resultType="int">
 	<![CDATA[
@@ -187,11 +308,11 @@
 	</select>
 
 	<!-- 유저ID로 기본정보 가져오기 -->
-	<select id="selectUserInfo" resultType="AppVO">
+	<select id="selectUserInfo" resultType="UserVO">
 	<![CDATA[
 		SELECT NAME, ADDR, HP, EMAIL 
 		FROM ST_MEMBER SM, MEMBER M 
-		WHERE M.ID='gkrtod' AND SM.ID=#{param1}
+		WHERE M.ID=SM.ID AND M.ID=#{param1}
 	]]>
 	</select>
 
@@ -200,12 +321,60 @@
 	<![CDATA[
 		INSERT 
 			INTO APPLICATION 
-			VALUES(APP_NO.NEXTVAL, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, TO_DATE(SYSDATE, 'YYYY-MM-DD'), NULL,'신청대기중')
+			VALUES(APP_NO.NEXTVAL,
+				   #{param1}, 
+				   #{param2}, 
+				   #{param3}, 
+				   #{param4},
+				   ' ',
+				   TO_DATE(SYSDATE, 'YYYY-MM-DD'), 
+				   NULL,
+				   '신청대기중')
 	]]>
 	</insert>
 
+	<!-- 사업신청 정보가져오기 (학생) -->
+	<select id="selectAppInfo" resultType="AppVO">
+	<![CDATA[
+		SELECT APP_NO, HOPE_JOB, APP_REASON, FILENAME 
+			FROM APPLICATION
+			WHERE ID = #{param1} AND UNI_B_NO = #{param2}
+	]]>
+	</select>
 
+	<!-- 사업신청 수정하기(학생) -->
+	<update id="updateStuApplication">
+	<![CDATA[
+		UPDATE APPLICATION 
+			SET HOPE_JOB = #{param1},
+                       	   APP_REASON = #{param2}
+            WHERE UNI_B_NO = #{param3} AND ID = #{param4}
+	]]>
+	</update>
 
+	<!-- 사업신청 삭제하기(학생) -->
+	<delete id="deleteStuApplication">
+	<![CDATA[
+		DELETE FROM APPLICATION 
+			WHERE UNI_B_NO = #{param1} AND ID = #{param2}
+	]]>
+	</delete>
+	
+	<!-- 사업신청 승인(학생) -->
+	<update id="updatePermission">
+	<![CDATA[
+		UPDATE APPLICATION SET PERMISSION='승인'
+		WHERE UNI_B_NO = #{UNI_B_NO}
+	]]>
+	</update>
+	
+		<!-- 사업신청 승인취소(학생) -->
+	<update id="updatePermissionDel">
+	<![CDATA[
+		UPDATE APPLICATION SET PERMISSION='신청대기중'
+		WHERE UNI_B_NO = #{UNI_B_NO}
+	]]>
+	</update>
 
 	<!-- 설문등록 -->
 	<insert id="addSurvery">
@@ -228,12 +397,34 @@
 	]]>
 	</select>
 
-	<!-- 설문전체리스트 -->
-	<select id="selectAllSurveyList" resultType="SurveyVO">
+	<!-- 설문전체리스트 (리더만) -->
+	<select id="selectAllSurveyList" resultType="SurveyVO" parameterType="hashmap">
 	<![CDATA[
-		SELECT SV_NO, TITLE, TO_CHAR(S_DATE, 'YYYY-MM-DD') AS S_DATE, TO_CHAR(E_DATE, 'YYYY-MM-DD') AS E_DATE, NAME 
-		FROM SURVEY S, EMP E 
-		WHERE S.EMP_NO=E.EMP_NO order by SV_NO ASC
+		SELECT
+        SV_NO, 
+		TITLE, 
+		S_DATE, 
+		E_DATE, 
+		NAME
+        FROM(
+            SELECT
+                SV_NO, 
+				TITLE, 
+				TO_CHAR(S_DATE, 'YYYY-MM-DD') AS S_DATE, 
+				TO_CHAR(E_DATE, 'YYYY-MM-DD') AS E_DATE, 
+				NAME,
+                ROW_NUMBER() OVER(ORDER BY SV_NO ASC) AS RNUM
+            FROM SURVEY S, EMP E
+            WHERE 1=1 AND S.EMP_NO=E.EMP_NO AND (DIVISION = 'all' OR DIVISION = 'leader'))
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+	]]>
+	</select>
+	
+	<!-- 설문전체글갯수(리더만) -->
+	<select id="selectAllSurveyListCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) FROM SURVEY
+		WHERE DIVISION = 'all' OR DIVISION = 'leader'
 	]]>
 	</select>
 
@@ -274,5 +465,141 @@
     ]]>
 	</select>
 
+	<!-- 기업신청여부(기업) -->
+	<select id="selectAppCountCom" resultType="int"
+		parameterType="String">
+    <![CDATA[
+    	 SELECT UNI_B_NO
+    		FROM C_REG R, C_MEMBER M
+    		WHERE R.B_NO = M.B_NO AND ID = #{param1}
+    ]]>
+	</select>
+
+	<select id="selectAllCommute" resultType="HashMap"
+		parameterType="hashmap">
+    <![CDATA[
+    	SELECT COM_DATE,
+        ATT_TIME,
+        QUT_TIME
+        FROM(
+            SELECT 
+                COM_NO, 
+                ID,
+                TO_CHAR(COM_DATE, 'YYYY-MM-DD') as COM_DATE, 
+                TO_CHAR(ATT_TIME, 'YYYY-MM-DD hh:MI:ss') as ATT_TIME, 
+                TO_CHAR(QUT_TIME, 'YYYY-MM-DD hh:MI:ss') as QUT_TIME,
+                ROW_NUMBER() OVER(ORDER BY COM_NO DESC) AS RNUM
+            FROM COMMUTE
+            WHERE 1=1 AND ID = #{param2})
+        WHERE RNUM BETWEEN #{param1.rowStart} AND #{param1.rowEnd}
+    ]]>
+	</select>
+
+	<select id="commuteListCnt" resultType="int">
+    <![CDATA[
+    	SELECT COUNT(*) FROM COMMUTE WHERE ID=#{param1}
+    ]]>
+	</select>
+
+	<select id="selectSearchCommute" resultType="java.util.HashMap"
+		parameterType="String">
+    <![CDATA[
+    	SELECT TO_CHAR(COM_DATE, 'YYYY-MM-DD') as COM_DATE, TO_CHAR(ATT_TIME, 'YYYY-MM-DD hh:MI:ss') as ATT_TIME, TO_CHAR(QUT_TIME, 'YYYY-MM-DD hh:MI:ss') as QUT_TIME 
+			FROM COMMUTE WHERE ID = #{param1} AND 
+			COM_DATE BETWEEN #{param2} AND #{param3} ORDER BY COM_NO DESC
+    ]]>
+	</select>
+
+	<insert id="insertgoToWork">
+    <![CDATA[
+    	INSERT INTO COMMUTE(COM_NO, ID, COM_DATE, ATT_TIME, QUT_TIME)
+    		VALUES(COM_NO.NEXTVAL, #{param1}, TO_DATE(#{param2}, 'YYYY-MM-DD'), TO_DATE(#{param3}, 'YYYY-MM-DD HH24:MI:SS'), '')
+    ]]>
+	</insert>
+
+	<update id="updateleaveWork">
+    <![CDATA[
+    	UPDATE COMMUTE 
+    		SET QUT_TIME = TO_DATE(#{param3}, 'YYYY-MM-DD HH24:MI:SS')
+    		WHERE COM_DATE = #{param2} AND ID = #{param1}
+    ]]>
+	</update>
+
+	<select id="selectATT" resultType="int">
+    <![CDATA[
+    	SELECT COUNT(ATT_TIME) FROM COMMUTE 
+    		WHERE COM_DATE=#{param1} AND ID=#{param2}
+    ]]>
+	</select>
+
+	<select id="selectQUT" resultType="int">
+    <![CDATA[
+    	SELECT COUNT(QUT_TIME) FROM COMMUTE 
+    		WHERE COM_DATE=#{param1} AND ID=#{param2}
+    ]]>
+	</select>
+
+	<select id="selectMacAddr" resultType="String">
+    <![CDATA[
+    	SELECT MAC_ADDR FROM ST_MEMBER WHERE ID = #{param1}
+    ]]>
+	</select>
+
+	<select id="selectJournal" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT JN_NO, 
+       TITLE, 
+       J_DATE 
+        FROM(
+            SELECT
+                JN_NO, 
+                TITLE, 
+                J_DATE ,
+                ROW_NUMBER() OVER(ORDER BY JN_NO ASC) AS RNUM
+            FROM JOURNAL
+            WHERE 1=1 AND ID=#{param1})
+        WHERE RNUM BETWEEN #{param2.rowStart} AND #{param2.rowEnd}
+	]]>
+	</select>
+	
+	<select id="selectJournalCnt" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) 
+			FROM JOURNAL WHERE ID = #{param1}
+	]]>
+	</select>
+
+	<insert id="insertJournal">
+	<![CDATA[
+		INSERT INTO JOURNAL(JN_NO, ID, TITLE, CONTENT, J_DATE)
+    		VALUES(JN_NO.NEXTVAL, #{param1}, #{param2}, #{param3}, TO_DATE(SYSDATE, 'YYYY-MM-DD'))
+	]]>
+	</insert>
+
+
+	<select id="selectDetail" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT JN_NO, TITLE, CONTENT, J_DATE 
+		    FROM JOURNAL
+		    WHERE JN_NO=#{param1}
+	]]>
+	</select>
+
+	<update id="updateJournal">
+	<![CDATA[
+		UPDATE JOURNAL SET 
+    		TITLE = #{param2},
+    		CONTENT = #{param3},
+    		J_DATE = TO_DATE(SYSDATE, 'YYYY-MM-DD')
+		WHERE JN_NO = #{param4} AND ID = #{param1}
+	]]>
+	</update>
+
+	<delete id="deleteJournal">
+	<![CDATA[
+		DELETE FROM JOURNAL
+    		WHERE JN_NO=#{param2} AND ID=#{param1}
+	]]>
+	</delete>
 
 </mapper>
