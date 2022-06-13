@@ -175,6 +175,32 @@
 		value="/WEB-INF/views/counselor/programPermission.jsp" />
 	</definition>
 	
-	
+	<definition name="/counselor/surveylist"
+      extends="counseolr_baseLayout">
+      <put-attribute name="title" value="설문조사리스트" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/counselor/surveyList.jsp" />
+   </definition>
+   
+   <definition name="/counselor/addsurveryfrom"
+      extends="counseolr_baseLayout">
+      <put-attribute name="title" value="설문조사등록" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/counselor/addSurveryFrom.jsp" />
+   </definition>
+   
+   <definition name="/counselor/surveyDetail"
+      extends="counseolr_baseLayout">
+      <put-attribute name="title" value="설문조사등록" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/counselor/surveyDetail.jsp" />
+   </definition>
+   
+   <definition name="/counselor/surveyResult"
+      extends="counseolr_baseLayout">
+      <put-attribute name="title" value="설문조사결과" />
+      <put-attribute name="body"
+         value="/WEB-INF/views/counselor/surveyResult.jsp" />
+   </definition>
 	
 </tiles-definitions>
