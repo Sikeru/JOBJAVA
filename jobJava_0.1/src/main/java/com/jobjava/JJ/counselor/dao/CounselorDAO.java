@@ -11,6 +11,7 @@ import com.jobjava.JJ.counselor.vo.JobregVO;
 import com.jobjava.JJ.counselor.vo.SearchCriteria;
 import com.jobjava.JJ.counselor.vo.SturegVO;
 import com.jobjava.JJ.counselor.vo.UniregVO;
+import com.jobjava.JJ.leader.vo.SurveyVO;
 
 public interface CounselorDAO {
 	public List<HashMap<String, String>> JobDao();
