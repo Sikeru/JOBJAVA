@@ -18,8 +18,8 @@
 <title><tiles:insertAttribute name="title" /></title>
 	
 </head>
-<body>
-	<div id="outer_wrap">
+<body style="overflow-x:hidden">
+
 		<div id="wrap">
 			<aside>
 				 <tiles:insertAttribute name="side" />
@@ -28,7 +28,6 @@
 			 	<tiles:insertAttribute name="body" />
 			</article>
         	</div>
-        </div>
 </body>      
         
         
