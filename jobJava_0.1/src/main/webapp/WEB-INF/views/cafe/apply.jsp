@@ -27,7 +27,7 @@ function cancel() {
 		if (!form.QUESTION.value) {
 			alert("내용을 입력해주세요");
 			form.QUESTION.focus();
-			return;
+			return false;
 		}
 
 	
@@ -36,7 +36,7 @@ function cancel() {
 		
 		alert('사업참여등록이 완료되었습니다.');
 	
- 	} 
+ 	} ;
 	
 		</script> 
 <style>
@@ -209,6 +209,9 @@ padding-left: 130px;
 					value="미승인" name="APP"><br>
 			
 				 
+			
+					 
+			</form>
 				
 				<div id="buttonset">
 			<button class="button_2" OnClick="javascript:applyCheck();">신청하기</button>
@@ -216,9 +219,6 @@ padding-left: 130px;
 			&nbsp; &nbsp; &nbsp;
 			<button class="button_2" OnClick="cancel()">취소</button>
 					 </div>
-					 
-			</form>
-			
 			
 		</section>
 	</div>
