@@ -803,6 +803,124 @@
 		    WHERE
 		        RNUM BETWEEN #{rowStart} AND #{rowEnd}
 	</select>
+	
+	<!-- 설문조사 리스트조회 -->
+	<select id="selectAllSurveyList" resultType="SurveyVO">
+	<![CDATA[
+		SELECT
+        SV_NO, 
+		TITLE, 
+		S_DATE, 
+		E_DATE, 
+		NAME
+        FROM(
+            SELECT
+                SV_NO, 
+				TITLE, 
+				TO_CHAR(S_DATE, 'YYYY-MM-DD') AS S_DATE, 
+				TO_CHAR(E_DATE, 'YYYY-MM-DD') AS E_DATE, 
+				NAME,
+                ROW_NUMBER() OVER(ORDER BY SV_NO ASC) AS RNUM
+            FROM SURVEY S, EMP E
+            WHERE 1=1 AND S.EMP_NO=E.EMP_NO)
+        WHERE RNUM BETWEEN #{rowStart} AND #{rowEnd}
+	]]>
+	</select>
+	
+	<!-- 설문전체글갯수 -->
+	<select id="selectAllSurveyListCount" resultType="int">
+	<![CDATA[
+		SELECT COUNT(*) FROM SURVEY
+	]]>
+	</select>
+
+	<!-- 사원번호 가져오기 -->
+	<select id="selectEmpNO" resultType="int">
+	<![CDATA[
+		select emp_no from emp where id = #{Id}
+	]]>
+	</select>
+
+	<!-- 설문등록 -->
+	<insert id="addSurvery">
+	<![CDATA[
+		INSERT INTO SURVEY(SV_NO, EMP_NO, TITLE, S_DATE, E_DATE, PROGRESS, DIVISION) VALUES(SV_NO.NEXTVAL, #{param1}, #{param2}, TO_DATE(#{param3},'YYYY-MM-DD'), TO_DATE(#{param4}, 'YYYY-MM-DD'), ' ', #{param5})
+	]]>
+	</insert>
+
+	<!-- 설문번호 가져오기 -->
+	<select id="selectSvNO" resultType="int">
+	<![CDATA[
+		SELECT SV_NO FROM SURVEY WHERE TITLE = #{param1}
+	]]>
+	</select>
+
+	<!-- 설문문항등록 -->
+	<insert id="addQuestion">
+		<![CDATA[
+			INSERT INTO QUESTION VALUES(Q_NO.NEXTVAL, #{param1}, #{param2})
+		]]>
+	</insert>
+
+	<!-- 설문상세 -->
+	<select id="selectSurvey" resultType="SurveyVO">
+	<![CDATA[
+		SELECT TITLE, TO_CHAR(S_DATE, 'YYYY-MM-DD') AS S_DATE, TO_CHAR(E_DATE, 'YYYY-MM-DD') AS E_DATE, NAME, DIVISION 
+		FROM SURVEY S, EMP E 
+		WHERE S.EMP_NO=E.EMP_NO AND SV_NO = #{param1}
+		order by SV_NO ASC
+	]]>
+	</select>
+
+	<select id="selectContent" resultType="SurveyVO">
+	<![CDATA[
+		SELECT Q_NO, Q_TXT
+		FROM SURVEY S, QUESTION Q
+		WHERE S.SV_NO = Q.SV_NO AND S.SV_NO = #{param1}
+		ORDER BY Q_NO ASC
+	]]>
+	</select>
+
+	<select id="selectQno" resultType="int">
+	<![CDATA[
+		SELECT Q_NO FROM QUESTION 
+    		WHERE SV_NO=#{param1}
+	]]>
+	</select>
+
+	<update id="updateQue">
+	<![CDATA[
+		UPDATE QUESTION SET Q_TXT = #{param2}
+    			WHERE SV_NO = #{param1} AND Q_NO = #{param3}
+	]]>
+	</update>
+
+	<delete id="deleteQue">
+	<![CDATA[
+		DELETE FROM QUESTION WHERE Q_NO=#{param1}
+	]]>
+	</delete>
+
+	<delete id="deleteSur">
+	<![CDATA[
+		DELETE FROM SURVEY WHERE SV_NO=#{param1}
+	]]>
+	</delete>
+
+	<select id="selectSurveyResult" resultType="java.util.HashMap">
+		<![CDATA[
+			SELECT Q.Q_TXT, 
+			    NVL(SUM(G_DISLIKE), 0) as G_DISLIKE, 
+			    NVL(SUM(DISLIKE), 0) as DISLIKE, 
+			    NVL(SUM(MIDDLE), 0) as MIDDLE, 
+			    NVL(SUM(M_LIKE), 0) as M_LIKE, 
+			    NVL(SUM(G_LIKE), 0) as G_LIKE
+			    FROM SURVEY S, QUESTION Q, ANSWER A
+			    WHERE S.SV_NO=Q.SV_NO AND Q.Q_NO=A.Q_NO AND S.SV_NO=#{param1}
+			    GROUP BY Q.Q_NO, Q.Q_TXT
+			    ORDER BY Q.Q_NO ASC
+		]]>
+		</select>
 </mapper>
 
 
