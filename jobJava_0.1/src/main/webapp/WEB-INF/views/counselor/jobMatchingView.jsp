@@ -64,19 +64,24 @@
 
 @media(max-width:767px) {
   html {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
 
 .btn {
-   background: rgb(89,166,255);
+   background:#0F4C75;
 }
-#main{
-	position: absolute;
-   	left: 500px;
-   	top: 20px;
 
+#matching{
+        background-color: white;
+    margin-left: 900;
+    margin-top: -36px;
+    width: 65px;
+    height: 39px;
+    border-block-color: gray;
 }
+
+
   </style>
 
  <script>
@@ -86,7 +91,7 @@
          $('.sub').hide(500);
          $('.title').removeClass('on');
          $('.title').css({
-             color: '#fff'
+             color: '#000'
          })
          $(this).next().show(500);
          $(this).addClass('on');
@@ -112,9 +117,9 @@
     
    });
 </script>
+
 </head>
 <body>
-<div id="main"style="overflow:auto;; width:1000px; height:900px;">
 <div class="accordion">
   <c:forEach var="bInfo" items="${bInfo}" varStatus="qnaNUM">
   <div class="accordion-item">
@@ -124,22 +129,25 @@
     <div class="accordion-item-body">
       <div class="accordion-item-body-content">
             <form action="${contextPath}/counselor/memberMatching.do" method="post">
-				           기업 : ${bInfo.COMPANY }<br>
-				           경력 : ${bInfo.JOB_NO }<br>
-				           학력 : ${bInfo.EDU }<br>
-				           직무내용 <br> ${bInfo.JOB_D }<br>
+           기업 : ${bInfo.COMPANY }
+           <br><br>
+           경력 : ${bInfo.JOB_NO }
+           <br><br>
+           학력 : ${bInfo.EDU }
+           <br><br>
+           직무내용 <br> ${bInfo.JOB_D }
+           <br><br>
            <input type="hidden" name="SHOP_NO" value="${bInfo.SHOP_NO }" />
            <c:forEach var="member" items="${member}" varStatus="i">
-           <input type='checkbox' name='CM_NO${i.count}' value='${member.CM_NO }' />
-           <button type="button" class="btn btn-secondary" data-bs-toggle="popover" title="나이 : ${member.AGE}" data-bs-content="선호지역 : ${member.AREA}　　　　　　　 선호직종 : ${member.OCC_TYPE } ">${member.NAME }</button>
+           <input type='checkbox' name='CM_NO' value='${member.CM_NO }' />
+           <button type="button" class="btn btn-secondary" data-bs-toggle="popover" title="나이 : ${member.AGE}" data-bs-content="선호지역 : ${member.AREA}　선호직종 : ${member.OCC_TYPE } ">${member.NAME }</button>
            </c:forEach>
-           <br><input type="submit" value="매칭"/>
+           <br><input type="submit" id = "matching" value="매칭"/>
            </form>
       </div>
     </div>
   </div>
   </c:forEach>
- </div>
  </div>
  <script type="text/javascript">
 const accordionItemHeaders = document.querySelectorAll(".accordion-item-header");
