@@ -50,7 +50,7 @@
 </head>
 <body>
 <div id="fileMain">
-<h1>질의응답게시판</h1>
+<h1>게시판</h1>
 <form id="join" action="${contextPath}/board/onlineAddTable.do" method="post">
   작성자<br>
  <input type="text" name="ID" value="${pageContext.request.userPrincipal.name}" readonly><br>
