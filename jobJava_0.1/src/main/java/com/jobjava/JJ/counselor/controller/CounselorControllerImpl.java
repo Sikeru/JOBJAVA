@@ -1,6 +1,8 @@
 package com.jobjava.JJ.counselor.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,7 @@ import com.jobjava.JJ.counselor.vo.Paging;
 import com.jobjava.JJ.counselor.vo.SearchCriteria;
 import com.jobjava.JJ.counselor.vo.SturegVO;
 import com.jobjava.JJ.counselor.vo.UniregVO;
+import com.jobjava.JJ.leader.vo.SurveyVO;
 
 @Controller("CounselorController")
 @RequestMapping(value = "/counselor")
