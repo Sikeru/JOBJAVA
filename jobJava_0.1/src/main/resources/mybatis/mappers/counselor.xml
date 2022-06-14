@@ -49,13 +49,13 @@
 	<select id="boardList" resultType="java.util.HashMap"
 	parameterType="java.util.HashMap">
 	 <![CDATA[
-            SELECT *
+           SELECT *
 			FROM (SELECT ME.ID
 				, TO_CHAR(COM_DATE, 'YYYY-MM-DD') CD
 				, TO_CHAR(ATT_TIME, 'HH24:MI:SS') AT
 				, TO_CHAR(QUT_TIME, 'HH24:MI:SS') QT
 				, PROCESS
-				, ROW_NUMBER() OVER(ORDER BY CO.COM_NO) AS RNUM
+				, ROW_NUMBER() OVER(ORDER BY co.com_date) AS RNUM
                 , CO.COM_NO
 			FROM 
 				MEMBER ME
@@ -69,7 +69,7 @@
 				ME.ID LIKE '%' || #{keyword} || '%')
 			WHERE 
 				RNUM BETWEEN #{rowStart} AND #{rowEnd}
- 		   	ORDER BY COM_NO ASC
+ 		   	ORDER BY RNUM ASC
         	]]>
 	</select>
 	
