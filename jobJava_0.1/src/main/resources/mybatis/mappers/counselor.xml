@@ -347,7 +347,7 @@
 	<select id = "selectjob" resultType = "JobregVO">
 		select JOB_NO, CAREER, EDU, AREA, SAL, EMP_TYPE, WORK_TYPE, WELFARE,
 			 COMPANY, B_TYPE, SCALE, ESTABLISH, Y_SALES, HP, EMP_NUM,
-			 S_DATE, D_DATE
+			 S_DATE, D_DATE, TITLE, JOB_D
 		FROM JOB_INFO
 		WHERE JOB_NO = #{JOB_NO}
 	</select>
