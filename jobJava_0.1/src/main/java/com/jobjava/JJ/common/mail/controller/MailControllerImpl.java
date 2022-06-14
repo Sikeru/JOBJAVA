@@ -51,7 +51,7 @@ public class MailControllerImpl implements MailController{
 				+ generatedString 
 				+ "</h1>\r\n" + 
 				"            <br>\r\n" + 
-				"            <p style=\"display:block;width:220px;margin:0 auto;\">임시 비밀번호</p>\r\n" + 
+				"            <p style=\"display:block;width:220px;margin:0 auto;\"></p>\r\n" + 
 				"        </div>\r\n" + 
 				"    </div>";
 		String from = "jobjava1230@gmail.com"; //
