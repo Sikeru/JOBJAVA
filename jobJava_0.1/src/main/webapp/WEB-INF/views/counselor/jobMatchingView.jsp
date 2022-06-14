@@ -72,10 +72,10 @@
    background:#0F4C75;
 }
 
-#matching{
+    #matching{
         background-color: white;
-    margin-left: 900;
-    margin-top: -36px;
+    margin-left: 800px;
+    margin-top: -40px;
     width: 65px;
     height: 39px;
     border-block-color: gray;
