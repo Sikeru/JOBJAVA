@@ -21,7 +21,7 @@
         </div>
         <div id="copyrights">
                <div class="footerLogo">
-                    <img src="${contextPath}/resources/image/logo.png">
+                    <img width="250px" height="250px"  src="${contextPath}/resources/image/jobleader_logo.png">
                </div>
                <div class="copyright-wrap">
                 <div class="copyright">
@@ -36,15 +36,7 @@
                 </div>
                 </div>
             </div>
-            <div id="company">
-            <ul>
-                <li><img src="${contextPath}/resources/image/logo.png"></li>
-                <li><img src="${contextPath}/resources/image/logo.png"></li>
-                <li><img src="${contextPath}/resources/image/logo.png"></li>
-                <li><img src="${contextPath}/resources/image/logo.png"></li>
-                <li><img src="${contextPath}/resources/image/logo.png"></li>
-            </ul>
-        </div>
+          
         </div>
         </html>    
 
