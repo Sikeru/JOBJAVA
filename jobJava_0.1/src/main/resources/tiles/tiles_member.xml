@@ -3,7 +3,7 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
-	<definition name="baseLayout"
+	<definition name="memberBaseLayout"
 		template="/WEB-INF/views/common/main/layout.jsp">
 		<put-attribute name="title" value="레이아웃 페이지" />
 		<put-attribute name="header" value="/WEB-INF/views/common/main/header.jsp" />
@@ -12,32 +12,32 @@
 	</definition>
 	
 	
-	<definition name="/member/loginForm" extends="baseLayout">
+	<definition name="/member/loginForm" extends="memberBaseLayout">
 		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
 	</definition>
 	
-	<definition name="/member/signUpView" extends="baseLayout">
+	<definition name="/member/signUpView" extends="memberBaseLayout">
 		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/signUpView.jsp" />
 	</definition>
 	
-	<definition name="/member/signUpTestView" extends="baseLayout">
+	<definition name="/member/signUpTestView" extends="memberBaseLayout">
 		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/signUpTestView.jsp" />
 	</definition>
 	
-	<definition name="/member/mypageForm" extends="baseLayout">
+	<definition name="/member/mypageForm" extends="memberBaseLayout">
 		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/mypageForm.jsp" />
 	</definition>
 	
-	<definition name="/member/termsgree" extends="baseLayout">
+	<definition name="/member/termsgree" extends="memberBaseLayout">
 		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/termsgree.jsp" />
 	</definition>
 	
-	<definition name="/member/memberFindView" extends="baseLayout">
+	<definition name="/member/memberFindView" extends="memberBaseLayout">
 		<put-attribute name="title" value="JOBJAVA" />
 		<put-attribute name="body" value="/WEB-INF/views/member/memberFindView.jsp" />
 	</definition>
