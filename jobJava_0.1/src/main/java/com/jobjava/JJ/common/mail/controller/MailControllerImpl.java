@@ -45,7 +45,7 @@ public class MailControllerImpl implements MailController{
 				"            <hr>\r\n" + 
 				"            <img src=\"http://image.happymoney.co.kr/image/mail//icon_5.gif\" alt=\"해피머니\" style=\"display:block;width:112px;height:112px;margin:51px auto 26px\" border=\"0\" loading=\"lazy\"><br>\r\n" + 
 				"            \r\n" + 
-				"            <p style=\"display:block;width:300px;margin:0 auto;\">회원의 임시 비밀번호을 발급하였습니다.</p>\r\n" + 
+				"            <p style=\"display:block;width:300px;margin:0 auto;\">이메일 인증코드을 발급하였습니다.</p>\r\n" + 
 				"            <br>\r\n" + 
 				"            <h1 style=\"display:block;width:190px;margin:51px auto 26px\">"
 				+ generatedString 
@@ -141,13 +141,13 @@ public class MailControllerImpl implements MailController{
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 		    message  = "<script>";
-		    message +=" alert('�ӽú�й�ȣ�� �̸��Ϸ� �����߽��ϴ�. �α���â���� �̵��մϴ�.');";
+		    message +=" alert('임시 비밀번호를 발급하셨습니다. 로그인 페이지로 돌아갑니다.');";
 		    message += " location.href='"+request.getContextPath()+"/member/loginForm.do;'";
 		    message += " </script>";
 		    
 		}catch(Exception e) {
 			message  = "<script>";
-		    message +=" alert('�۾� �� ������ �߻��߽��ϴ�. �ٽ� �õ��� �ּ���');";
+		    message +=" alert('시스템의 오류가 발생했습니다.');";
 		    message += " location.href='"+request.getContextPath()+"/member/loginForm.do;'";
 		    message += " </script>";
 			e.printStackTrace();
