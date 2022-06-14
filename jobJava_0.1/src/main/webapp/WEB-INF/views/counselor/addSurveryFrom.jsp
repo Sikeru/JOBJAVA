@@ -33,6 +33,10 @@
 		$("#surver>tbody:last").append(
 				"<tr><td>" + cnt + "</td><td><input name = 'qno"+cnt+"'></td></td></tr>");
 		cnt++;
+		if(cnt>30){
+			alert('항목은 최대 30개까지 추가할 수 있습니다.');
+			return false;
+		}
 	}
 	function s_del() {
 		if(cnt<=2){
