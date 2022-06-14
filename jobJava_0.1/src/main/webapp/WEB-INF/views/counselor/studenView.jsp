@@ -41,7 +41,7 @@ $(function() {
         $('.sub').hide(500);
         $('.title').removeClass('on');
         $('.title').css({
-            color: '#fff'
+            color: '#000'
         })
         $(this).next().show(500);
         $(this).addClass('on');
@@ -68,174 +68,173 @@ $(function() {
   });
 
 $(document).ready(function() {
-	   var formObj = $("form[name='frm']");
-	       
-	         //수정
-	       $(".studenupdate").on("click", function(){
-	           formObj.attr("action", "/JJ/counselor/studenupdateView.do?CM_NO=${studenlist.CM_NO}");
-	          formObj.attr("method", "get");
-	          formObj.submit();
-	      }) 
+	var formObj = $("form[name='frm']");
+ 	   
+         //수정
+	    $(".update").on("click", function(){
+		     formObj.attr("action", "/JJ/counselor/studenupdateView.do?CM_NO=${studenlist.CM_NO}");
+			 formObj.attr("method", "get");
+			 formObj.submit();
+		}) 
 
-	      // 삭제
-	      $(".studendelete").on("click", function() {
-	         formObj.attr("action", "/JJ/counselor/studendelete.do");
-	         formObj.attr("method", "post");
-	         formObj.submit();
-	      })
-	    
-	      
-	})
-	      
-	   
-	          
-	         
-</script>
-	        
-<style>
-   .stu{
-	         
-	    position: absolute;
-	    top: 100px;
-    	left: -50px;
-	    border: 5px solid #0F4C75;
-	    padding: 40px;
-	    border-radius: 10px;
-	    width: 600px;
-
-	         
-	      
-	         }
-	         
-	         #stubox{
-	         width: 500px;
-	         height: 1000px;
-	         position: absolute;
-	         left: 600px;
+		// 삭제
+		$(".delete").on("click", function() {
+			formObj.attr("action", "/JJ/counselor/studendelete.do");
+			formObj.attr("method", "post");
+			formObj.submit();
+		})
 	 
-	         }
-	                 
-	   label {
-	    display: inline-block;
-	    background: #0F4C75;
-	    color: white;
-	    padding: 5px;
-	    border-radius: 5px;
-	    width: 80;
-	    text-align: center;
-	}
+		
+})
+		
+   
+          
+         
+</script>
+        
+<style>
+   		.stu{
+   		
+   		position: absolute;
+    top: 180px;
+    border: 5px solid #0F4C75;
+    padding: 40px;
+    border-radius: 10px;
+    width: 600px;
 
-	   #sturegh{
-	text-align: center;
-	      }
-	      
-	      .stureg{
-	      border-bottom: 4px solid #0F4C75;
-	      }
-	      
-	       .update:hover {
-	   color: white;
-	   background: #E16106;
-	}
-	   .delete:hover {
-	   color: white;
-	   background: #E16106;
-	}
+   		
+   	
+   		}
+   		
+   		#stubox{
+   		width: 500px;
+   		height: 1000px;
+   		position: absolute;
+   		left: 600px;
+ 
+   		}
+   		  		
+	label {
+    display: inline-block;
+    background: #0F4C75;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    width: 80;
+    text-align: center;
+}
 
-	      .update{
-	      background-color:  #0F4C75;
-	      border:none;
-	      color: white;
-	      padding: 5;
-	    border-radius: 3px;
-	      }
-	      
-	      .delete{
-	      background-color:  #0F4C75;
-	      border:none;
-	      color: white;
-	      padding: 5;
-	    border-radius: 3px;
-	      }
-	      
-	      #buttonset{
-	         margin-left : 180px;
-	         }
+	#sturegh{
+text-align: center;
+   	}
+   	
+   	.stureg{
+   	border-bottom: 4px solid #0F4C75;
+   	}
+   	
+   	 .update:hover {
+   color: white;
+   background: #E16106;
+}
+	.delete:hover {
+   color: white;
+   background: #E16106;
+}
 
-	   </style>
-	   <body>
-	   <div id = "stubox">
-	      <div class = "stu">
-	      
-	      <div class = "stureg"><h1 id = "sturegh">학생 상세창</h1></div>
-	      
-	      <form name = "frm" method = "post" role='form' >
-	         <input type = "hidden" name = "CM_NO" value = "${studenlist.CM_NO}" readonly/>
-	         
+   	.update{
+   	background-color:  #0F4C75;
+   	border:none;
+   	color: white;
+   	padding: 5;
+    border-radius: 3px;
+   	}
+   	
+   	.delete{
+   	background-color:  #0F4C75;
+   	border:none;
+   	color: white;
+   	padding: 5;
+    border-radius: 3px;
+   	}
+   	
+   	#buttonset{
+   		margin-left : 180px;
+   		}
+
+   </style>
+	<body>
+	<div id = "stubox">
+		<div class = "stu">
+		
+		<div class = "stureg"><h1 id = "sturegh">학생 상세창</h1></div>
+		
+		<form name = "frm" method = "post" role='form' >
+			<input type = "hidden" name = "CM_NO" value = "${studenlist.CM_NO}" readonly/>
+			
 
 
-	      <br>
-	      
-	      
-	      <div class = "ID" name = "ID" >
-	         <label>아이디</label> &nbsp;
-	         ${studenlist.ID}
-	      </div>       
-	      <br>
-	      <div class = "NAME" name = "NAME">
-	         <label>이름</label> &nbsp;
-	         ${studenlist.NAME }
-	      </div> 
-	      <br>
-	      <div class = "BIRTH" name = "BIRTH">
-	         <label>생년월일</label> &nbsp;
-	         ${studenlist.BIRTH }
-	      </div> 
-	      
-	      <br>
-	      <div class = "U_NAME" name = "U_NAME">
-	         <label>대학교</label> &nbsp;
-	         ${studenlist.u_NAME }
-	      </div>
-	      <br>
-	      <div class = "DEPT" name = "DEPT">
-	         <label>학과</label> &nbsp;
-	         ${studenlist.DEPT }
-	      </div>
-	      <br>
-	      <div class = "ADDR" name ="ADDR">
-	         <label>주소</label>  &nbsp;
-	         ${studenlist.ADDR }
-	      </div>
-	      <br>
-	      <div class = "HP" name ="HP">
-	         <label>전화번호</label> &nbsp;
-	         ${studenlist.HP } 
-	      </div>
-	      <br>
-	      
-	      <div class = "EMAIL" name ="EMAIL">
-	         <label>E-MAIL</label> &nbsp;
-	         ${studenlist.EMAIL } 
-	      </div>
-	      
-	      <br>
-	      
-	      
+		<br>
+		
+		
+		<div class = "ID" name = "ID" >
+			<label>아이디</label> &nbsp;
+			${studenlist.ID}
+		</div> 		
+		<br>
+		<div class = "NAME" name = "NAME">
+			<label>이름</label> &nbsp;
+			${studenlist.NAME }
+		</div> 
+		<br>
+		<div class = "BIRTH" name = "BIRTH">
+			<label>생년월일</label> &nbsp;
+			${studenlist.BIRTH }
+		</div> 
+		
+		<br>
+		<div class = "U_NAME" name = "U_NAME">
+			<label>대학교</label> &nbsp;
+			${studenlist.u_NAME }
+		</div>
+		<br>
+		<div class = "DEPT" name = "DEPT">
+			<label>학과</label> &nbsp;
+			${studenlist.DEPT }
+		</div>
+		<br>
+		<div class = "ADDR" name ="ADDR">
+			<label>주소</label>  &nbsp;
+			${studenlist.ADDR }
+		</div>
+		<br>
+		<div class = "HP" name ="HP">
+			<label>전화번호</label> &nbsp;
+			${studenlist.HP } 
+		</div>
+		<br>
+		
+		<div class = "EMAIL" name ="EMAIL">
+			<label>E-MAIL</label> &nbsp;
+			${studenlist.EMAIL } 
+		</div>
+		
+		<br>
+		
+		
 
-	      <div id = "buttonset">
-	   <button type="submit" class="update">수정하기</button>
-	   &nbsp;&nbsp;&nbsp;
-	   <button type="submit" class="delete">삭제하기</button>
-	   </div>
-	   
-	    </form>
-	    
-	   
-	      </div>
-	   </div>
+		<div id = "buttonset">
+	<button type="submit" class="update">수정하기</button>
+	&nbsp;&nbsp;&nbsp;
+	<button type="submit" class="delete">삭제하기</button>
+	</div>
+	
+	 </form>
+	 
+	
+		</div>
+	</div>
 
-	   
-	   </body>
-	   
-	</html>
+	
+	</body>
+	
+</html>
