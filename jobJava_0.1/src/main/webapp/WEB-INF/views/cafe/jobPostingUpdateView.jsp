@@ -27,6 +27,19 @@
          formObj.submit();
       });
    });
+   
+   function update() {
+		var form = document.updateForm;
+
+
+		form.submit();
+		
+		
+		alert('수정이 완료되었습니다.');
+	
+	} ;
+   
+   
 </script>
 <style>
 #listMenu {
@@ -353,7 +366,7 @@ textarea {
             </table>
 
             <div id="btn1">
-               <button type="submit" class="save_btn">저장</button>
+               <button type="submit" class="save_btn" OnClick="javascript:update();" >저장</button>
                <button type="submit" class="cancel_btn">취소</button>
             </div>
          </form>
