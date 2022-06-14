@@ -31,6 +31,7 @@
 		$(".delete_btn").on("click", function() {
 			formObj.attr("action", "/JJ/cafe/jobPostingDelete.do");
 			formObj.attr("method", "post");
+			alert('게시글이 삭제되었습니다.');
 			formObj.submit();
 		})
 
