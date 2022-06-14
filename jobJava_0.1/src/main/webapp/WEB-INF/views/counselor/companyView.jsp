@@ -36,7 +36,7 @@
                 $('.sub').hide(500);
                 $('.title').removeClass('on');
                 $('.title').css({
-                    color: '#fff'
+                    color: '#000'
                 })
                 $(this).next().show(500);
                 $(this).addClass('on');
@@ -63,47 +63,47 @@
           });
           
            $(document).ready(function() {
-              var formObj = $("form[name='frm']");
-                  
-                    //수정
-                  $('.companyupdate').on("click", function(){
-                      formObj.attr("action", "/JJ/counselor/companyupdateView.do?CM_NO=${companylist.CM_NO}");
-                     formObj.attr("method", "get");
-                     formObj.submit();
-                 }) 
+        		var formObj = $("form[name='frm']");
+        	 	   
+        	         //수정
+        		    $('#update').on("click", function(){
+        			     formObj.attr("action", "/JJ/counselor/companyupdateView.do?CM_NO=${companylist.CM_NO}");
+        				 formObj.attr("method", "get");
+        				 formObj.submit();
+        			}) 
 
-                 // 삭제
-                 $('.companydelete').on("click", function() {
-                    formObj.attr("action", "/JJ/counselor/companydelete.do");
-                    formObj.attr("method", "post");
-                    formObj.submit();
-                 })
-               
-                 
-           })
+        			// 삭제
+        			$('#delete').on("click", function() {
+        				formObj.attr("action", "/JJ/counselor/companydelete.do");
+        				formObj.attr("method", "post");
+        				formObj.submit();
+        			})
+        		 
+        			
+        	})
           
 </script>
         
 <style>
-         .com{
-         position: absolute;
+   		.com{
+   		position: absolute;
     top: 180px;
     border: 5px solid #0F4C75;
     padding: 40px;
     border-radius: 10px;
     width: 600px;
-      
-         }
-         
-         #combox{
-         width: 500px;
-         height: 1000px;
-         position: absolute;
-         left: 600px;
+   	
+   		}
+   		
+   		#combox{
+   		width: 500px;
+   		height: 1000px;
+   		position: absolute;
+   		left: 600px;
 
-         }
-         
-    label {
+   		}
+   		
+ 	label {
     display: inline-block;
     background: #0F4C75;
     color: white;
@@ -111,109 +111,109 @@
     border-radius: 5px;
     width: 100;
     text-align: center;
-   }
-   
-    #update:hover {
+	}
+	
+	 #update:hover {
    color: white;
    background: #E16106;
 }
-   #delete:hover {
+	#delete:hover {
    color: white;
    background: #E16106;
 }
 
-      #update{
-      background-color:  #0F4C75;
-      border:none;
-      color: white;
-      padding: 5;
+   	#update{
+   	background-color:  #0F4C75;
+   	border:none;
+   	color: white;
+   	padding: 5;
     border-radius: 3px;
-      }
-      
-      #delete{
-      background-color:  #0F4C75;
-      border:none;
-      color: white;
-      padding: 5;
+   	}
+   	
+   	#delete{
+   	background-color:  #0F4C75;
+   	border:none;
+   	color: white;
+   	padding: 5;
     border-radius: 3px;
-      }
-      
-      #comregh{
-      text-align: center;
-      }
-      
-      .comreg{
-      border-bottom: 4px solid #0F4C75;
-      }
-      
-          #buttonset{
-         margin-left : 180px;
-         }
+   	}
+   	
+   	#comregh{
+   	text-align: center;
+   	}
+   	
+   	.comreg{
+   	border-bottom: 4px solid #0F4C75;
+   	}
+   	
+   	 	#buttonset{
+   		margin-left : 180px;
+   		}
 
    </style>
-   <body>
-   <div id = "combox">
-      <div class = "com">
-      
-      <div class = "comreg"><h1 id = "comregh">기업 상세창</h1></div>
-      
-      <form name = "frm" method = "post" role='form'>
-         <input type = "hidden" name = "CM_NO" value = "${companylist.CM_NO}" readonly/>
-         
-   
+	<body>
+	<div id = "combox">
+		<div class = "com">
+		
+		<div class = "comreg"><h1 id = "comregh">기업 상세창</h1></div>
+		
+		<form name = "frm" method = "post" role='form'>
+			<input type = "hidden" name = "CM_NO" value = "${companylist.CM_NO}" readonly/>
+			
+	
 
-      <br>
-      
-      <div class = "AGENT" name = "AGENT">
-         <label>대표자</label> &nbsp;
-         ${companylist.AGENT }
-         </div> 
-      <br>
-       <div class = "C_NAME" name = "C_NAME">
-       <label>회사명</label> &nbsp;
-         ${companylist.c_NAME }
-      </div> 
-      <br>
-      
-      <div class = "B_TYPE" name = "B_TYPE">
-         <label>업종</label> &nbsp;
-         ${companylist.b_TYPE }
-      </div>
-      <br>
-      <div class = "C_DIV" name = "C_DIV">
-         <label>기업구분</label> &nbsp;
-         ${companylist.c_DIV }
-      </div>
-      <br>
-      <div class = "HOMEPAGE" name ="HOMEPAGE">
-         <label>HOMEPAGE</label> &nbsp;
-         ${companylist.HOMEPAGE }
-      </div>
-      <br>
-      <div class = "EMP_NUM" name ="EMP_NUM">
-         <label>근로자수</label> &nbsp;
-         ${companylist.EMP_NUM }
-      </div>
-      
-      
-      <br>
-      
-         <div id = "buttonset">
-   <button type="submit" id="update">수정하기</button>
-   &nbsp;&nbsp;&nbsp;
-   <button type="submit" id="delete">삭제하기</button>
-   </div>
+		<br>
+		
+		<div class = "AGENT" name = "AGENT">
+			<label>대표자</label> &nbsp;
+			${companylist.AGENT }
+			</div> 
+		<br>
+	 	<div class = "C_NAME" name = "C_NAME">
+	 	<label>회사명</label> &nbsp;
+			${companylist.c_NAME }
+		</div> 
+		<br>
+		
+		<div class = "B_TYPE" name = "B_TYPE">
+			<label>업종</label> &nbsp;
+			${companylist.b_TYPE }
+		</div>
+		<br>
+		<div class = "C_DIV" name = "C_DIV">
+			<label>기업구분</label> &nbsp;
+			${companylist.c_DIV }
+		</div>
+		<br>
+		<div class = "HOMEPAGE" name ="HOMEPAGE">
+			<label>HOMEPAGE</label> &nbsp;
+			${companylist.HOMEPAGE }
+		</div>
+		<br>
+		<div class = "EMP_NUM" name ="EMP_NUM">
+			<label>근로자수</label> &nbsp;
+			${companylist.EMP_NUM }
+		</div>
+		
+		
+		<br>
+		
+			<div id = "buttonset">
+	<button type="submit" id="update">수정하기</button>
+	&nbsp;&nbsp;&nbsp;
+	<button type="submit" id="delete">삭제하기</button>
+	</div>
    
-   
-      </form>
-   
+	
+		</form>
+	
 
-   
-    
-      </div>
-   </div>
+	
+	 
+		</div>
+	</div>
 
-   
-   </body>
-   
+	
+	</body>
+	
 </html>
