@@ -1,5 +1,7 @@
 package com.jobjava.JJ.cafe.vo;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Date;
 
 public class JobAppVO {
@@ -35,12 +37,24 @@ public class JobAppVO {
 
 
 	public String getFILENAME() {
+		try {
+			if(FILENAME!= null && FILENAME.length()!=0) {
+				this.FILENAME = URLDecoder.decode(FILENAME,"UTF-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return FILENAME;
 	}
 
-
 	public void setFILENAME(String fILENAME) {
-		FILENAME = fILENAME;
+		try {
+			if(fILENAME!= null && fILENAME.length()!=0) {
+				this.FILENAME = URLDecoder.decode(fILENAME,"UTF-8");
+			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 
