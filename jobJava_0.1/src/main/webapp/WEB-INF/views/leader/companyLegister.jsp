@@ -26,7 +26,7 @@ section {
 	width: 100%;
 	height: 50px;
 	margin: 0;
-	margin-left: 25%;
+	margin-left: 30%;
 	padding: 0;
 	text-align: center;
 }
@@ -200,9 +200,6 @@ height: auto;
 						</p></li>
 					<li><p>
 							<a href="${contextPath}/leader/companyLegisterStuList.do">참여학생조회</a>
-						</p></li>
-					<li><p>
-							<a href="${contextPath}/leader/commuteCheck.do">출퇴근조회</a>
 						</p></li>
 					<li><p>
 							<a href="${contextPath}/leader/surveylist.do">설문조사</a>
