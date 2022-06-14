@@ -1,7 +1,7 @@
 package com.jobjava.JJ.cafe.vo;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.net.URLDecoder;
 import java.sql.Date;
 
 
@@ -27,7 +27,7 @@ public class FileVO {
 	public String getEMP_FILENAME() {
 		try {
 			if(EMP_FILENAME!= null && EMP_FILENAME.length()!=0) {
-				this.EMP_FILENAME = URLEncoder.encode(EMP_FILENAME,"UTF-8");
+				this.EMP_FILENAME = URLDecoder.decode(EMP_FILENAME,"UTF-8");
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -37,7 +37,7 @@ public class FileVO {
 	public void setEMP_FILENAME(String eMP_FILENAME) {
 		try {
 			if(eMP_FILENAME!= null && eMP_FILENAME.length()!=0) {
-				this.EMP_FILENAME = URLEncoder.encode(eMP_FILENAME,"UTF-8");
+				this.EMP_FILENAME = URLDecoder.decode(eMP_FILENAME,"UTF-8");
 			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
