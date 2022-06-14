@@ -35,7 +35,7 @@
                 $('.sub').hide(500);
                 $('.title').removeClass('on');
                 $('.title').css({
-                    color: '#fff'
+                    color: '#000'
                 })
                 $(this).next().show(500);
                 $(this).addClass('on');
@@ -64,201 +64,203 @@
 </script>
         
 <style>
-         .job{
-          position: absolute;
-   top: 100px;
-    left: -50px;
+   		.job{
+   		/*  position: absolute; */
+    top: 180px;
     border: 5px solid #0F4C75;
     padding: 40px;
     border-radius: 10px;
     width: 1100px;
-      
-         }
-         
-         #jobbox{
-         width: 500px;
-         height: 1000px;
-         position: absolute;
-         left: 600px;
-         }
-         
-      
-         
-         label{
-             display: inline-block;
-             background: #0F4C75;
-          color: white;
-          padding: 5px;
-          border-radius: 5px;
-          width: 100;
-          text-align: center;
-          margin-bottom: 10px;
-          margin-right: 3px;
-         }
-         
-         #JOB_D{
-         height : 100px;
-         }
-         
-         #jobregh2{
-         text-align: center;
-       
-         }
-         
-         .jobreg{
-         border-bottom: 4px solid #0F4C75;
-         padding-bottom: 8px;
+   	
+   		}
+   		
+   		#jobbox{
+   		width: 500px;
+   		height: 1000px;
+   		position: absolute;
+   		left: 600px;
+   		}
+   		
+   	
+   		
+   		label{
+   		    display: inline-block;
+   			 background: #0F4C75;
+    		color: white;
+   		 padding: 5px;
+   		 border-radius: 5px;
+   		 width: 100;
+   		 text-align: center;
+   		 margin-bottom: 10px;
+   		 margin-right: 3px;
+   		}
+   		
+   		#JOB_D{
+   		height : 100px;
+   		}
+   		
+   		#jobregh2{
+   		text-align: center;
+ 		
+   		}
+   		
+   		.jobreg{
+   		border-bottom: 4px solid #0F4C75;
+   		padding-bottom: 8px;
     margin-bottom: 4px
    
-         }
-         
-         #buttonset2{
-         margin-left : 400px;
-         }
-         
-          #update:hover {
-         color: white;
-         background: #E16106;
+   		}
+   		
+   		#buttonset2{
+   		margin-left : 400px;
+   		}
+   		
+   		 #update:hover {
+  		 color: white;
+ 		  background: #E16106;
  
 }
-   #delete:hover {
+	#delete:hover {
    color: white;
    background: #E16106;
 }
 
-      #update{
-      background-color:  #0F4C75;
-      border:none;
-      color: white;
-      margin-right: 20px;
-      }
-      
-      #delete{
-      background-color:  #0F4C75;
-      border:none;
-      color: white;
-      }
-         
+   	#update{
+   	background-color:  #0F4C75;
+   	border:none;
+   	color: white;
+   	margin-right: 20px;
+   	}
+   	
+   	#delete{
+   	background-color:  #0F4C75;
+   	border:none;
+   	color: white;
+   	}
+   		
     #frm{
     padding-left: 50px;
     }
 
    </style>
-   <body>
-   <div id = "jobbox">
-      <div class = "job">
-      
-      <div class = "jobreg"><h1 id = "jobregh2">기업 상세창</h1></div>
-      
-      <form id = "frm" method = "post">
-         <input type = "hidden" name = "JOB_NO" value = "${job.JOB_NO }" readonly/>
-   
+	<body>
+	<div id = "jobbox">
+		<div class = "job">
+		
+		<div class = "jobreg"><h1 id = "jobregh2">기업 상세창</h1></div>
+		
+		<form id = "frm" method = "post">
+			<input type = "hidden" name = "JOB_NO" value = "${job.JOB_NO }" readonly/>
+	
 
-      <br>
-   
-      <div class = "comtitle" name = "TITLE">
-         <label>제목</label>
-         <input type = "text" id = "TITLE" name = "TITLE" value = "${job.TITLE }" size = 50/>
-   
-         <label>기업 이름</label>
-         <input type = "text" id = "TITLE" name = "TITLE" value = ${job.COMPANY } " size = 50 disabled/>
-      </div> 
-      
-      <div class = "B_TYPE" name = "B_TYPE">
-         <label>업종</label>
-         <input type = "text" id = "B_TYPE" name = "B_TYPE" value = "${job.b_TYPE}" size = 50/>
+		<br>
+	
+		<div class = "comtitle" name = "TITLE">
+			<label>제목</label>
+			<input type = "text" id = "TITLE" name = "TITLE" value = "${job.TITLE }" size = 50/>
+	
+			<label>기업 이름</label>
+			<input type = "text" id = "TITLE" name = "TITLE" value = ${job.COMPANY } " size = 50 disabled/>
+		</div> 
+		
+		
+		<div class = "B_TYPE" name = "B_TYPE">
+			<label>업종</label>
+			<input type = "text" id = "B_TYPE" name = "B_TYPE" value = "${job.b_TYPE}" size = 50/>
 
-         <label>경력</label>
-         <input type = "text" id = "CAREER" name = "CAREER" value = "${job.CAREER }" size = 50/>
-      </div>
-      
-      <div class = "EDU" name = "EDU">
-         <label>학력</label>
-         <input type = "text" id = "EDU" name = "EDU" value = "${job.EDU }" size = 50/>
+			<label>경력</label>
+			<input type = "text" id = "CAREER" name = "CAREER" value = "${job.CAREER }" size = 50/>
+		</div>
+		
+		<div class = "EDU" name = "EDU">
+			<label>학력</label>
+			<input type = "text" id = "EDU" name = "EDU" value = "${job.EDU }" size = 50/>
 
-         <label>임금</label>
-         <input type = "text" id = "SAL" name = "SAL" value = "${job.SAL } " size = 50/>
-      </div>
-      
-      <div class = "EMP_TYPE" name = "EMP_TYPE">
-         <label>고용형태</label>
-         <input type = "text" id = "EMP_TYPE" name = "EMP_TYPE" value = "${job.EMP_TYPE }" size = 50/>
+			<label>임금</label>
+			<input type = "text" id = "SAL" name = "SAL" value = "${job.SAL } " size = 50/>
+		</div>
+		
+		<div class = "EMP_TYPE" name = "EMP_TYPE">
+			<label>고용형태</label>
+			<input type = "text" id = "EMP_TYPE" name = "EMP_TYPE" value = "${job.EMP_TYPE }" size = 50/>
 
-         <label>근무형태</label>
-         <input type = "text" id = "WORK_TYPE" name = "WORK_TYPE" value = "${job.WORK_TYPE }" size = 50/>
-      </div>
-      
-      <div class = "AREA" name = "AREA">
-         <label>지역</label>
-         <input type = "text" id = "AREA" name = "AREA" value = "${job.AREA }" size = 50/>
+			<label>근무형태</label>
+			<input type = "text" id = "WORK_TYPE" name = "WORK_TYPE" value = "${job.WORK_TYPE }" size = 50/>
+		</div>
+		
+		<div class = "AREA" name = "AREA">
+			<label>지역</label>
+			<input type = "text" id = "AREA" name = "AREA" value = "${job.AREA }" size = 50/>
 
-         <label>복리후생</label>
-         <input type = "text" id = "WELFARE" name = "WELFARE" value = "${job.WELFARE }" size = 50/>
-      </div>
-      
-      <div class = "SCALE" name = "SCALE">
-         <label>기업규모</label>
-         <input type = "text" id = "SCALE" name = "SCALE" value = "${job.SCALE }" size = 50/>
+			<label>복리후생</label>
+			<input type = "text" id = "WELFARE" name = "WELFARE" value = "${job.WELFARE }" size = 50/>
+		</div>
+		
+		<div class = "SCALE" name = "SCALE">
+			<label>기업규모</label>
+			<input type = "text" id = "SCALE" name = "SCALE" value = "${job.SCALE }" size = 50/>
 
-         <label>설립년도</label>
-         <input type = "text" id = "ESTABLISH" name = "ESTABLISH" value = "${job.ESTABLISH }" size = 50/>
-      </div>
-      
-      <div class = "Y_SALES" name = "Y_SALES">
-         <label>연매출액</label>
-         <input type = "text" id = "Y_SALES" name = "Y_SALES" value = "${job.y_SALES }" size = 50/>
+			<label>설립년도</label>
+			<input type = "text" id = "ESTABLISH" name = "ESTABLISH" value = "${job.ESTABLISH }" size = 50/>
+		</div>
+		
+		<div class = "Y_SALES" name = "Y_SALES">
+			<label>연매출액</label>
+			<input type = "text" id = "Y_SALES" name = "Y_SALES" value = "${job.y_SALES }" size = 50/>
 
-         <label>홈페이지</label>
-         <input type = "text" id = "HP" name = "HP" value = "${job.HP }" size = 50/>
-      </div>
-      
-      <div class = "EMP_NUM" name = "EMP_NUM">
-         <label>근로자수</label>
-         <input type = "text" id = "EMP_NUM" name = "EMP_NUM" value = "${job.EMP_NUM }" size = 50/>
-         
-         <label name = "S_DATE">사업기간</label> 
-         <input type = "date" id = "s_date" name = "S_DATE" value = "${job.s_DATE }"/> -
-         <input type = "date" id = "e_date" name = "D_DATE" value = "${job.d_DATE }"/>
-      </div>
-      
-      <label>업무내용</label>
-      <div class = "JOB_D" name = "JOB_D">
-         <textarea name="JOB_D" cols="119" rows="6"><c:out value="${job.JOB_D}" /></textarea>
-      </div>
-      
-      
-      
-      
-      
-      <br>
+			<label>홈페이지</label>
+			<input type = "text" id = "HP" name = "HP" value = "${job.HP }" size = 50/>
+		</div>
+		
+		<div class = "EMP_NUM" name = "EMP_NUM">
+			<label>근로자수</label>
+			<input type = "text" id = "EMP_NUM" name = "EMP_NUM" value = "${job.EMP_NUM }" size = 50/>
+			
+			<label name = "S_DATE">사업기간</label> 
+			<input type = "date" id = "s_date" name = "S_DATE" value = "${job.s_DATE }"/> -
+			<input type = "date" id = "e_date" name = "D_DATE" value = "${job.d_DATE }"/>
+		</div>
+		
+		<label>업무내용</label>
+		<div class = "JOB_D" name = "JOB_D">
+			<textarea name="JOB_D" cols="109" rows="7"><c:out value="${job.JOB_D}" /></textarea>
+		</div>
+		
+		
+		
+		
+		
+		<br>
 
-      </form>
-      
-      
-   <div id = "buttonset2">
-   <input type = "button" id = "update" value = "수정하기">
-   <input type = "button" id = "delete" value = "삭제하기">
-    </div>
-    <script type="text/javascript">
-    
-    $("#jobupdate").on("click", function(){
+		</form>
+		
+		
+	<div id = "buttonset2">
+	<input type = "button" id = "update" value = "수정하기">
+	<input type = "button" id = "delete" value = "삭제하기">
+	 </div>
+	 <script type="text/javascript">
+	 
+	 $("#update").on("click", function(){
          var frm = $("#frm")[0];
          frm.action = "jobupdate.do";
          frm.submit();
+         alert("수정이 완료되었습니다.");
      });
 
-     $("#jobdelete").on("click", function(){
+     $("#delete").on("click", function(){
          var frm = $("#frm")[0];
          frm.action = "jobdelete.do";
          frm.submit();
+         alert("삭제가 완료되었습니다.");
      });
-    
-    </script>
-    
-      </div>
-   </div>
+	 
+	 </script>
+	 
+		</div>
+	</div>
 
-   
-   </body>
-   
+	
+	</body>
+	
 </html>
